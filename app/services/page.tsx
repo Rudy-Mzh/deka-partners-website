@@ -60,7 +60,7 @@ export default function ServicesPage() {
       <Section
         title="Services Détaillés"
         subtitle="Accompagnement professionnel et transparent"
-        background="dark"
+        background="white"
       >
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {mainServices.map((service, index) => (
@@ -77,7 +77,7 @@ export default function ServicesPage() {
       {/* Expertise Areas */}
       <Section
         title="Nos Domaines d'Expertise"
-        background="gradient"
+        background="gray"
         centered
       >
         <div className="flex flex-wrap justify-center gap-3">
@@ -96,7 +96,7 @@ export default function ServicesPage() {
       <Section
         title="Notre Processus"
         subtitle="Transparent, professionnel, efficace"
-        background="dark"
+        background="gray"
       >
         <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
           {[
@@ -120,7 +120,7 @@ export default function ServicesPage() {
       <Section
         title="Vous avez un projet ?"
         subtitle="Contactez-nous pour une consultation gratuite et sans engagement."
-        background="dark"
+        background="gray"
         centered
       >
         <div className="mt-8">

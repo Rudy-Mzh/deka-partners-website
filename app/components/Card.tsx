@@ -8,50 +8,36 @@ interface CardProps {
 export default function Card({ icon, title, description, highlighted = false }: CardProps) {
   return (
     <div
-      className={`group relative p-8 rounded-2xl transition-all duration-300 hover:scale-105 ${
+      className={`group p-8 rounded-xl transition-all duration-300 card-hover ${
         highlighted
-          ? 'bg-gradient-to-br from-[#7B2FFF]/30 to-[#00F0FF]/10 border-2 border-[#7B2FFF] shadow-xl'
-          : 'bg-[#1a1f3a]/50 border border-[#7B2FFF]/20 hover:border-[#7B2FFF]/50 backdrop-blur-sm'
+          ? 'bg-[#d4af37] text-gray-900 shadow-lg'
+          : 'bg-gray-50 text-gray-900 border border-gray-100 hover:bg-white'
       }`}
     >
-      {/* Neon Glow Background */}
-      {highlighted && (
-        <div className="absolute inset-0 bg-gradient-to-br from-[#7B2FFF]/10 to-transparent rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+      {/* Icon */}
+      {icon && (
+        <div className="text-4xl mb-6 group-hover:scale-110 transition-transform duration-300">
+          {icon}
+        </div>
       )}
 
-      <div className="relative z-10">
-        {/* Icon */}
-        {icon && (
-          <div className={`text-5xl mb-6 transition-transform duration-300 group-hover:scale-125 ${
-            highlighted ? 'neon-glow-purple' : 'group-hover:neon-glow-cyan'
-          }`}>
-            {icon}
-          </div>
-        )}
+      {/* Title */}
+      <h3 className={`text-xl font-serif font-bold mb-4 ${
+        highlighted ? 'text-gray-900' : 'text-gray-900'
+      }`}>
+        {title}
+      </h3>
 
-        {/* Title */}
-        <h3 className={`text-2xl font-bold mb-4 ${
-          highlighted ? 'text-white' : 'text-white group-hover:text-[#00F0FF] transition-colors'
-        }`}>
-          {title}
-        </h3>
+      {/* Description */}
+      <p className={`leading-relaxed text-base ${
+        highlighted ? 'text-gray-800' : 'text-gray-600'
+      }`}>
+        {description}
+      </p>
 
-        {/* Description */}
-        <p className={`leading-relaxed text-base ${
-          highlighted ? 'text-gray-200' : 'text-gray-400 group-hover:text-gray-300 transition-colors'
-        }`}>
-          {description}
-        </p>
-
-        {/* Bottom Accent Line */}
-        <div className={`mt-6 h-1 w-0 ${
-          highlighted ? 'bg-[#00F0FF]' : 'bg-[#7B2FFF]'
-        } group-hover:w-12 transition-all duration-300`}></div>
-      </div>
-
-      {/* Corner Accent */}
-      {highlighted && (
-        <div className="absolute top-0 right-0 w-32 h-32 bg-[#7B2FFF]/5 rounded-full blur-3xl group-hover:bg-[#7B2FFF]/10 transition-all duration-300"></div>
+      {/* Bottom Accent */}
+      {!highlighted && (
+        <div className="mt-6 h-0.5 w-0 bg-[#d4af37] group-hover:w-12 transition-all duration-300"></div>
       )}
     </div>
   );

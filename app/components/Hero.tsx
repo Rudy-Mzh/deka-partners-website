@@ -12,53 +12,47 @@ interface HeroProps {
 
 export default function Hero({ title, subtitle, cta, image }: HeroProps) {
   return (
-    <section className="relative w-full min-h-screen flex items-center justify-center overflow-hidden pt-20">
-      {/* Animated Background Gradients */}
-      <div className="absolute inset-0 z-0">
-        <div className="absolute top-0 left-1/4 w-96 h-96 bg-[#7B2FFF]/20 rounded-full blur-3xl animate-pulse"></div>
-        <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-[#00F0FF]/10 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '1s' }}></div>
-        <div className="absolute inset-0 bg-gradient-to-b from-[#0A0E27] via-[#1a1f3a] to-[#0A0E27]"></div>
-      </div>
+    <section className="relative w-full h-screen flex items-center justify-center overflow-hidden pt-20">
+      {/* Subtle Background */}
+      <div className="absolute inset-0 bg-gradient-to-b from-gray-50 via-white to-gray-50"></div>
 
-      {/* Grid Pattern Overlay */}
-      <div className="absolute inset-0 opacity-10 z-0" style={{
-        backgroundImage: 'linear-gradient(rgba(123, 47, 255, 0.5) 1px, transparent 1px), linear-gradient(90deg, rgba(123, 47, 255, 0.5) 1px, transparent 1px)',
-        backgroundSize: '50px 50px',
-      }}></div>
+      {/* Decorative Elements */}
+      <div className="absolute top-20 right-0 w-96 h-96 bg-[#d4af37]/5 rounded-full blur-3xl"></div>
+      <div className="absolute bottom-20 left-0 w-96 h-96 bg-[#d4af37]/5 rounded-full blur-3xl"></div>
 
       {/* Content */}
-      <div className="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center animate-fade-in py-20">
-        {/* Logo Accent */}
-        <div className="mb-12 inline-flex">
-          <div className="px-6 py-3 bg-gradient-to-r from-[#7B2FFF]/20 to-[#00F0FF]/20 border border-[#7B2FFF]/50 rounded-full backdrop-blur-sm">
-            <span className="text-sm font-bold neon-glow-cyan">DEKA Partners</span>
+      <div className="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center animate-fade-in">
+        {/* Accent */}
+        <div className="mb-8 inline-block">
+          <div className="px-4 py-2 border border-[#d4af37] text-[#d4af37] text-sm font-semibold rounded-full">
+            Investissement Immobilier & Conseil
           </div>
         </div>
 
-        {/* Title - Epic Gradient */}
-        <h1 className="text-6xl md:text-7xl lg:text-8xl font-display font-black mb-8 leading-tight animate-slide-up">
+        {/* Title */}
+        <h1 className="text-6xl md:text-7xl lg:text-8xl font-serif font-bold mb-8 leading-tight text-gray-900">
           {title}
         </h1>
 
         {/* Subtitle */}
         {subtitle && (
-          <p className="text-xl md:text-2xl text-gray-300 mb-12 max-w-4xl mx-auto leading-relaxed animate-slide-up" style={{ animationDelay: '0.2s' }}>
+          <p className="text-xl md:text-2xl text-gray-600 mb-12 max-w-3xl mx-auto leading-relaxed">
             {subtitle}
           </p>
         )}
 
         {/* CTA Buttons */}
         {cta && (
-          <div className="flex flex-col sm:flex-row gap-6 justify-center animate-slide-up" style={{ animationDelay: '0.4s' }}>
+          <div className="flex flex-col sm:flex-row gap-4 justify-center animate-slide-up" style={{ animationDelay: '0.2s' }}>
             <Link
               href={cta.href}
-              className="px-10 py-4 bg-[#7B2FFF] text-white font-bold text-lg rounded-lg btn-neon-purple btn-pulse hover:scale-105 transition-transform"
+              className="px-8 py-4 bg-[#d4af37] text-gray-900 font-semibold text-lg rounded-lg hover:bg-gray-900 hover:text-[#d4af37] transition shadow-lg hover:shadow-xl"
             >
               {cta.text}
             </Link>
             <Link
               href="/about"
-              className="px-10 py-4 border-2 border-[#00F0FF] text-[#00F0FF] font-bold text-lg rounded-lg hover:bg-[#00F0FF]/10 transition-all"
+              className="px-8 py-4 border-2 border-gray-900 text-gray-900 font-semibold text-lg rounded-lg hover:bg-gray-900 hover:text-white transition"
             >
               En savoir plus
             </Link>
@@ -66,9 +60,9 @@ export default function Hero({ title, subtitle, cta, image }: HeroProps) {
         )}
 
         {/* Scroll Indicator */}
-        <div className="absolute bottom-12 left-1/2 transform -translate-x-1/2 animate-bounce" style={{ animationDuration: '2.5s' }}>
+        <div className="absolute bottom-12 left-1/2 transform -translate-x-1/2 animate-bounce">
           <svg
-            className="w-8 h-8 text-[#00F0FF] animate-glow"
+            className="w-6 h-6 text-gray-400"
             fill="none"
             stroke="currentColor"
             viewBox="0 0 24 24"

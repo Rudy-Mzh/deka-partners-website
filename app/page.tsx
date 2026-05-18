@@ -39,7 +39,7 @@ export default function Home() {
       <Section
         title="Nos Services"
         subtitle="Une expertise complète pour tous vos projets immobiliers"
-        background="gradient"
+        background="white"
       >
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           {services.map((service, index) => (
@@ -58,7 +58,7 @@ export default function Home() {
       <Section
         title="Prêt à collaborer ?"
         subtitle="Parlons de votre projet immobilier. Notre équipe est à votre écoute pour créer une stratégie adaptée à vos objectifs."
-        background="dark"
+        background="gray"
         centered
       >
         <div className="flex flex-col sm:flex-row gap-4 justify-center mt-12">

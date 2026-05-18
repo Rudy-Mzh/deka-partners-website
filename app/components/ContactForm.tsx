@@ -39,14 +39,14 @@ export default function ContactForm() {
     <form onSubmit={handleSubmit} className="max-w-2xl mx-auto space-y-6 animate-slide-up">
       {/* Success Message */}
       {submitted && (
-        <div className="p-4 bg-[#00F0FF]/20 border border-[#00F0FF] text-[#00F0FF] rounded-lg animate-fade-in">
+        <div className="p-4 bg-green-50 border border-green-200 text-green-700 rounded-lg animate-fade-in">
           ✓ Merci ! Nous vous répondrons au plus vite.
         </div>
       )}
 
       {/* Name */}
       <div>
-        <label htmlFor="name" className="block text-sm font-bold text-white mb-3">
+        <label htmlFor="name" className="block text-sm font-semibold text-gray-900 mb-2">
           Nom Complet
         </label>
         <input
@@ -56,14 +56,14 @@ export default function ContactForm() {
           value={formData.name}
           onChange={handleChange}
           required
-          className="w-full px-5 py-3 bg-[#1a1f3a]/50 border border-[#7B2FFF]/30 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:border-[#7B2FFF] focus:ring-2 focus:ring-[#7B2FFF]/50 transition"
+          className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-[#d4af37] focus:ring-2 focus:ring-[#d4af37]/20 transition"
           placeholder="Votre nom"
         />
       </div>
 
       {/* Email */}
       <div>
-        <label htmlFor="email" className="block text-sm font-bold text-white mb-3">
+        <label htmlFor="email" className="block text-sm font-semibold text-gray-900 mb-2">
           Email
         </label>
         <input
@@ -73,14 +73,14 @@ export default function ContactForm() {
           value={formData.email}
           onChange={handleChange}
           required
-          className="w-full px-5 py-3 bg-[#1a1f3a]/50 border border-[#7B2FFF]/30 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:border-[#7B2FFF] focus:ring-2 focus:ring-[#7B2FFF]/50 transition"
+          className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-[#d4af37] focus:ring-2 focus:ring-[#d4af37]/20 transition"
           placeholder="votre.email@example.com"
         />
       </div>
 
       {/* Phone */}
       <div>
-        <label htmlFor="phone" className="block text-sm font-bold text-white mb-3">
+        <label htmlFor="phone" className="block text-sm font-semibold text-gray-900 mb-2">
           Téléphone
         </label>
         <input
@@ -89,14 +89,14 @@ export default function ContactForm() {
           name="phone"
           value={formData.phone}
           onChange={handleChange}
-          className="w-full px-5 py-3 bg-[#1a1f3a]/50 border border-[#7B2FFF]/30 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:border-[#7B2FFF] focus:ring-2 focus:ring-[#7B2FFF]/50 transition"
+          className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-[#d4af37] focus:ring-2 focus:ring-[#d4af37]/20 transition"
           placeholder="+33 6 12 34 56 78"
         />
       </div>
 
       {/* Subject */}
       <div>
-        <label htmlFor="subject" className="block text-sm font-bold text-white mb-3">
+        <label htmlFor="subject" className="block text-sm font-semibold text-gray-900 mb-2">
           Sujet
         </label>
         <select
@@ -105,20 +105,20 @@ export default function ContactForm() {
           value={formData.subject}
           onChange={handleChange}
           required
-          className="w-full px-5 py-3 bg-[#1a1f3a]/50 border border-[#7B2FFF]/30 rounded-lg text-white focus:outline-none focus:border-[#7B2FFF] focus:ring-2 focus:ring-[#7B2FFF]/50 transition"
+          className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-[#d4af37] focus:ring-2 focus:ring-[#d4af37]/20 transition"
         >
-          <option value="" className="bg-[#0A0E27]">Sélectionnez un sujet</option>
-          <option value="acquisition" className="bg-[#0A0E27]">Acquisition immobilière</option>
-          <option value="valorisation" className="bg-[#0A0E27]">Valorisation immobilière</option>
-          <option value="cession" className="bg-[#0A0E27]">Cession immobilière</option>
-          <option value="conseil" className="bg-[#0A0E27]">Conseil patrimonial</option>
-          <option value="autre" className="bg-[#0A0E27]">Autre</option>
+          <option value="">Sélectionnez un sujet</option>
+          <option value="acquisition">Acquisition immobilière</option>
+          <option value="valorisation">Valorisation immobilière</option>
+          <option value="cession">Cession immobilière</option>
+          <option value="conseil">Conseil patrimonial</option>
+          <option value="autre">Autre</option>
         </select>
       </div>
 
       {/* Message */}
       <div>
-        <label htmlFor="message" className="block text-sm font-bold text-white mb-3">
+        <label htmlFor="message" className="block text-sm font-semibold text-gray-900 mb-2">
           Message
         </label>
         <textarea
@@ -128,7 +128,7 @@ export default function ContactForm() {
           onChange={handleChange}
           required
           rows={6}
-          className="w-full px-5 py-3 bg-[#1a1f3a]/50 border border-[#7B2FFF]/30 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:border-[#7B2FFF] focus:ring-2 focus:ring-[#7B2FFF]/50 transition resize-none"
+          className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-[#d4af37] focus:ring-2 focus:ring-[#d4af37]/20 transition resize-none"
           placeholder="Décrivez votre projet ou vos questions..."
         />
       </div>
@@ -137,32 +137,32 @@ export default function ContactForm() {
       <button
         type="submit"
         disabled={loading}
-        className="w-full px-8 py-4 bg-[#7B2FFF] text-white font-bold text-lg btn-neon-purple hover:scale-105 transition-transform disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
+        className="w-full px-8 py-4 bg-[#d4af37] text-gray-900 font-semibold text-lg rounded-lg hover:bg-gray-900 hover:text-[#d4af37] transition disabled:opacity-50 disabled:cursor-not-allowed shadow-md hover:shadow-lg"
       >
         {loading ? 'Envoi en cours...' : 'Envoyer le message'}
       </button>
 
       {/* Contact Info */}
-      <div className="pt-8 border-t border-[#7B2FFF]/20">
-        <p className="text-sm text-gray-400 text-center mb-6">
+      <div className="pt-8 border-t border-gray-200">
+        <p className="text-sm text-gray-600 text-center mb-6">
           Ou contactez-nous directement :
         </p>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <div className="p-4 bg-[#1a1f3a]/30 border border-[#7B2FFF]/20 rounded-lg">
-            <p className="font-bold text-white mb-2">Rudy Mezoughi</p>
-            <a href="tel:+33630135189" className="text-[#00F0FF] hover:text-[#d4af37] transition">
+          <div className="p-4 bg-gray-50 border border-gray-200 rounded-lg">
+            <p className="font-semibold text-gray-900 mb-2">Rudy Mezoughi</p>
+            <a href="tel:+33630135189" className="text-[#d4af37] hover:text-gray-900 transition">
               +33 6 30 13 51 89
             </a>
           </div>
-          <div className="p-4 bg-[#1a1f3a]/30 border border-[#7B2FFF]/20 rounded-lg">
-            <p className="font-bold text-white mb-2">Alexandre Dupuy</p>
-            <a href="tel:+33661415139" className="text-[#00F0FF] hover:text-[#d4af37] transition">
+          <div className="p-4 bg-gray-50 border border-gray-200 rounded-lg">
+            <p className="font-semibold text-gray-900 mb-2">Alexandre Dupuy</p>
+            <a href="tel:+33661415139" className="text-[#d4af37] hover:text-gray-900 transition">
               +33 6 61 41 51 39
             </a>
           </div>
         </div>
         <div className="mt-4 text-center">
-          <a href="mailto:contact@deka-partners.com" className="text-[#00F0FF] hover:text-[#d4af37] transition font-medium">
+          <a href="mailto:contact@deka-partners.com" className="text-[#d4af37] hover:text-gray-900 transition font-medium">
             contact@deka-partners.com
           </a>
         </div>
