@@ -13,7 +13,7 @@ export default function ContactPage() {
       <Section
         title="Nous Écouter"
         subtitle="Remplissez le formulaire ci-dessous et nous vous recontacterons dans les plus brefs délais"
-        background="white"
+        background="dark"
       >
         <ContactForm />
       </Section>
@@ -22,7 +22,7 @@ export default function ContactPage() {
       <Section
         title="Coordonnées"
         subtitle="Plusieurs façons de nous joindre"
-        background="gray"
+        background="gradient"
       >
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {/* Email */}
@@ -82,7 +82,7 @@ export default function ContactPage() {
       <Section
         title="Zones Couvertes"
         subtitle="Nous accompagnons les investisseurs sur le Littoral Atlantique"
-        background="white"
+        background="dark"
         centered
       >
         <div className="grid grid-cols-2 md:grid-cols-3 gap-4 max-w-2xl mx-auto">

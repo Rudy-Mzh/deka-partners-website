@@ -13,7 +13,7 @@ export default function AboutPage() {
       <Section
         title="DEKA Partners"
         subtitle="Spécialistes en Investissement Immobilier & Conseil Patrimonial"
-        background="white"
+        background="dark"
         centered
       >
         <p className="text-lg text-gray-600 max-w-3xl mx-auto mb-8 leading-relaxed">
@@ -28,7 +28,7 @@ export default function AboutPage() {
       <Section
         title="L'Équipe"
         subtitle="Des experts passionnés par l'immobilier"
-        background="gray"
+        background="gradient"
       >
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
           {/* Rudy */}
@@ -93,7 +93,7 @@ export default function AboutPage() {
       <Section
         title="Nos Valeurs"
         subtitle="Ce qui nous guide au quotidien"
-        background="white"
+        background="dark"
       >
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {[
