@@ -1,0 +1,730 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Le Jaurès — Dossier Investisseur — DEKA Immobilier</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Josefin+Sans:wght@200;300;400;600&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --noir: #111214;
+  --anthracite: #1C1F24;
+  --ardoise: #2A2F38;
+  --or: #C6993A;
+  --or-clair: #DDB96A;
+  --or-pale: #F0DFA8;
+  --creme: #F7F3EC;
+  --creme-fonce: #EDE7DA;
+  --blanc: #FDFCFA;
+  --texte: #1A1A1A;
+  --texte-doux: #5C5C5C;
+  --texte-fin: #8A8A8A;
+  --vert: #2A7A4A;
+}
+html { scroll-behavior: smooth; }
+body { font-family: 'Cormorant Garamond', Georgia, serif; background: var(--creme); color: var(--texte); overflow-x: hidden; }
+
+/* REVEAL ANIMATIONS */
+.reveal { opacity: 0; transform: translateY(32px); transition: opacity 0.8s ease, transform 0.8s ease; }
+.reveal.visible { opacity: 1; transform: translateY(0); }
+.reveal-left { opacity: 0; transform: translateX(-40px); transition: opacity 0.8s ease, transform 0.8s ease; }
+.reveal-left.visible { opacity: 1; transform: translateX(0); }
+.reveal-right { opacity: 0; transform: translateX(40px); transition: opacity 0.8s ease, transform 0.8s ease; }
+.reveal-right.visible { opacity: 1; transform: translateX(0); }
+.reveal-scale { opacity: 0; transform: scale(0.92); transition: opacity 0.7s ease, transform 0.7s ease; }
+.reveal-scale.visible { opacity: 1; transform: scale(1); }
+.delay-1 { transition-delay: 0.1s; }
+.delay-2 { transition-delay: 0.2s; }
+.delay-3 { transition-delay: 0.3s; }
+.delay-4 { transition-delay: 0.4s; }
+.delay-5 { transition-delay: 0.5s; }
+.delay-6 { transition-delay: 0.6s; }
+
+/* COUNTER ANIMATION */
+.count-up { display: inline-block; }
+
+/* HERO */
+.hero { min-height: 100vh; background: var(--noir); position: relative; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; padding: 100px 40px 80px; overflow: hidden; }
+.hero-grid { position: absolute; inset: 0; background-image: linear-gradient(0deg, transparent 49px, rgba(198,153,58,0.05) 49px, rgba(198,153,58,0.05) 50px), linear-gradient(90deg, transparent 49px, rgba(198,153,58,0.03) 49px, rgba(198,153,58,0.03) 50px); background-size: 50px 50px; }
+.hero-glow { position: absolute; bottom: -120px; left: 50%; transform: translateX(-50%); width: 800px; height: 500px; background: radial-gradient(ellipse, rgba(198,153,58,0.15) 0%, transparent 65%); pointer-events: none; animation: glowPulse 4s ease-in-out infinite; }
+@keyframes glowPulse { 0%,100%{opacity:0.6;} 50%{opacity:1;} }
+.hero-tag { font-family:'Josefin Sans',sans-serif; font-weight:300; font-size:10px; letter-spacing:5px; text-transform:uppercase; color:var(--or); margin-bottom:32px; position:relative; display:flex; align-items:center; gap:16px; opacity:0; animation: fadeInDown 1s ease 0.3s forwards; }
+.hero-tag::before,.hero-tag::after { content:''; display:block; width:40px; height:1px; background:var(--or); opacity:0.5; }
+@keyframes fadeInDown { from{opacity:0;transform:translateY(-20px)} to{opacity:1;transform:translateY(0)} }
+.hero-city { font-family:'Josefin Sans',sans-serif; font-weight:200; font-size:12px; letter-spacing:8px; text-transform:uppercase; color:rgba(255,255,255,0.3); margin-bottom:16px; opacity:0; animation: fadeInDown 1s ease 0.5s forwards; }
+.hero-title { font-family:'Cormorant Garamond',serif; font-weight:300; font-size:clamp(56px,9vw,110px); line-height:0.9; color:var(--blanc); margin-bottom:8px; opacity:0; animation: fadeInUp 1s ease 0.6s forwards; }
+@keyframes fadeInUp { from{opacity:0;transform:translateY(30px)} to{opacity:1;transform:translateY(0)} }
+.hero-title em { font-style:italic; color:var(--or-clair); }
+.hero-subtitle { font-family:'Josefin Sans',sans-serif; font-weight:200; font-size:12px; letter-spacing:4px; text-transform:uppercase; color:rgba(255,255,255,0.35); margin-bottom:72px; opacity:0; animation: fadeInUp 1s ease 0.8s forwards; }
+.hero-stats { display:flex; gap:0; border:1px solid rgba(198,153,58,0.2); opacity:0; animation: fadeInUp 1s ease 1s forwards; }
+.hero-stat { padding:32px 52px; border-right:1px solid rgba(198,153,58,0.15); text-align:center; }
+.hero-stat:last-child { border-right:none; }
+.hero-stat-value { font-family:'Cormorant Garamond',serif; font-weight:300; font-size:clamp(30px,3.8vw,46px); color:var(--or-clair); line-height:1; margin-bottom:8px; }
+.hero-stat-label { font-family:'Josefin Sans',sans-serif; font-weight:300; font-size:9px; letter-spacing:3px; text-transform:uppercase; color:rgba(255,255,255,0.3); }
+.hero-scroll { position:absolute; bottom:32px; left:50%; transform:translateX(-50%); display:flex; flex-direction:column; align-items:center; gap:8px; color:rgba(255,255,255,0.2); font-family:'Josefin Sans',sans-serif; font-size:9px; letter-spacing:3px; text-transform:uppercase; animation: fadeIn 2s ease 2s forwards; opacity:0; }
+@keyframes fadeIn { to{opacity:1;} }
+.hero-scroll-line { width:1px; height:48px; background:linear-gradient(to bottom,rgba(198,153,58,0.5),transparent); animation:scrollDown 2s ease-in-out infinite; }
+@keyframes scrollDown { 0%,100%{opacity:0.3;transform:scaleY(1)} 50%{opacity:1;transform:scaleY(1.1)} }
+
+/* SECTION BASE */
+.section { padding:100px 40px; max-width:1200px; margin:0 auto; }
+.eyebrow { font-family:'Josefin Sans',sans-serif; font-weight:300; font-size:9px; letter-spacing:5px; text-transform:uppercase; color:var(--or); margin-bottom:20px; display:flex; align-items:center; gap:16px; }
+.eyebrow::after { content:''; display:block; width:40px; height:1px; background:var(--or); opacity:0.5; }
+.section-title { font-family:'Cormorant Garamond',serif; font-weight:300; font-size:clamp(38px,5vw,64px); line-height:1.02; color:var(--texte); margin-bottom:20px; }
+.section-title em { font-style:italic; color:var(--or); }
+.section-intro { font-family:'Cormorant Garamond',serif; font-size:clamp(17px,2vw,21px); line-height:1.75; color:var(--texte-doux); max-width:680px; font-weight:300; }
+
+/* BIEN */
+.bien-grid { display:grid; grid-template-columns:1fr 1fr; gap:0; margin-top:60px; }
+.bien-photo { background:var(--ardoise); min-height:500px; position:relative; overflow:hidden; }
+.bien-photo-placeholder { position:absolute; inset:0; background:linear-gradient(135deg,#1C2A35 0%,#0D1920 100%); display:flex; flex-direction:column; align-items:center; justify-content:center; gap:16px; }
+.bien-photo-placeholder svg { opacity:0.12; }
+.bien-photo-hint { font-family:'Josefin Sans',sans-serif; font-size:9px; letter-spacing:3px; text-transform:uppercase; color:rgba(255,255,255,0.2); }
+.bien-photo-overlay { position:absolute; bottom:0; left:0; right:0; background:linear-gradient(to top,rgba(0,0,0,0.75) 0%,transparent 100%); padding:40px; }
+.bien-photo-adresse { font-family:'Josefin Sans',sans-serif; font-weight:300; font-size:10px; letter-spacing:4px; text-transform:uppercase; color:var(--or-clair); margin-bottom:8px; }
+.bien-photo-nom { font-family:'Cormorant Garamond',serif; font-weight:300; font-size:30px; color:white; }
+.bien-infos { background:var(--blanc); padding:56px 48px; display:flex; flex-direction:column; justify-content:center; gap:0; }
+.bien-info-row { padding:20px 0; border-bottom:1px solid var(--creme-fonce); }
+.bien-info-row:last-child { border-bottom:none; }
+.bien-info-label { font-family:'Josefin Sans',sans-serif; font-weight:300; font-size:9px; letter-spacing:4px; text-transform:uppercase; color:var(--texte-fin); margin-bottom:6px; }
+.bien-info-value { font-family:'Cormorant Garamond',serif; font-size:21px; font-weight:400; color:var(--texte); line-height:1.35; }
+.bien-info-value.or { color:var(--or); }
+
+/* MAP SECTION */
+.map-section { background:var(--noir); padding:100px 40px; }
+.map-inner { max-width:1200px; margin:0 auto; }
+.map-container { margin-top:60px; display:grid; grid-template-columns:1fr 360px; gap:2px; background:rgba(198,153,58,0.1); }
+.map-frame { min-height:480px; position:relative; overflow:hidden; }
+.map-frame iframe { width:100%; height:100%; border:none; filter:grayscale(30%) contrast(1.05); }
+.map-pois { background:var(--anthracite); padding:40px 36px; display:flex; flex-direction:column; gap:0; }
+.map-poi { padding:20px 0; border-bottom:1px solid rgba(255,255,255,0.06); display:flex; flex-direction:column; gap:6px; }
+.map-poi:last-child { border-bottom:none; }
+.map-poi-dist { font-family:'Josefin Sans',sans-serif; font-size:9px; letter-spacing:3px; text-transform:uppercase; color:var(--or); }
+.map-poi-name { font-family:'Cormorant Garamond',serif; font-size:20px; color:white; }
+.map-poi-desc { font-family:'Cormorant Garamond',serif; font-size:15px; color:rgba(255,255,255,0.4); line-height:1.5; }
+
+/* LOTS */
+.lots-section { background:var(--noir); }
+.lots-inner { max-width:1200px; margin:0 auto; padding:100px 40px; }
+.lots-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:1px; background:rgba(198,153,58,0.12); margin-top:60px; }
+.lot-card { background:var(--anthracite); padding:48px 36px; position:relative; transition:background 0.3s; cursor:default; }
+.lot-card:hover { background:#22272F; }
+.lot-card:hover .lot-prix { color:var(--or-pale); }
+.lot-number { font-family:'Cormorant Garamond',serif; font-size:80px; font-weight:300; color:rgba(198,153,58,0.08); line-height:1; margin-bottom:20px; font-style:italic; }
+.lot-type { font-family:'Josefin Sans',sans-serif; font-weight:300; font-size:9px; letter-spacing:4px; text-transform:uppercase; color:var(--or); margin-bottom:12px; }
+.lot-nom { font-family:'Cormorant Garamond',serif; font-size:28px; font-weight:300; color:white; margin-bottom:24px; line-height:1.2; }
+.lot-prix { font-family:'Cormorant Garamond',serif; font-size:38px; font-weight:300; color:var(--or-clair); margin-bottom:4px; transition:color 0.3s; }
+.lot-prix-label { font-family:'Josefin Sans',sans-serif; font-size:9px; letter-spacing:3px; text-transform:uppercase; color:rgba(255,255,255,0.2); margin-bottom:28px; }
+.lot-desc { font-family:'Cormorant Garamond',serif; font-size:16px; color:rgba(255,255,255,0.4); line-height:1.7; border-top:1px solid rgba(198,153,58,0.12); padding-top:24px; }
+
+/* CSP */
+.csp-section { background:var(--blanc); }
+.csp-inner { max-width:1200px; margin:0 auto; padding:100px 40px; }
+.csp-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:2px; background:var(--creme-fonce); margin-top:60px; }
+.csp-card { background:var(--blanc); padding:36px 28px; text-align:center; transition:background 0.3s; }
+.csp-card:hover { background:var(--creme); }
+.csp-value { font-family:'Cormorant Garamond',serif; font-size:48px; font-weight:300; color:var(--or); line-height:1; margin-bottom:8px; }
+.csp-label { font-family:'Josefin Sans',sans-serif; font-size:9px; letter-spacing:3px; text-transform:uppercase; color:var(--texte-fin); margin-bottom:8px; }
+.csp-note { font-family:'Cormorant Garamond',serif; font-size:15px; color:var(--texte-doux); line-height:1.5; }
+.marche-grid { display:grid; grid-template-columns:1fr 1fr; gap:2px; background:var(--creme-fonce); margin-top:48px; }
+.marche-card { background:var(--blanc); padding:40px 36px; }
+.marche-title { font-family:'Josefin Sans',sans-serif; font-size:9px; letter-spacing:4px; text-transform:uppercase; color:var(--texte-fin); margin-bottom:24px; }
+.marche-row { display:flex; justify-content:space-between; align-items:center; padding:10px 0; border-bottom:1px solid var(--creme-fonce); }
+.marche-row:last-child { border-bottom:none; }
+.marche-row-label { font-family:'Cormorant Garamond',serif; font-size:17px; color:var(--texte-doux); }
+.marche-row-value { font-family:'Cormorant Garamond',serif; font-size:17px; color:var(--texte); font-weight:600; }
+.marche-row-value.or { color:var(--or); font-size:19px; }
+.source-tag { font-family:'Josefin Sans',sans-serif; font-size:8px; letter-spacing:2px; text-transform:uppercase; color:var(--texte-fin); margin-top:16px; opacity:0.6; }
+
+/* FINANCIER */
+.financier-section { background:var(--creme); }
+.financier-inner { max-width:1200px; margin:0 auto; padding:100px 40px; }
+.compte-op { margin-top:60px; display:grid; grid-template-columns:1fr 1fr; gap:2px; background:var(--creme-fonce); }
+.compte-col { background:var(--blanc); padding:48px 40px; }
+.compte-col-title { font-family:'Josefin Sans',sans-serif; font-weight:300; font-size:9px; letter-spacing:5px; text-transform:uppercase; color:var(--texte-fin); margin-bottom:36px; padding-bottom:16px; border-bottom:1px solid var(--creme-fonce); }
+.ligne-compte { display:flex; justify-content:space-between; align-items:baseline; padding:13px 0; border-bottom:1px solid var(--creme-fonce); }
+.ligne-compte:last-child { border-bottom:none; }
+.ligne-compte.total { border-top:2px solid var(--or); border-bottom:none; margin-top:16px; padding-top:20px; }
+.ligne-label { font-family:'Cormorant Garamond',serif; font-size:17px; color:var(--texte-doux); }
+.ligne-label.bold { color:var(--texte); font-weight:600; }
+.ligne-value { font-family:'Cormorant Garamond',serif; font-size:17px; color:var(--texte); text-align:right; }
+.ligne-value.or { color:var(--or); font-size:22px; font-weight:600; }
+.ligne-value.vert { color:var(--vert); font-size:22px; font-weight:600; }
+
+/* MARGE ANIMATED BAR */
+.marge-section { background:var(--anthracite); padding:100px 40px; }
+.marge-inner { max-width:900px; margin:0 auto; text-align:center; }
+.marge-title-text { font-family:'Cormorant Garamond',serif; font-size:clamp(36px,5vw,56px); font-weight:300; color:white; margin-bottom:8px; }
+.marge-title-text em { color:var(--or-clair); font-style:italic; }
+.marge-subtitle { font-family:'Josefin Sans',sans-serif; font-size:9px; letter-spacing:4px; text-transform:uppercase; color:rgba(255,255,255,0.3); margin-bottom:64px; }
+.marge-bar-wrap { margin-bottom:8px; }
+.marge-bar-bg { height:72px; background:rgba(255,255,255,0.04); position:relative; overflow:hidden; }
+.marge-bar-fill { height:100%; width:0; background:linear-gradient(90deg, var(--or) 0%, var(--or-clair) 100%); transition:width 1.8s cubic-bezier(0.22, 1, 0.36, 1); display:flex; align-items:center; justify-content:flex-end; padding-right:16px; min-width:0; white-space:nowrap; overflow:hidden; }
+.marge-bar-fill.animated { width:59.3%; }
+.marge-bar-fill-label { font-family:'Josefin Sans',sans-serif; font-size:9px; letter-spacing:2px; text-transform:uppercase; color:var(--noir); font-weight:600; opacity:0; transition:opacity 0.5s ease 1.5s; }
+.marge-bar-fill.animated .marge-bar-fill-label { opacity:1; }
+.marge-bar-labels { display:flex; justify-content:space-between; margin-top:8px; }
+.marge-bar-l { font-family:'Josefin Sans',sans-serif; font-size:9px; letter-spacing:2px; text-transform:uppercase; color:rgba(255,255,255,0.25); }
+.marge-flex-note { margin-top:40px; padding:32px 40px; border:1px solid rgba(198,153,58,0.2); text-align:left; }
+.marge-flex-title { font-family:'Josefin Sans',sans-serif; font-size:9px; letter-spacing:4px; text-transform:uppercase; color:var(--or); margin-bottom:12px; }
+.marge-flex-text { font-family:'Cormorant Garamond',serif; font-size:19px; color:rgba(255,255,255,0.6); line-height:1.7; }
+.marge-flex-text strong { color:var(--or-clair); font-weight:400; }
+.marge-chiffres { display:flex; justify-content:center; gap:64px; margin-top:56px; }
+.marge-chiffre { text-align:center; }
+.marge-chiffre-value { font-family:'Cormorant Garamond',serif; font-size:48px; font-weight:300; color:var(--or-clair); line-height:1; }
+.marge-chiffre-label { font-family:'Josefin Sans',sans-serif; font-size:9px; letter-spacing:3px; text-transform:uppercase; color:rgba(255,255,255,0.3); margin-top:8px; }
+
+/* INVESTISSEUR */
+.invest-section { background:var(--blanc); }
+.invest-inner { max-width:1200px; margin:0 auto; padding:100px 40px; }
+.invest-hero { background:var(--noir); padding:80px; margin-top:60px; position:relative; overflow:hidden; }
+.invest-hero::before { content:''; position:absolute; top:-80px; right:-80px; width:360px; height:360px; border-radius:50%; background:radial-gradient(circle,rgba(198,153,58,0.1) 0%,transparent 70%); animation:glowPulse 5s ease-in-out infinite; }
+.invest-montant { font-family:'Cormorant Garamond',serif; font-size:clamp(48px,7vw,90px); font-weight:300; color:var(--or-clair); line-height:1; margin-bottom:8px; }
+.invest-montant-label { font-family:'Josefin Sans',sans-serif; font-size:10px; letter-spacing:4px; text-transform:uppercase; color:rgba(255,255,255,0.3); margin-bottom:48px; }
+.invest-terms { display:grid; grid-template-columns:repeat(3,1fr); gap:32px; padding-top:40px; border-top:1px solid rgba(198,153,58,0.2); }
+.invest-term-label { font-family:'Josefin Sans',sans-serif; font-size:9px; letter-spacing:3px; text-transform:uppercase; color:rgba(255,255,255,0.25); margin-bottom:8px; }
+.invest-term-value { font-family:'Cormorant Garamond',serif; font-size:28px; font-weight:300; color:white; line-height:1.2; }
+.invest-term-value em { color:var(--or-clair); font-style:normal; }
+.garanties-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:2px; background:var(--creme-fonce); margin-top:2px; }
+.garantie-card { background:var(--blanc); padding:40px 32px; transition:background 0.3s; }
+.garantie-card:hover { background:var(--creme); }
+.garantie-label { font-family:'Josefin Sans',sans-serif; font-size:9px; letter-spacing:4px; text-transform:uppercase; color:var(--texte-fin); margin-bottom:16px; }
+.garantie-value { font-family:'Cormorant Garamond',serif; font-size:21px; color:var(--texte); line-height:1.5; }
+.garantie-value span { display:block; font-size:16px; color:var(--texte-fin); margin-top:4px; }
+
+/* OPÉRATIONS DEKA */
+.ops-section { background:var(--creme); }
+.ops-inner { max-width:1200px; margin:0 auto; padding:100px 40px; }
+.ops-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:2px; background:var(--creme-fonce); margin-top:60px; }
+.op-card { background:var(--blanc); padding:44px 36px; position:relative; transition:background 0.3s; }
+.op-card:hover { background:var(--creme); }
+.op-card.active { border-top:3px solid var(--or); }
+.op-card.reflex { border-top:3px solid rgba(198,153,58,0.3); }
+.op-badge { font-family:'Josefin Sans',sans-serif; font-size:8px; letter-spacing:3px; text-transform:uppercase; padding:4px 10px; display:inline-block; margin-bottom:20px; }
+.op-badge.or-bg { background:var(--or); color:var(--noir); }
+.op-badge.grey-bg { background:var(--creme-fonce); color:var(--texte-fin); }
+.op-name { font-family:'Cormorant Garamond',serif; font-size:28px; font-weight:300; color:var(--texte); margin-bottom:6px; }
+.op-loc { font-family:'Josefin Sans',sans-serif; font-size:9px; letter-spacing:3px; text-transform:uppercase; color:var(--texte-fin); margin-bottom:24px; }
+.op-kpi { padding:12px 0; border-bottom:1px solid var(--creme-fonce); display:flex; justify-content:space-between; align-items:baseline; }
+.op-kpi:last-of-type { border-bottom:none; }
+.op-kpi-l { font-family:'Cormorant Garamond',serif; font-size:16px; color:var(--texte-doux); }
+.op-kpi-v { font-family:'Cormorant Garamond',serif; font-size:18px; color:var(--texte); font-weight:600; }
+.op-kpi-v.or { color:var(--or); }
+.op-note { margin-top:20px; font-family:'Cormorant Garamond',serif; font-size:14px; color:var(--texte-fin); line-height:1.6; font-style:italic; padding-top:16px; border-top:1px solid var(--creme-fonce); }
+
+/* ÉQUIPE */
+.team-section { background:var(--noir); padding:100px 40px; }
+.team-inner { max-width:900px; margin:0 auto; }
+.team-grid { display:grid; grid-template-columns:1fr 1fr; gap:2px; background:rgba(198,153,58,0.1); margin-top:60px; }
+.team-card { background:var(--anthracite); padding:56px 48px; display:flex; flex-direction:column; align-items:center; text-align:center; gap:24px; transition:background 0.3s; }
+.team-card:hover { background:#22272F; }
+.team-avatar { width:96px; height:96px; border-radius:50%; background:var(--ardoise); border:2px solid rgba(198,153,58,0.3); display:flex; align-items:center; justify-content:center; overflow:hidden; }
+.team-avatar svg { opacity:0.3; }
+.team-avatar-hint { font-family:'Josefin Sans',sans-serif; font-size:7px; letter-spacing:2px; text-transform:uppercase; color:rgba(255,255,255,0.2); margin-top:4px; }
+.team-name { font-family:'Cormorant Garamond',serif; font-size:30px; font-weight:300; color:white; margin-bottom:4px; }
+.team-role { font-family:'Josefin Sans',sans-serif; font-size:9px; letter-spacing:4px; text-transform:uppercase; color:var(--or); }
+.team-contact { margin-top:8px; display:flex; flex-direction:column; gap:6px; }
+.team-contact a { font-family:'Josefin Sans',sans-serif; font-size:10px; letter-spacing:2px; color:rgba(255,255,255,0.4); text-decoration:none; transition:color 0.3s; }
+.team-contact a:hover { color:var(--or-clair); }
+
+/* FOOTER */
+.deka-footer { background:var(--noir); padding:80px 40px; text-align:center; border-top:1px solid rgba(198,153,58,0.1); }
+.deka-footer-logo { font-family:'Cormorant Garamond',serif; font-size:52px; font-weight:300; color:white; letter-spacing:14px; text-transform:uppercase; margin-bottom:8px; }
+.deka-footer-tagline { font-family:'Josefin Sans',sans-serif; font-weight:200; font-size:10px; letter-spacing:5px; text-transform:uppercase; color:var(--or); margin-bottom:40px; }
+.deka-footer-legal { font-family:'Josefin Sans',sans-serif; font-size:8px; letter-spacing:2px; text-transform:uppercase; color:rgba(255,255,255,0.12); line-height:2.2; margin-top:48px; padding-top:32px; border-top:1px solid rgba(255,255,255,0.04); }
+
+@media (max-width:900px) {
+  .hero-stats,.bien-grid,.lots-grid,.csp-grid,.compte-op,.invest-terms,.garanties-grid,.ops-grid,.team-grid,.marche-grid,.map-container { grid-template-columns:1fr; }
+  .hero-stat { border-right:none; border-bottom:1px solid rgba(198,153,58,0.15); }
+  .hero-stat:last-child { border-bottom:none; }
+  .invest-hero { padding:48px 28px; }
+  .marge-chiffres { flex-direction:column; gap:32px; }
+  .section { padding:64px 24px; }
+}
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-grid"></div>
+  <div class="hero-glow"></div>
+  <div class="hero-tag">Dossier investisseur · Confidentiel</div>
+  <p class="hero-city">Aytré · Charente-Maritime · 17440</p>
+  <h1 class="hero-title">Le <em>Jaurès</em></h1>
+  <p class="hero-subtitle">Programme Marchand de Biens · DEKA Immobilier · 2026</p>
+  <div class="hero-stats">
+    <div class="hero-stat">
+      <div class="hero-stat-value" id="h1">820 k€</div>
+      <div class="hero-stat-label">CA sortie projeté</div>
+    </div>
+    <div class="hero-stat">
+      <div class="hero-stat-value" id="h2">305 k€</div>
+      <div class="hero-stat-label">Marge brute</div>
+    </div>
+    <div class="hero-stat">
+      <div class="hero-stat-value" id="h3">+42 %</div>
+      <div class="hero-stat-label">TRI annualisé investisseur</div>
+    </div>
+    <div class="hero-stat">
+      <div class="hero-stat-value" id="h4">6 mois</div>
+      <div class="hero-stat-label">Portage cible</div>
+    </div>
+  </div>
+  <div class="hero-scroll"><div class="hero-scroll-line"></div>Découvrir</div>
+</section>
+
+<!-- LE BIEN -->
+<div style="background:var(--blanc);">
+<div class="section">
+  <div class="eyebrow reveal">Le bien</div>
+  <h2 class="section-title reveal delay-1">4 & 4 bis rue Jean Jaurès<br><em>Aytré</em></h2>
+  <p class="section-intro reveal delay-2">Un ensemble immobilier de caractère en cœur de ville, à 3 minutes de La Rochelle. Trois lots distincts à valoriser par une opération de division–revente sans travaux structurels.</p>
+
+  <div class="bien-grid reveal delay-2" style="margin-top:60px;">
+    <div class="bien-photo">
+      <div class="bien-photo-placeholder">
+        <svg width="80" height="80" viewBox="0 0 80 80" fill="none"><rect x="10" y="30" width="60" height="40" stroke="white" stroke-width="1.5"/><polygon points="40,8 5,30 75,30" stroke="white" stroke-width="1.5" fill="none"/><rect x="30" y="50" width="20" height="20" stroke="white" stroke-width="1.5"/><rect x="55" y="42" width="12" height="12" stroke="white" stroke-width="1"/></svg>
+        <span class="bien-photo-hint">Photo façade à insérer</span>
+      </div>
+      <div class="bien-photo-overlay">
+        <div class="bien-photo-adresse">4 & 4 bis rue Jean Jaurès · 17440 Aytré</div>
+        <div class="bien-photo-nom">Le Jaurès</div>
+      </div>
+    </div>
+    <div class="bien-infos">
+      <div class="bien-info-row">
+        <div class="bien-info-label">Localisation</div>
+        <div class="bien-info-value">Aytré Bourg · cœur de ville<br><span style="font-size:16px;color:var(--texte-fin)">Mitoyenne La Rochelle · gare à 5 min à pied</span></div>
+      </div>
+      <div class="bien-info-row">
+        <div class="bien-info-label">Nature de l'opération</div>
+        <div class="bien-info-value">Division en 3 lots indépendants<br><span style="font-size:16px;color:var(--texte-fin)">Création copropriété · régime MDB · 0 travaux structurels</span></div>
+      </div>
+      <div class="bien-info-row">
+        <div class="bien-info-label">Prix d'acquisition</div>
+        <div class="bien-info-value or">465 000 € FAI</div>
+      </div>
+      <div class="bien-info-row">
+        <div class="bien-info-label">Bien libre à l'acte</div>
+        <div class="bien-info-value">Oui · aucune occupation<br><span style="font-size:16px;color:var(--texte-fin)">Compromis de vente signé · notaire en cours</span></div>
+      </div>
+      <div class="bien-info-row">
+        <div class="bien-info-label">Horizon de sortie</div>
+        <div class="bien-info-value">6 mois · été–automne 2026</div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- MAP -->
+<section class="map-section">
+  <div class="map-inner">
+    <div class="eyebrow reveal" style="color:var(--or);">Localisation stratégique</div>
+    <h2 class="section-title reveal delay-1" style="color:white;">Ultra-centre Aytré,<br><em>à 3 min de La Rochelle</em></h2>
+    <p class="section-intro reveal delay-2" style="color:rgba(255,255,255,0.45);">Le bien est positionné au cœur du bourg d'Aytré, à quelques minutes de La Rochelle, des plages et des grands employeurs de l'agglomération.</p>
+
+    <div class="map-container reveal delay-3">
+      <div class="map-frame">
+        <iframe
+          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d5300.82!2d-1.1494!3d46.1305!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x48015bc0a12a9f4b%3A0x6e7d4a8ef0d31c9!2s4%20Rue%20Jean%20Jaur%C3%A8s%2C%2017440%20Aytré!5e0!3m2!1sfr!2sfr!4v1718200000000"
+          allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="Carte Le Jaurès Aytré">
+        </iframe>
+      </div>
+      <div class="map-pois">
+        <div class="map-poi">
+          <div class="map-poi-dist">≈ 3 min</div>
+          <div class="map-poi-name">La Rochelle</div>
+          <div class="map-poi-desc">Centre-ville, commerces, port, bassin d'emploi principal</div>
+        </div>
+        <div class="map-poi">
+          <div class="map-poi-dist">≈ 5 min à pied</div>
+          <div class="map-poi-name">Gare d'Aytré</div>
+          <div class="map-poi-desc">Connexion TER directe La Rochelle</div>
+        </div>
+        <div class="map-poi">
+          <div class="map-poi-dist">≈ 5 min</div>
+          <div class="map-poi-name">Alstom</div>
+          <div class="map-poi-desc">~2 400 salariés · 1er employeur industriel de l'agglomération</div>
+        </div>
+        <div class="map-poi">
+          <div class="map-poi-dist">≈ 8 min</div>
+          <div class="map-poi-name">Plages de La Rochelle</div>
+          <div class="map-poi-desc">Les Minimes, Plage de Chef de Baie</div>
+        </div>
+        <div class="map-poi">
+          <div class="map-poi-dist">≈ 10 min</div>
+          <div class="map-poi-name">Île de Ré</div>
+          <div class="map-poi-desc">Pont, attractivité touristique & résidentielle premium</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- LOTS -->
+<section class="lots-section">
+  <div class="lots-inner">
+    <div class="eyebrow reveal" style="color:var(--or);">Les trois lots</div>
+    <h2 class="section-title reveal delay-1" style="color:white;">Trois actifs,<br><em>un seul prix d'entrée</em></h2>
+    <p class="section-intro reveal delay-2" style="color:rgba(255,255,255,0.45);">L'ensemble est acquis en une seule transaction. La création de copropriété libère trois actifs autonomes sur un marché porteur.</p>
+    <div class="lots-grid">
+      <div class="lot-card reveal delay-2">
+        <div class="lot-number">01</div>
+        <div class="lot-type">Habitation principale</div>
+        <div class="lot-nom">La Maison</div>
+        <div class="lot-prix">400 000 €</div>
+        <div class="lot-prix-label">Prix de sortie cible</div>
+        <div class="lot-desc">Maison individuelle avec jardin. Bien le plus liquide du programme. Cible : famille primo-accédante ou investisseur locatif long terme.</div>
+      </div>
+      <div class="lot-card reveal delay-3">
+        <div class="lot-number">02</div>
+        <div class="lot-type">Habitation</div>
+        <div class="lot-nom">L'Appartement</div>
+        <div class="lot-prix">260 000 €</div>
+        <div class="lot-prix-label">Prix de sortie cible</div>
+        <div class="lot-desc">Appartement indépendant. Fort potentiel locatif dans un bassin d'emploi dynamique. Cible : investisseur ou couple sans enfant.</div>
+      </div>
+      <div class="lot-card reveal delay-4">
+        <div class="lot-number">03</div>
+        <div class="lot-type">Local / Hangar ~150 m²</div>
+        <div class="lot-nom">Le Garage</div>
+        <div class="lot-prix">160 000 €</div>
+        <div class="lot-prix-label">Prix de sortie cible</div>
+        <div class="lot-desc">Grand local avec fort potentiel de revalorisation. DP changement de destination en cours — option résidentielle ou artisanale. Subvention façade à explorer auprès de la mairie.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CSP & MARCHÉ -->
+<section class="csp-section">
+  <div class="csp-inner">
+    <div class="eyebrow reveal">Territoire & marché</div>
+    <h2 class="section-title reveal delay-1">Aytré, <em>une commune<br>qui monte</em></h2>
+    <p class="section-intro reveal delay-2">2e ville de l'agglomération rochelaise, en croissance démographique constante, portée par l'industrie ferroviaire et l'attractivité littorale.</p>
+
+    <div class="csp-grid">
+      <div class="csp-card reveal delay-2">
+        <div class="csp-value count-num" data-target="10300" data-suffix="">~10 k</div>
+        <div class="csp-label">Habitants</div>
+        <div class="csp-note">+1,9%/an sur 2016–2022<br>Source : INSEE 2025</div>
+      </div>
+      <div class="csp-card reveal delay-3">
+        <div class="csp-value">22 830 €</div>
+        <div class="csp-label">Revenu moyen / hab.</div>
+        <div class="csp-note">+11% vs moyenne nationale<br>Source : INSEE Filosofi</div>
+      </div>
+      <div class="csp-card reveal delay-4">
+        <div class="csp-value">47,5 %</div>
+        <div class="csp-label">Taux de propriétaires</div>
+        <div class="csp-note">Profil acquisition stable<br>Source : INSEE RP 2021</div>
+      </div>
+      <div class="csp-card reveal delay-5">
+        <div class="csp-value">~2 400</div>
+        <div class="csp-label">Emplois Alstom</div>
+        <div class="csp-note">1er employeur industriel<br>de l'agglomération</div>
+      </div>
+    </div>
+
+    <div class="marche-grid" style="margin-top:48px;">
+      <div class="marche-card reveal delay-2">
+        <div class="marche-title">Prix au m² · Aytré Bourg (mars 2026)</div>
+        <div class="marche-row"><span class="marche-row-label">Maison — fourchette</span><span class="marche-row-value">3 400 – 3 900 €/m²</span></div>
+        <div class="marche-row"><span class="marche-row-label">Appartement — fourchette</span><span class="marche-row-value">3 900 – 4 200 €/m²</span></div>
+        <div class="marche-row"><span class="marche-row-label">Aytré Bourg (premium)</span><span class="marche-row-value or">4 614 €/m²</span></div>
+        <div class="marche-row"><span class="marche-row-label">Prime bourg vs commune</span><span class="marche-row-value">+10 à +15 %</span></div>
+        <div class="source-tag">Sources : RealAdvisor, MeilleursAgents, PAP · mars 2026</div>
+      </div>
+      <div class="marche-card reveal delay-3">
+        <div class="marche-title">Transactions récentes (DVF 2025)</div>
+        <div class="marche-row"><span class="marche-row-label">Appart. 77m² / 4P</span><span class="marche-row-value">264 k€ · 3 430 €/m²</span></div>
+        <div class="marche-row"><span class="marche-row-label">Appart. 80m² / 3P</span><span class="marche-row-value">307 k€ · 3 838 €/m²</span></div>
+        <div class="marche-row"><span class="marche-row-label">Maison 89m² / 5P</span><span class="marche-row-value">375 k€ · 4 213 €/m²</span></div>
+        <div class="marche-row"><span class="marche-row-label">Volume annuel</span><span class="marche-row-value or">56 ventes en 2024</span></div>
+        <div class="source-tag">Source : DVF / data.gouv.fr · 2025</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- COMPTE D'OPÉRATION -->
+<section class="financier-section">
+  <div class="financier-inner">
+    <div class="eyebrow reveal">Compte d'opération</div>
+    <h2 class="section-title reveal delay-1">La mécanique<br><em>financière</em></h2>
+    <p class="section-intro reveal delay-2">Opération à fort levier sur actif bien localisé. Le modèle crée de la valeur par la seule division juridique, sans travaux structurels.</p>
+    <div class="compte-op">
+      <div class="compte-col reveal-left delay-2">
+        <div class="compte-col-title">Charges de l'opération</div>
+        <div class="ligne-compte"><span class="ligne-label">Prix d'acquisition FAI</span><span class="ligne-value">465 000 €</span></div>
+        <div class="ligne-compte"><span class="ligne-label">Frais de notaire (3% MDB)</span><span class="ligne-value">13 950 €</span></div>
+        <div class="ligne-compte"><span class="ligne-label">Frais de garanties bancaires</span><span class="ligne-value">10 600 €</span></div>
+        <div class="ligne-compte"><span class="ligne-label">Honoraires de négociation</span><span class="ligne-value">25 000 €</span></div>
+        <div class="ligne-compte total"><span class="ligne-label bold">Coût total opération</span><span class="ligne-value or">514 550 €</span></div>
+      </div>
+      <div class="compte-col reveal-right delay-2">
+        <div class="compte-col-title">Produits de la revente</div>
+        <div class="ligne-compte"><span class="ligne-label">Lot 01 — La Maison</span><span class="ligne-value">400 000 €</span></div>
+        <div class="ligne-compte"><span class="ligne-label">Lot 02 — L'Appartement</span><span class="ligne-value">260 000 €</span></div>
+        <div class="ligne-compte"><span class="ligne-label">Lot 03 — Le Garage</span><span class="ligne-value">160 000 €</span></div>
+        <div class="ligne-compte" style="visibility:hidden;"><span class="ligne-label">—</span><span class="ligne-value">—</span></div>
+        <div class="ligne-compte total"><span class="ligne-label bold">CA sortie total</span><span class="ligne-value vert">820 000 €</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MARGE ANIMÉE -->
+<section class="marge-section">
+  <div class="marge-inner">
+    <div class="eyebrow reveal" style="color:var(--or);justify-content:center;">Répartition de la valeur créée</div>
+    <h2 class="marge-title-text reveal delay-1">Une marge qui<br><em>protège le projet</em></h2>
+    <p class="marge-subtitle reveal delay-2">Rapport coût / valeur créée</p>
+
+    <div class="marge-bar-wrap reveal delay-3">
+      <div class="marge-bar-bg">
+        <div class="marge-bar-fill" id="margeBar">
+          <span class="marge-bar-fill-label">Marge · 305 450 € · 59%</span>
+        </div>
+      </div>
+      <div class="marge-bar-labels">
+        <span class="marge-bar-l">Coût total · 514 550 €</span>
+        <span class="marge-bar-l">CA sortie · 820 000 €</span>
+      </div>
+    </div>
+
+    <div class="marge-flex-note reveal delay-4">
+      <div class="marge-flex-title">⚡ Préco en cours · Flexibilité marché</div>
+      <div class="marge-flex-text">
+        Une marge brute de <strong>305 450 €</strong> offre une capacité d'adaptation significative. En cas de réponse marché défavorable sur un lot, DEKA peut <strong>absorber jusqu'à -15 à -20% sur le prix de sortie</strong> tout en maintenant une opération rentable — sans sacrifier la rentabilité pour l'investisseur. L'objectif : <strong>limiter la durée de portage en préservant la valeur de l'actif</strong>, plutôt que de brader.
+      </div>
+    </div>
+
+    <div class="marge-chiffres">
+      <div class="marge-chiffre reveal delay-2">
+        <div class="marge-chiffre-value count-animate" data-val="305450" data-suffix=" €">305 450 €</div>
+        <div class="marge-chiffre-label">Marge brute</div>
+      </div>
+      <div class="marge-chiffre reveal delay-3">
+        <div class="marge-chiffre-value count-animate" data-val="59" data-suffix=" %">59 %</div>
+        <div class="marge-chiffre-label">Taux de marge brute</div>
+      </div>
+      <div class="marge-chiffre reveal delay-4">
+        <div class="marge-chiffre-value count-animate" data-val="229088" data-suffix=" €">229 088 €</div>
+        <div class="marge-chiffre-label">Marge nette après IS 25%</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- INVESTISSEUR -->
+<section class="invest-section">
+  <div class="invest-inner">
+    <div class="eyebrow reveal">Proposition investisseur</div>
+    <h2 class="section-title reveal delay-1">Votre place<br>dans <em>l'opération</em></h2>
+    <p class="section-intro reveal delay-2">DEKA recherche un partenaire financier pour couvrir l'apport. En échange d'une contribution courte durée, vous percevez une part fixe de la marge réalisée.</p>
+
+    <div class="invest-hero reveal delay-3">
+      <div class="invest-montant">145 600 €</div>
+      <div class="invest-montant-label">Apport recherché · financement bancaire complémentaire : 355 000 € (Crédit Mutuel)</div>
+      <div class="invest-terms">
+        <div class="invest-term">
+          <div class="invest-term-label">Votre retour</div>
+          <div class="invest-term-value"><em>30 545 €</em><br><span style="font-size:16px;color:rgba(255,255,255,0.4)">10% de la marge brute</span></div>
+        </div>
+        <div class="invest-term">
+          <div class="invest-term-label">TRI annualisé</div>
+          <div class="invest-term-value"><em>+42 %</em><br><span style="font-size:16px;color:rgba(255,255,255,0.4)">Sur 6 mois de portage</span></div>
+        </div>
+        <div class="invest-term">
+          <div class="invest-term-label">Horizon</div>
+          <div class="invest-term-value"><em>6 mois</em><br><span style="font-size:16px;color:rgba(255,255,255,0.4)">Remboursement + retour à la vente</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="garanties-grid">
+      <div class="garantie-card reveal delay-2">
+        <div class="garantie-label">Structure juridique</div>
+        <div class="garantie-value">SPV dédiée<span>Société créée pour ce seul projet · pas d'autres dettes</span></div>
+      </div>
+      <div class="garantie-card reveal delay-3">
+        <div class="garantie-label">Garantie bancaire</div>
+        <div class="garantie-value">Crédit Mutuel<span>Cautions partagées sur 3 têtes · garantie solidaire</span></div>
+      </div>
+      <div class="garantie-card reveal delay-4">
+        <div class="garantie-label">Opérateur</div>
+        <div class="garantie-value">DEKA Immobilier<span>Formés Greenbull · 3 opérations actives · zone La Rochelle</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- OPÉRATIONS DEKA -->
+<section class="ops-section">
+  <div class="ops-inner">
+    <div class="eyebrow reveal">Le pipeline DEKA</div>
+    <h2 class="section-title reveal delay-1">3 opérations,<br><em>une seule vision</em></h2>
+    <p class="section-intro reveal delay-2">DEKA opère simultanément sur trois dossiers dans la zone La Rochelle / Charente-Maritime, pour un CA projeté global de ~2,1 M€.</p>
+    <div class="ops-grid">
+      <div class="op-card active reveal delay-2">
+        <span class="op-badge or-bg">Signé · En cours</span>
+        <div class="op-name">Projet Herpens</div>
+        <div class="op-loc">Saint-Gelais · Deux-Sèvres (79)</div>
+        <div class="op-kpi"><span class="op-kpi-l">Prix d'achat</span><span class="op-kpi-v">~155 000 € FAI</span></div>
+        <div class="op-kpi"><span class="op-kpi-l">CA projeté</span><span class="op-kpi-v or">235 000 €</span></div>
+        <div class="op-kpi"><span class="op-kpi-l">Lots</span><span class="op-kpi-v">2 lots</span></div>
+        <div class="op-kpi"><span class="op-kpi-l">Stratégie</span><span class="op-kpi-v">Division · revente clé-en-main</span></div>
+      </div>
+      <div class="op-card active reveal delay-3">
+        <span class="op-badge or-bg">Signé · En cours</span>
+        <div class="op-name">Le Jaurès</div>
+        <div class="op-loc">Aytré · Charente-Maritime (17)</div>
+        <div class="op-kpi"><span class="op-kpi-l">Prix d'achat</span><span class="op-kpi-v">465 000 € FAI</span></div>
+        <div class="op-kpi"><span class="op-kpi-l">CA projeté</span><span class="op-kpi-v or">820 000 €</span></div>
+        <div class="op-kpi"><span class="op-kpi-l">Lots</span><span class="op-kpi-v">3 lots</span></div>
+        <div class="op-kpi"><span class="op-kpi-l">Marge brute</span><span class="op-kpi-v or">305 450 €</span></div>
+      </div>
+      <div class="op-card reflex reveal delay-4">
+        <span class="op-badge grey-bg">Étude en cours</span>
+        <div class="op-name">Le Clos des Noues</div>
+        <div class="op-loc">Andilly · Charente-Maritime (17)</div>
+        <div class="op-kpi"><span class="op-kpi-l">Prix envisagé</span><span class="op-kpi-v">250–260 000 €</span></div>
+        <div class="op-kpi"><span class="op-kpi-l">Configuration</span><span class="op-kpi-v">Hangar · 6 lots</span></div>
+        <div class="op-kpi"><span class="op-kpi-l">Associés</span><span class="op-kpi-v">DEKA + Alexandre</span></div>
+        <div class="op-note">Réflexion en cours suite à des désordres constatés sur structure. Décision GO/NO GO à venir après expertise.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ÉQUIPE -->
+<section class="team-section">
+  <div class="team-inner">
+    <div class="eyebrow reveal" style="color:var(--or);">L'équipe DEKA</div>
+    <h2 class="section-title reveal delay-1" style="color:white;text-align:center;">Deux opérateurs,<br><em>un seul cap</em></h2>
+    <div class="team-grid">
+      <div class="team-card reveal-left delay-2">
+        <div>
+          <div class="team-avatar">
+            <svg width="40" height="40" viewBox="0 0 40 40" fill="none"><circle cx="20" cy="14" r="8" stroke="white" stroke-width="1.5"/><path d="M4 36c0-8.837 7.163-16 16-16s16 7.163 16 16" stroke="white" stroke-width="1.5"/></svg>
+          </div>
+          <div class="team-avatar-hint">Photo à insérer</div>
+        </div>
+        <div>
+          <div class="team-name">Rudy Mezoughi</div>
+          <div class="team-role">Fondateur · Stratégie & Finance</div>
+          <div class="team-contact">
+            <a href="mailto:rudy.m@deka-partners.com">rudy.m@deka-partners.com</a>
+            <a href="tel:+33600000000">+33 6 · · · · · · · ·</a>
+          </div>
+        </div>
+      </div>
+      <div class="team-card reveal-right delay-3">
+        <div>
+          <div class="team-avatar">
+            <svg width="40" height="40" viewBox="0 0 40 40" fill="none"><circle cx="20" cy="14" r="8" stroke="white" stroke-width="1.5"/><path d="M4 36c0-8.837 7.163-16 16-16s16 7.163 16 16" stroke="white" stroke-width="1.5"/></svg>
+          </div>
+          <div class="team-avatar-hint">Photo à insérer</div>
+        </div>
+        <div>
+          <div class="team-name">Alexandre Dupuy</div>
+          <div class="team-role">Associé · Opérations & Terrain</div>
+          <div class="team-contact">
+            <a href="mailto:contact@deka-partners.com">contact@deka-partners.com</a>
+            <a href="tel:+33600000000">+33 6 · · · · · · · ·</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="deka-footer">
+  <div class="deka-footer-logo">DEKA</div>
+  <div class="deka-footer-tagline">Immobilier · La Rochelle · 2026</div>
+  <div class="deka-footer-legal">
+    Document confidentiel — réservé à l'usage exclusif du destinataire · DEKA Immobilier 2026<br>
+    Les projections financières sont des estimations et ne constituent pas une garantie de rendement.<br>
+    Ce document ne constitue pas une offre de placement réglementée au sens de l'AMF.
+  </div>
+</footer>
+
+<script>
+// INTERSECTION OBSERVER — REVEAL ON SCROLL
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+      // Trigger marge bar animation
+      if (entry.target.id === 'margeBar' || entry.target.closest('#margeBar')) {
+        document.getElementById('margeBar').classList.add('animated');
+      }
+    }
+  });
+}, { threshold: 0.15 });
+
+document.querySelectorAll('.reveal, .reveal-left, .reveal-right, .reveal-scale').forEach(el => observer.observe(el));
+
+// MARGE BAR TRIGGER
+const margeObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      document.getElementById('margeBar').classList.add('animated');
+    }
+  });
+}, { threshold: 0.3 });
+const margeEl = document.getElementById('margeBar');
+if (margeEl) margeObserver.observe(margeEl);
+
+// COUNT UP ANIMATION
+function animateCount(el) {
+  const target = parseFloat(el.dataset.val);
+  const suffix = el.dataset.suffix || '';
+  const duration = 2000;
+  const start = performance.now();
+  const isLarge = target > 1000;
+
+  function update(now) {
+    const elapsed = now - start;
+    const progress = Math.min(elapsed / duration, 1);
+    const ease = 1 - Math.pow(1 - progress, 3);
+    const value = target * ease;
+    if (isLarge) {
+      el.textContent = Math.round(value).toLocaleString('fr-FR') + suffix;
+    } else {
+      el.textContent = Math.round(value) + suffix;
+    }
+    if (progress < 1) requestAnimationFrame(update);
+  }
+  requestAnimationFrame(update);
+}
+
+const countObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting && !entry.target.dataset.animated) {
+      entry.target.dataset.animated = true;
+      animateCount(entry.target);
+    }
+  });
+}, { threshold: 0.3 });
+
+document.querySelectorAll('.count-animate').forEach(el => countObserver.observe(el));
+
+// STAGGER DELAYS ON LOT CARDS (already handled by CSS delay classes)
+// Hover pulse on hero stats
+document.querySelectorAll('.hero-stat').forEach(stat => {
+  stat.addEventListener('mouseenter', () => {
+    stat.style.background = 'rgba(255,255,255,0.03)';
+  });
+  stat.addEventListener('mouseleave', () => {
+    stat.style.background = '';
+  });
+});
+</script>
+</body>
+</html>
