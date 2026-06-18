@@ -73,8 +73,8 @@ body{font-family:'DM Sans',system-ui,sans-serif;background:var(--cream);color:va
 @keyframes fU{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
 @keyframes fI{to{opacity:1}}
 .hero-city{font-family:'DM Sans',sans-serif;font-weight:300;font-size:11px;letter-spacing:7px;text-transform:uppercase;color:rgba(255,255,255,0.65);opacity:0;animation:fD .9s ease .5s forwards;z-index:2;position:relative;margin-bottom:14px;}
-.hero-title{font-family:'Playfair Display',serif;font-weight:400;font-size:clamp(64px,14vw,130px);line-height:.86;color:var(--white100);opacity:0;animation:fU 1s ease .65s forwards;z-index:2;position:relative;margin-bottom:10px;letter-spacing:-2px;}
-.hero-title em{font-style:italic;color:var(--gold2);filter:drop-shadow(0 0 40px rgba(232,201,106,.5));}
+.hero-title{font-family:'Playfair Display',serif;font-weight:400;font-size:clamp(56px,12vw,108px);line-height:1.05;color:var(--white100);opacity:0;animation:fU 1s ease .65s forwards;z-index:2;position:relative;margin-bottom:24px;letter-spacing:-2px;}
+.hero-title em{font-style:normal;font-weight:600;color:var(--gold2);filter:drop-shadow(0 0 40px rgba(232,201,106,.5));}
 .hero-sub{font-family:'DM Sans',sans-serif;font-weight:300;font-size:11px;letter-spacing:5px;text-transform:uppercase;color:rgba(255,255,255,0.50);opacity:0;animation:fU 1s ease .85s forwards;z-index:2;position:relative;margin-bottom:60px;}
 /* hero stats */
 .hero-stats{display:grid;grid-template-columns:repeat(2,1fr);gap:1px;background:rgba(200,160,74,.2);opacity:0;animation:fU 1s ease 1.1s forwards;z-index:2;position:relative;width:min(560px,92vw);}
@@ -103,8 +103,9 @@ body{font-family:'DM Sans',system-ui,sans-serif;background:var(--cream);color:va
 .card-dark:hover{transform:translateY(-5px);box-shadow:0 0 60px rgba(200,160,74,.12),0 24px 48px rgba(0,0,0,.3);border-color:rgba(200,160,74,.35);}
 
 /* ─── BIEN ─── */
-.bien-wrap{background:var(--white);border-radius:var(--r);overflow:hidden;display:grid;grid-template-columns:1fr;margin-top:52px;}
-@media(min-width:700px){.bien-wrap{grid-template-columns:1fr 1fr;}}
+.bien-wrap-full{background:var(--white);border-radius:var(--r);overflow:hidden;margin-top:52px;padding:8px;}
+.bien-rows-full{display:grid;grid-template-columns:1fr;gap:0;padding:24px;}
+@media(min-width:700px){.bien-rows-full{grid-template-columns:1fr 1fr;gap:0 48px;}}
 .bien-img{background:linear-gradient(135deg,#1A2A35,#0A1520);min-height:360px;position:relative;overflow:hidden;display:flex;flex-direction:column;justify-content:flex-end;}
 .bien-img-inner{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;}
 .bien-img-inner svg{opacity:.14;}
@@ -345,15 +346,8 @@ body{font-family:'DM Sans',system-ui,sans-serif;background:var(--cream);color:va
   <div class="eyebrow">Le bien</div>
   <h2 class="stitle">4 & 4 bis rue Jean Jaurès<br><em>Aytré</em></h2>
   <p class="sintro">Un ensemble de caractère en cœur de ville, à 3 minutes de La Rochelle. Trois lots à valoriser par division–revente, sans travaux structurels.</p>
-  <div class="bien-wrap r0 t2">
-    <div class="bien-img">
-      <div class="bien-img-inner">
-        <svg width="72" height="72" viewBox="0 0 80 80" fill="none"><rect x="10" y="30" width="60" height="40" stroke="white" stroke-width="1.5"/><polygon points="40,8 5,30 75,30" stroke="white" stroke-width="1.5" fill="none"/><rect x="30" y="50" width="20" height="20" stroke="white" stroke-width="1.5"/><rect x="55" y="42" width="12" height="12" stroke="white" stroke-width="1"/></svg>
-        <span class="bien-img-hint">Photo façade à insérer</span>
-      </div>
-      <div class="bien-overlay"><div class="bien-addr">4 & 4 bis rue Jean Jaurès · 17440 Aytré</div><div class="bien-name">Le Jaurès</div></div>
-    </div>
-    <div class="bien-rows">
+  <div class="bien-wrap-full r0 t2">
+    <div class="bien-rows-full">
       <div class="brow"><div class="brow-lbl">Localisation</div><div class="brow-val">Aytré Bourg · cœur de ville<br><span style="font-size:15px;color:var(--text3)">Mitoyenne La Rochelle · gare 5 min à pied</span></div></div>
       <div class="brow"><div class="brow-lbl">Opération</div><div class="brow-val">Division 3 lots · copropriété à créer<br><span style="font-size:15px;color:var(--text3)">Régime MDB · 0 travaux structurels</span></div></div>
       <div class="brow"><div class="brow-lbl">Prix d'acquisition</div><div class="brow-val gold">465 000 € net vendeur</div></div>
@@ -491,7 +485,7 @@ body{font-family:'DM Sans',system-ui,sans-serif;background:var(--cream);color:va
     <h2 class="marge-htitle r0 t1">Une marge qui<br><em>protège le projet</em></h2>
     <p class="marge-hsub r0 t2">Rapport coût total / valeur de sortie</p>
     <div class="bar-wrap r0 t3">
-      <div class="bar-bg"><div class="bar-fill" id="barFill"><span class="bar-lbl">Marge · 279 700 € · 52 %</span></div></div>
+      <div class="bar-bg"><div class="bar-fill" id="barFill"><span class="bar-lbl">Marge MDB · 279 700 € · 34 %</span></div></div>
       <div class="bar-ends"><span class="bar-end">Coût · 540 300 €</span><span class="bar-end">CA sortie · 820 000 €</span></div>
     </div>
     <div class="flex-note r0 t4">
@@ -500,7 +494,7 @@ body{font-family:'DM Sans',system-ui,sans-serif;background:var(--cream);color:va
     </div>
     <div class="big-nums r0 t3">
       <div class="bn"><div class="bn-val" data-count="279700" data-suf=" €">279 700 €</div><div class="bn-lbl">Marge brute</div></div>
-      <div class="bn"><div class="bn-val" data-count="52" data-suf=" %">52 %</div><div class="bn-lbl">Taux de marge brute</div></div>
+      <div class="bn"><div class="bn-val" data-count="52" data-suf=" %">52 %</div><div class="bn-lbl">Marge / Coût total</div></div>
       <div class="bn"><div class="bn-val" data-count="209775" data-suf=" €">209 775 €</div><div class="bn-lbl">Marge nette (IS 25%)</div></div>
     </div>
   </div>
