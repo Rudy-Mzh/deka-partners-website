@@ -1,0 +1,70 @@
+categorie,designation,unite,prix_bas,prix_moyen,prix_haut,source,notes
+Demolition / Evacuation,Demolition cloison legere (placo / carreaux de platre),m2,15,25,35,Estimation marche,A calibrer avec vos devis
+Demolition / Evacuation,Demolition mur parpaing ou brique (non porteur),m2,30,45,65,Estimation marche,A calibrer avec vos devis
+Demolition / Evacuation,Depose et evacuation d'un element (placard sanitaire etc.),forfait,100,200,400,Estimation marche,
+Demolition / Evacuation,Evacuation gravats / location benne (par m3),m3,30,40,50,Devis reel,Base CYCLAD 35.90EUR TTC/m3
+Gros oeuvre / Maconnerie,Creation d'ouverture en mur (porte ou fenetre jusqu'a 3m),u,2200,2700,3500,Devis reel,Devis Riguet 2700EUR
+Gros oeuvre / Maconnerie,Bouchage d'ouverture en parpaings (avec finitions),u,700,900,1400,Devis reel,Devis Riguet 700-900EUR
+Gros oeuvre / Maconnerie,Reprise de plancher ponctuelle,u,300,500,900,Devis reel,Devis Riguet 350EUR
+Gros oeuvre / Maconnerie,Creation d'evacuation sanitaire (percement + raccord beton),u,900,1200,1600,Devis reel,Devis Riguet 1200EUR
+Gros oeuvre / Maconnerie,Chape beton / ragreage de sol,m2,20,30,45,Estimation marche,A calibrer avec vos devis
+Gros oeuvre / Maconnerie,Reprise de fissures / enduit maconnerie ponctuel,forfait,300,600,1200,Estimation marche,A calibrer avec vos devis
+Toiture / Couverture / Zinguerie,Pose toiture bac acier isole (fourniture + pose complete),m2,45,52,60,Devis reel,Devis Collard 51.6EUR/m2 HT sur 487m2
+Toiture / Couverture / Zinguerie,Desamiantage + depose toiture fibro-ciment (avec evacuation specialisee),m2,28,34,42,Devis reel,Devis Collard 33.2EUR/m2 HT + forfaits
+Toiture / Couverture / Zinguerie,Couverture tuiles (depose + pose neuve fourniture+pose),m2,90,130,180,Estimation marche,A calibrer avec vos devis
+Toiture / Couverture / Zinguerie,Reparation ponctuelle / recherche de fuite toiture,forfait,150,250,450,Devis reel,Devis Riguet 200EUR
+Toiture / Couverture / Zinguerie,Raccord de zinguerie autour d'un conduit de cheminee,u,450,600,850,Devis reel,Devis Riguet 600EUR
+Toiture / Couverture / Zinguerie,Isolation combles perdus (soufflee),m2,20,30,45,Estimation marche,A calibrer avec vos devis
+Menuiseries exterieures,Fenetre bois 2 vantaux petite (moins de 1.8m2) fourniture+pose,u,950,1150,1400,Devis reel,Devis Bonnet / Nova 950-1275EUR
+Menuiseries exterieures,Fenetre bois 2 vantaux moyenne (1.8 a 3m2) fourniture+pose,u,1300,1600,1950,Devis reel,Devis Bonnet / Nova 1210-1935EUR
+Menuiseries exterieures,Fenetre PVC equivalente fourniture+pose,u,500,650,900,Estimation marche,A calibrer avec vos devis
+Menuiseries exterieures,Volet bois battant la paire fourniture+pose,paire,1000,1250,1500,Devis reel,Devis Bonnet
+Menuiseries exterieures,Decapage et peinture de volets existants (la paire),paire,280,350,450,Devis reel,Devis Bonnet 350EUR
+Menuiseries exterieures,Decapage et peinture porte d'entree,u,450,550,700,Devis reel,Devis Bonnet 550EUR
+Menuiseries exterieures,Echafaudage (forfait chantier hauteur R+1),forfait,450,580,800,Devis reel,Devis Bonnet 580EUR
+Menuiseries exterieures,Pose menuiserie en renovation depose totale (main d'oeuvre seule),u,150,200,280,Devis reel,Devis Bonnet/Nova 195-260EUR
+Menuiseries exterieures,Portail motorise fourniture+pose+motorisation,forfait,1800,2100,2800,Devis reel,Devis LP Elec 2126EUR
+Menuiseries interieures,Bloc-porte interieur fourniture+pose (huisserie+serrure),u,850,1000,1200,Devis reel,Devis Bonnet 945EUR
+Menuiseries interieures,Pose porte palliere seule (cloison ossature metallique),u,80,100,150,Devis reel,Devis Bonnet 95EUR
+Cloisons / Platrerie / Isolation,Cloison de distribution placo (rails+montants 48 double BA13 laine 45mm) fourniture+pose,m2,75,88,100,Devis reel,Devis Bonnet 88EUR/m2 (6 lignes coherentes)
+Cloisons / Platrerie / Isolation,Joints / finition plaque de platre (hors poncage),m2,6,8,10,Devis reel,Devis Bonnet 7EUR/m2
+Cloisons / Platrerie / Isolation,Doublage isolation interieure (placo + laine mur peripherique),m2,45,60,80,Estimation marche,A calibrer avec vos devis
+Cloisons / Platrerie / Isolation,Isolation combles amenages (rampants),m2,35,50,70,Estimation marche,A calibrer avec vos devis
+Cloisons / Platrerie / Isolation,Saignees murs pour distribution electrique (forfait par logement),forfait,1100,1350,1700,Devis reel,Devis Lamba17 1348EUR
+Electricite,Generalites electriques appartement / T2-T3 (tableau+communication+cablage+VMC+saignees),forfait,2200,2900,3300,Devis reel,Devis Lamba17 2846-3181EUR / LP Elec 2217EUR
+Electricite,Generalites electriques maison plus de 100m2 (tableau+communication+cablage+VMC+saignees),forfait,5500,6200,7000,Devis reel,Devis Lamba17 6023-6323EUR
+Electricite,Tableau electrique seul fourniture+pose prequipe,u,1150,1700,2050,Devis reel,Devis LP Elec 1139-2035EUR
+Electricite,Mise a la terre fourniture+pose+verification,u,380,420,460,Devis reel,Devis LP Elec / Lamba17 381-450EUR
+Electricite,Point lumineux simple allumage,u,70,100,185,Devis reel,74-183EUR selon config
+Electricite,Point lumineux va-et-vient ou telerupteur,u,125,220,460,Devis reel,127-460EUR
+Electricite,Point lumineux supplementaire (spot LED),u,18,55,75,Devis reel,18-75EUR
+Electricite,Prise de courant 2P+T standard,u,58,75,80,Devis reel,58-79EUR
+Electricite,Prise RJ45 / informatique blindee,u,90,100,110,Devis reel,93-108EUR
+Electricite,Prise TV coaxiale,u,70,77,85,Devis reel,
+Electricite,Ligne dediee electromenager (plaque four LV LL),u,79,130,175,Devis reel,79-174EUR
+Electricite,VMC hygroreglable kit complet fourniture+pose,forfait,415,900,2000,Devis reel,415EUR kit simple a 1484-1984EUR VMC complete
+Electricite,Radiateur electrique chaleur douce fourniture+pose+alimentation,u,400,500,600,Devis reel,447-580EUR
+Electricite,Seche-serviettes electrique connecte fourniture+pose+alimentation,u,460,530,620,Devis reel,463-570EUR
+Electricite,Alimentation volet roulant electrique,u,65,72,80,Devis reel,
+Plomberie / Sanitaire,Salle de bain complete (douche+vasque+WC+evac/alim hors carrelage),forfait,2300,2700,3200,Devis reel,Devis SFTJ ~2500-2900EUR/SDB
+Plomberie / Sanitaire,Douche complete (cabine quart de rond) fourniture+pose,u,950,1100,1300,Devis reel,Devis SFTJ 1100EUR
+Plomberie / Sanitaire,Vasque simple + robinetterie posee,u,400,450,550,Devis reel,
+Plomberie / Sanitaire,Vasque double + robinetterie posee,u,750,850,950,Devis reel,
+Plomberie / Sanitaire,Baignoire + robinetterie posee,u,450,500,600,Devis reel,
+Plomberie / Sanitaire,WC complet pose (pack a poser),u,250,280,350,Devis reel,
+Plomberie / Sanitaire,Ballon eau chaude extra-plat 80L + groupe securite pose,u,700,800,950,Devis reel,
+Plomberie / Sanitaire,Alimentation / evacuation EC-EF (par point ponctuel),u,80,150,220,Devis reel,
+Chauffage / ECS,Chaudiere gaz condensation fourniture+pose,u,3500,4500,6000,Estimation marche,A calibrer avec vos devis
+Chauffage / ECS,Pompe a chaleur air/eau fourniture+pose,u,8000,11000,15000,Estimation marche,A calibrer avec vos devis
+Revetements sols et murs / Peinture,Peinture rafraichissement murs+plafonds 2 couches,m2,20,28,38,Estimation marche,A calibrer avec vos devis
+Revetements sols et murs / Peinture,Sol stratifie ou PVC pose,m2,30,45,60,Estimation marche,A calibrer avec vos devis
+Revetements sols et murs / Peinture,Carrelage sol pose fourniture+pose,m2,55,75,100,Estimation marche,A calibrer avec vos devis
+Revetements sols et murs / Peinture,Faience murale salle de bain posee,m2,60,80,110,Estimation marche,A calibrer avec vos devis
+Revetements sols et murs / Peinture,Parquet contrecolle pose,m2,50,70,100,Estimation marche,A calibrer avec vos devis
+Cuisine,Cuisine equipee standard (meubles+plan de travail hors electromenager),forfait,4000,6500,10000,Estimation marche,A calibrer avec vos devis
+VRD / Terrassement / Assainissement,Assainissement individuel (fosse toutes eaux + epandage) creation,forfait,8000,11000,15000,Estimation marche,A calibrer avec vos devis
+VRD / Terrassement / Assainissement,Terrassement / VRD general (acces reseaux),forfait,3000,6000,12000,Estimation marche,A calibrer avec vos devis
+Facade / Ravalement,Ravalement de facade (enduit fourniture+pose),m2,55,75,100,Estimation marche,A calibrer avec vos devis
+Facade / Ravalement,Peinture facade,m2,25,35,50,Estimation marche,A calibrer avec vos devis
+Divers,Petites fournitures / consommables chantier (forfait),forfait,200,350,550,Devis reel,250-500EUR observes
+Divers,Nettoyage de fin de chantier,forfait,100,200,400,Devis reel,150EUR observe

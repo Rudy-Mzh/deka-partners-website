@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>DEKA Partners — Chiffrage rapide des travaux</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
+<style>
+  :root{
+    --ink:#f2ede2; --ink-soft:#b7b0a2; --blue:#c9a84c; --blue-dark:#8a6f30;
+    --accent:#e8c97a; --bg:#141210; --card:#1c1a16; --line:#342f26;
+    --green:#8fd19e; --green-bg:rgba(143,209,158,.12); --amber:#e3b25a; --amber-bg:rgba(227,178,90,.12);
+    --danger:#e08a80;
+    font-family:'Montserrat',-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;
+  }
+  *{box-sizing:border-box;}
+  body{margin:0;background:var(--bg);color:var(--ink);}
+  a{color:var(--blue);}
+  h1,h2{font-family:'Cormorant Garamond',serif;}
+  .wrap{max-width:1180px;margin:0 auto;padding:0 20px 80px;}
+  header.top{background:linear-gradient(135deg,#111111,#1c1a16);border-bottom:1px solid var(--line);color:var(--ink);padding:28px 0;margin-bottom:24px;}
+  header.top .wrap{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;}
+  header.top h1{font-size:1.7rem;margin:0;font-weight:600;letter-spacing:.3px;color:var(--accent);}
+  header.top .sub{font-size:.82rem;color:var(--ink-soft);margin-top:4px;letter-spacing:.02em;}
+  header.top .badge{font-size:.72rem;background:rgba(232,201,122,.1);border:1px solid rgba(232,201,122,.35);color:var(--accent);padding:4px 10px;border-radius:20px;}
+
+  #gate{max-width:380px;margin:80px auto;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:28px;box-shadow:0 10px 30px rgba(0,0,0,.4);}
+  #gate h2{margin-top:0;font-size:1.3rem;color:var(--accent);}
+  #gate input{width:100%;padding:10px 12px;border:1px solid var(--line);border-radius:8px;font-size:1rem;margin:10px 0;background:#14120f;color:var(--ink);}
+  #gate button{width:100%;padding:10px;background:var(--blue);color:#1a1710;border:none;border-radius:8px;font-size:.95rem;font-weight:600;cursor:pointer;}
+  #gate button:hover{background:var(--accent);}
+  #gate .err{color:var(--danger);font-size:.85rem;min-height:18px;}
+
+  .card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:20px 22px;margin-bottom:18px;}
+  .card h2{font-size:1.3rem;font-weight:600;margin:0 0 14px;color:var(--accent);display:flex;align-items:center;gap:8px;}
+  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:14px;}
+  label{display:block;font-size:.78rem;color:var(--ink-soft);margin-bottom:4px;font-weight:600;text-transform:uppercase;letter-spacing:.03em;}
+  input[type=text],input[type=number],select,textarea{
+    width:100%;padding:9px 10px;border:1px solid var(--line);border-radius:8px;font-size:.95rem;background:#14120f;color:var(--ink);
+  }
+  input:focus,select:focus,textarea:focus{outline:2px solid var(--blue);outline-offset:1px;}
+
+  .toolbar{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-bottom:14px;}
+  .toolbar input[type=text]{flex:1;min-width:220px;}
+  .pricetier{display:flex;border:1px solid var(--line);border-radius:8px;overflow:hidden;}
+  .pricetier button{border:none;background:#14120f;padding:8px 12px;font-size:.82rem;cursor:pointer;color:var(--ink-soft);}
+  .pricetier button.active{background:var(--blue);color:#1a1710;font-weight:600;}
+
+  details.cat{border:1px solid var(--line);border-radius:10px;margin-bottom:10px;overflow:hidden;background:var(--card);}
+  details.cat[open] summary{border-bottom:1px solid var(--line);}
+  summary.cathead{list-style:none;cursor:pointer;padding:12px 14px;display:flex;justify-content:space-between;align-items:center;font-weight:600;color:var(--accent);background:#181611;font-size:.92rem;}
+  summary.cathead::-webkit-details-marker{display:none;}
+  summary.cathead .count{font-size:.75rem;font-weight:600;color:var(--ink-soft);background:rgba(255,255,255,.06);padding:2px 9px;border-radius:12px;}
+
+  .poste-row{display:grid;grid-template-columns:26px 1fr 90px 110px 90px;gap:10px;align-items:center;padding:9px 14px;border-top:1px solid rgba(255,255,255,.05);font-size:.88rem;}
+  .poste-row:first-of-type{border-top:none;}
+  .poste-row.checked{background:var(--green-bg);}
+  .poste-row .desig{line-height:1.25;}
+  .poste-row .desig small{display:block;color:var(--ink-soft);font-size:.74rem;margin-top:2px;}
+  .tag{display:inline-block;font-size:.66rem;font-weight:700;padding:1px 6px;border-radius:5px;margin-left:6px;vertical-align:middle;}
+  .tag.reel{background:var(--green-bg);color:var(--green);border:1px solid rgba(143,209,158,.35);}
+  .tag.estim{background:var(--amber-bg);color:var(--amber);border:1px solid rgba(227,178,90,.35);}
+  .poste-row input[type=number]{padding:6px 8px;text-align:right;}
+  .poste-row .prix{text-align:right;font-variant-numeric:tabular-nums;color:var(--ink-soft);}
+  .poste-row .subtotal{text-align:right;font-variant-numeric:tabular-nums;font-weight:700;color:var(--accent);}
+  .poste-row input[type=checkbox]{width:18px;height:18px;accent-color:var(--blue);}
+
+  .custom-add{padding:10px 14px;background:#161410;border-top:1px dashed var(--line);display:grid;grid-template-columns:1fr 90px 110px 90px auto;gap:8px;align-items:center;}
+  .custom-add input{font-size:.85rem;padding:6px 8px;}
+  .custom-add button{background:var(--blue);color:#1a1710;font-weight:600;border:none;border-radius:6px;padding:7px 10px;font-size:.8rem;cursor:pointer;}
+
+  .summary{position:sticky;top:14px;}
+  .summary .line{display:flex;justify-content:space-between;padding:6px 0;font-size:.88rem;border-bottom:1px dashed var(--line);}
+  .summary .line.total{font-size:1.15rem;font-weight:800;color:var(--accent);border:none;padding-top:12px;}
+  .summary .range{font-size:.78rem;color:var(--ink-soft);text-align:right;}
+  .aleas-row{display:flex;align-items:center;justify-content:space-between;gap:10px;margin:12px 0;}
+  .aleas-row input{width:70px;text-align:right;}
+  .btnbar{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px;}
+  .btn{flex:1;min-width:120px;padding:11px 12px;border-radius:9px;border:none;font-size:.88rem;font-weight:700;cursor:pointer;text-align:center;}
+  .btn.primary{background:var(--blue);color:#1a1710;}
+  .btn.primary:hover{background:var(--accent);}
+  .btn.ghost{background:transparent;border:1px solid var(--line);color:var(--ink);}
+  .btn.ghost:hover{background:rgba(255,255,255,.05);}
+  .btn.danger{background:transparent;border:1px solid #4a2e29;color:var(--danger);}
+  .empty-hint{color:var(--ink-soft);font-size:.85rem;text-align:center;padding:20px 6px;}
+
+  .layout{display:grid;grid-template-columns:1fr 340px;gap:20px;align-items:start;}
+  @media (max-width:880px){
+    .layout{grid-template-columns:1fr;}
+    .summary{position:static;}
+    .poste-row{grid-template-columns:22px 1fr;grid-template-areas:"cb desig" "cb prix" "cb qty" "cb sub";row-gap:4px;}
+    .poste-row input[type=checkbox]{grid-area:cb;}
+    .poste-row .desig{grid-area:desig;}
+    .poste-row .prix{grid-area:prix;text-align:left;}
+    .poste-row .qty-wrap{grid-area:qty;}
+    .poste-row .subtotal{grid-area:sub;text-align:left;}
+    .custom-add{grid-template-columns:1fr;}
+  }
+
+  footer{color:var(--ink-soft);font-size:.78rem;text-align:center;padding:26px 10px 10px;}
+  .status{font-size:.75rem;color:var(--ink-soft);margin-top:2px;}
+  .status.ok{color:var(--green);}
+  .status.warn{color:var(--amber);}
+
+  /* Recap / print */
+  #recapModal{display:none;position:fixed;inset:0;background:rgba(10,20,30,.5);z-index:50;align-items:flex-start;justify-content:center;overflow:auto;padding:30px 14px;}
+  #recapModal.show{display:flex;}
+  #recapSheet{background:#fff;width:100%;max-width:760px;border-radius:10px;padding:34px 40px;position:relative;color:#241f14;}
+  #recapSheet h2{color:var(--blue-dark);margin-top:0;font-family:'Cormorant Garamond',serif;}
+  #recapSheet table{width:100%;border-collapse:collapse;font-size:.86rem;margin:14px 0;}
+  #recapSheet th{text-align:left;background:#f1f4f6;padding:7px 8px;font-size:.72rem;text-transform:uppercase;color:#6b6558;}
+  #recapSheet td{padding:7px 8px;border-bottom:1px solid #eef1f3;color:#241f14;}
+  #recapSheet td.num{text-align:right;font-variant-numeric:tabular-nums;}
+  #recapSheet .catrow td{background:#fafbfc;font-weight:700;color:var(--blue-dark);padding-top:14px;}
+  #recapClose{position:absolute;top:14px;right:16px;border:none;background:none;font-size:1.3rem;cursor:pointer;color:#6b6558;}
+  #recapTotals{border-top:2px solid var(--blue-dark);margin-top:6px;padding-top:10px;}
+  #recapTotals .big{font-size:1.4rem;font-weight:800;color:var(--blue-dark);}
+  .recap-meta{font-size:.85rem;color:#6b6558;margin-bottom:10px;}
+  .recap-actions{display:flex;gap:10px;margin-top:20px;flex-wrap:wrap;}
+
+  @media print{
+    body *{visibility:hidden;}
+    #recapSheet, #recapSheet *{visibility:visible;}
+    #recapSheet{position:absolute;top:0;left:0;width:100%;box-shadow:none;padding:0;}
+    #recapClose,.recap-actions{display:none !important;}
+  }
+</style>
+</head>
+<body>
+
+<div id="gate">
+  <h2>Accès outil interne DEKA</h2>
+  <p style="font-size:.85rem;color:var(--ink-soft);">Cette page n'est pas destinée au public. Merci de saisir le code d'accès.</p>
+  <input type="password" id="gateInput" placeholder="Code d'accès" autocomplete="off">
+  <div class="err" id="gateErr"></div>
+  <button onclick="tryUnlock()">Accéder à l'outil</button>
+</div>
+
+<div id="app" style="display:none;">
+<header class="top">
+  <div class="wrap">
+    <div>
+      <h1>Chiffrage rapide des travaux</h1>
+      <div class="sub">DEKA Partners · outil interne — La Rochelle / Niort / Melle</div>
+    </div>
+    <div class="badge" id="dataStatus">Base de prix : chargement…</div>
+  </div>
+</header>
+
+<div class="wrap">
+
+  <div class="card">
+    <h2>1 · Informations sur le bien</h2>
+    <div class="grid">
+      <div>
+        <label>Adresse / référence du bien</label>
+        <input type="text" id="fAdresse" placeholder="ex : 27 rue de l'Arsenal, Niort">
+      </div>
+      <div>
+        <label>Type de bien</label>
+        <select id="fType">
+          <option>Maison</option>
+          <option>Appartement</option>
+          <option>Immeuble</option>
+          <option>Local / autre</option>
+        </select>
+      </div>
+      <div>
+        <label>Surface habitable (m²)</label>
+        <input type="number" id="fSurface" min="0" placeholder="ex : 110">
+      </div>
+      <div>
+        <label>Niveau de travaux estimé</label>
+        <select id="fNiveau">
+          <option value="Léger">Léger (rafraîchissement)</option>
+          <option value="Moyen" selected>Moyen (rénovation partielle)</option>
+          <option value="Lourd">Lourd (rénovation complète)</option>
+          <option value="Coquille">Coquille (curage total)</option>
+        </select>
+      </div>
+    </div>
+    <div style="margin-top:12px;">
+      <label>Notes / hypothèses complémentaires</label>
+      <textarea id="fNotes" rows="2" placeholder="ex : toiture à vérifier, DPE F, absence de chauffage central..."></textarea>
+    </div>
+  </div>
+
+  <div class="layout">
+    <div>
+      <div class="card">
+        <h2>2 · Postes de travaux</h2>
+        <div class="toolbar">
+          <input type="text" id="search" placeholder="Rechercher un poste (ex : fenêtre, tableau électrique, salle de bain…)">
+          <div class="pricetier" id="tierSwitch">
+            <button data-tier="prix_bas">Optimiste</button>
+            <button data-tier="prix_moyen" class="active">Réaliste</button>
+            <button data-tier="prix_haut">Prudent</button>
+          </div>
+        </div>
+        <div id="categories"></div>
+      </div>
+    </div>
+
+    <div class="summary">
+      <div class="card">
+        <h2>Estimation en cours</h2>
+        <div id="summaryLines"><div class="empty-hint">Aucun poste sélectionné pour l'instant.</div></div>
+        <div class="aleas-row">
+          <label style="margin:0;">Marge aléas / imprévus</label>
+          <div><input type="number" id="aleas" value="12" min="0" max="50" step="1"> %</div>
+        </div>
+        <div class="line total"><span>Total estimé</span><span id="totalDisplay">0 €</span></div>
+        <div class="range" id="rangeDisplay">fourchette 0 € – 0 €</div>
+        <div class="btnbar">
+          <button class="btn primary" onclick="openRecap()">Générer le récapitulatif</button>
+          <button class="btn danger" onclick="resetAll()">Réinitialiser</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  Outil d'estimation interne — ne remplace pas un devis d'artisan. Prix HT indicatifs, calibrés sur les devis DEKA
+  (secteur Charente-Maritime / Deux-Sèvres) et compléments de marché à affiner.
+  <span id="dataDate"></span>
+</footer>
+</div>
+
+<!-- RECAP MODAL -->
+<div id="recapModal">
+  <div id="recapSheet">
+    <button id="recapClose" onclick="closeRecap()">✕</button>
+    <div style="display:flex;justify-content:space-between;align-items:flex-start;">
+      <div>
+        <div style="font-size:.78rem;letter-spacing:.08em;color:var(--ink-soft);text-transform:uppercase;">DEKA Partners</div>
+        <h2>Chiffrage estimatif des travaux</h2>
+      </div>
+    </div>
+    <div class="recap-meta" id="recapMeta"></div>
+    <table id="recapTable"></table>
+    <div id="recapTotals"></div>
+    <p style="font-size:.72rem;color:var(--ink-soft);margin-top:16px;">
+      Document généré automatiquement à partir de la base de prix interne DEKA Partners. Estimation non contractuelle,
+      à confirmer par devis d'artisans avant toute décision d'acquisition ou de travaux.
+    </p>
+    <div class="recap-actions">
+      <button class="btn primary" onclick="window.print()">Exporter en PDF (imprimer)</button>
+      <button class="btn ghost" onclick="exportWord()">Exporter en Word (.doc)</button>
+      <button class="btn ghost" onclick="closeRecap()">Fermer</button>
+    </div>
+  </div>
+</div>
+
+<script>
+/* ============================================================
+   ACCES (passcode superficiel — ne remplace pas une vraie sécurité)
+   Code par defaut : deka2026  (a changer, voir guide d'utilisation)
+   ============================================================ */
+const PASSCODE_HASH = "3df851f8a45465e987bc3c7cadf2cfa4a8b94cb35a5606020da376e77b07fe6b";
+
+async function sha256hex(str){
+  const enc = new TextEncoder().encode(str);
+  const buf = await crypto.subtle.digest('SHA-256', enc);
+  return Array.from(new Uint8Array(buf)).map(b=>b.toString(16).padStart(2,'0')).join('');
+}
+async function tryUnlock(){
+  const val = document.getElementById('gateInput').value;
+  const hash = await sha256hex(val);
+  if(hash === PASSCODE_HASH){
+    sessionStorage.setItem('deka_unlocked','1');
+    document.getElementById('gate').style.display='none';
+    document.getElementById('app').style.display='block';
+    init();
+  } else {
+    document.getElementById('gateErr').textContent = "Code incorrect.";
+  }
+}
+document.getElementById('gateInput').addEventListener('keydown', e=>{ if(e.key==='Enter') tryUnlock(); });
+if(sessionStorage.getItem('deka_unlocked')==='1'){
+  document.getElementById('gate').style.display='none';
+  document.getElementById('app').style.display='block';
+  window.addEventListener('DOMContentLoaded', init);
+}
+
+/* ============================================================
+   BASE DE PRIX PAR DEFAUT (secours hors-ligne / premier lancement)
+   Source : devis reels DEKA (macon, menuiserie, electricien, couvreur
+   2025-2026) + estimations de marche a affiner. Voir base_prix.csv
+   ============================================================ */
+const DEFAULT_PRICES = [{"categorie": "Demolition / Evacuation", "designation": "Demolition cloison legere (placo / carreaux de platre)", "unite": "m2", "prix_bas": 15.0, "prix_moyen": 25.0, "prix_haut": 35.0, "source": "Estimation marche", "notes": "A calibrer avec vos devis"}, {"categorie": "Demolition / Evacuation", "designation": "Demolition mur parpaing ou brique (non porteur)", "unite": "m2", "prix_bas": 30.0, "prix_moyen": 45.0, "prix_haut": 65.0, "source": "Estimation marche", "notes": "A calibrer avec vos devis"}, {"categorie": "Demolition / Evacuation", "designation": "Depose et evacuation d'un element (placard sanitaire etc.)", "unite": "forfait", "prix_bas": 100.0, "prix_moyen": 200.0, "prix_haut": 400.0, "source": "Estimation marche", "notes": ""}, {"categorie": "Demolition / Evacuation", "designation": "Evacuation gravats / location benne (par m3)", "unite": "m3", "prix_bas": 30.0, "prix_moyen": 40.0, "prix_haut": 50.0, "source": "Devis reel", "notes": "Base CYCLAD 35.90EUR TTC/m3"}, {"categorie": "Gros oeuvre / Maconnerie", "designation": "Creation d'ouverture en mur (porte ou fenetre jusqu'a 3m)", "unite": "u", "prix_bas": 2200.0, "prix_moyen": 2700.0, "prix_haut": 3500.0, "source": "Devis reel", "notes": "Devis Riguet 2700EUR"}, {"categorie": "Gros oeuvre / Maconnerie", "designation": "Bouchage d'ouverture en parpaings (avec finitions)", "unite": "u", "prix_bas": 700.0, "prix_moyen": 900.0, "prix_haut": 1400.0, "source": "Devis reel", "notes": "Devis Riguet 700-900EUR"}, {"categorie": "Gros oeuvre / Maconnerie", "designation": "Reprise de plancher ponctuelle", "unite": "u", "prix_bas": 300.0, "prix_moyen": 500.0, "prix_haut": 900.0, "source": "Devis reel", "notes": "Devis Riguet 350EUR"}, {"categorie": "Gros oeuvre / Maconnerie", "designation": "Creation d'evacuation sanitaire (percement + raccord beton)", "unite": "u", "prix_bas": 900.0, "prix_moyen": 1200.0, "prix_haut": 1600.0, "source": "Devis reel", "notes": "Devis Riguet 1200EUR"}, {"categorie": "Gros oeuvre / Maconnerie", "designation": "Chape beton / ragreage de sol", "unite": "m2", "prix_bas": 20.0, "prix_moyen": 30.0, "prix_haut": 45.0, "source": "Estimation marche", "notes": "A calibrer avec vos devis"}, {"categorie": "Gros oeuvre / Maconnerie", "designation": "Reprise de fissures / enduit maconnerie ponctuel", "unite": "forfait", "prix_bas": 300.0, "prix_moyen": 600.0, "prix_haut": 1200.0, "source": "Estimation marche", "notes": "A calibrer avec vos devis"}, {"categorie": "Toiture / Couverture / Zinguerie", "designation": "Pose toiture bac acier isole (fourniture + pose complete)", "unite": "m2", "prix_bas": 45.0, "prix_moyen": 52.0, "prix_haut": 60.0, "source": "Devis reel", "notes": "Devis Collard 51.6EUR/m2 HT sur 487m2"}, {"categorie": "Toiture / Couverture / Zinguerie", "designation": "Desamiantage + depose toiture fibro-ciment (avec evacuation specialisee)", "unite": "m2", "prix_bas": 28.0, "prix_moyen": 34.0, "prix_haut": 42.0, "source": "Devis reel", "notes": "Devis Collard 33.2EUR/m2 HT + forfaits"}, {"categorie": "Toiture / Couverture / Zinguerie", "designation": "Couverture tuiles (depose + pose neuve fourniture+pose)", "unite": "m2", "prix_bas": 90.0, "prix_moyen": 130.0, "prix_haut": 180.0, "source": "Estimation marche", "notes": "A calibrer avec vos devis"}, {"categorie": "Toiture / Couverture / Zinguerie", "designation": "Reparation ponctuelle / recherche de fuite toiture", "unite": "forfait", "prix_bas": 150.0, "prix_moyen": 250.0, "prix_haut": 450.0, "source": "Devis reel", "notes": "Devis Riguet 200EUR"}, {"categorie": "Toiture / Couverture / Zinguerie", "designation": "Raccord de zinguerie autour d'un conduit de cheminee", "unite": "u", "prix_bas": 450.0, "prix_moyen": 600.0, "prix_haut": 850.0, "source": "Devis reel", "notes": "Devis Riguet 600EUR"}, {"categorie": "Toiture / Couverture / Zinguerie", "designation": "Isolation combles perdus (soufflee)", "unite": "m2", "prix_bas": 20.0, "prix_moyen": 30.0, "prix_haut": 45.0, "source": "Estimation marche", "notes": "A calibrer avec vos devis"}, {"categorie": "Menuiseries exterieures", "designation": "Fenetre bois 2 vantaux petite (moins de 1.8m2) fourniture+pose", "unite": "u", "prix_bas": 950.0, "prix_moyen": 1150.0, "prix_haut": 1400.0, "source": "Devis reel", "notes": "Devis Bonnet / Nova 950-1275EUR"}, {"categorie": "Menuiseries exterieures", "designation": "Fenetre bois 2 vantaux moyenne (1.8 a 3m2) fourniture+pose", "unite": "u", "prix_bas": 1300.0, "prix_moyen": 1600.0, "prix_haut": 1950.0, "source": "Devis reel", "notes": "Devis Bonnet / Nova 1210-1935EUR"}, {"categorie": "Menuiseries exterieures", "designation": "Fenetre PVC equivalente fourniture+pose", "unite": "u", "prix_bas": 500.0, "prix_moyen": 650.0, "prix_haut": 900.0, "source": "Estimation marche", "notes": "A calibrer avec vos devis"}, {"categorie": "Menuiseries exterieures", "designation": "Volet bois battant la paire fourniture+pose", "unite": "paire", "prix_bas": 1000.0, "prix_moyen": 1250.0, "prix_haut": 1500.0, "source": "Devis reel", "notes": "Devis Bonnet"}, {"categorie": "Menuiseries exterieures", "designation": "Decapage et peinture de volets existants (la paire)", "unite": "paire", "prix_bas": 280.0, "prix_moyen": 350.0, "prix_haut": 450.0, "source": "Devis reel", "notes": "Devis Bonnet 350EUR"}, {"categorie": "Menuiseries exterieures", "designation": "Decapage et peinture porte d'entree", "unite": "u", "prix_bas": 450.0, "prix_moyen": 550.0, "prix_haut": 700.0, "source": "Devis reel", "notes": "Devis Bonnet 550EUR"}, {"categorie": "Menuiseries exterieures", "designation": "Echafaudage (forfait chantier hauteur R+1)", "unite": "forfait", "prix_bas": 450.0, "prix_moyen": 580.0, "prix_haut": 800.0, "source": "Devis reel", "notes": "Devis Bonnet 580EUR"}, {"categorie": "Menuiseries exterieures", "designation": "Pose menuiserie en renovation depose totale (main d'oeuvre seule)", "unite": "u", "prix_bas": 150.0, "prix_moyen": 200.0, "prix_haut": 280.0, "source": "Devis reel", "notes": "Devis Bonnet/Nova 195-260EUR"}, {"categorie": "Menuiseries exterieures", "designation": "Portail motorise fourniture+pose+motorisation", "unite": "forfait", "prix_bas": 1800.0, "prix_moyen": 2100.0, "prix_haut": 2800.0, "source": "Devis reel", "notes": "Devis LP Elec 2126EUR"}, {"categorie": "Menuiseries interieures", "designation": "Bloc-porte interieur fourniture+pose (huisserie+serrure)", "unite": "u", "prix_bas": 850.0, "prix_moyen": 1000.0, "prix_haut": 1200.0, "source": "Devis reel", "notes": "Devis Bonnet 945EUR"}, {"categorie": "Menuiseries interieures", "designation": "Pose porte palliere seule (cloison ossature metallique)", "unite": "u", "prix_bas": 80.0, "prix_moyen": 100.0, "prix_haut": 150.0, "source": "Devis reel", "notes": "Devis Bonnet 95EUR"}, {"categorie": "Cloisons / Platrerie / Isolation", "designation": "Cloison de distribution placo (rails+montants 48 double BA13 laine 45mm) fourniture+pose", "unite": "m2", "prix_bas": 75.0, "prix_moyen": 88.0, "prix_haut": 100.0, "source": "Devis reel", "notes": "Devis Bonnet 88EUR/m2 (6 lignes coherentes)"}, {"categorie": "Cloisons / Platrerie / Isolation", "designation": "Joints / finition plaque de platre (hors poncage)", "unite": "m2", "prix_bas": 6.0, "prix_moyen": 8.0, "prix_haut": 10.0, "source": "Devis reel", "notes": "Devis Bonnet 7EUR/m2"}, {"categorie": "Cloisons / Platrerie / Isolation", "designation": "Doublage isolation interieure (placo + laine mur peripherique)", "unite": "m2", "prix_bas": 45.0, "prix_moyen": 60.0, "prix_haut": 80.0, "source": "Estimation marche", "notes": "A calibrer avec vos devis"}, {"categorie": "Cloisons / Platrerie / Isolation", "designation": "Isolation combles amenages (rampants)", "unite": "m2", "prix_bas": 35.0, "prix_moyen": 50.0, "prix_haut": 70.0, "source": "Estimation marche", "notes": "A calibrer avec vos devis"}, {"categorie": "Cloisons / Platrerie / Isolation", "designation": "Saignees murs pour distribution electrique (forfait par logement)", "unite": "forfait", "prix_bas": 1100.0, "prix_moyen": 1350.0, "prix_haut": 1700.0, "source": "Devis reel", "notes": "Devis Lamba17 1348EUR"}, {"categorie": "Electricite", "designation": "Generalites electriques appartement / T2-T3 (tableau+communication+cablage+VMC+saignees)", "unite": "forfait", "prix_bas": 2200.0, "prix_moyen": 2900.0, "prix_haut": 3300.0, "source": "Devis reel", "notes": "Devis Lamba17 2846-3181EUR / LP Elec 2217EUR"}, {"categorie": "Electricite", "designation": "Generalites electriques maison plus de 100m2 (tableau+communication+cablage+VMC+saignees)", "unite": "forfait", "prix_bas": 5500.0, "prix_moyen": 6200.0, "prix_haut": 7000.0, "source": "Devis reel", "notes": "Devis Lamba17 6023-6323EUR"}, {"categorie": "Electricite", "designation": "Tableau electrique seul fourniture+pose prequipe", "unite": "u", "prix_bas": 1150.0, "prix_moyen": 1700.0, "prix_haut": 2050.0, "source": "Devis reel", "notes": "Devis LP Elec 1139-2035EUR"}, {"categorie": "Electricite", "designation": "Mise a la terre fourniture+pose+verification", "unite": "u", "prix_bas": 380.0, "prix_moyen": 420.0, "prix_haut": 460.0, "source": "Devis reel", "notes": "Devis LP Elec / Lamba17 381-450EUR"}, {"categorie": "Electricite", "designation": "Point lumineux simple allumage", "unite": "u", "prix_bas": 70.0, "prix_moyen": 100.0, "prix_haut": 185.0, "source": "Devis reel", "notes": "74-183EUR selon config"}, {"categorie": "Electricite", "designation": "Point lumineux va-et-vient ou telerupteur", "unite": "u", "prix_bas": 125.0, "prix_moyen": 220.0, "prix_haut": 460.0, "source": "Devis reel", "notes": "127-460EUR"}, {"categorie": "Electricite", "designation": "Point lumineux supplementaire (spot LED)", "unite": "u", "prix_bas": 18.0, "prix_moyen": 55.0, "prix_haut": 75.0, "source": "Devis reel", "notes": "18-75EUR"}, {"categorie": "Electricite", "designation": "Prise de courant 2P+T standard", "unite": "u", "prix_bas": 58.0, "prix_moyen": 75.0, "prix_haut": 80.0, "source": "Devis reel", "notes": "58-79EUR"}, {"categorie": "Electricite", "designation": "Prise RJ45 / informatique blindee", "unite": "u", "prix_bas": 90.0, "prix_moyen": 100.0, "prix_haut": 110.0, "source": "Devis reel", "notes": "93-108EUR"}, {"categorie": "Electricite", "designation": "Prise TV coaxiale", "unite": "u", "prix_bas": 70.0, "prix_moyen": 77.0, "prix_haut": 85.0, "source": "Devis reel", "notes": ""}, {"categorie": "Electricite", "designation": "Ligne dediee electromenager (plaque four LV LL)", "unite": "u", "prix_bas": 79.0, "prix_moyen": 130.0, "prix_haut": 175.0, "source": "Devis reel", "notes": "79-174EUR"}, {"categorie": "Electricite", "designation": "VMC hygroreglable kit complet fourniture+pose", "unite": "forfait", "prix_bas": 415.0, "prix_moyen": 900.0, "prix_haut": 2000.0, "source": "Devis reel", "notes": "415EUR kit simple a 1484-1984EUR VMC complete"}, {"categorie": "Electricite", "designation": "Radiateur electrique chaleur douce fourniture+pose+alimentation", "unite": "u", "prix_bas": 400.0, "prix_moyen": 500.0, "prix_haut": 600.0, "source": "Devis reel", "notes": "447-580EUR"}, {"categorie": "Electricite", "designation": "Seche-serviettes electrique connecte fourniture+pose+alimentation", "unite": "u", "prix_bas": 460.0, "prix_moyen": 530.0, "prix_haut": 620.0, "source": "Devis reel", "notes": "463-570EUR"}, {"categorie": "Electricite", "designation": "Alimentation volet roulant electrique", "unite": "u", "prix_bas": 65.0, "prix_moyen": 72.0, "prix_haut": 80.0, "source": "Devis reel", "notes": ""}, {"categorie": "Plomberie / Sanitaire", "designation": "Salle de bain complete (douche+vasque+WC+evac/alim hors carrelage)", "unite": "forfait", "prix_bas": 2300.0, "prix_moyen": 2700.0, "prix_haut": 3200.0, "source": "Devis reel", "notes": "Devis SFTJ ~2500-2900EUR/SDB"}, {"categorie": "Plomberie / Sanitaire", "designation": "Douche complete (cabine quart de rond) fourniture+pose", "unite": "u", "prix_bas": 950.0, "prix_moyen": 1100.0, "prix_haut": 1300.0, "source": "Devis reel", "notes": "Devis SFTJ 1100EUR"}, {"categorie": "Plomberie / Sanitaire", "designation": "Vasque simple + robinetterie posee", "unite": "u", "prix_bas": 400.0, "prix_moyen": 450.0, "prix_haut": 550.0, "source": "Devis reel", "notes": ""}, {"categorie": "Plomberie / Sanitaire", "designation": "Vasque double + robinetterie posee", "unite": "u", "prix_bas": 750.0, "prix_moyen": 850.0, "prix_haut": 950.0, "source": "Devis reel", "notes": ""}, {"categorie": "Plomberie / Sanitaire", "designation": "Baignoire + robinetterie posee", "unite": "u", "prix_bas": 450.0, "prix_moyen": 500.0, "prix_haut": 600.0, "source": "Devis reel", "notes": ""}, {"categorie": "Plomberie / Sanitaire", "designation": "WC complet pose (pack a poser)", "unite": "u", "prix_bas": 250.0, "prix_moyen": 280.0, "prix_haut": 350.0, "source": "Devis reel", "notes": ""}, {"categorie": "Plomberie / Sanitaire", "designation": "Ballon eau chaude extra-plat 80L + groupe securite pose", "unite": "u", "prix_bas": 700.0, "prix_moyen": 800.0, "prix_haut": 950.0, "source": "Devis reel", "notes": ""}, {"categorie": "Plomberie / Sanitaire", "designation": "Alimentation / evacuation EC-EF (par point ponctuel)", "unite": "u", "prix_bas": 80.0, "prix_moyen": 150.0, "prix_haut": 220.0, "source": "Devis reel", "notes": ""}, {"categorie": "Chauffage / ECS", "designation": "Chaudiere gaz condensation fourniture+pose", "unite": "u", "prix_bas": 3500.0, "prix_moyen": 4500.0, "prix_haut": 6000.0, "source": "Estimation marche", "notes": "A calibrer avec vos devis"}, {"categorie": "Chauffage / ECS", "designation": "Pompe a chaleur air/eau fourniture+pose", "unite": "u", "prix_bas": 8000.0, "prix_moyen": 11000.0, "prix_haut": 15000.0, "source": "Estimation marche", "notes": "A calibrer avec vos devis"}, {"categorie": "Revetements sols et murs / Peinture", "designation": "Peinture rafraichissement murs+plafonds 2 couches", "unite": "m2", "prix_bas": 20.0, "prix_moyen": 28.0, "prix_haut": 38.0, "source": "Estimation marche", "notes": "A calibrer avec vos devis"}, {"categorie": "Revetements sols et murs / Peinture", "designation": "Sol stratifie ou PVC pose", "unite": "m2", "prix_bas": 30.0, "prix_moyen": 45.0, "prix_haut": 60.0, "source": "Estimation marche", "notes": "A calibrer avec vos devis"}, {"categorie": "Revetements sols et murs / Peinture", "designation": "Carrelage sol pose fourniture+pose", "unite": "m2", "prix_bas": 55.0, "prix_moyen": 75.0, "prix_haut": 100.0, "source": "Estimation marche", "notes": "A calibrer avec vos devis"}, {"categorie": "Revetements sols et murs / Peinture", "designation": "Faience murale salle de bain posee", "unite": "m2", "prix_bas": 60.0, "prix_moyen": 80.0, "prix_haut": 110.0, "source": "Estimation marche", "notes": "A calibrer avec vos devis"}, {"categorie": "Revetements sols et murs / Peinture", "designation": "Parquet contrecolle pose", "unite": "m2", "prix_bas": 50.0, "prix_moyen": 70.0, "prix_haut": 100.0, "source": "Estimation marche", "notes": "A calibrer avec vos devis"}, {"categorie": "Cuisine", "designation": "Cuisine equipee standard (meubles+plan de travail hors electromenager)", "unite": "forfait", "prix_bas": 4000.0, "prix_moyen": 6500.0, "prix_haut": 10000.0, "source": "Estimation marche", "notes": "A calibrer avec vos devis"}, {"categorie": "VRD / Terrassement / Assainissement", "designation": "Assainissement individuel (fosse toutes eaux + epandage) creation", "unite": "forfait", "prix_bas": 8000.0, "prix_moyen": 11000.0, "prix_haut": 15000.0, "source": "Estimation marche", "notes": "A calibrer avec vos devis"}, {"categorie": "VRD / Terrassement / Assainissement", "designation": "Terrassement / VRD general (acces reseaux)", "unite": "forfait", "prix_bas": 3000.0, "prix_moyen": 6000.0, "prix_haut": 12000.0, "source": "Estimation marche", "notes": "A calibrer avec vos devis"}, {"categorie": "Facade / Ravalement", "designation": "Ravalement de facade (enduit fourniture+pose)", "unite": "m2", "prix_bas": 55.0, "prix_moyen": 75.0, "prix_haut": 100.0, "source": "Estimation marche", "notes": "A calibrer avec vos devis"}, {"categorie": "Facade / Ravalement", "designation": "Peinture facade", "unite": "m2", "prix_bas": 25.0, "prix_moyen": 35.0, "prix_haut": 50.0, "source": "Estimation marche", "notes": "A calibrer avec vos devis"}, {"categorie": "Divers", "designation": "Petites fournitures / consommables chantier (forfait)", "unite": "forfait", "prix_bas": 200.0, "prix_moyen": 350.0, "prix_haut": 550.0, "source": "Devis reel", "notes": "250-500EUR observes"}, {"categorie": "Divers", "designation": "Nettoyage de fin de chantier", "unite": "forfait", "prix_bas": 100.0, "prix_moyen": 200.0, "prix_haut": 400.0, "source": "Devis reel", "notes": "150EUR observe"}];
+
+let PRICES = [];
+let currentTier = 'prix_moyen';
+const selections = {}; // key -> {item, qty}
+let customCounter = 0;
+
+async function loadPrices(){
+  const statusEl = document.getElementById('dataStatus');
+  try{
+    const res = await fetch('base_prix.csv', {cache:'no-store'});
+    if(!res.ok) throw new Error('http '+res.status);
+    const text = await res.text();
+    const parsed = Papa.parse(text, {header:true, skipEmptyLines:true, dynamicTyping:true});
+    if(!parsed.data || !parsed.data.length || !parsed.data[0].designation) throw new Error('csv vide/invalide');
+    PRICES = parsed.data.map(normalizeRow).filter(r=>r.designation);
+    localStorage.setItem('deka_prices_cache', JSON.stringify(PRICES));
+    localStorage.setItem('deka_prices_cache_date', new Date().toISOString());
+    statusEl.textContent = 'Base de prix : à jour (base_prix.csv)';
+    statusEl.classList.add('ok');
+  }catch(e){
+    const cached = localStorage.getItem('deka_prices_cache');
+    if(cached){
+      PRICES = JSON.parse(cached);
+      statusEl.textContent = 'Base de prix : version en cache (hors-ligne)';
+      statusEl.classList.add('warn');
+    } else {
+      PRICES = DEFAULT_PRICES.map(normalizeRow);
+      statusEl.textContent = 'Base de prix : jeu de données par défaut';
+      statusEl.classList.add('warn');
+    }
+  }
+  document.getElementById('dataDate').textContent = localStorage.getItem('deka_prices_cache_date')
+    ? ' · Base mise à jour le ' + new Date(localStorage.getItem('deka_prices_cache_date')).toLocaleDateString('fr-FR')
+    : '';
+}
+
+function normalizeRow(r){
+  return {
+    categorie: (r.categorie||'Divers').trim(),
+    designation: (r.designation||'').trim(),
+    unite: (r.unite||'u').trim(),
+    prix_bas: Number(r.prix_bas)||0,
+    prix_moyen: Number(r.prix_moyen)||0,
+    prix_haut: Number(r.prix_haut)||0,
+    source: (r.source||'').trim(),
+    notes: (r.notes||'').trim()
+  };
+}
+
+function euros(n){
+  return Math.round(n).toLocaleString('fr-FR') + ' €';
+}
+
+function keyFor(cat, desig){ return cat+'|||'+desig; }
+
+function render(){
+  const cats = {};
+  PRICES.forEach(p=>{ (cats[p.categorie] = cats[p.categorie]||[]).push(p); });
+  const q = document.getElementById('search').value.trim().toLowerCase();
+  const container = document.getElementById('categories');
+  container.innerHTML = '';
+
+  Object.keys(cats).forEach(cat=>{
+    const items = cats[cat].filter(p=> !q || p.designation.toLowerCase().includes(q) || cat.toLowerCase().includes(q));
+    if(!items.length) return;
+    const det = document.createElement('details');
+    det.className = 'cat';
+    det.open = !!q;
+    const nSel = items.filter(p=>selections[keyFor(cat,p.designation)]).length;
+    det.innerHTML = `<summary class="cathead"><span>${cat}</span><span class="count">${items.length} postes${nSel? ' · '+nSel+' sélectionné(s)':''}</span></summary>`;
+    const body = document.createElement('div');
+
+    items.forEach(p=>{
+      const k = keyFor(cat,p.designation);
+      const sel = selections[k];
+      const row = document.createElement('div');
+      row.className = 'poste-row' + (sel? ' checked':'');
+      const tag = p.source==='Devis reel' ? '<span class="tag reel">devis réel</span>' : '<span class="tag estim">estimation</span>';
+      row.innerHTML = `
+        <input type="checkbox" ${sel?'checked':''} data-k="${k}">
+        <div class="desig">${p.designation}${tag}${p.notes?`<small>${p.notes}</small>`:''}</div>
+        <div class="prix">${euros(p[currentTier])}/${p.unite}</div>
+        <div class="qty-wrap"><input type="number" min="0" step="any" placeholder="qté (${p.unite})" value="${sel? sel.qty : ''}" data-k="${k}" class="qtyinput" ${sel?'':'disabled'}></div>
+        <div class="subtotal">${sel ? euros(p[currentTier]*sel.qty) : '—'}</div>
+      `;
+      row.querySelector('input[type=checkbox]').addEventListener('change', e=>{
+        if(e.target.checked){ selections[k] = {item:p, qty: selections[k]?.qty || 1}; }
+        else { delete selections[k]; }
+        render(); renderSummary();
+      });
+      const qi = row.querySelector('.qtyinput');
+      qi.addEventListener('input', e=>{
+        const v = parseFloat(e.target.value);
+        if(selections[k]) selections[k].qty = isNaN(v)?0:v;
+        renderSummary();
+        row.querySelector('.subtotal').textContent = selections[k] ? euros(p[currentTier]*selections[k].qty) : '—';
+      });
+      body.appendChild(row);
+    });
+
+    // ligne d'ajout de poste personnalise pour cette categorie
+    const addRow = document.createElement('div');
+    addRow.className = 'custom-add';
+    addRow.innerHTML = `
+      <input type="text" placeholder="+ Ajouter un poste personnalisé dans « ${cat} »" class="cAdd-desig">
+      <input type="text" placeholder="unité" class="cAdd-unite" value="u">
+      <input type="number" placeholder="prix €" class="cAdd-prix">
+      <input type="number" placeholder="qté" class="cAdd-qte" value="1">
+      <button type="button">Ajouter</button>
+    `;
+    addRow.querySelector('button').addEventListener('click', ()=>{
+      const d = addRow.querySelector('.cAdd-desig').value.trim();
+      const u = addRow.querySelector('.cAdd-unite').value.trim() || 'u';
+      const pr = parseFloat(addRow.querySelector('.cAdd-prix').value)||0;
+      const qte = parseFloat(addRow.querySelector('.cAdd-qte').value)||1;
+      if(!d) return;
+      customCounter++;
+      const custom = {categorie:cat, designation:d+' (poste personnalisé)', unite:u, prix_bas:pr, prix_moyen:pr, prix_haut:pr, source:'Poste personnalisé', notes:'Ajouté manuellement le '+new Date().toLocaleDateString('fr-FR')};
+      PRICES.push(custom);
+      selections[keyFor(cat, custom.designation)] = {item:custom, qty:qte};
+      render(); renderSummary();
+    });
+    body.appendChild(addRow);
+
+    det.appendChild(body);
+    container.appendChild(det);
+  });
+
+  if(!Object.keys(cats).length){
+    container.innerHTML = '<div class="empty-hint">Base de prix vide ou en cours de chargement…</div>';
+  }
+}
+
+function computeTotals(){
+  let bas=0, moyen=0, haut=0;
+  Object.values(selections).forEach(s=>{
+    bas += s.item.prix_bas * s.qty;
+    moyen += s.item.prix_moyen * s.qty;
+    haut += s.item.prix_haut * s.qty;
+  });
+  const aleas = parseFloat(document.getElementById('aleas').value)||0;
+  const factor = 1 + aleas/100;
+  return {bas:bas*factor, moyen:moyen*factor, haut:haut*factor, aleas, rawBas:bas, rawMoyen:moyen, rawHaut:haut};
+}
+
+function renderSummary(){
+  const lines = Object.entries(selections);
+  const box = document.getElementById('summaryLines');
+  if(!lines.length){
+    box.innerHTML = '<div class="empty-hint">Aucun poste sélectionné pour l\'instant.</div>';
+  } else {
+    box.innerHTML = lines.map(([k,s])=>{
+      return `<div class="line"><span>${s.item.designation.replace('(poste personnalisé)','')} ×${s.qty}</span><span>${euros(s.item[currentTier]*s.qty)}</span></div>`;
+    }).join('');
+  }
+  const t = computeTotals();
+  document.getElementById('totalDisplay').textContent = euros(t[currentTier==='prix_bas'?'bas':currentTier==='prix_haut'?'haut':'moyen']);
+  document.getElementById('rangeDisplay').textContent = `fourchette ${euros(t.bas)} – ${euros(t.haut)} (marge aléas ${t.aleas}% incluse)`;
+}
+
+document.getElementById('search').addEventListener('input', render);
+document.getElementById('aleas').addEventListener('input', renderSummary);
+document.querySelectorAll('#tierSwitch button').forEach(b=>{
+  b.addEventListener('click', ()=>{
+    document.querySelectorAll('#tierSwitch button').forEach(x=>x.classList.remove('active'));
+    b.classList.add('active');
+    currentTier = b.dataset.tier;
+    render(); renderSummary();
+  });
+});
+
+function resetAll(){
+  if(!confirm('Réinitialiser le chiffrage en cours ?')) return;
+  Object.keys(selections).forEach(k=>delete selections[k]);
+  document.getElementById('fAdresse').value='';
+  document.getElementById('fSurface').value='';
+  document.getElementById('fNotes').value='';
+  document.getElementById('aleas').value=12;
+  render(); renderSummary();
+}
+
+/* ============================================================
+   RECAPITULATIF + EXPORTS
+   ============================================================ */
+function openRecap(){
+  const lines = Object.values(selections);
+  if(!lines.length){ alert("Sélectionnez au moins un poste de travaux avant de générer le récapitulatif."); return; }
+  const t = computeTotals();
+  const adresse = document.getElementById('fAdresse').value || '(adresse non renseignée)';
+  const type = document.getElementById('fType').value;
+  const surface = document.getElementById('fSurface').value;
+  const niveau = document.getElementById('fNiveau').value;
+  const notes = document.getElementById('fNotes').value;
+  const dateStr = new Date().toLocaleDateString('fr-FR');
+
+  document.getElementById('recapMeta').innerHTML = `
+    <strong>${adresse}</strong><br>
+    ${type}${surface? ' · '+surface+' m²':''} · Niveau de travaux : ${niveau} · Généré le ${dateStr}
+    ${notes? '<br>Notes : '+notes : ''}
+  `;
+
+  const byCat = {};
+  lines.forEach(s=>{ (byCat[s.item.categorie]=byCat[s.item.categorie]||[]).push(s); });
+  let rows = '<tr><th>Poste</th><th>Qté</th><th>Prix unitaire</th><th>Sous-total</th></tr>';
+  Object.keys(byCat).forEach(cat=>{
+    rows += `<tr class="catrow"><td colspan="4">${cat}</td></tr>`;
+    byCat[cat].forEach(s=>{
+      rows += `<tr><td>${s.item.designation.replace('(poste personnalisé)','')}</td><td class="num">${s.qty} ${s.item.unite}</td><td class="num">${euros(s.item[currentTier])}</td><td class="num">${euros(s.item[currentTier]*s.qty)}</td></tr>`;
+    });
+  });
+  document.getElementById('recapTable').innerHTML = rows;
+
+  document.getElementById('recapTotals').innerHTML = `
+    <div class="line"><span>Sous-total travaux (hors aléas)</span><span>${euros(t[currentTier==='prix_bas'?'rawBas':currentTier==='prix_haut'?'rawHaut':'rawMoyen'])}</span></div>
+    <div class="line"><span>Marge aléas / imprévus (${t.aleas}%)</span><span>${euros(t[currentTier==='prix_bas'?'bas':currentTier==='prix_haut'?'haut':'moyen'] - t[currentTier==='prix_bas'?'rawBas':currentTier==='prix_haut'?'rawHaut':'rawMoyen'])}</span></div>
+    <div class="line big" style="border-top:1px solid #ddd;padding-top:8px;"><span>TOTAL ESTIMÉ (${currentTier==='prix_bas'?'optimiste':currentTier==='prix_haut'?'prudent':'réaliste'})</span><span class="big">${euros(t[currentTier==='prix_bas'?'bas':currentTier==='prix_haut'?'haut':'moyen'])}</span></div>
+    <div class="range">Fourchette globale : ${euros(t.bas)} – ${euros(t.haut)}</div>
+  `;
+
+  document.getElementById('recapModal').classList.add('show');
+}
+function closeRecap(){ document.getElementById('recapModal').classList.remove('show'); }
+
+function exportWord(){
+  const adresse = (document.getElementById('fAdresse').value || 'bien-sans-adresse').replace(/[^a-z0-9]+/gi,'_');
+  const content = document.getElementById('recapSheet').cloneNode(true);
+  content.querySelector('.recap-actions')?.remove();
+  content.querySelector('#recapClose')?.remove();
+  const html = `
+    <html xmlns:o='urn:schemas-microsoft-com:office:office' xmlns:w='urn:schemas-microsoft-com:office:word' xmlns='http://www.w3.org/TR/REC-html40'>
+    <head><meta charset="utf-8"><title>Chiffrage travaux</title>
+    <style>
+      body{font-family:Calibri,Arial,sans-serif;color:#0f2438;}
+      table{border-collapse:collapse;width:100%;font-size:11pt;}
+      th{background:#1F4E78;color:#fff;padding:6px;text-align:left;font-size:9pt;}
+      td{padding:6px;border-bottom:1px solid #ddd;font-size:10pt;}
+      .catrow td{background:#f1f4f6;font-weight:bold;color:#1F4E78;}
+      h2{color:#1F4E78;}
+    </style></head>
+    <body>${content.innerHTML}</body></html>`;
+  const blob = new Blob(['﻿', html], {type:'application/msword'});
+  const link = document.createElement('a');
+  link.href = URL.createObjectURL(blob);
+  const dateTag = new Date().toISOString().slice(0,10);
+  link.download = `Chiffrage_travaux_${adresse}_${dateTag}.doc`;
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+}
+
+async function init(){
+  await loadPrices();
+  render();
+  renderSummary();
+}
+if(sessionStorage.getItem('deka_unlocked')==='1'){ init(); }
+</script>
+</body>
+</html>
