@@ -100,6 +100,22 @@
     .custom-add{grid-template-columns:1fr;}
   }
 
+  .photo-add-btn{display:inline-block;cursor:pointer;margin-bottom:14px;}
+  .photo-gallery{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:14px;}
+  .photo-item{background:#14120f;border:1px solid var(--line);border-radius:10px;overflow:hidden;}
+  .photo-item img{width:100%;height:110px;object-fit:cover;display:block;}
+  .photo-item .photo-meta{padding:8px;}
+  .photo-item input{width:100%;font-size:.76rem;padding:5px 6px;border:1px solid var(--line);border-radius:6px;background:#1c1a16;color:var(--ink);margin-bottom:6px;}
+  .photo-item .photo-del{width:100%;padding:5px;font-size:.72rem;background:transparent;border:1px solid #4a2e29;color:var(--danger);border-radius:6px;cursor:pointer;}
+  .photo-empty-hint{color:var(--ink-soft);font-size:.85rem;padding:6px 2px;}
+
+  #recapPhotos{margin-top:18px;}
+  #recapPhotos h3{font-size:.95rem;color:var(--blue-dark);font-family:'Cormorant Garamond',serif;margin:0 0 8px;}
+  #recapPhotos .rp-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;}
+  #recapPhotos .rp-item{border:1px solid #eef1f3;border-radius:8px;overflow:hidden;}
+  #recapPhotos .rp-item img{width:100%;max-height:220px;object-fit:cover;display:block;}
+  #recapPhotos .rp-cap{font-size:.74rem;color:#6b6558;padding:5px 7px;}
+
   footer{color:var(--ink-soft);font-size:.78rem;text-align:center;padding:26px 10px 10px;}
   .status{font-size:.75rem;color:var(--ink-soft);margin-top:2px;}
   .status.ok{color:var(--green);}
@@ -180,6 +196,7 @@
           <option value="Lourd">Lourd (rénovation complète)</option>
           <option value="Coquille">Coquille (curage total)</option>
         </select>
+        <button type="button" id="btnPrefillNiveau" style="margin-top:8px;width:100%;padding:8px;background:transparent;border:1px solid var(--line);color:var(--ink-soft);border-radius:8px;font-size:.78rem;cursor:pointer;">+ Pré-remplir les postes types de ce niveau</button>
       </div>
     </div>
     <div style="margin-top:12px;">
@@ -222,6 +239,14 @@
     </div>
   </div>
 
+  <div class="card" id="photosCard">
+    <h2>3 · Photos du bien (visite terrain)</h2>
+    <p style="font-size:.82rem;color:var(--ink-soft);margin-top:-8px;margin-bottom:14px;">Prenez une photo avec votre téléphone/tablette ou importez-en depuis votre appareil. Elles sont intégrées telles quelles (avec la légende que vous saisissez) dans le PDF et le Word exportés — aucune donnée n'est envoyée sur un serveur.</p>
+    <label for="photoInput" class="btn ghost photo-add-btn">+ Ajouter une photo</label>
+    <input type="file" id="photoInput" accept="image/*" capture="environment" multiple style="display:none;">
+    <div id="photoGallery"><div class="photo-empty-hint">Aucune photo ajoutée pour l'instant.</div></div>
+  </div>
+
 </div>
 
 <footer>
@@ -244,6 +269,7 @@
     <div class="recap-meta" id="recapMeta"></div>
     <table id="recapTable"></table>
     <div id="recapTotals"></div>
+    <div id="recapPhotos"></div>
     <p style="font-size:.72rem;color:var(--ink-soft);margin-top:16px;">
       Document généré automatiquement à partir de la base de prix interne DEKA Partners. Estimation non contractuelle,
       à confirmer par devis d'artisans avant toute décision d'acquisition ou de travaux.
@@ -292,7 +318,7 @@ if(sessionStorage.getItem('deka_unlocked')==='1'){
    Source : devis reels DEKA (macon, menuiserie, electricien, couvreur
    2025-2026) + estimations de marche a affiner. Voir base_prix.csv
    ============================================================ */
-const DEFAULT_PRICES = [{"categorie": "Demolition / Evacuation", "designation": "Demolition cloison legere (placo / carreaux de platre)", "unite": "m2", "prix_bas": 15.0, "prix_moyen": 25.0, "prix_haut": 35.0, "source": "Estimation marche", "notes": "A calibrer avec vos devis"}, {"categorie": "Demolition / Evacuation", "designation": "Demolition mur parpaing ou brique (non porteur)", "unite": "m2", "prix_bas": 30.0, "prix_moyen": 45.0, "prix_haut": 65.0, "source": "Estimation marche", "notes": "A calibrer avec vos devis"}, {"categorie": "Demolition / Evacuation", "designation": "Depose et evacuation d'un element (placard sanitaire etc.)", "unite": "forfait", "prix_bas": 100.0, "prix_moyen": 200.0, "prix_haut": 400.0, "source": "Estimation marche", "notes": ""}, {"categorie": "Demolition / Evacuation", "designation": "Evacuation gravats / location benne (par m3)", "unite": "m3", "prix_bas": 30.0, "prix_moyen": 40.0, "prix_haut": 50.0, "source": "Devis reel", "notes": "Base CYCLAD 35.90EUR TTC/m3"}, {"categorie": "Gros oeuvre / Maconnerie", "designation": "Creation d'ouverture en mur (porte ou fenetre jusqu'a 3m)", "unite": "u", "prix_bas": 2200.0, "prix_moyen": 2700.0, "prix_haut": 3500.0, "source": "Devis reel", "notes": "Devis Riguet 2700EUR"}, {"categorie": "Gros oeuvre / Maconnerie", "designation": "Bouchage d'ouverture en parpaings (avec finitions)", "unite": "u", "prix_bas": 700.0, "prix_moyen": 900.0, "prix_haut": 1400.0, "source": "Devis reel", "notes": "Devis Riguet 700-900EUR"}, {"categorie": "Gros oeuvre / Maconnerie", "designation": "Reprise de plancher ponctuelle", "unite": "u", "prix_bas": 300.0, "prix_moyen": 500.0, "prix_haut": 900.0, "source": "Devis reel", "notes": "Devis Riguet 350EUR"}, {"categorie": "Gros oeuvre / Maconnerie", "designation": "Creation d'evacuation sanitaire (percement + raccord beton)", "unite": "u", "prix_bas": 900.0, "prix_moyen": 1200.0, "prix_haut": 1600.0, "source": "Devis reel", "notes": "Devis Riguet 1200EUR"}, {"categorie": "Gros oeuvre / Maconnerie", "designation": "Chape beton / ragreage de sol", "unite": "m2", "prix_bas": 20.0, "prix_moyen": 30.0, "prix_haut": 45.0, "source": "Estimation marche", "notes": "A calibrer avec vos devis"}, {"categorie": "Gros oeuvre / Maconnerie", "designation": "Reprise de fissures / enduit maconnerie ponctuel", "unite": "forfait", "prix_bas": 300.0, "prix_moyen": 600.0, "prix_haut": 1200.0, "source": "Estimation marche", "notes": "A calibrer avec vos devis"}, {"categorie": "Toiture / Couverture / Zinguerie", "designation": "Pose toiture bac acier isole (fourniture + pose complete)", "unite": "m2", "prix_bas": 45.0, "prix_moyen": 52.0, "prix_haut": 60.0, "source": "Devis reel", "notes": "Devis Collard 51.6EUR/m2 HT sur 487m2"}, {"categorie": "Toiture / Couverture / Zinguerie", "designation": "Desamiantage + depose toiture fibro-ciment (avec evacuation specialisee)", "unite": "m2", "prix_bas": 28.0, "prix_moyen": 34.0, "prix_haut": 42.0, "source": "Devis reel", "notes": "Devis Collard 33.2EUR/m2 HT + forfaits"}, {"categorie": "Toiture / Couverture / Zinguerie", "designation": "Couverture tuiles (depose + pose neuve fourniture+pose)", "unite": "m2", "prix_bas": 90.0, "prix_moyen": 130.0, "prix_haut": 180.0, "source": "Estimation marche", "notes": "A calibrer avec vos devis"}, {"categorie": "Toiture / Couverture / Zinguerie", "designation": "Reparation ponctuelle / recherche de fuite toiture", "unite": "forfait", "prix_bas": 150.0, "prix_moyen": 250.0, "prix_haut": 450.0, "source": "Devis reel", "notes": "Devis Riguet 200EUR"}, {"categorie": "Toiture / Couverture / Zinguerie", "designation": "Raccord de zinguerie autour d'un conduit de cheminee", "unite": "u", "prix_bas": 450.0, "prix_moyen": 600.0, "prix_haut": 850.0, "source": "Devis reel", "notes": "Devis Riguet 600EUR"}, {"categorie": "Toiture / Couverture / Zinguerie", "designation": "Isolation combles perdus (soufflee)", "unite": "m2", "prix_bas": 20.0, "prix_moyen": 30.0, "prix_haut": 45.0, "source": "Estimation marche", "notes": "A calibrer avec vos devis"}, {"categorie": "Menuiseries exterieures", "designation": "Fenetre bois 2 vantaux petite (moins de 1.8m2) fourniture+pose", "unite": "u", "prix_bas": 950.0, "prix_moyen": 1150.0, "prix_haut": 1400.0, "source": "Devis reel", "notes": "Devis Bonnet / Nova 950-1275EUR"}, {"categorie": "Menuiseries exterieures", "designation": "Fenetre bois 2 vantaux moyenne (1.8 a 3m2) fourniture+pose", "unite": "u", "prix_bas": 1300.0, "prix_moyen": 1600.0, "prix_haut": 1950.0, "source": "Devis reel", "notes": "Devis Bonnet / Nova 1210-1935EUR"}, {"categorie": "Menuiseries exterieures", "designation": "Fenetre PVC equivalente fourniture+pose", "unite": "u", "prix_bas": 500.0, "prix_moyen": 650.0, "prix_haut": 900.0, "source": "Estimation marche", "notes": "A calibrer avec vos devis"}, {"categorie": "Menuiseries exterieures", "designation": "Volet bois battant la paire fourniture+pose", "unite": "paire", "prix_bas": 1000.0, "prix_moyen": 1250.0, "prix_haut": 1500.0, "source": "Devis reel", "notes": "Devis Bonnet"}, {"categorie": "Menuiseries exterieures", "designation": "Decapage et peinture de volets existants (la paire)", "unite": "paire", "prix_bas": 280.0, "prix_moyen": 350.0, "prix_haut": 450.0, "source": "Devis reel", "notes": "Devis Bonnet 350EUR"}, {"categorie": "Menuiseries exterieures", "designation": "Decapage et peinture porte d'entree", "unite": "u", "prix_bas": 450.0, "prix_moyen": 550.0, "prix_haut": 700.0, "source": "Devis reel", "notes": "Devis Bonnet 550EUR"}, {"categorie": "Menuiseries exterieures", "designation": "Echafaudage (forfait chantier hauteur R+1)", "unite": "forfait", "prix_bas": 450.0, "prix_moyen": 580.0, "prix_haut": 800.0, "source": "Devis reel", "notes": "Devis Bonnet 580EUR"}, {"categorie": "Menuiseries exterieures", "designation": "Pose menuiserie en renovation depose totale (main d'oeuvre seule)", "unite": "u", "prix_bas": 150.0, "prix_moyen": 200.0, "prix_haut": 280.0, "source": "Devis reel", "notes": "Devis Bonnet/Nova 195-260EUR"}, {"categorie": "Menuiseries exterieures", "designation": "Portail motorise fourniture+pose+motorisation", "unite": "forfait", "prix_bas": 1800.0, "prix_moyen": 2100.0, "prix_haut": 2800.0, "source": "Devis reel", "notes": "Devis LP Elec 2126EUR"}, {"categorie": "Menuiseries interieures", "designation": "Bloc-porte interieur fourniture+pose (huisserie+serrure)", "unite": "u", "prix_bas": 850.0, "prix_moyen": 1000.0, "prix_haut": 1200.0, "source": "Devis reel", "notes": "Devis Bonnet 945EUR"}, {"categorie": "Menuiseries interieures", "designation": "Pose porte palliere seule (cloison ossature metallique)", "unite": "u", "prix_bas": 80.0, "prix_moyen": 100.0, "prix_haut": 150.0, "source": "Devis reel", "notes": "Devis Bonnet 95EUR"}, {"categorie": "Cloisons / Platrerie / Isolation", "designation": "Cloison de distribution placo (rails+montants 48 double BA13 laine 45mm) fourniture+pose", "unite": "m2", "prix_bas": 75.0, "prix_moyen": 88.0, "prix_haut": 100.0, "source": "Devis reel", "notes": "Devis Bonnet 88EUR/m2 (6 lignes coherentes)"}, {"categorie": "Cloisons / Platrerie / Isolation", "designation": "Joints / finition plaque de platre (hors poncage)", "unite": "m2", "prix_bas": 6.0, "prix_moyen": 8.0, "prix_haut": 10.0, "source": "Devis reel", "notes": "Devis Bonnet 7EUR/m2"}, {"categorie": "Cloisons / Platrerie / Isolation", "designation": "Doublage isolation interieure (placo + laine mur peripherique)", "unite": "m2", "prix_bas": 45.0, "prix_moyen": 60.0, "prix_haut": 80.0, "source": "Estimation marche", "notes": "A calibrer avec vos devis"}, {"categorie": "Cloisons / Platrerie / Isolation", "designation": "Isolation combles amenages (rampants)", "unite": "m2", "prix_bas": 35.0, "prix_moyen": 50.0, "prix_haut": 70.0, "source": "Estimation marche", "notes": "A calibrer avec vos devis"}, {"categorie": "Cloisons / Platrerie / Isolation", "designation": "Saignees murs pour distribution electrique (forfait par logement)", "unite": "forfait", "prix_bas": 1100.0, "prix_moyen": 1350.0, "prix_haut": 1700.0, "source": "Devis reel", "notes": "Devis Lamba17 1348EUR"}, {"categorie": "Electricite", "designation": "Generalites electriques appartement / T2-T3 (tableau+communication+cablage+VMC+saignees)", "unite": "forfait", "prix_bas": 2200.0, "prix_moyen": 2900.0, "prix_haut": 3300.0, "source": "Devis reel", "notes": "Devis Lamba17 2846-3181EUR / LP Elec 2217EUR"}, {"categorie": "Electricite", "designation": "Generalites electriques maison plus de 100m2 (tableau+communication+cablage+VMC+saignees)", "unite": "forfait", "prix_bas": 5500.0, "prix_moyen": 6200.0, "prix_haut": 7000.0, "source": "Devis reel", "notes": "Devis Lamba17 6023-6323EUR"}, {"categorie": "Electricite", "designation": "Tableau electrique seul fourniture+pose prequipe", "unite": "u", "prix_bas": 1150.0, "prix_moyen": 1700.0, "prix_haut": 2050.0, "source": "Devis reel", "notes": "Devis LP Elec 1139-2035EUR"}, {"categorie": "Electricite", "designation": "Mise a la terre fourniture+pose+verification", "unite": "u", "prix_bas": 380.0, "prix_moyen": 420.0, "prix_haut": 460.0, "source": "Devis reel", "notes": "Devis LP Elec / Lamba17 381-450EUR"}, {"categorie": "Electricite", "designation": "Point lumineux simple allumage", "unite": "u", "prix_bas": 70.0, "prix_moyen": 100.0, "prix_haut": 185.0, "source": "Devis reel", "notes": "74-183EUR selon config"}, {"categorie": "Electricite", "designation": "Point lumineux va-et-vient ou telerupteur", "unite": "u", "prix_bas": 125.0, "prix_moyen": 220.0, "prix_haut": 460.0, "source": "Devis reel", "notes": "127-460EUR"}, {"categorie": "Electricite", "designation": "Point lumineux supplementaire (spot LED)", "unite": "u", "prix_bas": 18.0, "prix_moyen": 55.0, "prix_haut": 75.0, "source": "Devis reel", "notes": "18-75EUR"}, {"categorie": "Electricite", "designation": "Prise de courant 2P+T standard", "unite": "u", "prix_bas": 58.0, "prix_moyen": 75.0, "prix_haut": 80.0, "source": "Devis reel", "notes": "58-79EUR"}, {"categorie": "Electricite", "designation": "Prise RJ45 / informatique blindee", "unite": "u", "prix_bas": 90.0, "prix_moyen": 100.0, "prix_haut": 110.0, "source": "Devis reel", "notes": "93-108EUR"}, {"categorie": "Electricite", "designation": "Prise TV coaxiale", "unite": "u", "prix_bas": 70.0, "prix_moyen": 77.0, "prix_haut": 85.0, "source": "Devis reel", "notes": ""}, {"categorie": "Electricite", "designation": "Ligne dediee electromenager (plaque four LV LL)", "unite": "u", "prix_bas": 79.0, "prix_moyen": 130.0, "prix_haut": 175.0, "source": "Devis reel", "notes": "79-174EUR"}, {"categorie": "Electricite", "designation": "VMC hygroreglable kit complet fourniture+pose", "unite": "forfait", "prix_bas": 415.0, "prix_moyen": 900.0, "prix_haut": 2000.0, "source": "Devis reel", "notes": "415EUR kit simple a 1484-1984EUR VMC complete"}, {"categorie": "Electricite", "designation": "Radiateur electrique chaleur douce fourniture+pose+alimentation", "unite": "u", "prix_bas": 400.0, "prix_moyen": 500.0, "prix_haut": 600.0, "source": "Devis reel", "notes": "447-580EUR"}, {"categorie": "Electricite", "designation": "Seche-serviettes electrique connecte fourniture+pose+alimentation", "unite": "u", "prix_bas": 460.0, "prix_moyen": 530.0, "prix_haut": 620.0, "source": "Devis reel", "notes": "463-570EUR"}, {"categorie": "Electricite", "designation": "Alimentation volet roulant electrique", "unite": "u", "prix_bas": 65.0, "prix_moyen": 72.0, "prix_haut": 80.0, "source": "Devis reel", "notes": ""}, {"categorie": "Plomberie / Sanitaire", "designation": "Salle de bain complete (douche+vasque+WC+evac/alim hors carrelage)", "unite": "forfait", "prix_bas": 2300.0, "prix_moyen": 2700.0, "prix_haut": 3200.0, "source": "Devis reel", "notes": "Devis SFTJ ~2500-2900EUR/SDB"}, {"categorie": "Plomberie / Sanitaire", "designation": "Douche complete (cabine quart de rond) fourniture+pose", "unite": "u", "prix_bas": 950.0, "prix_moyen": 1100.0, "prix_haut": 1300.0, "source": "Devis reel", "notes": "Devis SFTJ 1100EUR"}, {"categorie": "Plomberie / Sanitaire", "designation": "Vasque simple + robinetterie posee", "unite": "u", "prix_bas": 400.0, "prix_moyen": 450.0, "prix_haut": 550.0, "source": "Devis reel", "notes": ""}, {"categorie": "Plomberie / Sanitaire", "designation": "Vasque double + robinetterie posee", "unite": "u", "prix_bas": 750.0, "prix_moyen": 850.0, "prix_haut": 950.0, "source": "Devis reel", "notes": ""}, {"categorie": "Plomberie / Sanitaire", "designation": "Baignoire + robinetterie posee", "unite": "u", "prix_bas": 450.0, "prix_moyen": 500.0, "prix_haut": 600.0, "source": "Devis reel", "notes": ""}, {"categorie": "Plomberie / Sanitaire", "designation": "WC complet pose (pack a poser)", "unite": "u", "prix_bas": 250.0, "prix_moyen": 280.0, "prix_haut": 350.0, "source": "Devis reel", "notes": ""}, {"categorie": "Plomberie / Sanitaire", "designation": "Ballon eau chaude extra-plat 80L + groupe securite pose", "unite": "u", "prix_bas": 700.0, "prix_moyen": 800.0, "prix_haut": 950.0, "source": "Devis reel", "notes": ""}, {"categorie": "Plomberie / Sanitaire", "designation": "Alimentation / evacuation EC-EF (par point ponctuel)", "unite": "u", "prix_bas": 80.0, "prix_moyen": 150.0, "prix_haut": 220.0, "source": "Devis reel", "notes": ""}, {"categorie": "Chauffage / ECS", "designation": "Chaudiere gaz condensation fourniture+pose", "unite": "u", "prix_bas": 3500.0, "prix_moyen": 4500.0, "prix_haut": 6000.0, "source": "Estimation marche", "notes": "A calibrer avec vos devis"}, {"categorie": "Chauffage / ECS", "designation": "Pompe a chaleur air/eau fourniture+pose", "unite": "u", "prix_bas": 8000.0, "prix_moyen": 11000.0, "prix_haut": 15000.0, "source": "Estimation marche", "notes": "A calibrer avec vos devis"}, {"categorie": "Revetements sols et murs / Peinture", "designation": "Peinture rafraichissement murs+plafonds 2 couches", "unite": "m2", "prix_bas": 20.0, "prix_moyen": 28.0, "prix_haut": 38.0, "source": "Estimation marche", "notes": "A calibrer avec vos devis"}, {"categorie": "Revetements sols et murs / Peinture", "designation": "Sol stratifie ou PVC pose", "unite": "m2", "prix_bas": 30.0, "prix_moyen": 45.0, "prix_haut": 60.0, "source": "Estimation marche", "notes": "A calibrer avec vos devis"}, {"categorie": "Revetements sols et murs / Peinture", "designation": "Carrelage sol pose fourniture+pose", "unite": "m2", "prix_bas": 55.0, "prix_moyen": 75.0, "prix_haut": 100.0, "source": "Estimation marche", "notes": "A calibrer avec vos devis"}, {"categorie": "Revetements sols et murs / Peinture", "designation": "Faience murale salle de bain posee", "unite": "m2", "prix_bas": 60.0, "prix_moyen": 80.0, "prix_haut": 110.0, "source": "Estimation marche", "notes": "A calibrer avec vos devis"}, {"categorie": "Revetements sols et murs / Peinture", "designation": "Parquet contrecolle pose", "unite": "m2", "prix_bas": 50.0, "prix_moyen": 70.0, "prix_haut": 100.0, "source": "Estimation marche", "notes": "A calibrer avec vos devis"}, {"categorie": "Cuisine", "designation": "Cuisine equipee standard (meubles+plan de travail hors electromenager)", "unite": "forfait", "prix_bas": 4000.0, "prix_moyen": 6500.0, "prix_haut": 10000.0, "source": "Estimation marche", "notes": "A calibrer avec vos devis"}, {"categorie": "VRD / Terrassement / Assainissement", "designation": "Assainissement individuel (fosse toutes eaux + epandage) creation", "unite": "forfait", "prix_bas": 8000.0, "prix_moyen": 11000.0, "prix_haut": 15000.0, "source": "Estimation marche", "notes": "A calibrer avec vos devis"}, {"categorie": "VRD / Terrassement / Assainissement", "designation": "Terrassement / VRD general (acces reseaux)", "unite": "forfait", "prix_bas": 3000.0, "prix_moyen": 6000.0, "prix_haut": 12000.0, "source": "Estimation marche", "notes": "A calibrer avec vos devis"}, {"categorie": "Facade / Ravalement", "designation": "Ravalement de facade (enduit fourniture+pose)", "unite": "m2", "prix_bas": 55.0, "prix_moyen": 75.0, "prix_haut": 100.0, "source": "Estimation marche", "notes": "A calibrer avec vos devis"}, {"categorie": "Facade / Ravalement", "designation": "Peinture facade", "unite": "m2", "prix_bas": 25.0, "prix_moyen": 35.0, "prix_haut": 50.0, "source": "Estimation marche", "notes": "A calibrer avec vos devis"}, {"categorie": "Divers", "designation": "Petites fournitures / consommables chantier (forfait)", "unite": "forfait", "prix_bas": 200.0, "prix_moyen": 350.0, "prix_haut": 550.0, "source": "Devis reel", "notes": "250-500EUR observes"}, {"categorie": "Divers", "designation": "Nettoyage de fin de chantier", "unite": "forfait", "prix_bas": 100.0, "prix_moyen": 200.0, "prix_haut": 400.0, "source": "Devis reel", "notes": "150EUR observe"}];
+const DEFAULT_PRICES = [{"categorie": "Demolition / Evacuation", "designation": "Demolition cloison legere (placo / carreaux de platre)", "unite": "m2", "prix_bas": 15.0, "prix_moyen": 25.0, "prix_haut": 35.0, "source": "Estimation marche", "notes": "A calibrer avec vos devis"}, {"categorie": "Demolition / Evacuation", "designation": "Demolition mur parpaing ou brique (non porteur)", "unite": "m2", "prix_bas": 30.0, "prix_moyen": 45.0, "prix_haut": 65.0, "source": "Estimation marche", "notes": "A calibrer avec vos devis"}, {"categorie": "Demolition / Evacuation", "designation": "Depose et evacuation d'un element (placard sanitaire etc.)", "unite": "forfait", "prix_bas": 100.0, "prix_moyen": 200.0, "prix_haut": 400.0, "source": "Estimation marche", "notes": ""}, {"categorie": "Demolition / Evacuation", "designation": "Evacuation gravats / location benne (par m3)", "unite": "m3", "prix_bas": 30.0, "prix_moyen": 40.0, "prix_haut": 50.0, "source": "Devis reel", "notes": "Base CYCLAD 35.90EUR TTC/m3"}, {"categorie": "Gros oeuvre / Maconnerie", "designation": "Creation d'ouverture en mur (porte ou fenetre jusqu'a 3m)", "unite": "u", "prix_bas": 2200.0, "prix_moyen": 2700.0, "prix_haut": 3500.0, "source": "Devis reel", "notes": "Devis Riguet 2700EUR"}, {"categorie": "Gros oeuvre / Maconnerie", "designation": "Bouchage d'ouverture en parpaings (avec finitions)", "unite": "u", "prix_bas": 700.0, "prix_moyen": 900.0, "prix_haut": 1400.0, "source": "Devis reel", "notes": "Devis Riguet 700-900EUR"}, {"categorie": "Gros oeuvre / Maconnerie", "designation": "Reprise de plancher ponctuelle", "unite": "u", "prix_bas": 300.0, "prix_moyen": 500.0, "prix_haut": 900.0, "source": "Devis reel", "notes": "Devis Riguet 350EUR"}, {"categorie": "Gros oeuvre / Maconnerie", "designation": "Creation d'evacuation sanitaire (percement + raccord beton)", "unite": "u", "prix_bas": 900.0, "prix_moyen": 1200.0, "prix_haut": 1600.0, "source": "Devis reel", "notes": "Devis Riguet 1200EUR"}, {"categorie": "Gros oeuvre / Maconnerie", "designation": "Chape beton / ragreage de sol", "unite": "m2", "prix_bas": 20.0, "prix_moyen": 30.0, "prix_haut": 45.0, "source": "Estimation marche", "notes": "A calibrer avec vos devis"}, {"categorie": "Gros oeuvre / Maconnerie", "designation": "Reprise de fissures / enduit maconnerie ponctuel", "unite": "forfait", "prix_bas": 300.0, "prix_moyen": 600.0, "prix_haut": 1200.0, "source": "Estimation marche", "notes": "A calibrer avec vos devis"}, {"categorie": "Toiture / Couverture / Zinguerie", "designation": "Pose toiture bac acier isole (fourniture + pose complete)", "unite": "m2", "prix_bas": 45.0, "prix_moyen": 52.0, "prix_haut": 60.0, "source": "Devis reel", "notes": "Devis Collard 51.6EUR/m2 HT sur 487m2"}, {"categorie": "Toiture / Couverture / Zinguerie", "designation": "Desamiantage + depose toiture fibro-ciment (avec evacuation specialisee)", "unite": "m2", "prix_bas": 28.0, "prix_moyen": 34.0, "prix_haut": 42.0, "source": "Devis reel", "notes": "Devis Collard 33.2EUR/m2 HT + forfaits"}, {"categorie": "Toiture / Couverture / Zinguerie", "designation": "Couverture tuiles (depose + pose neuve fourniture+pose)", "unite": "m2", "prix_bas": 90.0, "prix_moyen": 130.0, "prix_haut": 180.0, "source": "Estimation marche", "notes": "A calibrer avec vos devis"}, {"categorie": "Toiture / Couverture / Zinguerie", "designation": "Reparation ponctuelle / recherche de fuite toiture", "unite": "forfait", "prix_bas": 150.0, "prix_moyen": 250.0, "prix_haut": 450.0, "source": "Devis reel", "notes": "Devis Riguet 200EUR"}, {"categorie": "Toiture / Couverture / Zinguerie", "designation": "Raccord de zinguerie autour d'un conduit de cheminee", "unite": "u", "prix_bas": 450.0, "prix_moyen": 600.0, "prix_haut": 850.0, "source": "Devis reel", "notes": "Devis Riguet 600EUR"}, {"categorie": "Toiture / Couverture / Zinguerie", "designation": "Isolation combles perdus (soufflee)", "unite": "m2", "prix_bas": 20.0, "prix_moyen": 30.0, "prix_haut": 45.0, "source": "Estimation marche", "notes": "A calibrer avec vos devis"}, {"categorie": "Menuiseries exterieures", "designation": "Fenetre bois 2 vantaux petite (moins de 1.8m2) fourniture+pose", "unite": "u", "prix_bas": 950.0, "prix_moyen": 1150.0, "prix_haut": 1400.0, "source": "Devis reel", "notes": "Devis Bonnet / Nova 950-1275EUR"}, {"categorie": "Menuiseries exterieures", "designation": "Fenetre bois 2 vantaux moyenne (1.8 a 3m2) fourniture+pose", "unite": "u", "prix_bas": 1300.0, "prix_moyen": 1600.0, "prix_haut": 1950.0, "source": "Devis reel", "notes": "Devis Bonnet / Nova 1210-1935EUR"}, {"categorie": "Menuiseries exterieures", "designation": "Fenetre PVC equivalente fourniture+pose", "unite": "u", "prix_bas": 500.0, "prix_moyen": 650.0, "prix_haut": 900.0, "source": "Estimation marche", "notes": "A calibrer avec vos devis"}, {"categorie": "Menuiseries exterieures", "designation": "Volet bois battant la paire fourniture+pose", "unite": "paire", "prix_bas": 1000.0, "prix_moyen": 1250.0, "prix_haut": 1500.0, "source": "Devis reel", "notes": "Devis Bonnet"}, {"categorie": "Menuiseries exterieures", "designation": "Decapage et peinture de volets existants (la paire)", "unite": "paire", "prix_bas": 280.0, "prix_moyen": 350.0, "prix_haut": 450.0, "source": "Devis reel", "notes": "Devis Bonnet 350EUR"}, {"categorie": "Menuiseries exterieures", "designation": "Decapage et peinture porte d'entree", "unite": "u", "prix_bas": 450.0, "prix_moyen": 550.0, "prix_haut": 700.0, "source": "Devis reel", "notes": "Devis Bonnet 550EUR"}, {"categorie": "Menuiseries exterieures", "designation": "Echafaudage (forfait chantier hauteur R+1)", "unite": "forfait", "prix_bas": 450.0, "prix_moyen": 580.0, "prix_haut": 800.0, "source": "Devis reel", "notes": "Devis Bonnet 580EUR"}, {"categorie": "Menuiseries exterieures", "designation": "Pose menuiserie en renovation depose totale (main d'oeuvre seule)", "unite": "u", "prix_bas": 150.0, "prix_moyen": 200.0, "prix_haut": 280.0, "source": "Devis reel", "notes": "Devis Bonnet/Nova 195-260EUR"}, {"categorie": "Menuiseries exterieures", "designation": "Portail motorise fourniture+pose+motorisation", "unite": "forfait", "prix_bas": 1800.0, "prix_moyen": 2100.0, "prix_haut": 2800.0, "source": "Devis reel", "notes": "Devis LP Elec 2126EUR"}, {"categorie": "Menuiseries interieures", "designation": "Bloc-porte interieur fourniture+pose (huisserie+serrure)", "unite": "u", "prix_bas": 850.0, "prix_moyen": 1000.0, "prix_haut": 1200.0, "source": "Devis reel", "notes": "Devis Bonnet 945EUR"}, {"categorie": "Menuiseries interieures", "designation": "Pose porte palliere seule (cloison ossature metallique)", "unite": "u", "prix_bas": 80.0, "prix_moyen": 100.0, "prix_haut": 150.0, "source": "Devis reel", "notes": "Devis Bonnet 95EUR"}, {"categorie": "Cloisons / Platrerie / Isolation", "designation": "Cloison de distribution placo (rails+montants 48 double BA13 laine 45mm) fourniture+pose", "unite": "m2", "prix_bas": 75.0, "prix_moyen": 88.0, "prix_haut": 100.0, "source": "Devis reel", "notes": "Devis Bonnet 88EUR/m2 (6 lignes coherentes)"}, {"categorie": "Cloisons / Platrerie / Isolation", "designation": "Joints / finition plaque de platre (hors poncage)", "unite": "m2", "prix_bas": 6.0, "prix_moyen": 8.0, "prix_haut": 10.0, "source": "Devis reel", "notes": "Devis Bonnet 7EUR/m2"}, {"categorie": "Cloisons / Platrerie / Isolation", "designation": "Doublage isolation interieure (placo + laine mur peripherique)", "unite": "m2", "prix_bas": 45.0, "prix_moyen": 60.0, "prix_haut": 80.0, "source": "Estimation marche", "notes": "A calibrer avec vos devis"}, {"categorie": "Cloisons / Platrerie / Isolation", "designation": "Isolation combles amenages (rampants)", "unite": "m2", "prix_bas": 35.0, "prix_moyen": 50.0, "prix_haut": 70.0, "source": "Estimation marche", "notes": "A calibrer avec vos devis"}, {"categorie": "Cloisons / Platrerie / Isolation", "designation": "Saignees murs pour distribution electrique (forfait par logement)", "unite": "forfait", "prix_bas": 1100.0, "prix_moyen": 1350.0, "prix_haut": 1700.0, "source": "Devis reel", "notes": "Devis Lamba17 1348EUR"}, {"categorie": "Electricite", "designation": "Generalites electriques appartement / T2-T3 (tableau+communication+cablage+VMC+saignees)", "unite": "forfait", "prix_bas": 2200.0, "prix_moyen": 2900.0, "prix_haut": 3300.0, "source": "Devis reel", "notes": "Devis Lamba17 2846-3181EUR / LP Elec 2217EUR"}, {"categorie": "Electricite", "designation": "Generalites electriques maison plus de 100m2 (tableau+communication+cablage+VMC+saignees)", "unite": "forfait", "prix_bas": 5500.0, "prix_moyen": 6200.0, "prix_haut": 7000.0, "source": "Devis reel", "notes": "Devis Lamba17 6023-6323EUR"}, {"categorie": "Electricite", "designation": "Tableau electrique seul fourniture+pose prequipe", "unite": "u", "prix_bas": 1150.0, "prix_moyen": 1700.0, "prix_haut": 2050.0, "source": "Devis reel", "notes": "Devis LP Elec 1139-2035EUR"}, {"categorie": "Electricite", "designation": "Mise a la terre fourniture+pose+verification", "unite": "u", "prix_bas": 380.0, "prix_moyen": 420.0, "prix_haut": 460.0, "source": "Devis reel", "notes": "Devis LP Elec / Lamba17 381-450EUR"}, {"categorie": "Electricite", "designation": "Point lumineux simple allumage", "unite": "u", "prix_bas": 70.0, "prix_moyen": 100.0, "prix_haut": 185.0, "source": "Devis reel", "notes": "74-183EUR selon config"}, {"categorie": "Electricite", "designation": "Point lumineux va-et-vient ou telerupteur", "unite": "u", "prix_bas": 125.0, "prix_moyen": 220.0, "prix_haut": 460.0, "source": "Devis reel", "notes": "127-460EUR"}, {"categorie": "Electricite", "designation": "Point lumineux supplementaire (spot LED)", "unite": "u", "prix_bas": 18.0, "prix_moyen": 55.0, "prix_haut": 75.0, "source": "Devis reel", "notes": "18-75EUR"}, {"categorie": "Electricite", "designation": "Prise de courant 2P+T standard", "unite": "u", "prix_bas": 58.0, "prix_moyen": 75.0, "prix_haut": 80.0, "source": "Devis reel", "notes": "58-79EUR"}, {"categorie": "Electricite", "designation": "Prise RJ45 / informatique blindee", "unite": "u", "prix_bas": 90.0, "prix_moyen": 100.0, "prix_haut": 110.0, "source": "Devis reel", "notes": "93-108EUR"}, {"categorie": "Electricite", "designation": "Prise TV coaxiale", "unite": "u", "prix_bas": 70.0, "prix_moyen": 77.0, "prix_haut": 85.0, "source": "Devis reel", "notes": ""}, {"categorie": "Electricite", "designation": "Ligne dediee electromenager (plaque four LV LL)", "unite": "u", "prix_bas": 79.0, "prix_moyen": 130.0, "prix_haut": 175.0, "source": "Devis reel", "notes": "79-174EUR"}, {"categorie": "Electricite", "designation": "VMC hygroreglable kit complet fourniture+pose", "unite": "forfait", "prix_bas": 415.0, "prix_moyen": 900.0, "prix_haut": 2000.0, "source": "Devis reel", "notes": "415EUR kit simple a 1484-1984EUR VMC complete"}, {"categorie": "Electricite", "designation": "Radiateur electrique chaleur douce fourniture+pose+alimentation", "unite": "u", "prix_bas": 400.0, "prix_moyen": 500.0, "prix_haut": 600.0, "source": "Devis reel", "notes": "447-580EUR"}, {"categorie": "Electricite", "designation": "Seche-serviettes electrique connecte fourniture+pose+alimentation", "unite": "u", "prix_bas": 460.0, "prix_moyen": 530.0, "prix_haut": 620.0, "source": "Devis reel", "notes": "463-570EUR"}, {"categorie": "Electricite", "designation": "Alimentation volet roulant electrique", "unite": "u", "prix_bas": 65.0, "prix_moyen": 72.0, "prix_haut": 80.0, "source": "Devis reel", "notes": ""}, {"categorie": "Plomberie / Sanitaire", "designation": "Salle de bain complete (douche+vasque+WC+evac/alim hors carrelage)", "unite": "forfait", "prix_bas": 2300.0, "prix_moyen": 2700.0, "prix_haut": 3200.0, "source": "Devis reel", "notes": "Devis SFTJ ~2500-2900EUR/SDB"}, {"categorie": "Plomberie / Sanitaire", "designation": "Douche complete (cabine quart de rond) fourniture+pose", "unite": "u", "prix_bas": 950.0, "prix_moyen": 1100.0, "prix_haut": 1300.0, "source": "Devis reel", "notes": "Devis SFTJ 1100EUR"}, {"categorie": "Plomberie / Sanitaire", "designation": "Vasque simple + robinetterie posee", "unite": "u", "prix_bas": 400.0, "prix_moyen": 450.0, "prix_haut": 550.0, "source": "Devis reel", "notes": ""}, {"categorie": "Plomberie / Sanitaire", "designation": "Vasque double + robinetterie posee", "unite": "u", "prix_bas": 750.0, "prix_moyen": 850.0, "prix_haut": 950.0, "source": "Devis reel", "notes": ""}, {"categorie": "Plomberie / Sanitaire", "designation": "Baignoire + robinetterie posee", "unite": "u", "prix_bas": 450.0, "prix_moyen": 500.0, "prix_haut": 600.0, "source": "Devis reel", "notes": ""}, {"categorie": "Plomberie / Sanitaire", "designation": "WC complet pose (pack a poser)", "unite": "u", "prix_bas": 250.0, "prix_moyen": 280.0, "prix_haut": 350.0, "source": "Devis reel", "notes": ""}, {"categorie": "Plomberie / Sanitaire", "designation": "Ballon eau chaude extra-plat 80L + groupe securite pose", "unite": "u", "prix_bas": 700.0, "prix_moyen": 800.0, "prix_haut": 950.0, "source": "Devis reel", "notes": ""}, {"categorie": "Plomberie / Sanitaire", "designation": "Alimentation / evacuation EC-EF (par point ponctuel)", "unite": "u", "prix_bas": 80.0, "prix_moyen": 150.0, "prix_haut": 220.0, "source": "Devis reel", "notes": ""}, {"categorie": "Chauffage / ECS", "designation": "Chaudiere gaz condensation fourniture+pose", "unite": "u", "prix_bas": 3500.0, "prix_moyen": 4500.0, "prix_haut": 6000.0, "source": "Estimation marche", "notes": "A calibrer avec vos devis"}, {"categorie": "Chauffage / ECS", "designation": "Pompe a chaleur air/eau fourniture+pose", "unite": "u", "prix_bas": 8000.0, "prix_moyen": 11000.0, "prix_haut": 15000.0, "source": "Estimation marche", "notes": "A calibrer avec vos devis"}, {"categorie": "Revetements sols et murs / Peinture", "designation": "Peinture rafraichissement murs+plafonds 2 couches", "unite": "m2", "prix_bas": 20.0, "prix_moyen": 28.0, "prix_haut": 38.0, "source": "Estimation marche", "notes": "A calibrer avec vos devis"}, {"categorie": "Revetements sols et murs / Peinture", "designation": "Sol stratifie ou PVC pose", "unite": "m2", "prix_bas": 30.0, "prix_moyen": 45.0, "prix_haut": 60.0, "source": "Estimation marche", "notes": "A calibrer avec vos devis"}, {"categorie": "Revetements sols et murs / Peinture", "designation": "Carrelage sol pose fourniture+pose", "unite": "m2", "prix_bas": 55.0, "prix_moyen": 75.0, "prix_haut": 100.0, "source": "Estimation marche", "notes": "A calibrer avec vos devis"}, {"categorie": "Revetements sols et murs / Peinture", "designation": "Faience murale salle de bain posee", "unite": "m2", "prix_bas": 60.0, "prix_moyen": 80.0, "prix_haut": 110.0, "source": "Estimation marche", "notes": "A calibrer avec vos devis"}, {"categorie": "Revetements sols et murs / Peinture", "designation": "Parquet contrecolle pose", "unite": "m2", "prix_bas": 50.0, "prix_moyen": 70.0, "prix_haut": 100.0, "source": "Estimation marche", "notes": "A calibrer avec vos devis"}, {"categorie": "Cuisine", "designation": "Cuisine equipee standard (meubles+plan de travail hors electromenager)", "unite": "forfait", "prix_bas": 4000.0, "prix_moyen": 6500.0, "prix_haut": 10000.0, "source": "Estimation marche", "notes": "A calibrer avec vos devis"}, {"categorie": "VRD / Terrassement / Assainissement", "designation": "Assainissement individuel (fosse toutes eaux + epandage) creation", "unite": "forfait", "prix_bas": 8000.0, "prix_moyen": 11000.0, "prix_haut": 15000.0, "source": "Estimation marche", "notes": "A calibrer avec vos devis"}, {"categorie": "VRD / Terrassement / Assainissement", "designation": "Terrassement / VRD general (acces reseaux)", "unite": "forfait", "prix_bas": 3000.0, "prix_moyen": 6000.0, "prix_haut": 12000.0, "source": "Estimation marche", "notes": "A calibrer avec vos devis"}, {"categorie": "Facade / Ravalement", "designation": "Ravalement de facade (enduit fourniture+pose)", "unite": "m2", "prix_bas": 55.0, "prix_moyen": 75.0, "prix_haut": 100.0, "source": "Estimation marche", "notes": "A calibrer avec vos devis"}, {"categorie": "Facade / Ravalement", "designation": "Peinture facade", "unite": "m2", "prix_bas": 25.0, "prix_moyen": 35.0, "prix_haut": 50.0, "source": "Estimation marche", "notes": "A calibrer avec vos devis"}, {"categorie": "Divers", "designation": "Petites fournitures / consommables chantier (forfait)", "unite": "forfait", "prix_bas": 200.0, "prix_moyen": 350.0, "prix_haut": 550.0, "source": "Devis reel", "notes": "250-500EUR observes"}, {"categorie": "Divers", "designation": "Nettoyage de fin de chantier", "unite": "forfait", "prix_bas": 100.0, "prix_moyen": 200.0, "prix_haut": 400.0, "source": "Devis reel", "notes": "150EUR observe"}, {"categorie": "Geometre / Bornage / Division", "designation": "Frais fixes ouverture de dossier geometre (mission fonciere)", "unite": "forfait", "prix_bas": 100.0, "prix_moyen": 131.0, "prix_haut": 180.0, "source": "Devis reel", "notes": "Devis Sit&a Conseil - prime fixe 131EUR observee"}, {"categorie": "Geometre / Bornage / Division", "designation": "Bornage de propriete (recherche limites + PV signe + convocation riverains)", "unite": "forfait", "prix_bas": 900.0, "prix_moyen": 1300.0, "prix_haut": 1900.0, "source": "Devis reel", "notes": "Devis Sit&a Conseil - recherche 1ere limite 100EUR + 50EUR/limite supp + PV bornage 200EUR"}, {"categorie": "Geometre / Bornage / Division", "designation": "Division parcellaire terrain a batir (bornage complet + plan division + declaration prealable urbanisme)", "unite": "forfait", "prix_bas": 1800.0, "prix_moyen": 2340.0, "prix_haut": 2900.0, "source": "Devis reel", "notes": "Devis Sit&a Conseil 224 Av Venise Verte Niort - 1950EUR HT / 2340EUR TTC"}, {"categorie": "Geometre / Bornage / Division", "designation": "Certificat de mesurage Loi Carrez", "unite": "u", "prix_bas": 150.0, "prix_moyen": 195.0, "prix_haut": 250.0, "source": "Devis reel", "notes": "Devis Sit&a Conseil - forfait 195EUR"}, {"categorie": "Geometre / Bornage / Division", "designation": "Releve topographique / plan de division (deplacement + releve + plan)", "unite": "forfait", "prix_bas": 800.0, "prix_moyen": 1200.0, "prix_haut": 1800.0, "source": "Devis reel", "notes": "Devis Sit&a Conseil - releve grand format immeuble complet 1800EUR"}, {"categorie": "Geometre / Bornage / Division", "designation": "Mise en copropriete d'un immeuble - forfait de base (EDD + reglement - jusqu'a 5 lots principaux)", "unite": "forfait", "prix_bas": 3000.0, "prix_moyen": 3740.0, "prix_haut": 4800.0, "source": "Devis reel", "notes": "Devis Sit&a Conseil parcelle ZI Andilly - 3740EUR HT / 4488EUR TTC (7 lots + 7 lots secondaires)"}, {"categorie": "Geometre / Bornage / Division", "designation": "Lot supplementaire en mise en copropriete (EDD + reglement + attestation Carrez)", "unite": "u", "prix_bas": 180.0, "prix_moyen": 250.0, "prix_haut": 320.0, "source": "Devis reel", "notes": "Devis Sit&a Conseil - 250EUR (2 premiers lots) degressif a 80EUR au-dela du 10e lot"}, {"categorie": "Geometre / Bornage / Division", "designation": "Modification etat descriptif de division / reglement de copropriete (par lot - moins de 6 lots)", "unite": "u", "prix_bas": 100.0, "prix_moyen": 130.0, "prix_haut": 180.0, "source": "Devis reel", "notes": "Devis Sit&a Conseil 27 rue Arsenal Niort - 130EUR/lot"}, {"categorie": "Geometre / Bornage / Division", "designation": "Montage de plan de copropriete (par piece)", "unite": "u", "prix_bas": 40.0, "prix_moyen": 55.0, "prix_haut": 70.0, "source": "Devis reel", "notes": "Devis Sit&a Conseil - 55EUR/piece"}, {"categorie": "Raccordements & Compteurs", "designation": "Droit de prise / branchement compteur eau (diametre 15mm)", "unite": "u", "prix_bas": 120.0, "prix_moyen": 148.0, "prix_haut": 180.0, "source": "Devis reel", "notes": "Devis Service des Eaux du Vivier Niort - 147.90EUR HT/unite"}, {"categorie": "Raccordements & Compteurs", "designation": "Frais de dossier raccordement eau (forfait etude)", "unite": "forfait", "prix_bas": 40.0, "prix_moyen": 54.0, "prix_haut": 70.0, "source": "Devis reel", "notes": "Devis Service des Eaux du Vivier - 53.70EUR"}, {"categorie": "Raccordements & Compteurs", "designation": "Etude bureau d'etudes electricite pour raccordement ENEDIS collectif (immeuble / division)", "unite": "forfait", "prix_bas": 1800.0, "prix_moyen": 2200.0, "prix_haut": 3000.0, "source": "Devis reel", "notes": "Devis ACE Betace Niort - 2200EUR HT / 2640EUR TTC"}, {"categorie": "Raccordements & Compteurs", "designation": "Raccordement / branchement electrique ENEDIS individuel (compteur neuf)", "unite": "forfait", "prix_bas": 900.0, "prix_moyen": 1300.0, "prix_haut": 1900.0, "source": "Estimation marche", "notes": "A calibrer avec vos devis - variable selon distance au reseau"}, {"categorie": "Raccordements & Compteurs", "designation": "Raccordement gaz GRDF (mise en service compteur)", "unite": "forfait", "prix_bas": 400.0, "prix_moyen": 600.0, "prix_haut": 900.0, "source": "Estimation marche", "notes": "A calibrer avec vos devis"}, {"categorie": "Raccordements & Compteurs", "designation": "Deplacement / modification emplacement compteur existant", "unite": "forfait", "prix_bas": 300.0, "prix_moyen": 500.0, "prix_haut": 800.0, "source": "Estimation marche", "notes": "A calibrer avec vos devis"}, {"categorie": "Etudes techniques", "designation": "Etude de sol G1 PGC (norme NFP94-500 - 1 sondage + 1 tariere)", "unite": "forfait", "prix_bas": 700.0, "prix_moyen": 890.0, "prix_haut": 1100.0, "source": "Devis reel", "notes": "Devis GPH Pau/Niort - 890EUR HT / 1068EUR TTC"}, {"categorie": "Etudes techniques", "designation": "Etude de sol G2 (etude geotechnique de conception)", "unite": "forfait", "prix_bas": 1500.0, "prix_moyen": 2200.0, "prix_haut": 3200.0, "source": "Estimation marche", "notes": "A calibrer avec vos devis"}, {"categorie": "Etudes techniques", "designation": "Etude d'assainissement individuel (conception filiere)", "unite": "forfait", "prix_bas": 600.0, "prix_moyen": 900.0, "prix_haut": 1300.0, "source": "Estimation marche", "notes": "A calibrer avec vos devis"}, {"categorie": "Diagnostics immobiliers", "designation": "Diagnostic amiante avant-vente ou avant-travaux (par lot)", "unite": "u", "prix_bas": 80.0, "prix_moyen": 100.0, "prix_haut": 150.0, "source": "Devis reel", "notes": "Devis Diagome Niort - 100EUR HT/lot (studio)"}, {"categorie": "Diagnostics immobiliers", "designation": "Diagnostic termites (par lot)", "unite": "u", "prix_bas": 80.0, "prix_moyen": 100.0, "prix_haut": 150.0, "source": "Devis reel", "notes": "Devis Diagome Niort - 100EUR HT/lot"}, {"categorie": "Diagnostics immobiliers", "designation": "Diagnostic plomb / CREP (par lot)", "unite": "u", "prix_bas": 80.0, "prix_moyen": 100.0, "prix_haut": 150.0, "source": "Devis reel", "notes": "Devis Diagome Niort - 100EUR HT/lot"}, {"categorie": "Diagnostics immobiliers", "designation": "Mesurage Loi Carrez (par lot > 50m2)", "unite": "u", "prix_bas": 50.0, "prix_moyen": 67.0, "prix_haut": 90.0, "source": "Devis reel", "notes": "Devis Diagome Niort - 66.67EUR HT/lot"}, {"categorie": "Diagnostics immobiliers", "designation": "Etat des Risques et Pollutions (ERP)", "unite": "u", "prix_bas": 20.0, "prix_moyen": 25.0, "prix_haut": 35.0, "source": "Devis reel", "notes": "Devis Diagome Niort - 25EUR HT (souvent offert en pack)"}, {"categorie": "Diagnostics immobiliers", "designation": "Diagnostic Technique Global (DTG) copropriete", "unite": "forfait", "prix_bas": 800.0, "prix_moyen": 1000.0, "prix_haut": 1500.0, "source": "Devis reel", "notes": "Devis Diagome Niort - 1000EUR HT pour 4 lots (batiment avant 1949)"}, {"categorie": "Diagnostics immobiliers", "designation": "Pack diagnostics complet avant-vente amiante+termites+plomb+carrez+ERP (par lot)", "unite": "u", "prix_bas": 300.0, "prix_moyen": 400.0, "prix_haut": 550.0, "source": "Devis reel", "notes": "Devis Diagome Niort - pack degressif avec remise globale (ex 4 lots 1750EUR HT apres remise)"}, {"categorie": "Huissier / Constats", "designation": "Constat d'huissier avant travaux", "unite": "forfait", "prix_bas": 900.0, "prix_moyen": 1115.0, "prix_haut": 1400.0, "source": "Devis reel", "notes": "Devis ACT'Atlantique - Commissaire de Justice - 1115EUR HT / 1338EUR TTC"}, {"categorie": "Huissier / Constats", "designation": "Constat d'huissier apres travaux", "unite": "forfait", "prix_bas": 900.0, "prix_moyen": 1115.0, "prix_haut": 1400.0, "source": "Devis reel", "notes": "Devis ACT'Atlantique - meme bareme que constat avant travaux"}, {"categorie": "Huissier / Constats", "designation": "Constat d'affichage (permis de construire)", "unite": "forfait", "prix_bas": 150.0, "prix_moyen": 250.0, "prix_haut": 400.0, "source": "Estimation marche", "notes": "A calibrer avec vos devis"}, {"categorie": "Huissier / Constats", "designation": "Etat des lieux contradictoire (avant/apres travaux)", "unite": "forfait", "prix_bas": 400.0, "prix_moyen": 600.0, "prix_haut": 900.0, "source": "Estimation marche", "notes": "A calibrer avec vos devis"}, {"categorie": "Syndic / Copropriete", "designation": "Remuneration syndic - forfait annuel (par lot)", "unite": "u", "prix_bas": 120.0, "prix_moyen": 167.0, "prix_haut": 220.0, "source": "Devis reel", "notes": "Devis Arthurimmo Agence du Chateau Niort - 166.67EUR HT/lot/an"}, {"categorie": "Syndic / Copropriete", "designation": "Immatriculation initiale du syndicat de copropriete", "unite": "forfait", "prix_bas": 250.0, "prix_moyen": 300.0, "prix_haut": 380.0, "source": "Devis reel", "notes": "Devis Arthurimmo - 300EUR HT"}, {"categorie": "Syndic / Copropriete", "designation": "Etablissement de l'etat date (mutation)", "unite": "forfait", "prix_bas": 270.0, "prix_moyen": 317.0, "prix_haut": 380.0, "source": "Devis reel", "notes": "Devis Arthurimmo - 316.67EUR HT"}, {"categorie": "Syndic / Copropriete", "designation": "Vacation syndic hors forfait (reunions AG supp. redaction reglement etc.)", "unite": "heure", "prix_bas": 70.0, "prix_moyen": 90.0, "prix_haut": 110.0, "source": "Devis reel", "notes": "Devis Arthurimmo - 90EUR HT/heure"}];
 
 let PRICES = [];
 let currentTier = 'prix_moyen';
@@ -348,6 +374,8 @@ function euros(n){
 
 function keyFor(cat, desig){ return cat+'|||'+desig; }
 
+const openCats = new Set();
+
 function render(){
   const cats = {};
   PRICES.forEach(p=>{ (cats[p.categorie] = cats[p.categorie]||[]).push(p); });
@@ -360,7 +388,10 @@ function render(){
     if(!items.length) return;
     const det = document.createElement('details');
     det.className = 'cat';
-    det.open = !!q;
+    det.open = openCats.has(cat) || !!q;
+    det.addEventListener('toggle', ()=>{
+      if(det.open) openCats.add(cat); else openCats.delete(cat);
+    });
     const nSel = items.filter(p=>selections[keyFor(cat,p.designation)]).length;
     det.innerHTML = `<summary class="cathead"><span>${cat}</span><span class="count">${items.length} postes${nSel? ' · '+nSel+' sélectionné(s)':''}</span></summary>`;
     const body = document.createElement('div');
@@ -464,15 +495,201 @@ document.querySelectorAll('#tierSwitch button').forEach(b=>{
   });
 });
 
+/* ============================================================
+   PHOTOS DU BIEN — capture/import local, compression cote client,
+   integration au dossier exporte (PDF + Word). Rien n'est envoye
+   sur un serveur : tout reste en memoire dans le navigateur.
+   ============================================================ */
+let photos = [];
+let photoCounter = 0;
+
+function compressImage(file, maxDim, quality){
+  return new Promise((resolve, reject)=>{
+    const reader = new FileReader();
+    reader.onload = e=>{
+      const img = new Image();
+      img.onload = ()=>{
+        let {width, height} = img;
+        if(width > maxDim || height > maxDim){
+          if(width > height){ height = Math.round(height * maxDim/width); width = maxDim; }
+          else { width = Math.round(width * maxDim/height); height = maxDim; }
+        }
+        const canvas = document.createElement('canvas');
+        canvas.width = width; canvas.height = height;
+        canvas.getContext('2d').drawImage(img, 0, 0, width, height);
+        resolve(canvas.toDataURL('image/jpeg', quality));
+      };
+      img.onerror = reject;
+      img.src = e.target.result;
+    };
+    reader.onerror = reject;
+    reader.readAsDataURL(file);
+  });
+}
+
+async function handlePhotoFiles(fileList){
+  for(const file of Array.from(fileList)){
+    if(!file.type.startsWith('image/')) continue;
+    try {
+      const dataUrl = await compressImage(file, 1400, 0.78);
+      photoCounter++;
+      photos.push({id:'p'+photoCounter, dataUrl, caption:''});
+    } catch(err){ console.warn('Photo ignorée (erreur de lecture) :', file.name, err); }
+  }
+  renderGallery();
+}
+
+document.getElementById('photoInput').addEventListener('change', e=>{
+  handlePhotoFiles(e.target.files);
+  e.target.value = '';
+});
+
+function renderGallery(){
+  const box = document.getElementById('photoGallery');
+  if(!photos.length){
+    box.innerHTML = '<div class="photo-empty-hint">Aucune photo ajoutée pour l\'instant.</div>';
+    return;
+  }
+  box.innerHTML = '';
+  photos.forEach(ph=>{
+    const item = document.createElement('div');
+    item.className = 'photo-item';
+    item.innerHTML = `
+      <img src="${ph.dataUrl}" alt="Photo du bien">
+      <div class="photo-meta">
+        <input type="text" placeholder="Légende (ex : fissure façade nord)" value="${ph.caption.replace(/"/g,'&quot;')}" data-id="${ph.id}">
+        <button type="button" class="photo-del" data-id="${ph.id}">Supprimer</button>
+      </div>
+    `;
+    item.querySelector('input').addEventListener('input', e=>{
+      const p = photos.find(x=>x.id===ph.id);
+      if(p) p.caption = e.target.value;
+    });
+    item.querySelector('.photo-del').addEventListener('click', ()=>{
+      photos = photos.filter(x=>x.id!==ph.id);
+      renderGallery();
+    });
+    box.appendChild(item);
+  });
+}
+
+function renderRecapPhotos(){
+  const box = document.getElementById('recapPhotos');
+  if(!photos.length){ box.innerHTML = ''; return; }
+  box.innerHTML = `
+    <h3>Photos du bien (${photos.length})</h3>
+    <div class="rp-grid">
+      ${photos.map(ph=>`
+        <div class="rp-item">
+          <img src="${ph.dataUrl}" alt="Photo du bien">
+          ${ph.caption? `<div class="rp-cap">${ph.caption}</div>` : ''}
+        </div>
+      `).join('')}
+    </div>
+  `;
+}
+
 function resetAll(){
-  if(!confirm('Réinitialiser le chiffrage en cours ?')) return;
+  if(!confirm('Réinitialiser le chiffrage en cours ? (les photos ajoutées seront aussi supprimées)')) return;
   Object.keys(selections).forEach(k=>delete selections[k]);
+  openCats.clear();
+  photos = [];
   document.getElementById('fAdresse').value='';
   document.getElementById('fSurface').value='';
   document.getElementById('fNotes').value='';
   document.getElementById('aleas').value=12;
-  render(); renderSummary();
+  render(); renderSummary(); renderGallery();
 }
+
+/* ============================================================
+   NIVEAU DE TRAVAUX → PRE-REMPLISSAGE DE POSTES TYPES
+   Le niveau n'a pas d'effet automatique sur le prix (chaque poste
+   reste piloté par ses propres cases à cocher), mais ce bouton
+   permet de partir d'une selection type coherente avec le niveau
+   choisi, a ajuster ensuite au cas par cas.
+   ============================================================ */
+const NIVEAU_STARTERS = {
+  'Léger': [
+    'Peinture rafraichissement murs+plafonds 2 couches',
+    'Sol stratifie ou PVC pose',
+    'Nettoyage de fin de chantier',
+    "Petites fournitures / consommables chantier (forfait)",
+    'Diagnostic amiante avant-vente ou avant-travaux (par lot)',
+    'Diagnostic termites (par lot)',
+    'Diagnostic plomb / CREP (par lot)',
+    "Etat des Risques et Pollutions (ERP)"
+  ],
+  'Moyen': [
+    'Generalites electriques appartement / T2-T3 (tableau+communication+cablage+VMC+saignees)',
+    'Salle de bain complete (douche+vasque+WC+evac/alim hors carrelage)',
+    'Cuisine equipee standard (meubles+plan de travail hors electromenager)',
+    'Carrelage sol pose fourniture+pose',
+    'Faience murale salle de bain posee',
+    'Peinture rafraichissement murs+plafonds 2 couches',
+    'Sol stratifie ou PVC pose',
+    'Nettoyage de fin de chantier',
+    "Petites fournitures / consommables chantier (forfait)",
+    'Pack diagnostics complet avant-vente amiante+termites+plomb+carrez+ERP (par lot)',
+    "Constat d'huissier avant travaux",
+    "Constat d'huissier apres travaux"
+  ],
+  'Lourd': [
+    'Demolition mur parpaing ou brique (non porteur)',
+    'Couverture tuiles (depose + pose neuve fourniture+pose)',
+    'Fenetre PVC equivalente fourniture+pose',
+    'Cloison de distribution placo (rails+montants 48 double BA13 laine 45mm) fourniture+pose',
+    'Generalites electriques maison plus de 100m2 (tableau+communication+cablage+VMC+saignees)',
+    'Chaudiere gaz condensation fourniture+pose',
+    'Salle de bain complete (douche+vasque+WC+evac/alim hors carrelage)',
+    'Cuisine equipee standard (meubles+plan de travail hors electromenager)',
+    'Carrelage sol pose fourniture+pose',
+    'Ravalement de facade (enduit fourniture+pose)',
+    'Pack diagnostics complet avant-vente amiante+termites+plomb+carrez+ERP (par lot)',
+    "Constat d'huissier avant travaux",
+    "Constat d'huissier apres travaux",
+    'Etude de sol G1 PGC (norme NFP94-500 - 1 sondage + 1 tariere)'
+  ],
+  'Coquille': [
+    'Demolition cloison legere (placo / carreaux de platre)',
+    'Demolition mur parpaing ou brique (non porteur)',
+    'Evacuation gravats / location benne (par m3)',
+    'Couverture tuiles (depose + pose neuve fourniture+pose)',
+    'Generalites electriques maison plus de 100m2 (tableau+communication+cablage+VMC+saignees)',
+    'Chaudiere gaz condensation fourniture+pose',
+    'Salle de bain complete (douche+vasque+WC+evac/alim hors carrelage)',
+    'Cuisine equipee standard (meubles+plan de travail hors electromenager)',
+    'Assainissement individuel (fosse toutes eaux + epandage) creation',
+    'Terrassement / VRD general (acces reseaux)',
+    'Ravalement de facade (enduit fourniture+pose)',
+    'Etude de sol G1 PGC (norme NFP94-500 - 1 sondage + 1 tariere)',
+    'Diagnostic Technique Global (DTG) copropriete',
+    'Pack diagnostics complet avant-vente amiante+termites+plomb+carrez+ERP (par lot)',
+    "Constat d'huissier avant travaux",
+    "Constat d'huissier apres travaux"
+  ]
+};
+
+function applyNiveauStarter(){
+  const niveau = document.getElementById('fNiveau').value;
+  const list = NIVEAU_STARTERS[niveau] || [];
+  if(!list.length) return;
+  let added = 0;
+  list.forEach(desig=>{
+    const p = PRICES.find(pr=>pr.designation===desig);
+    if(!p) return;
+    const k = keyFor(p.categorie, p.designation);
+    if(!selections[k]){
+      selections[k] = {item:p, qty:1};
+      added++;
+    }
+    openCats.add(p.categorie);
+  });
+  render(); renderSummary();
+  if(added===0){
+    alert('Les postes types de ce niveau sont déjà tous sélectionnés.');
+  }
+}
+document.getElementById('btnPrefillNiveau').addEventListener('click', applyNiveauStarter);
 
 /* ============================================================
    RECAPITULATIF + EXPORTS
@@ -511,6 +728,8 @@ function openRecap(){
     <div class="line big" style="border-top:1px solid #ddd;padding-top:8px;"><span>TOTAL ESTIMÉ (${currentTier==='prix_bas'?'optimiste':currentTier==='prix_haut'?'prudent':'réaliste'})</span><span class="big">${euros(t[currentTier==='prix_bas'?'bas':currentTier==='prix_haut'?'haut':'moyen'])}</span></div>
     <div class="range">Fourchette globale : ${euros(t.bas)} – ${euros(t.haut)}</div>
   `;
+
+  renderRecapPhotos();
 
   document.getElementById('recapModal').classList.add('show');
 }

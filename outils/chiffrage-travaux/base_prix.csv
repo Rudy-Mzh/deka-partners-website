@@ -68,3 +68,36 @@ Facade / Ravalement,Ravalement de facade (enduit fourniture+pose),m2,55,75,100,E
 Facade / Ravalement,Peinture facade,m2,25,35,50,Estimation marche,A calibrer avec vos devis
 Divers,Petites fournitures / consommables chantier (forfait),forfait,200,350,550,Devis reel,250-500EUR observes
 Divers,Nettoyage de fin de chantier,forfait,100,200,400,Devis reel,150EUR observe
+Geometre / Bornage / Division,Frais fixes ouverture de dossier geometre (mission fonciere),forfait,100,131,180,Devis reel,Devis Sit&a Conseil - prime fixe 131EUR observee
+Geometre / Bornage / Division,Bornage de propriete (recherche limites + PV signe + convocation riverains),forfait,900,1300,1900,Devis reel,Devis Sit&a Conseil - recherche 1ere limite 100EUR + 50EUR/limite supp + PV bornage 200EUR
+Geometre / Bornage / Division,Division parcellaire terrain a batir (bornage complet + plan division + declaration prealable urbanisme),forfait,1800,2340,2900,Devis reel,Devis Sit&a Conseil 224 Av Venise Verte Niort - 1950EUR HT / 2340EUR TTC
+Geometre / Bornage / Division,Certificat de mesurage Loi Carrez,u,150,195,250,Devis reel,Devis Sit&a Conseil - forfait 195EUR
+Geometre / Bornage / Division,Releve topographique / plan de division (deplacement + releve + plan),forfait,800,1200,1800,Devis reel,Devis Sit&a Conseil - releve grand format immeuble complet 1800EUR
+Geometre / Bornage / Division,Mise en copropriete d'un immeuble - forfait de base (EDD + reglement - jusqu'a 5 lots principaux),forfait,3000,3740,4800,Devis reel,Devis Sit&a Conseil parcelle ZI Andilly - 3740EUR HT / 4488EUR TTC (7 lots + 7 lots secondaires)
+Geometre / Bornage / Division,Lot supplementaire en mise en copropriete (EDD + reglement + attestation Carrez),u,180,250,320,Devis reel,Devis Sit&a Conseil - 250EUR (2 premiers lots) degressif a 80EUR au-dela du 10e lot
+Geometre / Bornage / Division,Modification etat descriptif de division / reglement de copropriete (par lot - moins de 6 lots),u,100,130,180,Devis reel,Devis Sit&a Conseil 27 rue Arsenal Niort - 130EUR/lot
+Geometre / Bornage / Division,Montage de plan de copropriete (par piece),u,40,55,70,Devis reel,Devis Sit&a Conseil - 55EUR/piece
+Raccordements & Compteurs,Droit de prise / branchement compteur eau (diametre 15mm),u,120,148,180,Devis reel,Devis Service des Eaux du Vivier Niort - 147.90EUR HT/unite
+Raccordements & Compteurs,Frais de dossier raccordement eau (forfait etude),forfait,40,54,70,Devis reel,Devis Service des Eaux du Vivier - 53.70EUR
+Raccordements & Compteurs,Etude bureau d'etudes electricite pour raccordement ENEDIS collectif (immeuble / division),forfait,1800,2200,3000,Devis reel,Devis ACE Betace Niort - 2200EUR HT / 2640EUR TTC
+Raccordements & Compteurs,Raccordement / branchement electrique ENEDIS individuel (compteur neuf),forfait,900,1300,1900,Estimation marche,A calibrer avec vos devis - variable selon distance au reseau
+Raccordements & Compteurs,Raccordement gaz GRDF (mise en service compteur),forfait,400,600,900,Estimation marche,A calibrer avec vos devis
+Raccordements & Compteurs,Deplacement / modification emplacement compteur existant,forfait,300,500,800,Estimation marche,A calibrer avec vos devis
+Etudes techniques,Etude de sol G1 PGC (norme NFP94-500 - 1 sondage + 1 tariere),forfait,700,890,1100,Devis reel,Devis GPH Pau/Niort - 890EUR HT / 1068EUR TTC
+Etudes techniques,Etude de sol G2 (etude geotechnique de conception),forfait,1500,2200,3200,Estimation marche,A calibrer avec vos devis
+Etudes techniques,Etude d'assainissement individuel (conception filiere),forfait,600,900,1300,Estimation marche,A calibrer avec vos devis
+Diagnostics immobiliers,Diagnostic amiante avant-vente ou avant-travaux (par lot),u,80,100,150,Devis reel,Devis Diagome Niort - 100EUR HT/lot (studio)
+Diagnostics immobiliers,Diagnostic termites (par lot),u,80,100,150,Devis reel,Devis Diagome Niort - 100EUR HT/lot
+Diagnostics immobiliers,Diagnostic plomb / CREP (par lot),u,80,100,150,Devis reel,Devis Diagome Niort - 100EUR HT/lot
+Diagnostics immobiliers,Mesurage Loi Carrez (par lot > 50m2),u,50,67,90,Devis reel,Devis Diagome Niort - 66.67EUR HT/lot
+Diagnostics immobiliers,Etat des Risques et Pollutions (ERP),u,20,25,35,Devis reel,Devis Diagome Niort - 25EUR HT (souvent offert en pack)
+Diagnostics immobiliers,Diagnostic Technique Global (DTG) copropriete,forfait,800,1000,1500,Devis reel,Devis Diagome Niort - 1000EUR HT pour 4 lots (batiment avant 1949)
+Diagnostics immobiliers,Pack diagnostics complet avant-vente amiante+termites+plomb+carrez+ERP (par lot),u,300,400,550,Devis reel,Devis Diagome Niort - pack degressif avec remise globale (ex 4 lots 1750EUR HT apres remise)
+Huissier / Constats,Constat d'huissier avant travaux,forfait,900,1115,1400,Devis reel,Devis ACT'Atlantique - Commissaire de Justice - 1115EUR HT / 1338EUR TTC
+Huissier / Constats,Constat d'huissier apres travaux,forfait,900,1115,1400,Devis reel,Devis ACT'Atlantique - meme bareme que constat avant travaux
+Huissier / Constats,Constat d'affichage (permis de construire),forfait,150,250,400,Estimation marche,A calibrer avec vos devis
+Huissier / Constats,Etat des lieux contradictoire (avant/apres travaux),forfait,400,600,900,Estimation marche,A calibrer avec vos devis
+Syndic / Copropriete,Remuneration syndic - forfait annuel (par lot),u,120,167,220,Devis reel,Devis Arthurimmo Agence du Chateau Niort - 166.67EUR HT/lot/an
+Syndic / Copropriete,Immatriculation initiale du syndicat de copropriete,forfait,250,300,380,Devis reel,Devis Arthurimmo - 300EUR HT
+Syndic / Copropriete,Etablissement de l'etat date (mutation),forfait,270,317,380,Devis reel,Devis Arthurimmo - 316.67EUR HT
+Syndic / Copropriete,Vacation syndic hors forfait (reunions AG supp. redaction reglement etc.),heure,70,90,110,Devis reel,Devis Arthurimmo - 90EUR HT/heure
