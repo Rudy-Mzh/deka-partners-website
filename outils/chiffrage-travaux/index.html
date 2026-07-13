@@ -8,6 +8,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.12.1/html2pdf.bundle.min.js"></script>
 <style>
   :root{
     --ink:#f2ede2; --ink-soft:#b7b0a2; --blue:#c9a84c; --blue-dark:#8a6f30;
@@ -275,7 +276,8 @@
       à confirmer par devis d'artisans avant toute décision d'acquisition ou de travaux.
     </p>
     <div class="recap-actions">
-      <button class="btn primary" onclick="window.print()">Exporter en PDF (imprimer)</button>
+      <button class="btn primary" id="btnShare" onclick="sharePdf()">Partager (WhatsApp, Mail…)</button>
+      <button class="btn ghost" onclick="window.print()">Exporter en PDF (imprimer)</button>
       <button class="btn ghost" onclick="exportWord()">Exporter en Word (.doc)</button>
       <button class="btn ghost" onclick="closeRecap()">Fermer</button>
     </div>
@@ -760,6 +762,78 @@ function exportWord(){
   document.body.appendChild(link);
   link.click();
   document.body.removeChild(link);
+}
+
+/* ============================================================
+   PARTAGE DIRECT (WhatsApp, Mail...) via l'API de partage native
+   du telephone. Genere un vrai PDF cote client (html2pdf.js), puis
+   ouvre le menu de partage du systeme si disponible ; sinon,
+   telecharge simplement le PDF comme repli.
+   ============================================================ */
+async function generatePdfBlob(){
+  const source = document.getElementById('recapSheet').cloneNode(true);
+  source.querySelector('.recap-actions')?.remove();
+  source.querySelector('#recapClose')?.remove();
+  source.style.boxShadow = 'none';
+  source.style.maxWidth = '720px';
+  const wrapper = document.createElement('div');
+  wrapper.style.position = 'fixed';
+  wrapper.style.left = '-9999px';
+  wrapper.style.top = '0';
+  wrapper.style.background = '#fff';
+  wrapper.appendChild(source);
+  document.body.appendChild(wrapper);
+  try {
+    const opt = {
+      margin: 10,
+      image: { type: 'jpeg', quality: 0.92 },
+      html2canvas: { scale: 2, useCORS: true },
+      jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+    };
+    return await window.html2pdf().set(opt).from(source).outputPdf('blob');
+  } finally {
+    document.body.removeChild(wrapper);
+  }
+}
+
+async function sharePdf(){
+  const adresseVal = document.getElementById('fAdresse').value;
+  const adresse = (adresseVal || 'bien-sans-adresse').replace(/[^a-z0-9]+/gi,'_');
+  const dateTag = new Date().toISOString().slice(0,10);
+  const filename = `Chiffrage_travaux_${adresse}_${dateTag}.pdf`;
+  const btn = document.getElementById('btnShare');
+  const originalLabel = btn.textContent;
+  btn.textContent = 'Génération du PDF…';
+  btn.disabled = true;
+  try {
+    const blob = await generatePdfBlob();
+    const file = new File([blob], filename, {type:'application/pdf'});
+    if(navigator.canShare && navigator.canShare({files:[file]})){
+      await navigator.share({
+        files:[file],
+        title:'Chiffrage travaux DEKA Partners',
+        text:`Chiffrage travaux — ${adresseVal || ''}`
+      });
+    } else {
+      const link = document.createElement('a');
+      link.href = URL.createObjectURL(blob);
+      link.download = filename;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      alert("Le partage direct n'est pas disponible sur cet appareil ou ce navigateur : le PDF a été téléchargé, il ne reste qu'à l'attacher manuellement dans WhatsApp (ou l'application de votre choix).");
+    }
+  } catch(err){
+    if(err && err.name === 'AbortError'){
+      // partage annulé par l'utilisateur — rien à faire
+    } else {
+      console.error('Erreur de partage PDF :', err);
+      alert("Impossible de générer le PDF pour le partage. Réessayez, ou utilisez le bouton « Exporter en PDF (imprimer) ».");
+    }
+  } finally {
+    btn.textContent = originalLabel;
+    btn.disabled = false;
+  }
 }
 
 async function init(){
