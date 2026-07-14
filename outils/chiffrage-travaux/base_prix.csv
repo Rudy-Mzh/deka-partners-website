@@ -17,7 +17,12 @@ Toiture / Couverture / Zinguerie,Raccord de zinguerie autour d'un conduit de che
 Toiture / Couverture / Zinguerie,Isolation combles perdus (soufflee),m2,20,30,45,Estimation marche,A calibrer avec vos devis
 Menuiseries exterieures,Fenetre bois 2 vantaux petite (moins de 1.8m2) fourniture+pose,u,950,1150,1400,Devis reel,Devis Bonnet / Nova 950-1275EUR
 Menuiseries exterieures,Fenetre bois 2 vantaux moyenne (1.8 a 3m2) fourniture+pose,u,1300,1600,1950,Devis reel,Devis Bonnet / Nova 1210-1935EUR
-Menuiseries exterieures,Fenetre PVC equivalente fourniture+pose,u,500,650,900,Estimation marche,A calibrer avec vos devis
+Menuiseries exterieures,Fenetre PVC standard (dimensions courantes jusqu'a 1.8m2) fourniture+pose,u,500,650,900,Estimation marche,A calibrer avec vos devis
+Menuiseries exterieures,Fenetre PVC grande dimension / hors standard (fabrication sur mesure) fourniture+pose,u,750,1050,1500,Estimation marche,A calibrer avec vos devis - surcout fabrication sur mesure
+Menuiseries exterieures,Porte-fenetre PVC 1 vantail battant fourniture+pose,u,900,1200,1600,Estimation marche,A calibrer avec vos devis
+Menuiseries exterieures,Baie vitree coulissante PVC 2 a 3 vantaux fourniture+pose,u,1800,2600,3800,Estimation marche,A calibrer avec vos devis
+Menuiseries exterieures,Fenetre de toit / Velux fourniture+pose (avec raccord etancheite),u,900,1300,1900,Estimation marche,A calibrer avec vos devis
+Menuiseries exterieures,Volet roulant PVC motorise fourniture+pose,u,450,650,900,Estimation marche,A calibrer avec vos devis
 Menuiseries exterieures,Volet bois battant la paire fourniture+pose,paire,1000,1250,1500,Devis reel,Devis Bonnet
 Menuiseries exterieures,Decapage et peinture de volets existants (la paire),paire,280,350,450,Devis reel,Devis Bonnet 350EUR
 Menuiseries exterieures,Decapage et peinture porte d'entree,u,450,550,700,Devis reel,Devis Bonnet 550EUR
@@ -101,3 +106,29 @@ Syndic / Copropriete,Remuneration syndic - forfait annuel (par lot),u,120,167,22
 Syndic / Copropriete,Immatriculation initiale du syndicat de copropriete,forfait,250,300,380,Devis reel,Devis Arthurimmo - 300EUR HT
 Syndic / Copropriete,Etablissement de l'etat date (mutation),forfait,270,317,380,Devis reel,Devis Arthurimmo - 316.67EUR HT
 Syndic / Copropriete,Vacation syndic hors forfait (reunions AG supp. redaction reglement etc.),heure,70,90,110,Devis reel,Devis Arthurimmo - 90EUR HT/heure
+Charpente / Structure,Traitement preventif charpente (pulverisation),m2,15,22,30,Estimation marche,A calibrer - source travaux.com/tytek.fr 2026
+Charpente / Structure,Traitement curatif charpente (injection - garantie 10 ans),m2,30,45,60,Estimation marche,A calibrer - source travaux.com/tytek.fr 2026
+Charpente / Structure,Reparation / renfort ponctuel de charpente,m2,25,70,120,Estimation marche,A calibrer - source dsdrenov.com/renovbox.com 2026
+Charpente / Structure,Refection complete charpente traditionnelle,m2,150,200,250,Estimation marche,A calibrer - base 100m2 = 15000-25000EUR (travaux.com 2026)
+Charpente / Structure,Refection complete charpente fermette industrielle,m2,100,125,150,Estimation marche,A calibrer - base 100m2 = 10000-15000EUR (travaux.com 2026)
+Escalier,Escalier bois standard fourniture+pose,forfait,1500,2500,4000,Estimation marche,A calibrer avec vos devis - source oeba.fr/tafsquare.com 2026
+Escalier,Escalier metal/acier fourniture+pose,forfait,2500,5000,8000,Estimation marche,A calibrer avec vos devis - source tafsquare.com/lapeyre.fr 2026
+Escalier,Escalier sur mesure haut de gamme (bois-metal formes complexes),forfait,5000,9000,15000,Estimation marche,A calibrer avec vos devis - source lamaisonsaintgobain.fr 2026
+Escalier,Renovation / habillage escalier existant (marches+contremarches+rampe),forfait,1200,2000,3500,Estimation marche,A calibrer avec vos devis
+Escalier,Garde-corps / rampe escalier metallique fourniture+pose,ml,150,210,350,Estimation marche,A calibrer - source prix-pose.com/metalenstock.fr 2026 (50-600EUR/ml selon materiau)
+Amenagements exterieurs,Terrasse bois composite posee (structure+lames),m2,140,170,200,Estimation marche,A calibrer - source lapeyre.fr/allojardin.com 2026
+Amenagements exterieurs,Terrasse dallage / carrelage exterieur posee,m2,60,90,130,Estimation marche,A calibrer avec vos devis
+Amenagements exterieurs,Cloture composite ou PVC posee (hauteur standard ~1.5m),m2,110,150,200,Estimation marche,A calibrer - source travaux.com/idenvironnement.fr 2026
+Amenagements exterieurs,Portillon pieton fourniture+pose,u,400,700,1100,Estimation marche,A calibrer avec vos devis
+Amenagements exterieurs,Engazonnement / espaces verts (forfait),forfait,500,1200,2500,Estimation marche,A calibrer avec vos devis
+Chauffage / ECS,VMC double flux standard fourniture+pose (rendement 60-75%),forfait,3000,3500,4000,Estimation marche,A calibrer - source mesdepanneurs.fr 2025 (maison 100m2 4500-7000EUR)
+Chauffage / ECS,VMC double flux haute performance fourniture+pose (rendement 85-95%),forfait,4500,5200,6000,Estimation marche,A calibrer - source mesdepanneurs.fr 2025
+Chauffage / ECS,VMC double flux thermodynamique fourniture+pose,forfait,6000,9000,13000,Estimation marche,A calibrer - source mesdepanneurs.fr 2025
+Chauffage / ECS,Climatisation reversible - unite interieure fourniture+pose,u,1200,1800,2500,Estimation marche,A calibrer avec vos devis
+Parties communes (immeuble),Peinture cage d'escalier (parties communes),m2,25,32,40,Estimation marche,A calibrer - source bailfacile.fr/prix-travaux-m2.com 2026
+Parties communes (immeuble),Rafraichissement complet hall + cage d'escalier par etage (peinture+sol+eclairage),forfait,3500,5750,8000,Estimation marche,A calibrer - source baticopro.com 2025
+Parties communes (immeuble),Renovation parties communes standard (sol+peinture),m2,130,265,400,Estimation marche,A calibrer - source illico-travaux.com 2025
+Parties communes (immeuble),Renovation parties communes standing (revetements nobles),m2,250,350,450,Estimation marche,A calibrer - source illico-travaux.com 2025
+Parties communes (immeuble),Pose interphone / portier video (pose seule hors materiel),forfait,400,500,650,Estimation marche,A calibrer - source bailfacile.fr 2025
+Parties communes (immeuble),Raccordement VMC collective par logement,u,200,350,500,Estimation marche,A calibrer avec vos devis
+Divers,Porte de garage motorisee fourniture+pose,u,900,1500,2200,Estimation marche,A calibrer avec vos devis
