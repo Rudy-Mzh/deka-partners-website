@@ -82,6 +82,12 @@
   summary.cathead::-webkit-details-marker{display:none;}
   summary.cathead .count{font-size:.75rem;font-weight:600;color:var(--ink-soft);background:rgba(255,255,255,.06);padding:2px 9px;border-radius:12px;}
 
+  .qty-wrap.stepper{display:flex;align-items:center;gap:4px;}
+  .qty-wrap.stepper input{width:44px;text-align:center;padding:6px 2px;}
+  .qty-wrap.stepper button{width:26px;height:30px;flex:0 0 auto;border:1px solid var(--line);background:#14120f;color:var(--ink);border-radius:6px;cursor:pointer;font-size:.95rem;line-height:1;}
+  .qty-wrap.stepper button:disabled{opacity:.4;cursor:default;}
+  .qty-wrap.stepper button:hover:not(:disabled){background:rgba(255,255,255,.08);}
+
   .poste-row{display:grid;grid-template-columns:26px 1fr 90px 110px 90px;gap:10px;align-items:center;padding:9px 14px;border-top:1px solid rgba(255,255,255,.05);font-size:.88rem;}
   .poste-row:first-of-type{border-top:none;}
   .poste-row.checked{background:var(--green-bg);}
@@ -414,6 +420,22 @@ function euros(n){
   return Math.round(n).toLocaleString('fr-FR') + ' €';
 }
 
+/* Postes comptes a l'unite (u, paire) : boutons +/- plus rapides que
+   la saisie clavier. Les unites de surface/forfait/heure gardent une
+   simple saisie numerique (le pas de 1 n'a pas de sens pour un m2). */
+function isCountUnit(u){ return u==='u' || u==='paire'; }
+
+function qtyWrapHtml(sel, unite){
+  if(isCountUnit(unite)){
+    return `<div class="qty-wrap stepper">
+      <button type="button" class="qty-dec" ${sel?'':'disabled'}>−</button>
+      <input type="number" min="0" step="1" placeholder="qté" value="${sel? sel.qty : ''}" class="qtyinput" ${sel?'':'disabled'}>
+      <button type="button" class="qty-inc" ${sel?'':'disabled'}>+</button>
+    </div>`;
+  }
+  return `<div class="qty-wrap"><input type="number" min="0" step="any" placeholder="qté (${unite})" value="${sel? sel.qty : ''}" class="qtyinput" ${sel?'':'disabled'}></div>`;
+}
+
 function keyFor(cat, desig, room){ return cat+'|||'+desig+(room? '|||'+room : ''); }
 
 const openCats = new Set();
@@ -448,7 +470,7 @@ function render(){
         <input type="checkbox" ${sel?'checked':''} data-k="${k}">
         <div class="desig">${p.designation}${tag}${p.notes?`<small>${p.notes}</small>`:''}</div>
         <div class="prix">${euros(p[currentTier])}/${p.unite}</div>
-        <div class="qty-wrap"><input type="number" min="0" step="any" placeholder="qté (${p.unite})" value="${sel? sel.qty : ''}" data-k="${k}" class="qtyinput" ${sel?'':'disabled'}></div>
+        ${qtyWrapHtml(sel, p.unite)}
         <div class="subtotal">${sel ? euros(p[currentTier]*sel.qty) : '—'}</div>
       `;
       row.querySelector('input[type=checkbox]').addEventListener('change', e=>{
@@ -457,12 +479,19 @@ function render(){
         render(); renderSummary();
       });
       const qi = row.querySelector('.qtyinput');
+      const updateQty = (newQty)=>{
+        if(!selections[k]) return;
+        selections[k].qty = newQty;
+        qi.value = newQty;
+        renderSummary();
+        row.querySelector('.subtotal').textContent = euros(p[currentTier]*newQty);
+      };
       qi.addEventListener('input', e=>{
         const v = parseFloat(e.target.value);
-        if(selections[k]) selections[k].qty = isNaN(v)?0:v;
-        renderSummary();
-        row.querySelector('.subtotal').textContent = selections[k] ? euros(p[currentTier]*selections[k].qty) : '—';
+        updateQty(isNaN(v)?0:v);
       });
+      row.querySelector('.qty-dec')?.addEventListener('click', ()=> updateQty(Math.max(0,(selections[k]?.qty||0)-1)) );
+      row.querySelector('.qty-inc')?.addEventListener('click', ()=> updateQty((selections[k]?.qty||0)+1) );
       body.appendChild(row);
     });
 
@@ -726,7 +755,8 @@ const ROOM_TYPES = [
     'Faience murale salle de bain posee',
     'VMC hygroreglable kit complet fourniture+pose',
     'Seche-serviettes electrique connecte fourniture+pose+alimentation',
-    'Ballon eau chaude extra-plat 80L + groupe securite pose'
+    'Ballon eau chaude extra-plat 80L + groupe securite pose',
+    'Point lumineux simple allumage'
   ]},
   {type:'salledeau', label:"Salle d'eau", postes:[
     'Douche complete (cabine quart de rond) fourniture+pose',
@@ -735,7 +765,8 @@ const ROOM_TYPES = [
     'Carrelage sol pose fourniture+pose',
     'Faience murale salle de bain posee',
     'VMC hygroreglable kit complet fourniture+pose',
-    'Seche-serviettes electrique connecte fourniture+pose+alimentation'
+    'Seche-serviettes electrique connecte fourniture+pose+alimentation',
+    'Point lumineux simple allumage'
   ]},
   {type:'wc', label:'WC séparé', postes:[
     'WC complet pose (pack a poser)',
@@ -749,8 +780,83 @@ const ROOM_TYPES = [
     'Point lumineux simple allumage',
     'Point lumineux va-et-vient ou telerupteur',
     'Bloc-porte interieur fourniture+pose (huisserie+serrure)'
+  ]},
+  {type:'logement', label:'Logement (général) — tableau élec, chauffage, VMC', noDims:true, postes:[
+    'Generalites electriques appartement / T2-T3 (tableau+communication+cablage+VMC+saignees)',
+    'Generalites electriques maison plus de 100m2 (tableau+communication+cablage+VMC+saignees)',
+    'Tableau electrique seul fourniture+pose prequipe',
+    'Mise a la terre fourniture+pose+verification',
+    'Saignees murs pour distribution electrique (forfait par logement)',
+    'Chaudiere gaz condensation fourniture+pose',
+    'Pompe a chaleur air/eau fourniture+pose',
+    'Ballon eau chaude extra-plat 80L + groupe securite pose',
+    'Droit de prise / branchement compteur eau (diametre 15mm)',
+    'Raccordement / branchement electrique ENEDIS individuel (compteur neuf)'
   ]}
 ];
+
+/* Selections pre-cochees a la creation d'une piece, avec quantite par
+   defaut ('auto' = calculee depuis les dimensions via ROOM_CALC des
+   que la piece a une longueur/largeur). Ce qui n'est pas liste reste
+   disponible dans la piece mais non coche par defaut (ex. choix
+   explicite entre chaudiere gaz et pompe a chaleur). */
+const ROOM_DEFAULTS = {
+  chambre: {
+    'Peinture rafraichissement murs+plafonds 2 couches': 'auto',
+    'Sol stratifie ou PVC pose': 'auto',
+    'Point lumineux simple allumage': 1,
+    'Prise de courant 2P+T standard': 3,
+    'Alimentation volet roulant electrique': 1
+  },
+  sejour: {
+    'Peinture rafraichissement murs+plafonds 2 couches': 'auto',
+    'Sol stratifie ou PVC pose': 'auto',
+    'Point lumineux simple allumage': 1,
+    'Point lumineux va-et-vient ou telerupteur': 1,
+    'Prise de courant 2P+T standard': 5,
+    'Prise TV coaxiale': 1
+  },
+  cuisine: {
+    'Cuisine equipee standard (meubles+plan de travail hors electromenager)': 1,
+    'Peinture rafraichissement murs+plafonds 2 couches': 'auto',
+    'Carrelage sol pose fourniture+pose': 'auto',
+    'Point lumineux simple allumage': 1,
+    'Prise de courant 2P+T standard': 4,
+    'Ligne dediee electromenager (plaque four LV LL)': 2,
+    'Alimentation / evacuation EC-EF (par point ponctuel)': 1,
+    'VMC hygroreglable kit complet fourniture+pose': 1
+  },
+  sdb: {
+    'Salle de bain complete (douche+vasque+WC+evac/alim hors carrelage)': 1,
+    'Carrelage sol pose fourniture+pose': 'auto',
+    'Faience murale salle de bain posee': 'auto',
+    'VMC hygroreglable kit complet fourniture+pose': 1,
+    'Seche-serviettes electrique connecte fourniture+pose+alimentation': 1,
+    'Point lumineux simple allumage': 1
+  },
+  salledeau: {
+    'Douche complete (cabine quart de rond) fourniture+pose': 1,
+    'Vasque simple + robinetterie posee': 1,
+    'WC complet pose (pack a poser)': 1,
+    'Carrelage sol pose fourniture+pose': 'auto',
+    'Faience murale salle de bain posee': 'auto',
+    'VMC hygroreglable kit complet fourniture+pose': 1,
+    'Point lumineux simple allumage': 1
+  },
+  wc: {
+    'WC complet pose (pack a poser)': 1,
+    'Peinture rafraichissement murs+plafonds 2 couches': 'auto',
+    'Point lumineux simple allumage': 1
+  },
+  degagement: {
+    'Peinture rafraichissement murs+plafonds 2 couches': 'auto',
+    'Sol stratifie ou PVC pose': 'auto',
+    'Point lumineux va-et-vient ou telerupteur': 1
+  },
+  logement: {
+    'Generalites electriques appartement / T2-T3 (tableau+communication+cablage+VMC+saignees)': 1
+  }
+};
 
 function round1(n){ return Math.round(n*10)/10; }
 function floorArea(room){ return round1((room.longueur||0) * (room.largeur||0)); }
@@ -777,12 +883,28 @@ function initRoomTypeSelect(){
   sel.innerHTML = ROOM_TYPES.map(rt=>`<option value="${rt.type}">${rt.label}</option>`).join('');
 }
 
+function applyRoomDefaults(room){
+  const defaults = ROOM_DEFAULTS[room.type] || {};
+  Object.entries(defaults).forEach(([desig, qtySpec])=>{
+    const p = PRICES.find(pr=>pr.designation===desig);
+    if(!p) return;
+    const k = keyFor(p.categorie, p.designation, room.id);
+    const isAuto = qtySpec === 'auto';
+    const autoCalc = ROOM_CALC[desig];
+    const qty = isAuto ? (autoCalc ? (autoCalc(room)||0) : 1) : qtySpec;
+    selections[k] = {item:p, qty, room:room.name, roomInternalId:room.id, auto: isAuto};
+  });
+}
+
 function addRoom(type){
   roomCounter++;
   const existingOfType = rooms.filter(r=>r.type===type).length;
   const name = `${roomTypeLabel(type)} ${existingOfType+1}`;
-  rooms.push({id:'room'+roomCounter, type, name, longueur:null, largeur:null, hauteur:2.5});
-  renderRooms();
+  const typeConfig = ROOM_TYPES.find(rt=>rt.type===type) || {};
+  const room = {id:'room'+roomCounter, type, name, longueur:null, largeur:null, hauteur:2.5, noDims: !!typeConfig.noDims};
+  rooms.push(room);
+  applyRoomDefaults(room);
+  renderRooms(); renderSummary();
 }
 
 function removeRoom(id){
@@ -826,12 +948,14 @@ function renderRooms(){
         <input type="text" class="room-name" value="${room.name.replace(/"/g,'&quot;')}">
         <button type="button" class="room-del">Supprimer la pièce</button>
       </div>
+      ${room.noDims ? '' : `
       <div class="room-dims">
         <label>Longueur <input type="number" min="0" step="0.1" class="room-l" value="${room.longueur??''}"> m</label>
         <label>Largeur <input type="number" min="0" step="0.1" class="room-la" value="${room.largeur??''}"> m</label>
         <label>Hauteur <input type="number" min="0" step="0.1" class="room-h" value="${room.hauteur??2.5}"> m</label>
       </div>
       <div class="room-area-hint" data-hint></div>
+      `}
     `;
     head.querySelector('.room-name').addEventListener('input', e=>{
       room.name = e.target.value;
@@ -839,28 +963,30 @@ function renderRooms(){
       renderSummary();
     });
     head.querySelector('.room-del').addEventListener('click', ()=>removeRoom(room.id));
-    const updateHint = ()=>{
-      const hint = head.querySelector('[data-hint]');
-      if(room.longueur && room.largeur){
-        hint.textContent = `Surface au sol : ${floorArea(room)} m² · Surface murs (brute, hauteur ${room.hauteur||2.5}m) : ${wallArea(room)} m²`;
-      } else {
-        hint.textContent = 'Renseignez longueur et largeur pour le calcul automatique des surfaces.';
-      }
-    };
-    head.querySelector('.room-l').addEventListener('input', e=>{
-      room.longueur = parseFloat(e.target.value)||null;
-      updateHint(); recalcRoomAutoQty(room); renderRoomBody(room); renderSummary();
-    });
-    head.querySelector('.room-la').addEventListener('input', e=>{
-      room.largeur = parseFloat(e.target.value)||null;
-      updateHint(); recalcRoomAutoQty(room); renderRoomBody(room); renderSummary();
-    });
-    head.querySelector('.room-h').addEventListener('input', e=>{
-      room.hauteur = parseFloat(e.target.value)||2.5;
-      updateHint(); recalcRoomAutoQty(room); renderRoomBody(room); renderSummary();
-    });
+    if(!room.noDims){
+      const updateHint = ()=>{
+        const hint = head.querySelector('[data-hint]');
+        if(room.longueur && room.largeur){
+          hint.textContent = `Surface au sol : ${floorArea(room)} m² · Surface murs (brute, hauteur ${room.hauteur||2.5}m) : ${wallArea(room)} m²`;
+        } else {
+          hint.textContent = 'Renseignez longueur et largeur pour le calcul automatique des surfaces.';
+        }
+      };
+      head.querySelector('.room-l').addEventListener('input', e=>{
+        room.longueur = parseFloat(e.target.value)||null;
+        updateHint(); recalcRoomAutoQty(room); renderRoomBody(room); renderSummary();
+      });
+      head.querySelector('.room-la').addEventListener('input', e=>{
+        room.largeur = parseFloat(e.target.value)||null;
+        updateHint(); recalcRoomAutoQty(room); renderRoomBody(room); renderSummary();
+      });
+      head.querySelector('.room-h').addEventListener('input', e=>{
+        room.hauteur = parseFloat(e.target.value)||2.5;
+        updateHint(); recalcRoomAutoQty(room); renderRoomBody(room); renderSummary();
+      });
+      updateHint();
+    }
     card.appendChild(head);
-    updateHint();
 
     const body = document.createElement('div');
     body.className = 'room-body';
@@ -916,7 +1042,7 @@ function renderRoomBody(room){
       <input type="checkbox" ${sel?'checked':''}>
       <div class="desig">${p.designation}${tag}${autoNote}</div>
       <div class="prix">${euros(p[currentTier])}/${p.unite}</div>
-      <div class="qty-wrap"><input type="number" min="0" step="any" placeholder="qté (${p.unite})" value="${sel? sel.qty : ''}" class="qtyinput" ${sel?'':'disabled'}></div>
+      ${qtyWrapHtml(sel, p.unite)}
       <div class="subtotal">${sel ? euros(p[currentTier]*sel.qty) : '—'}</div>
     `;
     row.querySelector('input[type=checkbox]').addEventListener('change', e=>{
@@ -930,12 +1056,20 @@ function renderRoomBody(room){
       renderRoomBody(room); renderSummary();
     });
     const qi = row.querySelector('.qtyinput');
+    const updateQty = (newQty)=>{
+      if(!selections[k]) return;
+      selections[k].qty = newQty;
+      selections[k].auto = false;
+      qi.value = newQty;
+      renderSummary();
+      row.querySelector('.subtotal').textContent = euros(p[currentTier]*newQty);
+    };
     qi.addEventListener('input', e=>{
       const v = parseFloat(e.target.value);
-      if(selections[k]){ selections[k].qty = isNaN(v)?0:v; selections[k].auto = false; }
-      renderSummary();
-      row.querySelector('.subtotal').textContent = selections[k] ? euros(p[currentTier]*selections[k].qty) : '—';
+      updateQty(isNaN(v)?0:v);
     });
+    row.querySelector('.qty-dec')?.addEventListener('click', ()=> updateQty(Math.max(0,(selections[k]?.qty||0)-1)) );
+    row.querySelector('.qty-inc')?.addEventListener('click', ()=> updateQty((selections[k]?.qty||0)+1) );
     body.appendChild(row);
   });
 
