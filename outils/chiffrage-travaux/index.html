@@ -50,6 +50,32 @@
   .pricetier button{border:none;background:#14120f;padding:8px 12px;font-size:.82rem;cursor:pointer;color:var(--ink-soft);}
   .pricetier button.active{background:var(--blue);color:#1a1710;font-weight:600;}
 
+  .mode-toggle{display:flex;gap:8px;margin-bottom:14px;}
+  .mode-toggle button{border:1px solid var(--line);background:transparent;color:var(--ink-soft);padding:8px 14px;border-radius:8px;font-size:.85rem;font-weight:600;cursor:pointer;}
+  .mode-toggle button.active{background:var(--blue);color:#1a1710;border-color:var(--blue);}
+
+  .room-add-row{display:flex;gap:10px;margin-bottom:16px;flex-wrap:wrap;}
+  .room-add-row select{flex:1;min-width:200px;padding:9px 10px;border:1px solid var(--line);border-radius:8px;background:#14120f;color:var(--ink);}
+
+  .room-card{border:1px solid var(--line);border-radius:12px;margin-bottom:16px;overflow:hidden;background:var(--card);}
+  .room-head{padding:14px;background:#181611;border-bottom:1px solid var(--line);}
+  .room-head-top{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;}
+  .room-head input.room-name{font-family:'Cormorant Garamond',serif;font-size:1.15rem;font-weight:600;color:var(--accent);background:transparent;border:none;border-bottom:1px dashed transparent;padding:2px 0;min-width:140px;}
+  .room-head input.room-name:hover, .room-head input.room-name:focus{border-bottom-color:var(--line);outline:none;}
+  .room-del{background:transparent;border:1px solid #4a2e29;color:var(--danger);border-radius:6px;padding:5px 10px;font-size:.72rem;cursor:pointer;}
+  .room-dims{display:flex;gap:10px;margin-top:10px;flex-wrap:wrap;align-items:center;}
+  .room-dims label{margin:0;font-size:.72rem;color:var(--ink-soft);text-transform:none;font-weight:500;display:flex;align-items:center;gap:5px;}
+  .room-dims input{width:70px;padding:6px 8px;border:1px solid var(--line);border-radius:6px;background:#14120f;color:var(--ink);}
+  .room-area-hint{font-size:.74rem;color:var(--ink-soft);margin-top:6px;}
+  .room-subtotal{font-size:.82rem;color:var(--accent);font-weight:700;margin-top:8px;}
+  .room-body .poste-row{grid-template-columns:22px 1fr 90px 100px 80px;}
+  .room-add-poste{display:flex;gap:8px;padding:10px 14px;border-top:1px solid rgba(255,255,255,.05);flex-wrap:wrap;}
+  .room-add-poste select{flex:1;min-width:180px;padding:7px 8px;border:1px solid var(--line);border-radius:6px;background:#14120f;color:var(--ink);font-size:.82rem;}
+  .room-photos{padding:12px 14px;border-top:1px solid rgba(255,255,255,.05);}
+  .room-photos .photo-add-btn{font-size:.74rem;padding:6px 10px;margin-bottom:10px;}
+  .room-photos .photo-gallery{grid-template-columns:repeat(auto-fill,minmax(110px,1fr));gap:10px;}
+  .room-photos .photo-item img{height:80px;}
+
   details.cat{border:1px solid var(--line);border-radius:10px;margin-bottom:10px;overflow:hidden;background:var(--card);}
   details.cat[open] summary{border-bottom:1px solid var(--line);}
   summary.cathead{list-style:none;cursor:pointer;padding:12px 14px;display:flex;justify-content:space-between;align-items:center;font-weight:600;color:var(--accent);background:#181611;font-size:.92rem;}
@@ -210,6 +236,10 @@
     <div>
       <div class="card">
         <h2>2 · Postes de travaux</h2>
+        <div class="mode-toggle" id="modeToggle">
+          <button data-mode="metier" class="active">Par corps de métier</button>
+          <button data-mode="piece">Par pièce</button>
+        </div>
         <div class="toolbar">
           <input type="text" id="search" placeholder="Rechercher un poste (ex : fenêtre, tableau électrique, salle de bain…)">
           <div class="pricetier" id="tierSwitch">
@@ -218,7 +248,17 @@
             <button data-tier="prix_haut">Prudent</button>
           </div>
         </div>
-        <div id="categories"></div>
+        <div id="metierView">
+          <div id="categories"></div>
+        </div>
+        <div id="pieceView" style="display:none;">
+          <p style="font-size:.82rem;color:var(--ink-soft);margin-top:0;">Composez le bien pièce par pièce. Les dimensions permettent de calculer automatiquement les quantités de peinture, sol et isolation ; les autres postes restent à quantifier manuellement.</p>
+          <div class="room-add-row">
+            <select id="roomTypeSelect"></select>
+            <button type="button" class="btn ghost" id="btnAddRoom" style="flex:0 0 auto;">+ Ajouter cette pièce</button>
+          </div>
+          <div id="roomsContainer"></div>
+        </div>
       </div>
     </div>
 
@@ -374,7 +414,7 @@ function euros(n){
   return Math.round(n).toLocaleString('fr-FR') + ' €';
 }
 
-function keyFor(cat, desig){ return cat+'|||'+desig; }
+function keyFor(cat, desig, room){ return cat+'|||'+desig+(room? '|||'+room : ''); }
 
 const openCats = new Set();
 
@@ -471,6 +511,16 @@ function computeTotals(){
   return {bas:bas*factor, moyen:moyen*factor, haut:haut*factor, aleas, rawBas:bas, rawMoyen:moyen, rawHaut:haut};
 }
 
+function posteLabel(s){
+  const desig = s.item.designation.replace('(poste personnalisé)','');
+  let roomName = s.room;
+  if(s.roomInternalId){
+    const r = rooms.find(x=>x.id===s.roomInternalId);
+    roomName = r ? r.name : (s.room || 'pièce supprimée');
+  }
+  return roomName ? `[${roomName}] ${desig}` : desig;
+}
+
 function renderSummary(){
   const lines = Object.entries(selections);
   const box = document.getElementById('summaryLines');
@@ -478,7 +528,7 @@ function renderSummary(){
     box.innerHTML = '<div class="empty-hint">Aucun poste sélectionné pour l\'instant.</div>';
   } else {
     box.innerHTML = lines.map(([k,s])=>{
-      return `<div class="line"><span>${s.item.designation.replace('(poste personnalisé)','')} ×${s.qty}</span><span>${euros(s.item[currentTier]*s.qty)}</span></div>`;
+      return `<div class="line"><span>${posteLabel(s)} ×${s.qty}</span><span>${euros(s.item[currentTier]*s.qty)}</span></div>`;
     }).join('');
   }
   const t = computeTotals();
@@ -494,6 +544,7 @@ document.querySelectorAll('#tierSwitch button').forEach(b=>{
     b.classList.add('active');
     currentTier = b.dataset.tier;
     render(); renderSummary();
+    rooms.forEach(room=>renderRoomBody(room));
   });
 });
 
@@ -529,22 +580,47 @@ function compressImage(file, maxDim, quality){
   });
 }
 
-async function handlePhotoFiles(fileList){
+async function handlePhotoFiles(fileList, roomId, roomLabel){
   for(const file of Array.from(fileList)){
     if(!file.type.startsWith('image/')) continue;
     try {
       const dataUrl = await compressImage(file, 1400, 0.78);
       photoCounter++;
-      photos.push({id:'p'+photoCounter, dataUrl, caption:''});
+      photos.push({id:'p'+photoCounter, dataUrl, caption:'', roomId: roomId||null, roomLabel: roomLabel||null});
     } catch(err){ console.warn('Photo ignorée (erreur de lecture) :', file.name, err); }
   }
   renderGallery();
+  if(roomId) renderRoomPhotos(roomId);
 }
 
 document.getElementById('photoInput').addEventListener('change', e=>{
   handlePhotoFiles(e.target.files);
   e.target.value = '';
 });
+
+function photoItemHtml(ph){
+  return `
+    <img src="${ph.dataUrl}" alt="Photo du bien">
+    <div class="photo-meta">
+      ${ph.roomLabel? `<div style="font-size:.68rem;color:var(--accent);margin-bottom:4px;">${ph.roomLabel}</div>` : ''}
+      <input type="text" placeholder="Légende (ex : fissure façade nord)" value="${ph.caption.replace(/"/g,'&quot;')}" data-id="${ph.id}">
+      <button type="button" class="photo-del" data-id="${ph.id}">Supprimer</button>
+    </div>
+  `;
+}
+
+function wirePhotoItem(item, ph){
+  item.querySelector('input').addEventListener('input', e=>{
+    const p = photos.find(x=>x.id===ph.id);
+    if(p) p.caption = e.target.value;
+  });
+  item.querySelector('.photo-del').addEventListener('click', ()=>{
+    const roomId = ph.roomId;
+    photos = photos.filter(x=>x.id!==ph.id);
+    renderGallery();
+    if(roomId) renderRoomPhotos(roomId);
+  });
+}
 
 function renderGallery(){
   const box = document.getElementById('photoGallery');
@@ -556,21 +632,26 @@ function renderGallery(){
   photos.forEach(ph=>{
     const item = document.createElement('div');
     item.className = 'photo-item';
-    item.innerHTML = `
-      <img src="${ph.dataUrl}" alt="Photo du bien">
-      <div class="photo-meta">
-        <input type="text" placeholder="Légende (ex : fissure façade nord)" value="${ph.caption.replace(/"/g,'&quot;')}" data-id="${ph.id}">
-        <button type="button" class="photo-del" data-id="${ph.id}">Supprimer</button>
-      </div>
-    `;
-    item.querySelector('input').addEventListener('input', e=>{
-      const p = photos.find(x=>x.id===ph.id);
-      if(p) p.caption = e.target.value;
-    });
-    item.querySelector('.photo-del').addEventListener('click', ()=>{
-      photos = photos.filter(x=>x.id!==ph.id);
-      renderGallery();
-    });
+    item.innerHTML = photoItemHtml(ph);
+    wirePhotoItem(item, ph);
+    box.appendChild(item);
+  });
+}
+
+function renderRoomPhotos(roomId){
+  const box = document.getElementById('roomPhotos-'+roomId);
+  if(!box) return;
+  const roomPhotos = photos.filter(p=>p.roomId===roomId);
+  if(!roomPhotos.length){
+    box.innerHTML = '<div class="photo-empty-hint">Aucune photo pour cette pièce.</div>';
+    return;
+  }
+  box.innerHTML = '';
+  roomPhotos.forEach(ph=>{
+    const item = document.createElement('div');
+    item.className = 'photo-item';
+    item.innerHTML = photoItemHtml(ph);
+    wirePhotoItem(item, ph);
     box.appendChild(item);
   });
 }
@@ -584,23 +665,334 @@ function renderRecapPhotos(){
       ${photos.map(ph=>`
         <div class="rp-item">
           <img src="${ph.dataUrl}" alt="Photo du bien">
-          ${ph.caption? `<div class="rp-cap">${ph.caption}</div>` : ''}
+          ${(ph.roomLabel || ph.caption)? `<div class="rp-cap">${ph.roomLabel? '<strong>'+ph.roomLabel+'</strong>'+(ph.caption? ' — ':'') : ''}${ph.caption||''}</div>` : ''}
         </div>
       `).join('')}
     </div>
   `;
 }
 
+/* ============================================================
+   MODE "PAR PIECE" — composition du bien piece par piece, avec
+   postes suggeres par type de piece et quantites de surface
+   (peinture, sol, isolation, bandes) calculees automatiquement
+   a partir des dimensions reelles saisies (longueur x largeur x
+   hauteur). Alimente le meme objet `selections` que le mode
+   "par corps de metier" : meme total, meme recapitulatif, meme
+   export — ce n'est qu'une autre facon de le remplir.
+   ============================================================ */
+const ROOM_TYPES = [
+  {type:'chambre', label:'Chambre', postes:[
+    'Peinture rafraichissement murs+plafonds 2 couches',
+    'Sol stratifie ou PVC pose',
+    'Parquet contrecolle pose',
+    'Point lumineux simple allumage',
+    'Point lumineux va-et-vient ou telerupteur',
+    'Prise de courant 2P+T standard',
+    'Radiateur electrique chaleur douce fourniture+pose+alimentation',
+    'Alimentation volet roulant electrique',
+    'Bloc-porte interieur fourniture+pose (huisserie+serrure)'
+  ]},
+  {type:'sejour', label:'Séjour / Salon', postes:[
+    'Peinture rafraichissement murs+plafonds 2 couches',
+    'Sol stratifie ou PVC pose',
+    'Parquet contrecolle pose',
+    'Point lumineux simple allumage',
+    'Point lumineux va-et-vient ou telerupteur',
+    'Prise de courant 2P+T standard',
+    'Prise TV coaxiale',
+    'Prise RJ45 / informatique blindee',
+    'Radiateur electrique chaleur douce fourniture+pose+alimentation'
+  ]},
+  {type:'cuisine', label:'Cuisine', postes:[
+    'Cuisine equipee standard (meubles+plan de travail hors electromenager)',
+    'Peinture rafraichissement murs+plafonds 2 couches',
+    'Carrelage sol pose fourniture+pose',
+    'Faience murale salle de bain posee',
+    'Ligne dediee electromenager (plaque four LV LL)',
+    'Alimentation / evacuation EC-EF (par point ponctuel)',
+    'VMC hygroreglable kit complet fourniture+pose',
+    'Prise de courant 2P+T standard',
+    'Point lumineux simple allumage'
+  ]},
+  {type:'sdb', label:'Salle de bains', postes:[
+    'Salle de bain complete (douche+vasque+WC+evac/alim hors carrelage)',
+    'Douche complete (cabine quart de rond) fourniture+pose',
+    'Vasque simple + robinetterie posee',
+    'Vasque double + robinetterie posee',
+    'Baignoire + robinetterie posee',
+    'WC complet pose (pack a poser)',
+    'Carrelage sol pose fourniture+pose',
+    'Faience murale salle de bain posee',
+    'VMC hygroreglable kit complet fourniture+pose',
+    'Seche-serviettes electrique connecte fourniture+pose+alimentation',
+    'Ballon eau chaude extra-plat 80L + groupe securite pose'
+  ]},
+  {type:'salledeau', label:"Salle d'eau", postes:[
+    'Douche complete (cabine quart de rond) fourniture+pose',
+    'Vasque simple + robinetterie posee',
+    'WC complet pose (pack a poser)',
+    'Carrelage sol pose fourniture+pose',
+    'Faience murale salle de bain posee',
+    'VMC hygroreglable kit complet fourniture+pose',
+    'Seche-serviettes electrique connecte fourniture+pose+alimentation'
+  ]},
+  {type:'wc', label:'WC séparé', postes:[
+    'WC complet pose (pack a poser)',
+    'Peinture rafraichissement murs+plafonds 2 couches',
+    'Carrelage sol pose fourniture+pose',
+    'Point lumineux simple allumage'
+  ]},
+  {type:'degagement', label:'Dégagement / Entrée / Couloir', postes:[
+    'Peinture rafraichissement murs+plafonds 2 couches',
+    'Sol stratifie ou PVC pose',
+    'Point lumineux simple allumage',
+    'Point lumineux va-et-vient ou telerupteur',
+    'Bloc-porte interieur fourniture+pose (huisserie+serrure)'
+  ]}
+];
+
+function round1(n){ return Math.round(n*10)/10; }
+function floorArea(room){ return round1((room.longueur||0) * (room.largeur||0)); }
+function wallArea(room){ return round1(2*((room.longueur||0)+(room.largeur||0))*(room.hauteur||0)); }
+
+const ROOM_CALC = {
+  'Peinture rafraichissement murs+plafonds 2 couches': room => round1(wallArea(room) + floorArea(room)),
+  'Sol stratifie ou PVC pose': room => floorArea(room),
+  'Parquet contrecolle pose': room => floorArea(room),
+  'Carrelage sol pose fourniture+pose': room => floorArea(room),
+  'Faience murale salle de bain posee': room => round1(wallArea(room) * 0.5),
+  'Doublage isolation interieure (placo + laine mur peripherique)': room => wallArea(room),
+  "Joints / finition plaque de platre (hors poncage)": room => wallArea(room)
+};
+
+let rooms = [];
+let roomCounter = 0;
+let inputMode = 'metier';
+
+function roomTypeLabel(type){ return (ROOM_TYPES.find(r=>r.type===type)||{}).label || type; }
+
+function initRoomTypeSelect(){
+  const sel = document.getElementById('roomTypeSelect');
+  sel.innerHTML = ROOM_TYPES.map(rt=>`<option value="${rt.type}">${rt.label}</option>`).join('');
+}
+
+function addRoom(type){
+  roomCounter++;
+  const existingOfType = rooms.filter(r=>r.type===type).length;
+  const name = `${roomTypeLabel(type)} ${existingOfType+1}`;
+  rooms.push({id:'room'+roomCounter, type, name, longueur:null, largeur:null, hauteur:2.5});
+  renderRooms();
+}
+
+function removeRoom(id){
+  if(!confirm('Supprimer cette pièce et les postes/photos qui lui sont rattachés ?')) return;
+  // retire les selections rattachees a cette piece
+  const room = rooms.find(r=>r.id===id);
+  if(room){
+    Object.keys(selections).forEach(k=>{
+      if(selections[k].roomInternalId === id) delete selections[k];
+    });
+    photos = photos.filter(p=>p.roomId!==id);
+  }
+  rooms = rooms.filter(r=>r.id!==id);
+  renderRooms(); renderSummary(); renderGallery();
+}
+
+function recalcRoomAutoQty(room){
+  Object.keys(selections).forEach(k=>{
+    const s = selections[k];
+    if(s.roomInternalId===room.id && s.auto && ROOM_CALC[s.item.designation]){
+      s.qty = ROOM_CALC[s.item.designation](room);
+    }
+  });
+}
+
+function renderRooms(){
+  const container = document.getElementById('roomsContainer');
+  container.innerHTML = '';
+  if(!rooms.length){
+    container.innerHTML = '<div class="empty-hint">Aucune pièce ajoutée pour l\'instant — choisissez un type de pièce ci-dessus.</div>';
+    return;
+  }
+  rooms.forEach(room=>{
+    const card = document.createElement('div');
+    card.className = 'room-card';
+
+    const head = document.createElement('div');
+    head.className = 'room-head';
+    head.innerHTML = `
+      <div class="room-head-top">
+        <input type="text" class="room-name" value="${room.name.replace(/"/g,'&quot;')}">
+        <button type="button" class="room-del">Supprimer la pièce</button>
+      </div>
+      <div class="room-dims">
+        <label>Longueur <input type="number" min="0" step="0.1" class="room-l" value="${room.longueur??''}"> m</label>
+        <label>Largeur <input type="number" min="0" step="0.1" class="room-la" value="${room.largeur??''}"> m</label>
+        <label>Hauteur <input type="number" min="0" step="0.1" class="room-h" value="${room.hauteur??2.5}"> m</label>
+      </div>
+      <div class="room-area-hint" data-hint></div>
+    `;
+    head.querySelector('.room-name').addEventListener('input', e=>{
+      room.name = e.target.value;
+      photos.forEach(p=>{ if(p.roomId===room.id) p.roomLabel = room.name; });
+      renderSummary();
+    });
+    head.querySelector('.room-del').addEventListener('click', ()=>removeRoom(room.id));
+    const updateHint = ()=>{
+      const hint = head.querySelector('[data-hint]');
+      if(room.longueur && room.largeur){
+        hint.textContent = `Surface au sol : ${floorArea(room)} m² · Surface murs (brute, hauteur ${room.hauteur||2.5}m) : ${wallArea(room)} m²`;
+      } else {
+        hint.textContent = 'Renseignez longueur et largeur pour le calcul automatique des surfaces.';
+      }
+    };
+    head.querySelector('.room-l').addEventListener('input', e=>{
+      room.longueur = parseFloat(e.target.value)||null;
+      updateHint(); recalcRoomAutoQty(room); renderRoomBody(room); renderSummary();
+    });
+    head.querySelector('.room-la').addEventListener('input', e=>{
+      room.largeur = parseFloat(e.target.value)||null;
+      updateHint(); recalcRoomAutoQty(room); renderRoomBody(room); renderSummary();
+    });
+    head.querySelector('.room-h').addEventListener('input', e=>{
+      room.hauteur = parseFloat(e.target.value)||2.5;
+      updateHint(); recalcRoomAutoQty(room); renderRoomBody(room); renderSummary();
+    });
+    card.appendChild(head);
+    updateHint();
+
+    const body = document.createElement('div');
+    body.className = 'room-body';
+    body.id = 'roomBody-'+room.id;
+    card.appendChild(body);
+
+    const photoSection = document.createElement('div');
+    photoSection.className = 'room-photos';
+    photoSection.innerHTML = `
+      <label for="roomPhotoInput-${room.id}" class="btn ghost photo-add-btn">+ Photo de cette pièce</label>
+      <input type="file" id="roomPhotoInput-${room.id}" accept="image/*" capture="environment" multiple style="display:none;">
+      <div class="photo-gallery" id="roomPhotos-${room.id}"></div>
+    `;
+    photoSection.querySelector('input[type=file]').addEventListener('change', e=>{
+      handlePhotoFiles(e.target.files, room.id, room.name);
+      e.target.value = '';
+    });
+    card.appendChild(photoSection);
+
+    container.appendChild(card);
+    renderRoomBody(room);
+    renderRoomPhotos(room.id);
+  });
+}
+
+function getRoomDisplayPostes(room){
+  const suggested = (ROOM_TYPES.find(rt=>rt.type===room.type)||{postes:[]}).postes
+    .map(desig=>PRICES.find(p=>p.designation===desig))
+    .filter(Boolean);
+  const suggestedDesigs = new Set(suggested.map(p=>p.designation));
+  const extra = Object.values(selections)
+    .filter(s=>s.roomInternalId===room.id && !suggestedDesigs.has(s.item.designation))
+    .map(s=>s.item);
+  return suggested.concat(extra);
+}
+
+function renderRoomBody(room){
+  const body = document.getElementById('roomBody-'+room.id);
+  if(!body) return;
+  const roomPostes = getRoomDisplayPostes(room);
+  body.innerHTML = '';
+  let subtotal = 0;
+
+  roomPostes.forEach(p=>{
+    const k = keyFor(p.categorie, p.designation, room.id);
+    const sel = selections[k];
+    if(sel) subtotal += sel.item[currentTier]*sel.qty;
+    const row = document.createElement('div');
+    row.className = 'poste-row' + (sel? ' checked':'');
+    const tag = p.source==='Devis reel' ? '<span class="tag reel">devis réel</span>' : '<span class="tag estim">estimation</span>';
+    const autoNote = ROOM_CALC[p.designation] ? '<small>Quantité calculée à partir des dimensions (modifiable)</small>' : (p.notes? `<small>${p.notes}</small>`:'');
+    row.innerHTML = `
+      <input type="checkbox" ${sel?'checked':''}>
+      <div class="desig">${p.designation}${tag}${autoNote}</div>
+      <div class="prix">${euros(p[currentTier])}/${p.unite}</div>
+      <div class="qty-wrap"><input type="number" min="0" step="any" placeholder="qté (${p.unite})" value="${sel? sel.qty : ''}" class="qtyinput" ${sel?'':'disabled'}></div>
+      <div class="subtotal">${sel ? euros(p[currentTier]*sel.qty) : '—'}</div>
+    `;
+    row.querySelector('input[type=checkbox]').addEventListener('change', e=>{
+      if(e.target.checked){
+        const autoCalc = ROOM_CALC[p.designation];
+        const qty = autoCalc ? (autoCalc(room) || 1) : 1;
+        selections[k] = {item:p, qty, room:room.name, roomInternalId:room.id, auto: !!autoCalc};
+      } else {
+        delete selections[k];
+      }
+      renderRoomBody(room); renderSummary();
+    });
+    const qi = row.querySelector('.qtyinput');
+    qi.addEventListener('input', e=>{
+      const v = parseFloat(e.target.value);
+      if(selections[k]){ selections[k].qty = isNaN(v)?0:v; selections[k].auto = false; }
+      renderSummary();
+      row.querySelector('.subtotal').textContent = selections[k] ? euros(p[currentTier]*selections[k].qty) : '—';
+    });
+    body.appendChild(row);
+  });
+
+  // ajout libre d'un autre poste du catalogue dans cette piece
+  const addRow = document.createElement('div');
+  addRow.className = 'room-add-poste';
+  const alreadyIn = new Set(roomPostes.map(p=>p.designation));
+  const otherOptions = PRICES.filter(p=>!alreadyIn.has(p.designation))
+    .map(p=>`<option value="${p.categorie}|||${p.designation}">${p.categorie} — ${p.designation}</option>`).join('');
+  addRow.innerHTML = `
+    <select class="room-other-select"><option value="">+ Ajouter un autre poste du catalogue à cette pièce…</option>${otherOptions}</select>
+  `;
+  addRow.querySelector('select').addEventListener('change', e=>{
+    const val = e.target.value;
+    if(!val) return;
+    const [cat, desig] = val.split('|||');
+    const p = PRICES.find(pr=>pr.categorie===cat && pr.designation===desig);
+    if(!p) return;
+    const k2 = keyFor(p.categorie, p.designation, room.id);
+    const autoCalc = ROOM_CALC[p.designation];
+    const qty = autoCalc ? (autoCalc(room) || 1) : 1;
+    selections[k2] = {item:p, qty, room:room.name, roomInternalId:room.id, auto: !!autoCalc};
+    renderRoomBody(room); renderSummary();
+  });
+  body.appendChild(addRow);
+
+  const subEl = document.createElement('div');
+  subEl.style.padding = '8px 14px 12px';
+  const currentSubtotal = Object.values(selections).filter(s=>s.roomInternalId===room.id).reduce((a,s)=>a+s.item[currentTier]*s.qty,0);
+  subEl.innerHTML = `<div class="room-subtotal">Sous-total pièce : ${euros(currentSubtotal)}</div>`;
+  body.appendChild(subEl);
+}
+
+document.querySelectorAll('#modeToggle button').forEach(b=>{
+  b.addEventListener('click', ()=>{
+    document.querySelectorAll('#modeToggle button').forEach(x=>x.classList.remove('active'));
+    b.classList.add('active');
+    inputMode = b.dataset.mode;
+    document.getElementById('metierView').style.display = inputMode==='metier' ? '' : 'none';
+    document.getElementById('pieceView').style.display = inputMode==='piece' ? '' : 'none';
+  });
+});
+document.getElementById('btnAddRoom').addEventListener('click', ()=>{
+  addRoom(document.getElementById('roomTypeSelect').value);
+});
+
 function resetAll(){
-  if(!confirm('Réinitialiser le chiffrage en cours ? (les photos ajoutées seront aussi supprimées)')) return;
+  if(!confirm('Réinitialiser le chiffrage en cours ? (les photos et les pièces ajoutées seront aussi supprimées)')) return;
   Object.keys(selections).forEach(k=>delete selections[k]);
   openCats.clear();
   photos = [];
+  rooms = [];
   document.getElementById('fAdresse').value='';
   document.getElementById('fSurface').value='';
   document.getElementById('fNotes').value='';
   document.getElementById('aleas').value=12;
-  render(); renderSummary(); renderGallery();
+  render(); renderSummary(); renderGallery(); renderRooms();
 }
 
 /* ============================================================
@@ -719,7 +1111,7 @@ function openRecap(){
   Object.keys(byCat).forEach(cat=>{
     rows += `<tr class="catrow"><td colspan="4">${cat}</td></tr>`;
     byCat[cat].forEach(s=>{
-      rows += `<tr><td>${s.item.designation.replace('(poste personnalisé)','')}</td><td class="num">${s.qty} ${s.item.unite}</td><td class="num">${euros(s.item[currentTier])}</td><td class="num">${euros(s.item[currentTier]*s.qty)}</td></tr>`;
+      rows += `<tr><td>${posteLabel(s)}</td><td class="num">${s.qty} ${s.item.unite}</td><td class="num">${euros(s.item[currentTier])}</td><td class="num">${euros(s.item[currentTier]*s.qty)}</td></tr>`;
     });
   });
   document.getElementById('recapTable').innerHTML = rows;
@@ -838,8 +1230,10 @@ async function sharePdf(){
 
 async function init(){
   await loadPrices();
+  initRoomTypeSelect();
   render();
   renderSummary();
+  renderRooms();
 }
 if(sessionStorage.getItem('deka_unlocked')==='1'){ init(); }
 </script>
