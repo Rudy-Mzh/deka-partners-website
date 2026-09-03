@@ -80,9 +80,12 @@
 <div id="app" style="display:block;">
   <header class="top">
     <div class="wrap">
-      <div>
-        <h1>Aide à la création d'offre</h1>
-        <div class="sub">DEKA Partners — MDB · descente de prix par la marge</div>
+      <div style="display:flex;align-items:center;gap:16px;">
+        <img src="/assets/deka-logo.png" alt="DEKA" style="height:48px;width:auto;">
+        <div>
+          <h1>Aide à la création d'offre</h1>
+          <div class="sub">DEKA Partners — MDB · descente de prix par la marge</div>
+        </div>
       </div>
       <div class="badge">Interne</div>
     </div>
@@ -157,8 +160,18 @@
       <button class="action" onclick="copyText('txtLong')">Copier le texte structuré</button>
     </div>
 
-    <button class="action primary" id="saveBtn" onclick="saveOffer()">Enregistrer l'offre (sauvegarde Drive + email)</button>
-    <div class="note">L'enregistrement ajoute une ligne au suivi sur Google Drive et envoie un mémo par email. La confirmation dans l'email fait foi (la page ne peut pas afficher d'accusé de réception en temps réel).</div>
+    <div class="card">
+      <h2>Destination de l'enregistrement</h2>
+      <label>Que souhaites-tu faire avec cette offre ?</label>
+      <select id="destination">
+        <option value="both" selected>Sauvegarde Drive + Email</option>
+        <option value="drive">Sauvegarde Drive uniquement</option>
+        <option value="email">Email uniquement</option>
+      </select>
+    </div>
+
+    <button class="action primary" id="saveBtn" onclick="saveOffer()">Enregistrer l'offre</button>
+    <div class="note">Selon l'option choisie, la ligne est ajoutée au suivi sur Google Drive, un mémo est envoyé par email, ou les deux. La confirmation dans l'email (si activé) fait foi.</div>
   </div>
 </div>
 
@@ -249,6 +262,7 @@
     data.notes = '';
     data.texteCourt = document.getElementById('txtCourt').value;
     data.texteLong = document.getElementById('txtLong').value;
+    data.destination = document.getElementById('destination').value;
 
     var btn = document.getElementById('saveBtn');
     btn.disabled = true;
@@ -263,12 +277,15 @@
       headers: { 'Content-Type': 'text/plain;charset=utf-8' },
       body: JSON.stringify(data)
     }).then(function() {
-      showToast("Offre envoyée : sauvegarde Drive + email en cours");
+      var msg = data.destination === 'drive' ? "Offre sauvegardée sur Drive"
+              : data.destination === 'email' ? "Mémo envoyé par email"
+              : "Sauvegarde Drive + email en cours";
+      showToast(msg);
     }).catch(function(err) {
       showToast('Erreur réseau : ' + err.message, true);
     }).finally(function() {
       btn.disabled = false;
-      btn.textContent = "Enregistrer l'offre (sauvegarde Drive + email)";
+      btn.textContent = "Enregistrer l'offre";
     });
   }
 
