@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>DEKA Partners — Aide à la création d'offre</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#f2ede2; --ink-soft:#b7b0a2; --blue:#c9a84c; --blue-dark:#8a6f30;
+    --accent:#e8c97a; --bg:#141210; --card:#1c1a16; --line:#342f26;
+    --green:#8fd19e; --green-bg:rgba(143,209,158,.12); --amber:#e3b25a; --amber-bg:rgba(227,178,90,.12);
+    --danger:#e08a80;
+    font-family:'Montserrat',-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;
+  }
+  *{box-sizing:border-box;}
+  body{margin:0;background:var(--bg);color:var(--ink);}
+  a{color:var(--blue);}
+  h1,h2{font-family:'Cormorant Garamond',serif;}
+  .wrap{max-width:820px;margin:0 auto;padding:0 20px 80px;}
+  header.top{background:linear-gradient(135deg,#111111,#1c1a16);border-bottom:1px solid var(--line);color:var(--ink);padding:28px 0;margin-bottom:24px;}
+  header.top .wrap{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;}
+  header.top h1{font-size:1.7rem;margin:0;font-weight:600;letter-spacing:.3px;color:var(--accent);}
+  header.top .sub{font-size:.82rem;color:var(--ink-soft);margin-top:4px;letter-spacing:.02em;}
+  header.top .badge{font-size:.72rem;background:rgba(232,201,122,.1);border:1px solid rgba(232,201,122,.35);color:var(--accent);padding:4px 10px;border-radius:20px;}
+
+  #gate{max-width:380px;margin:80px auto;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:28px;box-shadow:0 10px 30px rgba(0,0,0,.4);}
+  #gate h2{margin-top:0;font-size:1.3rem;color:var(--accent);}
+  #gate input{width:100%;padding:10px 12px;border:1px solid var(--line);border-radius:8px;font-size:1rem;margin:10px 0;background:#14120f;color:var(--ink);}
+  #gate button{width:100%;padding:10px;background:var(--blue);color:#1a1710;border:none;border-radius:8px;font-size:.95rem;font-weight:600;cursor:pointer;}
+  #gate button:hover{background:var(--accent);}
+  #gate .err{color:var(--danger);font-size:.85rem;min-height:18px;}
+
+  .card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:20px 22px;margin-bottom:18px;}
+  .card h2{font-size:1.3rem;font-weight:600;margin:0 0 14px;color:var(--accent);display:flex;align-items:center;gap:8px;}
+  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:14px;}
+  label{display:block;font-size:.78rem;color:var(--ink-soft);margin-bottom:4px;font-weight:500;}
+  select, input, textarea{
+    width:100%;padding:10px 12px;border-radius:8px;border:1px solid var(--line);
+    background:#14120f;color:var(--ink);font-size:.95rem;font-family:inherit;
+  }
+  textarea{resize:vertical;min-height:110px;}
+  details{margin-top:10px;}
+  summary{color:var(--ink-soft);font-size:.82rem;cursor:pointer;padding:6px 0;}
+
+  .result-key{background:var(--green-bg);border:1px solid var(--green);border-radius:12px;padding:18px;text-align:center;margin-bottom:14px;}
+  .result-key .label{color:var(--ink-soft);font-size:.78rem;letter-spacing:.03em;text-transform:uppercase;}
+  .result-key .value{color:var(--green);font-size:1.9rem;font-weight:700;margin-top:4px;font-family:'Cormorant Garamond',serif;}
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:10px;font-size:.85rem;margin-top:10px;}
+  .grid2 div{background:#14120f;border:1px solid var(--line);border-radius:8px;padding:10px;}
+  .grid2 .l{color:var(--ink-soft);font-size:.7rem;text-transform:uppercase;letter-spacing:.03em;}
+  .grid2 .v{font-weight:600;margin-top:2px;}
+  table.band{width:100%;border-collapse:collapse;font-size:.85rem;margin-top:14px;}
+  table.band td{padding:8px 4px;border-top:1px solid var(--line);}
+  table.band td:last-child{text-align:right;font-weight:600;color:var(--accent);}
+
+  button.action{
+    padding:11px 16px;border-radius:8px;border:1px solid var(--line);
+    font-size:.88rem;font-weight:600;cursor:pointer;margin-top:8px;
+    background:#14120f;color:var(--ink);width:100%;
+  }
+  button.action:hover{border-color:var(--blue);}
+  button.primary{background:var(--blue);color:#1a1710;border:none;}
+  button.primary:hover{background:var(--accent);}
+  button.primary:disabled{opacity:.6;cursor:default;}
+
+  .toast{
+    position:fixed;bottom:18px;left:18px;right:18px;max-width:780px;margin:0 auto;
+    background:var(--green);color:#14120f;padding:12px;border-radius:10px;
+    text-align:center;font-size:.88rem;font-weight:600;display:none;box-shadow:0 10px 30px rgba(0,0,0,.4);
+  }
+  .toast.error{background:var(--danger);}
+  .note{font-size:.72rem;color:var(--ink-soft);margin-top:6px;}
+</style>
+</head>
+<body>
+
+<div id="gate">
+  <h2>Accès protégé</h2>
+  <input type="password" id="gateInput" placeholder="Code d'accès" autocomplete="off">
+  <div class="err" id="gateErr"></div>
+  <button onclick="tryUnlock()">Entrer</button>
+</div>
+
+<div id="app" style="display:none;">
+  <header class="top">
+    <div class="wrap">
+      <div>
+        <h1>Aide à la création d'offre</h1>
+        <div class="sub">DEKA Partners — MDB · descente de prix par la marge</div>
+      </div>
+      <div class="badge">Interne</div>
+    </div>
+  </header>
+
+  <div class="wrap">
+
+    <div class="card">
+      <h2>Bien</h2>
+      <label>Charger un bien déjà visité (optionnel)</label>
+      <select id="propertyPicker"><option value="">— saisie manuelle —</option></select>
+      <div class="note" id="loadStatus"></div>
+
+      <label style="margin-top:14px;">Adresse</label>
+      <input id="adresse" placeholder="12 rue Exemple, 17000 La Rochelle">
+      <div class="grid" style="margin-top:10px;">
+        <div><label>Prix demandé (€)</label><input id="prixAffiche" type="number" value="500000"></div>
+        <div><label>Surface (m²)</label><input id="surface" type="number" value="100"></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>Sortie &amp; travaux</h2>
+      <div class="grid">
+        <div><label>Revente visée (€/m²)</label><input id="prixM2" type="number" value="5000"></div>
+        <div><label>Budget travaux (€)</label><input id="travaux" type="number" value="75000"></div>
+        <div><label>Portage (mois)</label><input id="duree" type="number" value="6"></div>
+        <div><label>Marge cible brute (%)</label><input id="marge" type="number" value="25"></div>
+      </div>
+      <details>
+        <summary>Paramètres financiers avancés</summary>
+        <div class="grid" style="margin-top:10px;">
+          <div><label>Notaire (%)</label><input id="notaire" type="number" value="3"></div>
+          <div><label>Dossier bancaire (%)</label><input id="dossier" type="number" value="1"></div>
+          <div><label>Garantie (%)</label><input id="garantie" type="number" value="1.5"></div>
+          <div><label>Taux bancaire annuel (%)</label><input id="tauxBanc" type="number" value="7"></div>
+        </div>
+        <label style="margin-top:10px;">Frais divers (€)</label>
+        <input id="fraisDivers" type="number" value="5000">
+      </details>
+      <div class="note">Commercialisation non incluse dans le coût (non payée par DEKA), hors calcul de marge.</div>
+    </div>
+
+    <div class="card">
+      <h2>Résultat</h2>
+      <div class="result-key">
+        <div class="label">Prix d'achat MAX</div>
+        <div class="value" id="outAchat">—</div>
+      </div>
+      <div class="grid2">
+        <div><div class="l">Marge brute</div><div class="v" id="outMarge">—</div></div>
+        <div><div class="l">Coût total opération</div><div class="v" id="outCout">—</div></div>
+        <div><div class="l">Écart vs prix demandé</div><div class="v" id="outEcart">—</div></div>
+        <div><div class="l">CA revente (HT)</div><div class="v" id="outCA">—</div></div>
+      </div>
+      <table class="band">
+        <tr><td>Marge 20%</td><td id="band20">—</td></tr>
+        <tr><td>Marge 25%</td><td id="band25">—</td></tr>
+        <tr><td>Marge 30%</td><td id="band30">—</td></tr>
+      </table>
+    </div>
+
+    <div class="card">
+      <h2>Argumentaire court</h2>
+      <textarea id="txtCourt" readonly></textarea>
+      <button class="action" onclick="copyText('txtCourt')">Copier le texte court</button>
+    </div>
+
+    <div class="card">
+      <h2>Argumentaire structuré (email agent)</h2>
+      <textarea id="txtLong" readonly style="min-height:170px"></textarea>
+      <button class="action" onclick="copyText('txtLong')">Copier le texte structuré</button>
+    </div>
+
+    <button class="action primary" id="saveBtn" onclick="saveOffer()">Enregistrer l'offre (sauvegarde Drive + email)</button>
+    <div class="note">L'enregistrement ajoute une ligne au suivi sur Google Drive et envoie un mémo par email. La confirmation dans l'email fait foi (la page ne peut pas afficher d'accusé de réception en temps réel).</div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+  // ⚠️ À remplir après déploiement du script Apps Script (voir Code.gs) :
+  var APPS_SCRIPT_URL = 'COLLER_ICI_URL_DEPLOIEMENT_APPS_SCRIPT';
+
+  // ---------- Accès ----------
+  const PASSCODE_HASH = "a99ac25d54f658e8dfc58695611ce9d251fc53ef57072558347312446ac06fa2";
+  async function sha256hex(str){
+    const enc = new TextEncoder().encode(str);
+    const buf = await crypto.subtle.digest('SHA-256', enc);
+    return Array.from(new Uint8Array(buf)).map(b=>b.toString(16).padStart(2,'0')).join('');
+  }
+  async function tryUnlock(){
+    const val = document.getElementById('gateInput').value;
+    const hash = await sha256hex(val);
+    if(hash === PASSCODE_HASH){
+      sessionStorage.setItem('deka_unlocked_offre','1');
+      document.getElementById('gate').style.display='none';
+      document.getElementById('app').style.display='block';
+      init();
+    } else {
+      document.getElementById('gateErr').textContent = "Code incorrect.";
+    }
+  }
+  document.getElementById('gateInput').addEventListener('keydown', e=>{ if(e.key==='Enter') tryUnlock(); });
+  if(sessionStorage.getItem('deka_unlocked_offre')==='1'){
+    document.getElementById('gate').style.display='none';
+    document.getElementById('app').style.display='block';
+  }
+
+  // ---------- Calcul ----------
+  function num(id) { return parseFloat(document.getElementById(id).value) || 0; }
+  function eur(n) { return Math.round(n).toLocaleString('fr-FR') + ' €'; }
+  function pct(n) { return (n * 100).toFixed(1) + ' %'; }
+
+  function compute() {
+    var surface = num('surface');
+    var prixM2 = num('prixM2');
+    var travaux = num('travaux');
+    var duree = num('duree');
+    var fraisDivers = num('fraisDivers');
+    var notaire = num('notaire') / 100;
+    var dossier = num('dossier') / 100;
+    var garantie = num('garantie') / 100;
+    var tauxBanc = num('tauxBanc') / 100;
+    var margeCible = num('marge') / 100;
+    var prixAffiche = num('prixAffiche');
+    var adresse = document.getElementById('adresse').value || '[adresse]';
+
+    var ca = surface * prixM2;
+    var k1 = 1 + notaire + dossier + garantie;
+    var k2 = 1 + tauxBanc * duree / 12;
+    var fixe = travaux + fraisDivers;
+
+    function achatPour(marge) { return (ca * (1 - marge) - fixe) / (k1 * k2); }
+
+    var achatMax = achatPour(margeCible);
+    var coutTotal = achatMax * k1 * k2 + fixe;
+    var margeBrute = ca - coutTotal;
+    var ecart = prixAffiche - achatMax;
+
+    document.getElementById('outAchat').textContent = eur(achatMax);
+    document.getElementById('outMarge').textContent = eur(margeBrute) + ' (' + pct(margeBrute / ca || 0) + ')';
+    document.getElementById('outCout').textContent = eur(coutTotal);
+    document.getElementById('outEcart').textContent = eur(ecart);
+    document.getElementById('outCA').textContent = eur(ca);
+    document.getElementById('band20').textContent = eur(achatPour(0.20));
+    document.getElementById('band25').textContent = eur(achatPour(0.25));
+    document.getElementById('band30').textContent = eur(achatPour(0.30));
+
+    var court = "Bonjour, suite à notre visite du bien " + adresse + ", je vous confirme une offre à "
+      + eur(achatMax) + ", sous condition suspensive de prêt. Budget travaux estimé " + eur(travaux)
+      + ", c'est le prix qui nous permet de rester sur une opération saine. Je reste disponible pour en discuter.";
+
+    var long = "Objet : Offre d'achat — " + adresse + "\n"
+      + "Statut : Marchand de biens (DEKA), achat en direct\n"
+      + "Offre : " + eur(achatMax) + ", sous condition suspensive de prêt\n"
+      + "Justification : prix de revente visé " + eur(prixM2) + "/m², budget travaux chiffré " + eur(travaux)
+      + ", marge cible " + pct(margeCible) + "\n"
+      + "Conditions : signature rapide dès accord de financement, portage estimé " + duree + " mois, "
+      + "mandat de revente confié à votre agence en cas d'accord\n"
+      + "Validité : 15 jours, relance prévue à 3 et 6 mois en cas de refus";
+
+    document.getElementById('txtCourt').value = court;
+    document.getElementById('txtLong').value = long;
+
+    return { adresse: adresse, prixAffiche: prixAffiche, prixAchatMax: Math.round(achatMax), margeCible: margeCible };
+  }
+
+  function copyText(id) {
+    var el = document.getElementById(id);
+    el.select();
+    el.setSelectionRange(0, 99999);
+    navigator.clipboard ? navigator.clipboard.writeText(el.value) : document.execCommand('copy');
+    showToast('Copié dans le presse-papiers');
+  }
+
+  function showToast(msg, isError) {
+    var t = document.getElementById('toast');
+    t.textContent = msg;
+    t.className = 'toast' + (isError ? ' error' : '');
+    t.style.display = 'block';
+    setTimeout(function() { t.style.display = 'none'; }, 2200);
+  }
+
+  // ---------- Sauvegarde (Drive) + email, via l'API Apps Script ----------
+  function saveOffer() {
+    var data = compute();
+    data.notes = '';
+    data.texteCourt = document.getElementById('txtCourt').value;
+    data.texteLong = document.getElementById('txtLong').value;
+
+    var btn = document.getElementById('saveBtn');
+    btn.disabled = true;
+    btn.textContent = 'Enregistrement…';
+
+    // mode 'no-cors' + text/plain : évite le preflight bloqué par Apps Script.
+    // On ne peut pas lire la réponse (limite Apps Script + site externe), donc
+    // confirmation optimiste ici ; la vraie confirmation arrive par email.
+    fetch(APPS_SCRIPT_URL, {
+      method: 'POST',
+      mode: 'no-cors',
+      headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+      body: JSON.stringify(data)
+    }).then(function() {
+      showToast("Offre envoyée : sauvegarde Drive + email en cours");
+    }).catch(function(err) {
+      showToast('Erreur réseau : ' + err.message, true);
+    }).finally(function() {
+      btn.disabled = false;
+      btn.textContent = "Enregistrer l'offre (sauvegarde Drive + email)";
+    });
+  }
+
+  // ---------- Chargement des biens visités (JSONP) ----------
+  var _propList = [];
+  function onPropertiesLoaded(list) {
+    _propList = list;
+    var picker = document.getElementById('propertyPicker');
+    list.forEach(function(p, i) {
+      var opt = document.createElement('option');
+      opt.value = i;
+      opt.textContent = p.adresse;
+      picker.appendChild(opt);
+    });
+    document.getElementById('loadStatus').textContent = list.length + ' bien(s) chargé(s) depuis le suivi.';
+  }
+  function loadProperties() {
+    if (APPS_SCRIPT_URL.indexOf('COLLER_ICI') !== -1) {
+      document.getElementById('loadStatus').textContent = "Backend non configuré : saisie manuelle uniquement.";
+      return;
+    }
+    var script = document.createElement('script');
+    script.src = APPS_SCRIPT_URL + '?action=properties&callback=onPropertiesLoaded';
+    script.onerror = function() {
+      document.getElementById('loadStatus').textContent = "Impossible de charger la liste des biens (vérifie l'URL du backend).";
+    };
+    document.body.appendChild(script);
+  }
+
+  document.getElementById('propertyPicker').addEventListener('change', function() {
+    if (this.value === '') return;
+    var p = _propList[this.value];
+    document.getElementById('adresse').value = p.adresse;
+    document.getElementById('prixAffiche').value = p.prixAffiche;
+    document.getElementById('surface').value = p.surface;
+    if (p.prixReventeM2) document.getElementById('prixM2').value = p.prixReventeM2;
+    document.getElementById('travaux').value = p.budgetTravaux;
+    compute();
+  });
+
+  document.querySelectorAll('#app input').forEach(function(el) {
+    el.addEventListener('input', compute);
+  });
+
+  function init() {
+    compute();
+    loadProperties();
+  }
+  if(sessionStorage.getItem('deka_unlocked_offre')==='1'){ init(); }
+</script>
+</body>
+</html>
