@@ -285,6 +285,7 @@
             <button type="button" class="btn ghost" id="btnAddRoom" style="flex:0 0 auto;">+ Ajouter cette pièce</button>
           </div>
           <div id="roomsContainer"></div>
+          <div id="surfaceCoherenceHint" class="empty-hint" style="margin-top:10px;"></div>
         </div>
       </div>
     </div>
@@ -1032,7 +1033,7 @@ const ROOM_DEFAULTS = {
     'Sol stratifie ou PVC pose': 'auto',
     'Plinthes (fourniture+pose)': 'auto',
     'Point lumineux simple allumage': 1,
-    'Prise de courant 2P+T standard': 6,
+    'Prise de courant 2P+T standard': 'auto',
     'Alimentation volet roulant electrique': 1,
     'Bloc-porte interieur fourniture+pose (huisserie+serrure)': 1,
     'Volet roulant PVC motorise fourniture+pose': 1,
@@ -1044,7 +1045,7 @@ const ROOM_DEFAULTS = {
     'Plinthes (fourniture+pose)': 'auto',
     'Point lumineux simple allumage': 1,
     'Point lumineux va-et-vient ou telerupteur': 1,
-    'Prise de courant 2P+T standard': 6,
+    'Prise de courant 2P+T standard': 'auto',
     'Prise TV coaxiale': 1,
     'Volet roulant PVC motorise fourniture+pose': 1,
     "Fenetre PVC standard (dimensions courantes jusqu'a 1.8m2) fourniture+pose": 1
@@ -1055,7 +1056,7 @@ const ROOM_DEFAULTS = {
     'Carrelage sol pose fourniture+pose': 'auto',
     'Plinthes (fourniture+pose)': 'auto',
     'Point lumineux simple allumage': 1,
-    'Prise de courant 2P+T standard': 6,
+    'Prise de courant 2P+T standard': 'auto',
     'Ligne dediee electromenager (plaque four LV LL)': 3,
     'Alimentation / evacuation EC-EF (par point ponctuel)': 1,
     'VMC hygroreglable kit complet fourniture+pose': 1,
@@ -1068,7 +1069,7 @@ const ROOM_DEFAULTS = {
     'VMC hygroreglable kit complet fourniture+pose': 1,
     'Seche-serviettes electrique connecte fourniture+pose+alimentation': 1,
     'Point lumineux simple allumage': 1,
-    'Prise de courant 2P+T standard': 1,
+    'Prise de courant 2P+T standard': 'auto',
     'Bloc-porte interieur fourniture+pose (huisserie+serrure)': 1
   },
   salledeau: {
@@ -1079,7 +1080,7 @@ const ROOM_DEFAULTS = {
     'Faience murale salle de bain posee': 'auto',
     'VMC hygroreglable kit complet fourniture+pose': 1,
     'Point lumineux simple allumage': 1,
-    'Prise de courant 2P+T standard': 1,
+    'Prise de courant 2P+T standard': 'auto',
     'Bloc-porte interieur fourniture+pose (huisserie+serrure)': 1
   },
   wc: {
@@ -1093,7 +1094,7 @@ const ROOM_DEFAULTS = {
     'Sol stratifie ou PVC pose': 'auto',
     'Plinthes (fourniture+pose)': 'auto',
     'Point lumineux va-et-vient ou telerupteur': 1,
-    'Prise de courant 2P+T standard': 1
+    'Prise de courant 2P+T standard': 'auto'
   },
   logement: {
     'Generalites electriques appartement / T2-T3 (tableau+communication+cablage+VMC+saignees)': 1,
@@ -1114,6 +1115,40 @@ function floorArea(room){ return round1((room.longueur||0) * (room.largeur||0));
 function wallArea(room){ return round1(2*((room.longueur||0)+(room.largeur||0))*(room.hauteur||0)); }
 function perimeter(room){ return round1(2*((room.longueur||0)+(room.largeur||0))); }
 
+/* Nombre de prises de courant minimum par piece, d'apres la norme
+   NF C 15-100 (minima legaux) :
+   - sejour : 5 prises si < 28m2, 7 si >= 28m2
+   - chambre : 3 prises
+   - cuisine : 3 prises si < 4m2, 6 si >= 4m2 (dont 4 au-dessus du plan de travail)
+   - salle de bain / salle d'eau : 1 prise (hors volumes de securite)
+   - degagement/entree : 1 prise si > 4m2, sinon aucune obligation
+   - WC : aucune obligation
+   Sources : legrand.fr "Norme NF C 15-100 : les prises de courant" et
+   "Combien de prises de courant doit-on installer dans chaque piece ?"
+   Pour un sejour-cuisine integre (studio/T1/T1 bis/T2 fondus en une
+   seule piece), on ajoute les prises cuisine dediees en plus des
+   prises sejour, la piece cumulant les deux usages. */
+function nfPrisesSejour(area){ return area>=28 ? 7 : 5; }
+function nfPrisesChambre(){ return 3; }
+function nfPrisesCuisine(area){ return area>=4 ? 6 : 3; }
+function nfPrisesSalleEau(){ return 1; }
+function nfPrisesDegagement(area){ return area>4 ? 1 : 0; }
+function nfPrisesRoom(room){
+  const area = floorArea(room);
+  switch(room.type){
+    case 'sejour':
+      return room.hasCuisine
+        ? nfPrisesSejour(area) + nfPrisesCuisine(room.cuisineGamme==='kitchenette' ? Math.min(area,3.9) : Math.min(area,8))
+        : nfPrisesSejour(area);
+    case 'chambre': return nfPrisesChambre();
+    case 'cuisine': return nfPrisesCuisine(area);
+    case 'sdb': case 'salledeau': return nfPrisesSalleEau();
+    case 'degagement': return nfPrisesDegagement(area);
+    case 'garage': return 2;
+    default: return 1;
+  }
+}
+
 const ROOM_CALC = {
   'Peinture rafraichissement murs+plafonds 2 couches': room => round1(wallArea(room) + floorArea(room)),
   'Sol stratifie ou PVC pose': room => floorArea(room),
@@ -1125,7 +1160,8 @@ const ROOM_CALC = {
   "Joints / finition plaque de platre (hors poncage)": room => wallArea(room),
   'Chape beton / ragreage de sol': room => floorArea(room),
   'Terrasse bois composite posee (structure+lames)': room => floorArea(room),
-  'Terrasse dallage / carrelage exterieur posee': room => floorArea(room)
+  'Terrasse dallage / carrelage exterieur posee': room => floorArea(room),
+  'Prise de courant 2P+T standard': room => nfPrisesRoom(room)
 };
 
 let rooms = [];
@@ -1162,68 +1198,75 @@ function applyRoomDefaults(room){
    un ajout manuel si besoin, mais ne sont jamais cochees par defaut. */
 const ROOM_COQUILLE = {
   chambre: {
+    'Doublage isolation interieure (placo + laine mur peripherique)': 'auto',
     'Peinture rafraichissement murs+plafonds 2 couches': 'auto',
     'Sol stratifie ou PVC pose': 'auto',
     'Plinthes (fourniture+pose)': 'auto',
     'Point lumineux simple allumage': 1,
     'Point lumineux va-et-vient ou telerupteur': 1,
-    'Prise de courant 2P+T standard': 6,
+    'Prise de courant 2P+T standard': 'auto',
     'Alimentation volet roulant electrique': 1,
     'Bloc-porte interieur fourniture+pose (huisserie+serrure)': 1,
     "Fenetre PVC standard (dimensions courantes jusqu'a 1.8m2) fourniture+pose": 1,
     'Volet roulant PVC motorise fourniture+pose': 1
   },
   sejour: {
+    'Doublage isolation interieure (placo + laine mur peripherique)': 'auto',
     'Peinture rafraichissement murs+plafonds 2 couches': 'auto',
     'Sol stratifie ou PVC pose': 'auto',
     'Plinthes (fourniture+pose)': 'auto',
     'Point lumineux simple allumage': 1,
     'Point lumineux va-et-vient ou telerupteur': 1,
-    'Prise de courant 2P+T standard': 6,
+    'Prise de courant 2P+T standard': 'auto',
     'Prise TV coaxiale': 1,
     'Bloc-porte interieur fourniture+pose (huisserie+serrure)': 1,
     "Fenetre PVC standard (dimensions courantes jusqu'a 1.8m2) fourniture+pose": 1,
     'Volet roulant PVC motorise fourniture+pose': 1
   },
   cuisine: {
+    'Doublage isolation interieure (placo + laine mur peripherique)': 'auto',
     'Peinture rafraichissement murs+plafonds 2 couches': 'auto',
     'Carrelage sol pose fourniture+pose': 'auto',
     'Plinthes (fourniture+pose)': 'auto',
     'Faience murale salle de bain posee': 'auto',
     'Ligne dediee electromenager (plaque four LV LL)': 3,
     'Alimentation / evacuation EC-EF (par point ponctuel)': 1,
-    'VMC hygroreglable kit complet fourniture+pose': 1,
-    'Prise de courant 2P+T standard': 6,
+    'Prise de courant 2P+T standard': 'auto',
     'Point lumineux simple allumage': 1,
     'Bloc-porte interieur fourniture+pose (huisserie+serrure)': 1
     /* la gamme de cuisine (kitchenette/standard/haut de gamme) est
-       ajoutee a part, selon le type de logement — voir plus bas */
+       ajoutee a part, selon le type de logement — voir plus bas.
+       La VMC n'est plus cochee ici : un seul kit VMC est necessaire
+       par logement (voir "logement" ci-dessous), pas un par piece
+       humide — sinon on facture plusieurs fois le meme reseau. */
   },
   sdb: {
+    'Doublage isolation interieure (placo + laine mur peripherique)': 'auto',
     'Salle de bain complete (douche+vasque+WC+evac/alim hors carrelage)': 1,
     'Carrelage sol pose fourniture+pose': 'auto',
     'Faience murale salle de bain posee': 'auto',
     'Plinthes (fourniture+pose)': 'auto',
-    'VMC hygroreglable kit complet fourniture+pose': 1,
     'Seche-serviettes electrique connecte fourniture+pose+alimentation': 1,
     'Ballon eau chaude extra-plat 80L + groupe securite pose': 1,
     'Point lumineux simple allumage': 1,
-    'Prise de courant 2P+T standard': 1,
+    'Prise de courant 2P+T standard': 'auto',
     'Bloc-porte interieur fourniture+pose (huisserie+serrure)': 1
+    /* VMC : un seul kit par logement, voir "logement" ci-dessous. */
   },
   salledeau: {
+    'Doublage isolation interieure (placo + laine mur peripherique)': 'auto',
     'Douche complete (cabine quart de rond) fourniture+pose': 1,
     'Vasque simple + robinetterie posee': 1,
     'WC complet pose (pack a poser)': 1,
     'Carrelage sol pose fourniture+pose': 'auto',
     'Faience murale salle de bain posee': 'auto',
     'Plinthes (fourniture+pose)': 'auto',
-    'VMC hygroreglable kit complet fourniture+pose': 1,
     'Seche-serviettes electrique connecte fourniture+pose+alimentation': 1,
     'Ballon eau chaude extra-plat 80L + groupe securite pose': 1,
     'Point lumineux simple allumage': 1,
-    'Prise de courant 2P+T standard': 1,
+    'Prise de courant 2P+T standard': 'auto',
     'Bloc-porte interieur fourniture+pose (huisserie+serrure)': 1
+    /* VMC : un seul kit par logement, voir "logement" ci-dessous. */
   },
   wc: {
     'WC complet pose (pack a poser)': 1,
@@ -1233,21 +1276,28 @@ const ROOM_COQUILLE = {
     'Bloc-porte interieur fourniture+pose (huisserie+serrure)': 1
   },
   degagement: {
+    'Doublage isolation interieure (placo + laine mur peripherique)': 'auto',
     'Peinture rafraichissement murs+plafonds 2 couches': 'auto',
     'Sol stratifie ou PVC pose': 'auto',
     'Plinthes (fourniture+pose)': 'auto',
     'Point lumineux va-et-vient ou telerupteur': 1,
-    'Prise de courant 2P+T standard': 1
+    'Prise de courant 2P+T standard': 'auto'
   },
   logement: {
     /* Un seul forfait electrique (il inclut deja tableau + communication
-       + cablage + VMC + saignees — inutile de recocher ces postes a
-       part), la mise a la terre, et les deux raccordements necessaires
-       pour creer un lot independant (eau + electricite). Le chauffage
-       (electrique/gaz/PAC) est ajoute a part, selon la variante choisie
-       — voir plus bas. VMC double flux, climatisation et chaudiere/PAC
-       restent disponibles dans la piece pour un ajout manuel si le
-       projet le justifie, mais ne sont jamais coches par defaut. */
+       + cablage + saignees ET la VMC de base du logement — inutile de
+       recocher ces postes a part, et surtout inutile de re-cocher une
+       "VMC hygroreglable" dans chaque piece humide : un logement n'a
+       qu'UN SEUL groupe VMC, avec une bouche d'extraction par piece
+       humide branchee dessus, pas un appareil different par piece), la
+       mise a la terre, et les deux raccordements necessaires pour creer
+       un lot independant (eau + electricite). Le chauffage (electrique/
+       gaz/PAC) est ajoute a part, selon la variante choisie — voir plus
+       bas. Un kit VMC autonome, la VMC double flux, la climatisation et
+       la chaudiere/PAC restent disponibles dans les pieces pour un ajout
+       manuel si le projet le justifie (ex. renovation d'une seule salle
+       de bain sans reprise electrique complete), mais ne sont jamais
+       coches par defaut dans la coquille type. */
     'Generalites electriques appartement / T2-T3 (tableau+communication+cablage+VMC+saignees)': 1,
     'Mise a la terre fourniture+pose+verification': 1,
     'Droit de prise / branchement compteur eau (diametre 15mm)': 1,
@@ -1260,10 +1310,25 @@ const ROOM_COQUILLE = {
   }
 };
 
+/* Quand une cuisine est fondue dans une autre piece (sejour d'un
+   studio/T1/T1 bis/T2 — voir LOGEMENT_TYPES), on n'y reinjecte pas les
+   postes de revetement (peinture/sol/plinthes) qui sont deja couverts
+   par la piece hote : on ajoute seulement les postes specifiques a la
+   fonction cuisine. La credence (faience) est une quantite forfaitaire
+   fixe (coin cuisine), pas la moitie du mur de toute la piece. */
+const CUISINE_INTEGREE_EXTRA = {
+  'Faience murale salle de bain posee': 4,
+  'Ligne dediee electromenager (plaque four LV LL)': 3,
+  'Alimentation / evacuation EC-EF (par point ponctuel)': 1
+};
+
 function applyFullRoomPostes(room, cuisineGamme){
   const coquille = {...(ROOM_COQUILLE[room.type] || {})};
-  if(room.type==='cuisine'){
+  if(room.type==='cuisine' || room.hasCuisine){
     coquille[CUISINE_GAMME_DESIG[cuisineGamme] || CUISINE_GAMME_DESIG.standard] = 1;
+  }
+  if(room.hasCuisine){
+    Object.assign(coquille, CUISINE_INTEGREE_EXTRA);
   }
   if(room.type==='logement'){
     const chauffageDesig = variantDefaultDesig('chauffage_generation');
@@ -1309,33 +1374,42 @@ const CUISINE_GAMME_DESIG = {
   hautdegamme: 'Cuisine equipee haut de gamme (meubles+plan de travail+electromenager complet)'
 };
 
+/* Studio / T1 / T1 bis / T2 : le sejour et la cuisine ne forment
+   qu'UNE SEULE piece ("salon-cuisine integre", cf. usage reel — un
+   studio n'a pas deux pieces distinctes). "withCuisine:true" indique
+   que la cuisine doit etre fondue dans cette piece plutot que creee a
+   part (voir applyLogementTypeShell). A partir du T3, la cuisine
+   redevient une piece a part entiere (plus grande surface, cuisine
+   fermee ou semi-ouverte plus frequente). */
+/* cloisonM2 : surface forfaitaire de cloisons de distribution a creer
+   pour separer les pieces d'une coquille totalement vide (aucune
+   cloison interieure existante). Estimation a 1 cloison ~= 3ml x 2.5m
+   de hauteur = 7.5m2 par separation de piece necessaire (ex. studio :
+   1 cloison entre le sejour/cuisine et la salle d'eau). A ajuster
+   selon le plan reel une fois le releve fait. */
 const LOGEMENT_TYPES = {
-  studio: {label:'Studio', cuisineGamme:'kitchenette', rooms:[
-    {type:'sejour', count:1},
-    {type:'cuisine', count:1},
+  studio: {label:'Studio', cuisineGamme:'kitchenette', cloisonM2:8, rooms:[
+    {type:'sejour', count:1, withCuisine:true},
     {type:'salledeau', count:1}
   ]},
-  t1: {label:'T1', cuisineGamme:'kitchenette', rooms:[
-    {type:'sejour', count:1},
-    {type:'cuisine', count:1},
+  t1: {label:'T1', cuisineGamme:'kitchenette', cloisonM2:12, rooms:[
+    {type:'sejour', count:1, withCuisine:true},
     {type:'salledeau', count:1},
     {type:'degagement', count:1}
   ]},
-  t1bis: {label:'T1 bis', cuisineGamme:'kitchenette', rooms:[
-    {type:'sejour', count:1},
+  t1bis: {label:'T1 bis', cuisineGamme:'kitchenette', cloisonM2:16, rooms:[
+    {type:'sejour', count:1, withCuisine:true},
     {type:'chambre', count:1},
-    {type:'cuisine', count:1},
     {type:'salledeau', count:1},
     {type:'degagement', count:1}
   ]},
-  t2: {label:'T2', cuisineGamme:'standard', rooms:[
-    {type:'sejour', count:1},
+  t2: {label:'T2', cuisineGamme:'standard', cloisonM2:20, rooms:[
+    {type:'sejour', count:1, withCuisine:true},
     {type:'chambre', count:1},
-    {type:'cuisine', count:1},
     {type:'sdb', count:1},
     {type:'degagement', count:1}
   ]},
-  t3: {label:'T3', cuisineGamme:'standard', rooms:[
+  t3: {label:'T3', cuisineGamme:'standard', cloisonM2:28, rooms:[
     {type:'sejour', count:1},
     {type:'chambre', count:2},
     {type:'cuisine', count:1},
@@ -1343,7 +1417,7 @@ const LOGEMENT_TYPES = {
     {type:'wc', count:1},
     {type:'degagement', count:1}
   ]},
-  t4plus: {label:'T4 et plus', cuisineGamme:'hautdegamme', rooms:[
+  t4plus: {label:'T4 et plus', cuisineGamme:'hautdegamme', cloisonM2:36, rooms:[
     {type:'sejour', count:1},
     {type:'chambre', count:3},
     {type:'cuisine', count:1},
@@ -1367,14 +1441,28 @@ function applyLogementTypeShell(){
   cfg.rooms.forEach(rc=>{
     for(let i=0;i<rc.count;i++){
       const room = createRoom(rc.type);
+      if(rc.withCuisine){
+        room.hasCuisine = true;
+        room.cuisineGamme = cfg.cuisineGamme;
+        room.name = 'Séjour / Cuisine';
+      }
       rooms.push(room);
       applyFullRoomPostes(room, cfg.cuisineGamme);
     }
   });
-  if(!rooms.some(r=>r.type==='logement')){
-    const gRoom = createRoom('logement');
+  let gRoom = rooms.find(r=>r.type==='logement');
+  if(!gRoom){
+    gRoom = createRoom('logement');
     rooms.push(gRoom);
     applyFullRoomPostes(gRoom, cfg.cuisineGamme);
+  }
+  if(cfg.cloisonM2){
+    const cloisonDesig = 'Cloison de distribution placo (rails+montants 48 double BA13 laine 45mm) fourniture+pose';
+    const p = PRICES.find(pr=>pr.designation===cloisonDesig);
+    if(p){
+      const k = keyFor(p.categorie, p.designation, gRoom.id);
+      selections[k] = {item:p, qty:cfg.cloisonM2, room:gRoom.name, roomInternalId:gRoom.id, auto:false};
+    }
   }
   renderRooms(); renderSummary();
 }
@@ -1446,15 +1534,15 @@ function renderRooms(){
       };
       head.querySelector('.room-l').addEventListener('input', e=>{
         room.longueur = parseFloat(e.target.value)||null;
-        updateHint(); recalcRoomAutoQty(room); renderRoomBody(room); renderSummary();
+        updateHint(); recalcRoomAutoQty(room); renderRoomBody(room); renderSummary(); updateSurfaceCoherenceHint();
       });
       head.querySelector('.room-la').addEventListener('input', e=>{
         room.largeur = parseFloat(e.target.value)||null;
-        updateHint(); recalcRoomAutoQty(room); renderRoomBody(room); renderSummary();
+        updateHint(); recalcRoomAutoQty(room); renderRoomBody(room); renderSummary(); updateSurfaceCoherenceHint();
       });
       head.querySelector('.room-h').addEventListener('input', e=>{
         room.hauteur = parseFloat(e.target.value)||2.5;
-        updateHint(); recalcRoomAutoQty(room); renderRoomBody(room); renderSummary();
+        updateHint(); recalcRoomAutoQty(room); renderRoomBody(room); renderSummary(); updateSurfaceCoherenceHint();
       });
       updateHint();
     }
@@ -1482,10 +1570,44 @@ function renderRooms(){
     renderRoomBody(room);
     renderRoomPhotos(room.id);
   });
+  updateSurfaceCoherenceHint();
+}
+
+/* Compare la surface cumulee des pieces saisies (L x l par piece) a la
+   "Surface habitable" declaree en haut du formulaire, pour reperer vite
+   un oubli de piece ou une dimension mal saisie. Les pieces sans
+   dimensions (noDims: logement, exterieur...) ne comptent pas. */
+function updateSurfaceCoherenceHint(){
+  const el = document.getElementById('surfaceCoherenceHint');
+  if(!el) return;
+  const declared = parseFloat(document.getElementById('fSurface').value) || 0;
+  const dimmedRooms = rooms.filter(r=>!r.noDims);
+  const cumulee = round1(dimmedRooms.reduce((sum,r)=> sum + floorArea(r), 0));
+  if(!dimmedRooms.length){
+    el.textContent = '';
+    return;
+  }
+  if(!declared){
+    el.innerHTML = `Surface cumulée des pièces saisies : <strong>${cumulee} m²</strong>. Renseignez la « Surface habitable » en haut du formulaire pour vérifier la cohérence.`;
+    el.style.color = '';
+    return;
+  }
+  const ecartPct = declared>0 ? Math.round(Math.abs(cumulee-declared)/declared*100) : 0;
+  const coherent = ecartPct <= 10;
+  el.innerHTML = `Surface cumulée des pièces saisies : <strong>${cumulee} m²</strong> vs Surface habitable déclarée : <strong>${declared} m²</strong> (écart ${ecartPct}%)${coherent? ' — cohérent.' : ' — à vérifier : il manque probablement une pièce ou une dimension.'}`;
+  el.style.color = coherent ? 'var(--ok, #3d8b52)' : '#c0392b';
 }
 
 function getRoomDisplayPostes(room){
-  const suggested = (ROOM_TYPES.find(rt=>rt.type===room.type)||{postes:[]}).postes
+  let designs = (ROOM_TYPES.find(rt=>rt.type===room.type)||{postes:[]}).postes;
+  if(room.hasCuisine){
+    // Sejour/T1/T2 avec cuisine integree : on affiche aussi les postes
+    // cuisine (gamme, electromenager, alim EC-EF, faience...) dans la
+    // meme piece, pour pouvoir les re-cocher/ajuster au meme endroit.
+    const cuisineDesigns = (ROOM_TYPES.find(rt=>rt.type==='cuisine')||{postes:[]}).postes;
+    designs = designs.concat(cuisineDesigns.filter(d=>!designs.includes(d)));
+  }
+  const suggested = designs
     .map(desig=>PRICES.find(p=>p.designation===desig))
     .filter(Boolean);
   const suggestedDesigs = new Set(suggested.map(p=>p.designation));
@@ -1601,6 +1723,7 @@ document.getElementById('btnAddRoom').addEventListener('click', ()=>{
   addRoom(document.getElementById('roomTypeSelect').value);
 });
 document.getElementById('btnPrefillLogement').addEventListener('click', applyLogementTypeShell);
+document.getElementById('fSurface').addEventListener('input', updateSurfaceCoherenceHint);
 
 function resetAll(){
   if(!confirm('Réinitialiser le chiffrage en cours ? (les photos et les pièces ajoutées seront aussi supprimées)')) return;
