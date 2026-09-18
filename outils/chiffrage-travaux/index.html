@@ -1152,26 +1152,131 @@ function applyRoomDefaults(room){
   });
 }
 
-/* Coquille exhaustive : coche TOUS les postes de la liste de la piece
-   (pas seulement les defauts partiels de ROOM_DEFAULTS), utilisee par
-   le bouton "Pré-remplir la coquille type" d'un type de logement. Pour
-   un poste appartenant a un groupe de variantes, seule la variante
-   voulue (cuisineGamme pour la cuisine, ou le poste est_defaut du CSV
-   pour les autres groupes) est cochee — les autres restent disponibles
-   pour une bascule manuelle. */
+/* Coquille type : UN SEUL jeu de postes coherent par piece (pas la
+   liste brute de tout ce qui est proposable dans la piece, qui
+   contient des alternatives — VMC simple/double flux/thermodynamique,
+   climatisation, chaudiere/PAC/electrique, plusieurs tailles de
+   fenetres... — qu'il ne faut surtout pas cocher toutes en meme
+   temps). Chaque piece coche une fois chaque besoin reel ; les
+   options premium/alternatives restent visibles dans la piece pour
+   un ajout manuel si besoin, mais ne sont jamais cochees par defaut. */
+const ROOM_COQUILLE = {
+  chambre: {
+    'Peinture rafraichissement murs+plafonds 2 couches': 'auto',
+    'Sol stratifie ou PVC pose': 'auto',
+    'Plinthes (fourniture+pose)': 'auto',
+    'Point lumineux simple allumage': 1,
+    'Point lumineux va-et-vient ou telerupteur': 1,
+    'Prise de courant 2P+T standard': 6,
+    'Alimentation volet roulant electrique': 1,
+    'Bloc-porte interieur fourniture+pose (huisserie+serrure)': 1,
+    "Fenetre PVC standard (dimensions courantes jusqu'a 1.8m2) fourniture+pose": 1,
+    'Volet roulant PVC motorise fourniture+pose': 1
+  },
+  sejour: {
+    'Peinture rafraichissement murs+plafonds 2 couches': 'auto',
+    'Sol stratifie ou PVC pose': 'auto',
+    'Plinthes (fourniture+pose)': 'auto',
+    'Point lumineux simple allumage': 1,
+    'Point lumineux va-et-vient ou telerupteur': 1,
+    'Prise de courant 2P+T standard': 6,
+    'Prise TV coaxiale': 1,
+    'Bloc-porte interieur fourniture+pose (huisserie+serrure)': 1,
+    "Fenetre PVC standard (dimensions courantes jusqu'a 1.8m2) fourniture+pose": 1,
+    'Volet roulant PVC motorise fourniture+pose': 1
+  },
+  cuisine: {
+    'Peinture rafraichissement murs+plafonds 2 couches': 'auto',
+    'Carrelage sol pose fourniture+pose': 'auto',
+    'Plinthes (fourniture+pose)': 'auto',
+    'Faience murale salle de bain posee': 'auto',
+    'Ligne dediee electromenager (plaque four LV LL)': 3,
+    'Alimentation / evacuation EC-EF (par point ponctuel)': 1,
+    'VMC hygroreglable kit complet fourniture+pose': 1,
+    'Prise de courant 2P+T standard': 6,
+    'Point lumineux simple allumage': 1,
+    'Bloc-porte interieur fourniture+pose (huisserie+serrure)': 1
+    /* la gamme de cuisine (kitchenette/standard/haut de gamme) est
+       ajoutee a part, selon le type de logement — voir plus bas */
+  },
+  sdb: {
+    'Salle de bain complete (douche+vasque+WC+evac/alim hors carrelage)': 1,
+    'Carrelage sol pose fourniture+pose': 'auto',
+    'Faience murale salle de bain posee': 'auto',
+    'Plinthes (fourniture+pose)': 'auto',
+    'VMC hygroreglable kit complet fourniture+pose': 1,
+    'Seche-serviettes electrique connecte fourniture+pose+alimentation': 1,
+    'Ballon eau chaude extra-plat 80L + groupe securite pose': 1,
+    'Point lumineux simple allumage': 1,
+    'Prise de courant 2P+T standard': 1,
+    'Bloc-porte interieur fourniture+pose (huisserie+serrure)': 1
+  },
+  salledeau: {
+    'Douche complete (cabine quart de rond) fourniture+pose': 1,
+    'Vasque simple + robinetterie posee': 1,
+    'WC complet pose (pack a poser)': 1,
+    'Carrelage sol pose fourniture+pose': 'auto',
+    'Faience murale salle de bain posee': 'auto',
+    'Plinthes (fourniture+pose)': 'auto',
+    'VMC hygroreglable kit complet fourniture+pose': 1,
+    'Seche-serviettes electrique connecte fourniture+pose+alimentation': 1,
+    'Ballon eau chaude extra-plat 80L + groupe securite pose': 1,
+    'Point lumineux simple allumage': 1,
+    'Prise de courant 2P+T standard': 1,
+    'Bloc-porte interieur fourniture+pose (huisserie+serrure)': 1
+  },
+  wc: {
+    'WC complet pose (pack a poser)': 1,
+    'Peinture rafraichissement murs+plafonds 2 couches': 'auto',
+    'Carrelage sol pose fourniture+pose': 'auto',
+    'Point lumineux simple allumage': 1,
+    'Bloc-porte interieur fourniture+pose (huisserie+serrure)': 1
+  },
+  degagement: {
+    'Peinture rafraichissement murs+plafonds 2 couches': 'auto',
+    'Sol stratifie ou PVC pose': 'auto',
+    'Plinthes (fourniture+pose)': 'auto',
+    'Point lumineux va-et-vient ou telerupteur': 1,
+    'Prise de courant 2P+T standard': 1
+  },
+  logement: {
+    /* Un seul forfait electrique (il inclut deja tableau + communication
+       + cablage + VMC + saignees — inutile de recocher ces postes a
+       part), la mise a la terre, et les deux raccordements necessaires
+       pour creer un lot independant (eau + electricite). Le chauffage
+       (electrique/gaz/PAC) est ajoute a part, selon la variante choisie
+       — voir plus bas. VMC double flux, climatisation et chaudiere/PAC
+       restent disponibles dans la piece pour un ajout manuel si le
+       projet le justifie, mais ne sont jamais coches par defaut. */
+    'Generalites electriques appartement / T2-T3 (tableau+communication+cablage+VMC+saignees)': 1,
+    'Mise a la terre fourniture+pose+verification': 1,
+    'Droit de prise / branchement compteur eau (diametre 15mm)': 1,
+    'Raccordement / branchement electrique ENEDIS individuel (compteur neuf)': 1
+  },
+  garage: {
+    'Peinture rafraichissement murs+plafonds 2 couches': 'auto',
+    'Sol stratifie ou PVC pose': 'auto',
+    'Point lumineux simple allumage': 1
+  }
+};
+
 function applyFullRoomPostes(room, cuisineGamme){
-  const typeConfig = ROOM_TYPES.find(rt=>rt.type===room.type) || {postes:[]};
-  typeConfig.postes.forEach(desig=>{
+  const coquille = {...(ROOM_COQUILLE[room.type] || {})};
+  if(room.type==='cuisine'){
+    coquille[CUISINE_GAMME_DESIG[cuisineGamme] || CUISINE_GAMME_DESIG.standard] = 1;
+  }
+  if(room.type==='logement'){
+    const chauffageDesig = variantDefaultDesig('chauffage_generation');
+    if(chauffageDesig) coquille[chauffageDesig] = 1;
+  }
+  Object.entries(coquille).forEach(([desig, qtySpec])=>{
     const p = PRICES.find(pr=>pr.designation===desig);
     if(!p) return;
-    if(p.groupe_variante){
-      const wanted = variantDefaultDesig(p.groupe_variante, cuisineGamme);
-      if(wanted ? p.designation!==wanted : !p.est_defaut) return;
-    }
     const k = keyFor(p.categorie, p.designation, room.id);
-    const autoCalc = ROOM_CALC[p.designation];
-    const qty = autoCalc ? (autoCalc(room)||0) : 1;
-    selections[k] = {item:p, qty, room:room.name, roomInternalId:room.id, auto: !!autoCalc};
+    const isAuto = qtySpec === 'auto';
+    const autoCalc = ROOM_CALC[desig];
+    const qty = isAuto ? (autoCalc ? (autoCalc(room)||0) : 1) : qtySpec;
+    selections[k] = {item:p, qty, room:room.name, roomInternalId:room.id, auto: isAuto};
   });
 }
 
