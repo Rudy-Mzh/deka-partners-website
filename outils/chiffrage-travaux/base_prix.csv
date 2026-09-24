@@ -47,6 +47,7 @@ Geometre,Releve des sommets des limites,u,19,19,30,Sit&A Conseil 2025,Devis reel
 Geometre,Certificat Loi Carrez,forfait,150,195,250,Sit&A Conseil 2025,Devis reel
 Huissier,Constat d'huissier avant travaux,forfait,800,1115,1400,ACT'Atlantique Niort,Devis reel
 Huissier,Constat d'huissier apres travaux,forfait,800,1115,1400,ACT'Atlantique Niort,Devis reel
+Huissier,Constat affichage permis construire,forfait,150,250,400,Estimation marche,A calibrer
 Diagnostiqueur,Pack diagnostics complet,u,300,400,550,Diagome Niort 2025,Devis reel
 Diagnostiqueur,Diagnostic amiante,u,80,100,150,Diagome Niort 2025,Devis reel
 Diagnostiqueur,Mesurage Loi Carrez,u,50,67,90,Diagome Niort 2025,Devis reel
@@ -69,23 +70,22 @@ Architecture,Esquisse,forfait,3224,3224,3224,FANUM ARCHITECTURE 2026,Devis reel
 Architecture,Avant-projet sommaire+détaillé,forfait,4836,4836,4836,FANUM ARCHITECTURE 2026,Devis reel
 Architecture,Demande d'autorisation d'urbanisme,forfait,4836,4836,4836,FANUM ARCHITECTURE 2026,Devis reel
 Architecture,Projet détaillé + DCE,forfait,9672,9672,9672,FANUM ARCHITECTURE 2026,Devis reel
-Demolition,Demolition cloison legere,m2,15,25,35,Estimation marche,A calibrer
-Demolition,Demolition mur non porteur,m2,30,45,65,Estimation marche,A calibrer
-Couvreur,Pose toiture bac acier isole,m2,40,55,75,Estimation marche,A calibrer
-Couvreur,Desamiantage depose toiture,m2,25,35,50,Estimation marche,A calibrer
-Isolation,Isolation combles perdus soufflee,m2,15,25,40,Estimation marche,A calibrer
-Carrelage,Carrelage murs cuisine,m2,40,60,100,Estimation marche,A calibrer
-Carrelage,Carrelage sol salle d'eau,m2,50,80,120,Estimation marche,A calibrer
-Sanitaire,Baignoire fourniture pose,u,300,600,1000,Estimation marche,A calibrer
-Sanitaire,Douche fourniture pose,u,500,900,1600,Estimation marche,A calibrer
-Sanitaire,WC fourniture pose,u,200,400,700,Estimation marche,A calibrer
-Sanitaire,Lavabo fourniture pose,u,150,300,600,Estimation marche,A calibrer
-Plaquiste,Cloison placo BA13 standard,m2,50,75,100,Estimation marche,A calibrer
-Volets,Volet roulant motorise,u,350,550,800,Estimation marche,A calibrer
-Serrurerie,Porte blindee fourniture pose,u,1500,2200,3500,Estimation marche,A calibrer
-Domotique,Interrupteur connecte,u,50,100,180,Estimation marche,A calibrer
-Energies,Panneaux solaires photovoltaiques,m2,300,450,700,Estimation marche,A calibrer
-Assainissement,Fosses septiques installation,forfait,3000,5000,8000,Estimation marche,A calibrer
-Facade,Ravalement facade complet,m2,50,80,120,Estimation marche,A calibrer
-EtudeDuSol,Étude géotechnique préalable,forfait,2000,4000,7000,Estimation marche,A calibrer
-EtudeDuSol,Sondages géotechniques,forfait,1500,3000,5000,Estimation marche,A calibrer
+Couvreur,Pose toiture bac acier isole,m2,40,55,75,Estimation marche 2026,A calibrer
+Couvreur,Desamiantage depose toiture,m2,25,35,50,Estimation marche 2026,A calibrer
+Isolation,Isolation combles perdus soufflee,m2,15,25,40,Estimation marche 2026,A calibrer
+Carrelage,Carrelage murs cuisine,m2,40,60,100,Estimation marche 2026,A calibrer
+Carrelage,Carrelage sol salle d'eau,m2,50,80,120,Estimation marche 2026,A calibrer
+Sanitaire,Baignoire fourniture pose,u,300,600,1000,Estimation marche 2026,A calibrer
+Sanitaire,Douche fourniture pose,u,500,900,1600,Estimation marche 2026,A calibrer
+Sanitaire,WC fourniture pose,u,200,400,700,Estimation marche 2026,A calibrer
+Sanitaire,Lavabo fourniture pose,u,150,300,600,Estimation marche 2026,A calibrer
+Plaquiste,Cloison placo BA13 standard,m2,50,75,100,Estimation marche 2026,A calibrer
+Volets,Volet roulant motorise,u,350,550,800,Estimation marche 2026,A calibrer
+Serrurerie,Porte blindee fourniture pose,u,1500,2200,3500,Estimation marche 2026,A calibrer
+Domotique,Interrupteur connecte,u,50,100,180,Estimation marche 2026,A calibrer
+Energies,Panneaux solaires photovoltaiques,m2,300,450,700,Estimation marche 2026,A calibrer
+Assainissement,Fosses septiques installation,forfait,3000,5000,8000,Estimation marche 2026,A calibrer
+Facade,Ravalement facade complet,m2,50,80,120,Estimation marche 2026,A calibrer
+EtudeDuSol,Étude géotechnique préalable,forfait,2000,4000,7000,Estimation marche 2026,A calibrer
+Terrassier,Terrassement general,m3,30,50,80,Estimation marche 2026,A calibrer
+Demolition,Demolition cloison legere,m2,15,25,35,Estimation marche 2026,A calibrer
