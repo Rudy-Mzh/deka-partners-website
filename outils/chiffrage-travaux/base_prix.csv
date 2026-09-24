@@ -70,8 +70,8 @@ Architecture,Esquisse,forfait,3224,3224,3224,FANUM ARCHITECTURE 2026,Devis reel
 Architecture,Avant-projet sommaire+détaillé,forfait,4836,4836,4836,FANUM ARCHITECTURE 2026,Devis reel
 Architecture,Demande d'autorisation d'urbanisme,forfait,4836,4836,4836,FANUM ARCHITECTURE 2026,Devis reel
 Architecture,Projet détaillé + DCE,forfait,9672,9672,9672,FANUM ARCHITECTURE 2026,Devis reel
-Couvreur,Pose toiture bac acier isole,m2,40,55,75,Estimation marche 2026,A calibrer
-Couvreur,Desamiantage depose toiture,m2,25,35,50,Estimation marche 2026,A calibrer
+Couvreur,Pose toiture bac acier isole,m2,45,65,95,EI COLLARD GAETAN 05-26 2025,Devis reel
+Couvreur,Desamiantage depose toiture,m2,30,50,80,Estimation marche 2026,A calibrer
 Isolation,Isolation combles perdus soufflee,m2,15,25,40,Estimation marche 2026,A calibrer
 Carrelage,Carrelage murs cuisine,m2,40,60,100,Estimation marche 2026,A calibrer
 Carrelage,Carrelage sol salle d'eau,m2,50,80,120,Estimation marche 2026,A calibrer
@@ -79,7 +79,7 @@ Sanitaire,Baignoire fourniture pose,u,450,530,630,ORLIAGUET SFIJ 260201 2026,Dev
 Sanitaire,Douche fourniture pose,u,1000,1100,1200,ORLIAGUET SFIJ 260201 2026,Devis reel
 Sanitaire,WC fourniture pose,u,250,280,350,ORLIAGUET SFIJ 260201 2026,Devis reel
 Sanitaire,Lavabo fourniture pose,u,180,250,350,ORLIAGUET SFIJ 260201 2026,Devis reel
-Plaquiste,Cloison placo BA13 standard,m2,50,75,100,Estimation marche 2026,A calibrer
+Plaquiste,Cloison placo BA13 standard,m2,50,60,80,PRESTIGE PEINTURES 1008 2026,Devis reel
 Volets,Volet roulant motorise,u,350,550,800,Estimation marche 2026,A calibrer
 Serrurerie,Porte blindee fourniture pose,u,1500,2200,3500,Estimation marche 2026,A calibrer
 Domotique,Interrupteur connecte,u,50,100,180,Estimation marche 2026,A calibrer
