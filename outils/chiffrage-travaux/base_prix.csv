@@ -45,14 +45,14 @@ Geometre,Redaction PV Bornage,forfait,200,200,300,Sit&A Conseil 2025,Devis reel
 Geometre,Modification du parcellaire cadastral,forfait,142,142,200,Sit&A Conseil 2025,Devis reel
 Geometre,Releve des sommets des limites,u,19,19,30,Sit&A Conseil 2025,Devis reel
 Geometre,Certificat Loi Carrez,forfait,150,195,250,Sit&A Conseil 2025,Devis reel
-Huissier,Constat d'huissier avant travaux,forfait,800,1115,1400,ACT'Atlantique Niort,Devis reel
-Huissier,Constat d'huissier apres travaux,forfait,800,1115,1400,ACT'Atlantique Niort,Devis reel
-Huissier,Constat affichage permis construire,forfait,150,250,400,Estimation marche,A calibrer
+Huissier,Constat d'huissier avant travaux,forfait,800,1115,1400,HuisAlliance KFM 2026,Devis reel
+Huissier,Constat d'huissier apres travaux,forfait,800,1115,1400,HuisAlliance KFM 2026,Devis reel
+Huissier,Constat affichage permis construire,forfait,460,552,700,HuisAlliance KFM 2026,Devis reel
 Diagnostiqueur,Pack diagnostics complet,u,300,400,550,Diagome Niort 2025,Devis reel
 Diagnostiqueur,Diagnostic amiante,u,80,100,150,Diagome Niort 2025,Devis reel
 Diagnostiqueur,Mesurage Loi Carrez,u,50,67,90,Diagome Niort 2025,Devis reel
 Plomberie,Pack SDB complet arrivees + evacuation,forfait,5000,8000,12000,JOTRAU Kevin 2026,Devis reel
-Plomberie,Ballon eau chaude electrique 200L,u,400,600,900,JOTRAU Kevin 2026,Devis reel
+Plomberie,Ballon eau chaude electrique 200L,u,750,850,950,ORLIAGUET SFIJ 260201 2026,Devis reel
 Plomberie,WC GEBERIT suspendu complet,u,800,1200,1800,JOTRAU Kevin 2026,Devis reel
 Plomberie,Carrelage salle de bain tout hauteur,m2,60,100,150,JOTRAU Kevin 2026,Devis reel
 Peinture,Peinture airless murs et plafond,m2,8,12,18,JOTRAU Kevin 2026,Devis reel
@@ -75,10 +75,10 @@ Couvreur,Desamiantage depose toiture,m2,25,35,50,Estimation marche 2026,A calibr
 Isolation,Isolation combles perdus soufflee,m2,15,25,40,Estimation marche 2026,A calibrer
 Carrelage,Carrelage murs cuisine,m2,40,60,100,Estimation marche 2026,A calibrer
 Carrelage,Carrelage sol salle d'eau,m2,50,80,120,Estimation marche 2026,A calibrer
-Sanitaire,Baignoire fourniture pose,u,300,600,1000,Estimation marche 2026,A calibrer
-Sanitaire,Douche fourniture pose,u,500,900,1600,Estimation marche 2026,A calibrer
-Sanitaire,WC fourniture pose,u,200,400,700,Estimation marche 2026,A calibrer
-Sanitaire,Lavabo fourniture pose,u,150,300,600,Estimation marche 2026,A calibrer
+Sanitaire,Baignoire fourniture pose,u,450,530,630,ORLIAGUET SFIJ 260201 2026,Devis reel
+Sanitaire,Douche fourniture pose,u,1000,1100,1200,ORLIAGUET SFIJ 260201 2026,Devis reel
+Sanitaire,WC fourniture pose,u,250,280,350,ORLIAGUET SFIJ 260201 2026,Devis reel
+Sanitaire,Lavabo fourniture pose,u,180,250,350,ORLIAGUET SFIJ 260201 2026,Devis reel
 Plaquiste,Cloison placo BA13 standard,m2,50,75,100,Estimation marche 2026,A calibrer
 Volets,Volet roulant motorise,u,350,550,800,Estimation marche 2026,A calibrer
 Serrurerie,Porte blindee fourniture pose,u,1500,2200,3500,Estimation marche 2026,A calibrer
