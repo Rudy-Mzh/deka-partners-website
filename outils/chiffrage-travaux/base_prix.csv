@@ -1,134 +1,91 @@
 categorie,designation,unite,prix_bas,prix_moyen,prix_haut,source,notes
-Demolition / Evacuation,Demolition cloison legere (placo / carreaux de platre),m2,15,25,35,Estimation marche,A calibrer avec vos devis
-Demolition / Evacuation,Demolition mur parpaing ou brique (non porteur),m2,30,45,65,Estimation marche,A calibrer avec vos devis
-Demolition / Evacuation,Depose et evacuation d'un element (placard sanitaire etc.),forfait,100,200,400,Estimation marche,
-Demolition / Evacuation,Evacuation gravats / location benne (par m3),m3,30,40,50,Devis reel,Base CYCLAD 35.90EUR TTC/m3
-Gros oeuvre / Maconnerie,Creation d'ouverture en mur (porte ou fenetre jusqu'a 3m),u,2200,2700,3500,Devis reel,Devis Riguet 2700EUR
-Gros oeuvre / Maconnerie,Bouchage d'ouverture en parpaings (avec finitions),u,700,900,1400,Devis reel,Devis Riguet 700-900EUR
-Gros oeuvre / Maconnerie,Reprise de plancher ponctuelle,u,300,500,900,Devis reel,Devis Riguet 350EUR
-Gros oeuvre / Maconnerie,Creation d'evacuation sanitaire (percement + raccord beton),u,900,1200,1600,Devis reel,Devis Riguet 1200EUR
-Gros oeuvre / Maconnerie,Chape beton / ragreage de sol,m2,20,30,45,Estimation marche,A calibrer avec vos devis
-Gros oeuvre / Maconnerie,Reprise de fissures / enduit maconnerie ponctuel,forfait,300,600,1200,Estimation marche,A calibrer avec vos devis
-Toiture / Couverture / Zinguerie,Pose toiture bac acier isole (fourniture + pose complete),m2,45,52,60,Devis reel,Devis Collard 51.6EUR/m2 HT sur 487m2
-Toiture / Couverture / Zinguerie,Desamiantage + depose toiture fibro-ciment (avec evacuation specialisee),m2,28,34,42,Devis reel,Devis Collard 33.2EUR/m2 HT + forfaits
-Toiture / Couverture / Zinguerie,Couverture tuiles (depose + pose neuve fourniture+pose),m2,90,130,180,Estimation marche,A calibrer avec vos devis
-Toiture / Couverture / Zinguerie,Reparation ponctuelle / recherche de fuite toiture,forfait,150,250,450,Devis reel,Devis Riguet 200EUR
-Toiture / Couverture / Zinguerie,Raccord de zinguerie autour d'un conduit de cheminee,u,450,600,850,Devis reel,Devis Riguet 600EUR
-Toiture / Couverture / Zinguerie,Isolation combles perdus (soufflee),m2,20,30,45,Estimation marche,A calibrer avec vos devis
-Menuiseries exterieures,Fenetre bois 2 vantaux petite (moins de 1.8m2) fourniture+pose,u,950,1150,1400,Devis reel,Devis Bonnet / Nova 950-1275EUR
-Menuiseries exterieures,Fenetre bois 2 vantaux moyenne (1.8 a 3m2) fourniture+pose,u,1300,1600,1950,Devis reel,Devis Bonnet / Nova 1210-1935EUR
-Menuiseries exterieures,Fenetre PVC standard (dimensions courantes jusqu'a 1.8m2) fourniture+pose,u,500,650,900,Estimation marche,A calibrer avec vos devis
-Menuiseries exterieures,Fenetre PVC grande dimension / hors standard (fabrication sur mesure) fourniture+pose,u,750,1050,1500,Estimation marche,A calibrer avec vos devis - surcout fabrication sur mesure
-Menuiseries exterieures,Porte-fenetre PVC 1 vantail battant fourniture+pose,u,900,1200,1600,Estimation marche,A calibrer avec vos devis
-Menuiseries exterieures,Baie vitree coulissante PVC 2 a 3 vantaux fourniture+pose,u,1800,2600,3800,Estimation marche,A calibrer avec vos devis
-Menuiseries exterieures,Fenetre de toit / Velux fourniture+pose (avec raccord etancheite),u,900,1300,1900,Estimation marche,A calibrer avec vos devis
-Menuiseries exterieures,Volet roulant PVC motorise fourniture+pose,u,450,650,900,Estimation marche,A calibrer avec vos devis
-Menuiseries exterieures,Volet bois battant la paire fourniture+pose,paire,1000,1250,1500,Devis reel,Devis Bonnet
-Menuiseries exterieures,Decapage et peinture de volets existants (la paire),paire,280,350,450,Devis reel,Devis Bonnet 350EUR
-Menuiseries exterieures,Decapage et peinture porte d'entree,u,450,550,700,Devis reel,Devis Bonnet 550EUR
-Menuiseries exterieures,Echafaudage (forfait chantier hauteur R+1),forfait,450,580,800,Devis reel,Devis Bonnet 580EUR
-Menuiseries exterieures,Pose menuiserie en renovation depose totale (main d'oeuvre seule),u,150,200,280,Devis reel,Devis Bonnet/Nova 195-260EUR
-Menuiseries exterieures,Portail motorise fourniture+pose+motorisation,forfait,1800,2100,2800,Devis reel,Devis LP Elec 2126EUR
-Menuiseries interieures,Bloc-porte interieur fourniture+pose (huisserie+serrure),u,850,1000,1200,Devis reel,Devis Bonnet 945EUR
-Menuiseries interieures,Pose porte palliere seule (cloison ossature metallique),u,80,100,150,Devis reel,Devis Bonnet 95EUR
-Cloisons / Platrerie / Isolation,Cloison de distribution placo (rails+montants 48 double BA13 laine 45mm) fourniture+pose,m2,75,88,100,Devis reel,Devis Bonnet 88EUR/m2 (6 lignes coherentes)
-Cloisons / Platrerie / Isolation,Joints / finition plaque de platre (hors poncage),m2,6,8,10,Devis reel,Devis Bonnet 7EUR/m2
-Cloisons / Platrerie / Isolation,Doublage isolation interieure (placo + laine mur peripherique),m2,45,60,80,Estimation marche,A calibrer avec vos devis
-Cloisons / Platrerie / Isolation,Isolation combles amenages (rampants),m2,35,50,70,Estimation marche,A calibrer avec vos devis
-Cloisons / Platrerie / Isolation,Saignees murs pour distribution electrique (forfait par logement),forfait,1100,1350,1700,Devis reel,Devis Lamba17 1348EUR
-Electricite,Generalites electriques appartement / T2-T3 (tableau+communication+cablage+VMC+saignees),forfait,2200,2900,3300,Devis reel,Devis Lamba17 2846-3181EUR / LP Elec 2217EUR
-Electricite,Generalites electriques maison plus de 100m2 (tableau+communication+cablage+VMC+saignees),forfait,5500,6200,7000,Devis reel,Devis Lamba17 6023-6323EUR
-Electricite,Tableau electrique seul fourniture+pose prequipe,u,1150,1700,2050,Devis reel,Devis LP Elec 1139-2035EUR
-Electricite,Mise a la terre fourniture+pose+verification,u,380,420,460,Devis reel,Devis LP Elec / Lamba17 381-450EUR
-Electricite,Point lumineux simple allumage,u,70,100,185,Devis reel,74-183EUR selon config
-Electricite,Point lumineux va-et-vient ou telerupteur,u,125,220,460,Devis reel,127-460EUR
-Electricite,Point lumineux supplementaire (spot LED),u,18,55,75,Devis reel,18-75EUR
-Electricite,Prise de courant 2P+T standard,u,58,75,80,Devis reel,58-79EUR
-Electricite,Prise RJ45 / informatique blindee,u,90,100,110,Devis reel,93-108EUR
-Electricite,Prise TV coaxiale,u,70,77,85,Devis reel,
-Electricite,Ligne dediee electromenager (plaque four LV LL),u,79,130,175,Devis reel,79-174EUR
-Electricite,VMC hygroreglable kit complet fourniture+pose,forfait,415,900,2000,Devis reel,415EUR kit simple a 1484-1984EUR VMC complete
-Electricite,Radiateur electrique chaleur douce fourniture+pose+alimentation,u,400,500,600,Devis reel,447-580EUR
-Electricite,Seche-serviettes electrique connecte fourniture+pose+alimentation,u,460,530,620,Devis reel,463-570EUR
-Electricite,Alimentation volet roulant electrique,u,65,72,80,Devis reel,
-Plomberie / Sanitaire,Salle de bain complete (douche+vasque+WC+evac/alim hors carrelage),forfait,2300,2700,3200,Devis reel,Devis SFTJ ~2500-2900EUR/SDB
-Plomberie / Sanitaire,Douche complete (cabine quart de rond) fourniture+pose,u,950,1100,1300,Devis reel,Devis SFTJ 1100EUR
-Plomberie / Sanitaire,Vasque simple + robinetterie posee,u,400,450,550,Devis reel,
-Plomberie / Sanitaire,Vasque double + robinetterie posee,u,750,850,950,Devis reel,
-Plomberie / Sanitaire,Baignoire + robinetterie posee,u,450,500,600,Devis reel,
-Plomberie / Sanitaire,WC complet pose (pack a poser),u,250,280,350,Devis reel,
-Plomberie / Sanitaire,Ballon eau chaude extra-plat 80L + groupe securite pose,u,700,800,950,Devis reel,
-Plomberie / Sanitaire,Alimentation / evacuation EC-EF (par point ponctuel),u,80,150,220,Devis reel,
-Chauffage / ECS,Chaudiere gaz condensation fourniture+pose,u,3500,4500,6000,Estimation marche,A calibrer avec vos devis
-Chauffage / ECS,Pompe a chaleur air/eau fourniture+pose,u,8000,11000,15000,Estimation marche,A calibrer avec vos devis
-Revetements sols et murs / Peinture,Peinture rafraichissement murs+plafonds 2 couches,m2,20,28,38,Estimation marche,A calibrer avec vos devis
-Revetements sols et murs / Peinture,Sol stratifie ou PVC pose,m2,30,45,60,Estimation marche,A calibrer avec vos devis
-Revetements sols et murs / Peinture,Carrelage sol pose fourniture+pose,m2,55,75,100,Estimation marche,A calibrer avec vos devis
-Revetements sols et murs / Peinture,Faience murale salle de bain posee,m2,60,80,110,Estimation marche,A calibrer avec vos devis
-Revetements sols et murs / Peinture,Parquet contrecolle pose,m2,50,70,100,Estimation marche,A calibrer avec vos devis
-Cuisine,Cuisine equipee standard (meubles+plan de travail hors electromenager),forfait,4000,6500,10000,Estimation marche,A calibrer avec vos devis
-VRD / Terrassement / Assainissement,Assainissement individuel (fosse toutes eaux + epandage) creation,forfait,8000,11000,15000,Estimation marche,A calibrer avec vos devis
-VRD / Terrassement / Assainissement,Terrassement / VRD general (acces reseaux),forfait,3000,6000,12000,Estimation marche,A calibrer avec vos devis
-Facade / Ravalement,Ravalement de facade (enduit fourniture+pose),m2,55,75,100,Estimation marche,A calibrer avec vos devis
-Facade / Ravalement,Peinture facade,m2,25,35,50,Estimation marche,A calibrer avec vos devis
-Divers,Petites fournitures / consommables chantier (forfait),forfait,200,350,550,Devis reel,250-500EUR observes
-Divers,Nettoyage de fin de chantier,forfait,100,200,400,Devis reel,150EUR observe
-Geometre / Bornage / Division,Frais fixes ouverture de dossier geometre (mission fonciere),forfait,100,131,180,Devis reel,Devis Sit&a Conseil - prime fixe 131EUR observee
-Geometre / Bornage / Division,Bornage de propriete (recherche limites + PV signe + convocation riverains),forfait,900,1300,1900,Devis reel,Devis Sit&a Conseil - recherche 1ere limite 100EUR + 50EUR/limite supp + PV bornage 200EUR
-Geometre / Bornage / Division,Division parcellaire terrain a batir (bornage complet + plan division + declaration prealable urbanisme),forfait,1800,2340,2900,Devis reel,Devis Sit&a Conseil 224 Av Venise Verte Niort - 1950EUR HT / 2340EUR TTC
-Geometre / Bornage / Division,Certificat de mesurage Loi Carrez,u,150,195,250,Devis reel,Devis Sit&a Conseil - forfait 195EUR
-Geometre / Bornage / Division,Releve topographique / plan de division (deplacement + releve + plan),forfait,800,1200,1800,Devis reel,Devis Sit&a Conseil - releve grand format immeuble complet 1800EUR
-Geometre / Bornage / Division,Mise en copropriete d'un immeuble - forfait de base (EDD + reglement - jusqu'a 5 lots principaux),forfait,3000,3740,4800,Devis reel,Devis Sit&a Conseil parcelle ZI Andilly - 3740EUR HT / 4488EUR TTC (7 lots + 7 lots secondaires)
-Geometre / Bornage / Division,Lot supplementaire en mise en copropriete (EDD + reglement + attestation Carrez),u,180,250,320,Devis reel,Devis Sit&a Conseil - 250EUR (2 premiers lots) degressif a 80EUR au-dela du 10e lot
-Geometre / Bornage / Division,Modification etat descriptif de division / reglement de copropriete (par lot - moins de 6 lots),u,100,130,180,Devis reel,Devis Sit&a Conseil 27 rue Arsenal Niort - 130EUR/lot
-Geometre / Bornage / Division,Montage de plan de copropriete (par piece),u,40,55,70,Devis reel,Devis Sit&a Conseil - 55EUR/piece
-Raccordements & Compteurs,Droit de prise / branchement compteur eau (diametre 15mm),u,120,148,180,Devis reel,Devis Service des Eaux du Vivier Niort - 147.90EUR HT/unite
-Raccordements & Compteurs,Frais de dossier raccordement eau (forfait etude),forfait,40,54,70,Devis reel,Devis Service des Eaux du Vivier - 53.70EUR
-Raccordements & Compteurs,Etude bureau d'etudes electricite pour raccordement ENEDIS collectif (immeuble / division),forfait,1800,2200,3000,Devis reel,Devis ACE Betace Niort - 2200EUR HT / 2640EUR TTC
-Raccordements & Compteurs,Raccordement / branchement electrique ENEDIS individuel (compteur neuf),forfait,900,1300,1900,Estimation marche,A calibrer avec vos devis - variable selon distance au reseau
-Raccordements & Compteurs,Raccordement gaz GRDF (mise en service compteur),forfait,400,600,900,Estimation marche,A calibrer avec vos devis
-Raccordements & Compteurs,Deplacement / modification emplacement compteur existant,forfait,300,500,800,Estimation marche,A calibrer avec vos devis
-Etudes techniques,Etude de sol G1 PGC (norme NFP94-500 - 1 sondage + 1 tariere),forfait,700,890,1100,Devis reel,Devis GPH Pau/Niort - 890EUR HT / 1068EUR TTC
-Etudes techniques,Etude de sol G2 (etude geotechnique de conception),forfait,1500,2200,3200,Estimation marche,A calibrer avec vos devis
-Etudes techniques,Etude d'assainissement individuel (conception filiere),forfait,600,900,1300,Estimation marche,A calibrer avec vos devis
-Diagnostics immobiliers,Diagnostic amiante avant-vente ou avant-travaux (par lot),u,80,100,150,Devis reel,Devis Diagome Niort - 100EUR HT/lot (studio)
-Diagnostics immobiliers,Diagnostic termites (par lot),u,80,100,150,Devis reel,Devis Diagome Niort - 100EUR HT/lot
-Diagnostics immobiliers,Diagnostic plomb / CREP (par lot),u,80,100,150,Devis reel,Devis Diagome Niort - 100EUR HT/lot
-Diagnostics immobiliers,Mesurage Loi Carrez (par lot > 50m2),u,50,67,90,Devis reel,Devis Diagome Niort - 66.67EUR HT/lot
-Diagnostics immobiliers,Etat des Risques et Pollutions (ERP),u,20,25,35,Devis reel,Devis Diagome Niort - 25EUR HT (souvent offert en pack)
-Diagnostics immobiliers,Diagnostic Technique Global (DTG) copropriete,forfait,800,1000,1500,Devis reel,Devis Diagome Niort - 1000EUR HT pour 4 lots (batiment avant 1949)
-Diagnostics immobiliers,Pack diagnostics complet avant-vente amiante+termites+plomb+carrez+ERP (par lot),u,300,400,550,Devis reel,Devis Diagome Niort - pack degressif avec remise globale (ex 4 lots 1750EUR HT apres remise)
-Huissier / Constats,Constat d'huissier avant travaux,forfait,900,1115,1400,Devis reel,Devis ACT'Atlantique - Commissaire de Justice - 1115EUR HT / 1338EUR TTC
-Huissier / Constats,Constat d'huissier apres travaux,forfait,900,1115,1400,Devis reel,Devis ACT'Atlantique - meme bareme que constat avant travaux
-Huissier / Constats,Constat d'affichage (permis de construire),forfait,150,250,400,Estimation marche,A calibrer avec vos devis
-Huissier / Constats,Etat des lieux contradictoire (avant/apres travaux),forfait,400,600,900,Estimation marche,A calibrer avec vos devis
-Syndic / Copropriete,Remuneration syndic - forfait annuel (par lot),u,120,167,220,Devis reel,Devis Arthurimmo Agence du Chateau Niort - 166.67EUR HT/lot/an
-Syndic / Copropriete,Immatriculation initiale du syndicat de copropriete,forfait,250,300,380,Devis reel,Devis Arthurimmo - 300EUR HT
-Syndic / Copropriete,Etablissement de l'etat date (mutation),forfait,270,317,380,Devis reel,Devis Arthurimmo - 316.67EUR HT
-Syndic / Copropriete,Vacation syndic hors forfait (reunions AG supp. redaction reglement etc.),heure,70,90,110,Devis reel,Devis Arthurimmo - 90EUR HT/heure
-Charpente / Structure,Traitement preventif charpente (pulverisation),m2,15,22,30,Estimation marche,A calibrer - source travaux.com/tytek.fr 2026
-Charpente / Structure,Traitement curatif charpente (injection - garantie 10 ans),m2,30,45,60,Estimation marche,A calibrer - source travaux.com/tytek.fr 2026
-Charpente / Structure,Reparation / renfort ponctuel de charpente,m2,25,70,120,Estimation marche,A calibrer - source dsdrenov.com/renovbox.com 2026
-Charpente / Structure,Refection complete charpente traditionnelle,m2,150,200,250,Estimation marche,A calibrer - base 100m2 = 15000-25000EUR (travaux.com 2026)
-Charpente / Structure,Refection complete charpente fermette industrielle,m2,100,125,150,Estimation marche,A calibrer - base 100m2 = 10000-15000EUR (travaux.com 2026)
-Escalier,Escalier bois standard fourniture+pose,forfait,1500,2500,4000,Estimation marche,A calibrer avec vos devis - source oeba.fr/tafsquare.com 2026
-Escalier,Escalier metal/acier fourniture+pose,forfait,2500,5000,8000,Estimation marche,A calibrer avec vos devis - source tafsquare.com/lapeyre.fr 2026
-Escalier,Escalier sur mesure haut de gamme (bois-metal formes complexes),forfait,5000,9000,15000,Estimation marche,A calibrer avec vos devis - source lamaisonsaintgobain.fr 2026
-Escalier,Renovation / habillage escalier existant (marches+contremarches+rampe),forfait,1200,2000,3500,Estimation marche,A calibrer avec vos devis
-Escalier,Garde-corps / rampe escalier metallique fourniture+pose,ml,150,210,350,Estimation marche,A calibrer - source prix-pose.com/metalenstock.fr 2026 (50-600EUR/ml selon materiau)
-Amenagements exterieurs,Terrasse bois composite posee (structure+lames),m2,140,170,200,Estimation marche,A calibrer - source lapeyre.fr/allojardin.com 2026
-Amenagements exterieurs,Terrasse dallage / carrelage exterieur posee,m2,60,90,130,Estimation marche,A calibrer avec vos devis
-Amenagements exterieurs,Cloture composite ou PVC posee (hauteur standard ~1.5m),m2,110,150,200,Estimation marche,A calibrer - source travaux.com/idenvironnement.fr 2026
-Amenagements exterieurs,Portillon pieton fourniture+pose,u,400,700,1100,Estimation marche,A calibrer avec vos devis
-Amenagements exterieurs,Engazonnement / espaces verts (forfait),forfait,500,1200,2500,Estimation marche,A calibrer avec vos devis
-Chauffage / ECS,VMC double flux standard fourniture+pose (rendement 60-75%),forfait,3000,3500,4000,Estimation marche,A calibrer - source mesdepanneurs.fr 2025 (maison 100m2 4500-7000EUR)
-Chauffage / ECS,VMC double flux haute performance fourniture+pose (rendement 85-95%),forfait,4500,5200,6000,Estimation marche,A calibrer - source mesdepanneurs.fr 2025
-Chauffage / ECS,VMC double flux thermodynamique fourniture+pose,forfait,6000,9000,13000,Estimation marche,A calibrer - source mesdepanneurs.fr 2025
-Chauffage / ECS,Climatisation reversible - unite interieure fourniture+pose,u,1200,1800,2500,Estimation marche,A calibrer avec vos devis
-Parties communes (immeuble),Peinture cage d'escalier (parties communes),m2,25,32,40,Estimation marche,A calibrer - source bailfacile.fr/prix-travaux-m2.com 2026
-Parties communes (immeuble),Rafraichissement complet hall + cage d'escalier par etage (peinture+sol+eclairage),forfait,3500,5750,8000,Estimation marche,A calibrer - source baticopro.com 2025
-Parties communes (immeuble),Renovation parties communes standard (sol+peinture),m2,130,265,400,Estimation marche,A calibrer - source illico-travaux.com 2025
-Parties communes (immeuble),Renovation parties communes standing (revetements nobles),m2,250,350,450,Estimation marche,A calibrer - source illico-travaux.com 2025
-Parties communes (immeuble),Pose interphone / portier video (pose seule hors materiel),forfait,400,500,650,Estimation marche,A calibrer - source bailfacile.fr 2025
-Parties communes (immeuble),Raccordement VMC collective par logement,u,200,350,500,Estimation marche,A calibrer avec vos devis
-Divers,Porte de garage motorisee fourniture+pose,u,900,1500,2200,Estimation marche,A calibrer avec vos devis
+Electricite,Tableau electrique equipe disjoncteur GTL,forfait,1700,1917,2050,LAMBA17 I-26-06-9 2026,Devis reel
+Electricite,Coffret communication RJ45,forfait,300,363,380,LAMBA17 I-26-06-9 2026,Devis reel
+Electricite,Cable R2V 2G16mm2 alimentation tableau,forfait,410,550,650,LAMBA17 I-26-06-9 2026,Devis reel
+Electricite,VMC hygroreglable + gaines + bouches,forfait,1300,1484,2000,LAMBA17 I-26-06-9 2026,Devis reel
+Electricite,Saignees distribution circuits + rebouchage,forfait,1100,1348,1700,LAMBA17 I-26-06-9 2026,Devis reel
+Electricite,Point lumineux simple allumage,u,74,100,185,LAMBA17 I-26-06-9 2026,Devis reel
+Electricite,Points lumineux supplementaires LED,u,18,55,75,LAMBA17 I-26-06-9 2026,Devis reel
+Electricite,Spot LED blanc orientable dimmable,u,48,55,75,LAMBA17 I-26-06-9 2026,Devis reel
+Electricite,Prise 2P+T 10/16A standard,u,59,75,80,LAMBA17 I-26-06-9 2026,Devis reel
+Electricite,Prise RJ45 blindee cat6,u,108,100,110,LAMBA17 I-26-06-9 2026,Devis reel
+Electricite,Point lumineux va-et-vient,u,127,220,460,LAMBA17 I-26-06-9 2026,Devis reel
+Electricite,Point lumineux telerupteur 3 boutons,u,327,220,460,LAMBA17 I-26-06-9 2026,Devis reel
+Electricite,Prise directe 2P+T four,u,106,130,175,LAMBA17 I-26-06-9 2026,Devis reel
+Electricite,Prise directe 2P+T lave-vaisselle,u,106,130,175,LAMBA17 I-26-06-9 2026,Devis reel
+Electricite,Alimentation directe 32A plaque cuisson,u,136,130,175,LAMBA17 I-26-06-9 2026,Devis reel
+Electricite,Refection TGBT aux normes,forfait,2500,2500,2500,ORLIAGUET SFIJ 2026,Devis reel
+Maconnerie,Creation d'ouverture en mur 2.5-3m,u,2200,2700,3500,Chevallier 1638 2026,Devis reel
+Maconnerie,Raccord zinguerie tour conduit cheminee,u,450,600,850,Chevallier 1638 2026,Devis reel
+Maconnerie,Demolition mur epaisseur 20cm,m2,108,108,108,EMRT 82 2026,Devis reel
+Maconnerie,Realisation plate forme terrassement,m2,57,57,57,EMRT 82 2026,Devis reel
+Maconnerie,Terrassement fondations mur cloture,ml,48,48,48,EMRT 82 2026,Devis reel
+Maconnerie,Realisation fondations mur ferraillage,ml,55,55,55,EMRT 82 2026,Devis reel
+Maconnerie,Montage parpaings 15x20x50,m2,53,53,53,EMRT 82 2026,Devis reel
+Maconnerie,Membrane geotextile,m2,2,2,2,EMRT 82 2026,Devis reel
+Maconnerie,Gravillon Calcaire 10/20,m3,282,282,282,EMRT 82 2026,Devis reel
+Menuiserie,Fenetre bois 2 vantaux 2310x1275mm,u,1500,1935,1950,Bonnet D-260183 2026,Devis reel
+Menuiserie,Fenetre bois 2 vantaux 2000x1080mm,u,1000,1175,1400,Bonnet D-260183 2026,Devis reel
+Menuiserie,Fenetre bois 2 vantaux 2020x1110mm,u,1000,1210,1400,Bonnet D-260183 2026,Devis reel
+Menuiserie,Fenetre bois 2 vantaux 1680x1060mm,u,900,1040,1200,Bonnet D-260183 2026,Devis reel
+Menuiserie,Pose menuiserie renovation depose,u,150,195,280,Bonnet D-260183 2026,Devis reel
+Menuiserie,Bloc-porte interieur 204x90,u,850,945,1200,Bonnet D-260183 2026,Devis reel
+Menuiserie,Doublage plafond rampant BA13 300mm,m2,45,65,85,JOTRAU Kevin 2026,Devis reel
+Menuiserie,Doublage murs exterieurs BA13 100mm,m2,40,55,75,JOTRAU Kevin 2026,Devis reel
+Menuiserie,Cloisons interieures BA13 45mm,m2,35,50,70,JOTRAU Kevin 2026,Devis reel
+Menuiserie,Parquet stratifie AC4 + plinthes,m2,25,40,60,JOTRAU Kevin 2026,Devis reel
+Menuiserie,Parquet hydro salle d'eau,m2,35,55,80,JOTRAU Kevin 2026,Devis reel
+Geometre,Prime fixe ouverture de dossier,forfait,100,131,180,Sit&A Conseil 2025-2026,Devis reel
+Geometre,Archivage gestion electronique,forfait,80,95,120,Sit&A Conseil 2025-2026,Devis reel
+Geometre,Deplacement forfaitaire sur site,forfait,50,63,100,Sit&A Conseil 2025-2026,Devis reel
+Geometre,Recherche cadastrale de riverain,u,14,14,20,Sit&A Conseil 2025,Devis reel
+Geometre,Convocation de riverains,u,7,7,10,Sit&A Conseil 2025,Devis reel
+Geometre,Recherche des limites avec titres,forfait,100,100,150,Sit&A Conseil 2025,Devis reel
+Geometre,Redaction PV Bornage,forfait,200,200,300,Sit&A Conseil 2025,Devis reel
+Geometre,Modification du parcellaire cadastral,forfait,142,142,200,Sit&A Conseil 2025,Devis reel
+Geometre,Releve des sommets des limites,u,19,19,30,Sit&A Conseil 2025,Devis reel
+Geometre,Certificat Loi Carrez,forfait,150,195,250,Sit&A Conseil 2025,Devis reel
+Huissier,Constat d'huissier avant travaux,forfait,800,1115,1400,ACT'Atlantique Niort,Devis reel
+Huissier,Constat d'huissier apres travaux,forfait,800,1115,1400,ACT'Atlantique Niort,Devis reel
+Diagnostiqueur,Pack diagnostics complet,u,300,400,550,Diagome Niort 2025,Devis reel
+Diagnostiqueur,Diagnostic amiante,u,80,100,150,Diagome Niort 2025,Devis reel
+Diagnostiqueur,Mesurage Loi Carrez,u,50,67,90,Diagome Niort 2025,Devis reel
+Plomberie,Pack SDB complet arrivees + evacuation,forfait,5000,8000,12000,JOTRAU Kevin 2026,Devis reel
+Plomberie,Ballon eau chaude electrique 200L,u,400,600,900,JOTRAU Kevin 2026,Devis reel
+Plomberie,WC GEBERIT suspendu complet,u,800,1200,1800,JOTRAU Kevin 2026,Devis reel
+Plomberie,Carrelage salle de bain tout hauteur,m2,60,100,150,JOTRAU Kevin 2026,Devis reel
+Peinture,Peinture airless murs et plafond,m2,8,12,18,JOTRAU Kevin 2026,Devis reel
+Chauffage,PAC air-air multi-split 4 interieur,forfait,6000,9000,14000,JOTRAU Kevin 2026,Devis reel
+Chauffage,Radiateur electrique mural,u,200,350,550,JOTRAU Kevin 2026,Devis reel
+Chauffage,Seche serviette electrique,u,150,250,450,JOTRAU Kevin 2026,Devis reel
+Etancheite,Spec etancheite sous carrelage,m2,8,12,18,JOTRAU Kevin 2026,Devis reel
+Recyclage,Location benne 30m3,forfait,4000,4000,4000,MÉTAL FER 2026,Devis reel
+Recyclage,Depot benne ouverte 30m3,forfait,120,120,120,MÉTAL FER 2026,Devis reel
+Recyclage,Rotation benne ouverte 30m3,forfait,120,120,120,MÉTAL FER 2026,Devis reel
+Recyclage,Retrait benne ouverte 30m3,forfait,120,120,120,MÉTAL FER 2026,Devis reel
+Recyclage,Traitement DIB mélange déchets,t,200,200,200,MÉTAL FER 2026,Devis reel
+Architecture,Étude de faisabilité,forfait,1612,1612,1612,FANUM ARCHITECTURE 2026,Devis reel
+Architecture,Esquisse,forfait,3224,3224,3224,FANUM ARCHITECTURE 2026,Devis reel
+Architecture,Avant-projet sommaire+détaillé,forfait,4836,4836,4836,FANUM ARCHITECTURE 2026,Devis reel
+Architecture,Demande d'autorisation d'urbanisme,forfait,4836,4836,4836,FANUM ARCHITECTURE 2026,Devis reel
+Architecture,Projet détaillé + DCE,forfait,9672,9672,9672,FANUM ARCHITECTURE 2026,Devis reel
+Demolition,Demolition cloison legere,m2,15,25,35,Estimation marche,A calibrer
+Demolition,Demolition mur non porteur,m2,30,45,65,Estimation marche,A calibrer
+Couvreur,Pose toiture bac acier isole,m2,40,55,75,Estimation marche,A calibrer
+Couvreur,Desamiantage depose toiture,m2,25,35,50,Estimation marche,A calibrer
+Isolation,Isolation combles perdus soufflee,m2,15,25,40,Estimation marche,A calibrer
+Carrelage,Carrelage murs cuisine,m2,40,60,100,Estimation marche,A calibrer
+Carrelage,Carrelage sol salle d'eau,m2,50,80,120,Estimation marche,A calibrer
+Sanitaire,Baignoire fourniture pose,u,300,600,1000,Estimation marche,A calibrer
+Sanitaire,Douche fourniture pose,u,500,900,1600,Estimation marche,A calibrer
+Sanitaire,WC fourniture pose,u,200,400,700,Estimation marche,A calibrer
+Sanitaire,Lavabo fourniture pose,u,150,300,600,Estimation marche,A calibrer
+Plaquiste,Cloison placo BA13 standard,m2,50,75,100,Estimation marche,A calibrer
+Volets,Volet roulant motorise,u,350,550,800,Estimation marche,A calibrer
+Serrurerie,Porte blindee fourniture pose,u,1500,2200,3500,Estimation marche,A calibrer
+Domotique,Interrupteur connecte,u,50,100,180,Estimation marche,A calibrer
+Energies,Panneaux solaires photovoltaiques,m2,300,450,700,Estimation marche,A calibrer
+Assainissement,Fosses septiques installation,forfait,3000,5000,8000,Estimation marche,A calibrer
+Facade,Ravalement facade complet,m2,50,80,120,Estimation marche,A calibrer
+EtudeDuSol,Étude géotechnique préalable,forfait,2000,4000,7000,Estimation marche,A calibrer
+EtudeDuSol,Sondages géotechniques,forfait,1500,3000,5000,Estimation marche,A calibrer
