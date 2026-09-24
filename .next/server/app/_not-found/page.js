@@ -1,0 +1,13 @@
+var R=require("../../chunks/ssr/[turbopack]_runtime.js")("server/app/_not-found/page.js")
+R.c("server/chunks/ssr/[root-of-the-server]__0jxu18q._.js")
+R.c("server/chunks/ssr/0_qb_next_dist_0phzsep._.js")
+R.c("server/chunks/ssr/0_qb_next_dist_esm_build_templates_app-page_0zdrb__.js")
+R.c("server/chunks/ssr/[root-of-the-server]__0jwud27._.js")
+R.c("server/chunks/ssr/[root-of-the-server]__0cmtun-._.js")
+R.c("server/chunks/ssr/[root-of-the-server]__0~55o8w._.js")
+R.c("server/chunks/ssr/0_qb_next_dist_client_components_0p1o05w._.js")
+R.c("server/chunks/ssr/0_qb_next_dist_client_components_builtin_forbidden_0t2nex8.js")
+R.c("server/chunks/ssr/0_qb_next_dist_client_components_builtin_unauthorized_0.y792w.js")
+R.c("server/chunks/ssr/12rs_deka-partners-website__next-internal_server_app__not-found_page_actions_0vrf.nl.js")
+R.m(87856)
+module.exports=R.m(87856).exports
