@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>DEKA Partners — Simulateur de levée</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.12.1/html2pdf.bundle.min.js"></script>
+<style>
+  :root{
+    --ink:#221c11; --ink-soft:#7c7460; --blue:#b3903f; --blue-dark:#8a6f30;
+    --accent:#9c7a2e; --bg:#f7f1e4; --card:#ffffff; --line:#e4dac0; --surface:#fbf8f1;
+    --green:#2f7d46; --green-bg:rgba(47,125,70,.09); --amber:#8a5f12; --amber-bg:rgba(138,95,18,.09);
+    --danger:#a53a30;
+    font-family:'Montserrat',-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;
+  }
+  *{box-sizing:border-box;}
+  body{margin:0;background:var(--bg);color:var(--ink);}
+  a{color:var(--blue);}
+  h1,h2,h3{font-family:'Cormorant Garamond',serif;}
+  .wrap{max-width:980px;margin:0 auto;padding:0 20px 80px;}
+  header.top{background:linear-gradient(135deg,#111111,#1c1a16);border-bottom:1px solid var(--line);color:#f2ede2;padding:28px 0;margin-bottom:24px;}
+  header.top .wrap{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;}
+  header.top h1{font-size:1.7rem;margin:0;font-weight:600;letter-spacing:.3px;color:#e8c97a;}
+  header.top .sub{font-size:.82rem;color:#b7b0a2;margin-top:4px;letter-spacing:.02em;}
+  header.top .badge{font-size:.72rem;background:rgba(232,201,122,.1);border:1px solid rgba(232,201,122,.35);color:#e8c97a;padding:4px 10px;border-radius:20px;}
+
+  #gate{max-width:380px;margin:80px auto;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:28px;box-shadow:0 10px 30px rgba(0,0,0,.1);}
+  #gate h2{margin-top:0;font-size:1.3rem;color:var(--accent);}
+  #gate input{width:100%;padding:10px 12px;border:1px solid var(--line);border-radius:8px;font-size:1rem;margin:10px 0;background:var(--surface);color:var(--ink);}
+  #gate button{width:100%;padding:10px;background:var(--blue);color:#1a1710;border:none;border-radius:8px;font-size:.95rem;font-weight:600;cursor:pointer;}
+  #gate button:hover{background:var(--accent);}
+  #gate .err{color:var(--danger);font-size:.85rem;min-height:18px;}
+
+  .intro{font-size:.92rem;color:var(--ink-soft);line-height:1.6;margin:0 0 22px;max-width:640px;}
+
+  .card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:20px 22px;margin-bottom:18px;box-shadow:0 1px 3px rgba(0,0,0,.04);}
+  .card h2{font-size:1.25rem;font-weight:600;margin:0 0 4px;color:var(--accent);display:flex;align-items:center;gap:8px;}
+  .card .card-sub{font-size:.78rem;color:var(--ink-soft);margin:0 0 14px;}
+  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:14px;}
+  label{display:block;font-size:.72rem;color:var(--ink-soft);margin-bottom:4px;font-weight:600;text-transform:uppercase;letter-spacing:.03em;}
+  select, input, textarea{
+    width:100%;padding:10px 11px;border-radius:8px;border:1px solid var(--line);
+    background:var(--surface);color:var(--ink);font-size:.95rem;font-family:inherit;
+  }
+  input:focus,select:focus{outline:2px solid var(--blue);outline-offset:1px;}
+  .field-hint{font-size:.72rem;color:var(--accent);margin-top:5px;}
+  details{margin-top:12px;}
+  summary{color:var(--ink-soft);font-size:.8rem;cursor:pointer;padding:6px 0;}
+
+  .kpi-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin-top:18px;}
+  .kpi-tile{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:14px 16px;}
+  .kpi-tile .l{color:var(--ink-soft);font-size:.68rem;text-transform:uppercase;letter-spacing:.04em;}
+  .kpi-tile .v{font-family:'Cormorant Garamond',serif;font-weight:700;font-size:1.55rem;margin-top:4px;}
+  .kpi-tile .v.gold{color:var(--accent);}
+  .kpi-tile .v.green{color:var(--green);}
+  .kpi-tile .v.amber{color:var(--amber);}
+  .kpi-tile .sub{font-size:.7rem;color:var(--ink-soft);margin-top:3px;}
+
+  .tabs{display:flex;gap:8px;flex-wrap:wrap;margin:20px 0 18px;}
+  .tabs button{border:1px solid var(--line);background:transparent;color:var(--ink-soft);padding:9px 16px;border-radius:20px;font-size:.83rem;font-weight:600;cursor:pointer;white-space:nowrap;}
+  .tabs button.active{background:var(--blue);color:#1a1710;border-color:var(--blue);}
+
+  .toggle2{display:flex;gap:8px;margin-bottom:16px;}
+  .toggle2 button{flex:1;border:1px solid var(--line);background:transparent;color:var(--ink-soft);padding:9px 12px;border-radius:8px;font-size:.82rem;font-weight:600;cursor:pointer;}
+  .toggle2 button.active{background:var(--blue);color:#1a1710;border-color:var(--blue);}
+
+  .panel{display:none;}
+  .panel.active{display:block;}
+
+  .result-line{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;font-size:.85rem;margin-top:16px;}
+  .result-line div{background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:11px;}
+  .result-line .l{color:var(--ink-soft);font-size:.68rem;text-transform:uppercase;letter-spacing:.03em;}
+  .result-line .v{font-weight:700;margin-top:3px;font-size:1.05rem;}
+  .result-line .v.gold{color:var(--accent);}
+  .result-line .v.green{color:var(--green);}
+
+  .callout{border-radius:10px;padding:14px 16px;font-size:.85rem;line-height:1.55;margin-top:16px;}
+  .callout.good{background:var(--green-bg);border:1px solid var(--green);color:var(--ink);}
+  .callout.warn{background:var(--amber-bg);border:1px solid var(--amber);color:var(--ink);}
+
+  table.cmp{width:100%;border-collapse:collapse;font-size:.85rem;margin-top:6px;}
+  table.cmp th{text-align:left;font-size:.68rem;text-transform:uppercase;letter-spacing:.03em;color:var(--ink-soft);padding:8px 6px;border-bottom:1px solid var(--line);}
+  table.cmp td{padding:11px 6px;border-bottom:1px solid var(--line);}
+  table.cmp tr.best{background:rgba(47,125,70,.07);}
+  table.cmp tr.best td:first-child{color:var(--green);font-weight:700;}
+  table.cmp td.num{text-align:right;font-weight:600;}
+  table.cmp td.num.gold{color:var(--accent);}
+  .cmp-note{font-size:.72rem;color:var(--ink-soft);margin-top:10px;}
+
+  .btnrow{display:flex;gap:10px;flex-wrap:wrap;margin:6px 0 24px;}
+  button.action{
+    padding:11px 18px;border-radius:8px;border:1px solid var(--line);
+    font-size:.88rem;font-weight:600;cursor:pointer;
+    background:var(--surface);color:var(--ink);
+  }
+  button.action:hover{border-color:var(--blue);}
+  button.primary{background:var(--blue);color:#1a1710;border:none;}
+  button.primary:hover{background:var(--accent);}
+
+  .note{font-size:.72rem;color:var(--ink-soft);margin-top:6px;line-height:1.5;}
+  footer.legal{border-top:1px solid var(--line);padding-top:20px;margin-top:10px;}
+  footer.legal a{color:var(--blue);}
+  footer.legal .links{display:flex;gap:14px;flex-wrap:wrap;margin-bottom:12px;font-size:.8rem;}
+
+  @media print{
+    header .badge, .tabs, .btnrow, #gate{display:none !important;}
+    body{background:#fff;color:#111;}
+  }
+</style>
+</head>
+<body>
+
+<div id="gate">
+  <h2>Accès outil interne DEKA</h2>
+  <p style="font-size:.85rem;color:var(--ink-soft);">Cette page n'est pas destinée au public. Merci de saisir le code d'accès.</p>
+  <input type="password" id="gateInput" placeholder="Code d'accès" autocomplete="off">
+  <div class="err" id="gateErr"></div>
+  <button onclick="tryUnlock()">Accéder à l'outil</button>
+</div>
+
+<div id="app" style="display:none;">
+  <header class="top">
+    <div class="wrap">
+      <div style="display:flex;align-items:center;gap:16px;">
+        <img src="/assets/deka-logo.png" alt="DEKA" style="height:48px;width:auto;">
+        <div>
+          <h1>Simulateur de levée</h1>
+          <div class="sub">DEKA Partners — comparer les modes de financement d'une opération</div>
+        </div>
+      </div>
+      <div class="badge">Interne</div>
+    </div>
+  </header>
+
+  <div class="wrap">
+    <p class="intro">Renseigne une opération une fois, compare les 4 véhicules de financement (associé, obligataire, banque + apport, crowdfunding), et simule ton retour perso avec la flat tax. Outil de comparaison — pas un outil de décision juridique ou fiscale.</p>
+
+    <div class="card">
+      <h2>1 · L'opération</h2>
+      <div class="grid">
+        <div><label>Prix d'achat</label><input id="pA" type="number" value="500000"></div>
+        <div><label>Frais (notaire, agence) %</label><input id="frP" type="number" value="9" step="0.1"><div class="field-hint" id="frEur">—</div></div>
+        <div><label>Travaux</label><input id="trv" type="number" value="300000"></div>
+        <div><label>Autres coûts</label><input id="autC" type="number" value="60000"></div>
+        <div><label>Revente visée (CA)</label><input id="revCA" type="number" value="1200000"></div>
+        <div><label>Durée de portage (mois)</label><input id="dur" type="number" value="18"></div>
+      </div>
+      <details>
+        <summary>Paramètre avancé</summary>
+        <div class="grid" style="margin-top:10px;max-width:220px;">
+          <div><label>ROI cible (%)</label><input id="roiCible" type="number" value="20"></div>
+        </div>
+      </details>
+
+      <div class="kpi-row">
+        <div class="kpi-tile"><div class="l">Coût de revient</div><div class="v" id="outCout">—</div><div class="sub" id="outCoutDetail">—</div></div>
+        <div class="kpi-tile"><div class="l">Marge brute</div><div class="v gold" id="outMarge">—</div></div>
+        <div class="kpi-tile"><div class="l">ROI</div><div class="v" id="outRoi">—</div><div class="sub" id="outRoiTag">—</div></div>
+        <div class="kpi-tile"><div class="l">À financer</div><div class="v" id="outFinancer">—</div><div class="sub">= coût de revient</div></div>
+      </div>
+    </div>
+
+    <div class="tabs" id="tabBar">
+      <button data-tab="assoc" class="active">Associé (equity)</button>
+      <button data-tab="obl">Obligataire</button>
+      <button data-tab="bq">Banque + apport</button>
+      <button data-tab="cf">Crowdfunding</button>
+      <button data-tab="cmp">Comparatif</button>
+      <button data-tab="perso">Perso · flat tax</button>
+    </div>
+
+    <div class="card">
+
+      <!-- ASSOCIÉ -->
+      <div class="panel active" id="panel-assoc">
+        <h2>Associé · apport en capital / CCA, partage de marge</h2>
+        <div class="card-sub">Pas d'intérêt obligatoire, risque partagé : si l'opération déborde, l'associé encaisse aussi. Idéal portage long.</div>
+        <div class="grid">
+          <div><label>Apport de l'associé</label><input id="assApport" type="number" value="300000"></div>
+          <div><label>Part de marge pour l'associé (%)</label><input id="assPart" type="number" value="50"></div>
+          <div><label>Intérêts de CCA (option) %/an</label><input id="assCca" type="number" value="0" step="0.1"></div>
+        </div>
+        <div class="result-line">
+          <div><div class="l">Intérêts CCA prioritaires</div><div class="v" id="assInterets">—</div></div>
+          <div><div class="l">Solde partagé</div><div class="v" id="assSolde">—</div></div>
+          <div><div class="l">Gain associé</div><div class="v gold" id="assGainAssocie">—</div><div class="sub" id="assRendement">—</div></div>
+          <div><div class="l">Gain opérateur</div><div class="v gold" id="assGainOperateur">—</div></div>
+        </div>
+        <div class="callout good" id="assCallout">—</div>
+      </div>
+
+      <!-- OBLIGATAIRE -->
+      <div class="panel" id="panel-obl">
+        <h2>Obligataire · rendement fixe contractuel</h2>
+        <div class="card-sub">Tu paies les intérêts même si l'opération déborde. Non cumulable avec un crédit bancaire. Tickets élevés = moins d'admin.</div>
+        <div class="grid">
+          <div><label>Montant levé</label><input id="oblMontant" type="number" value="800000"></div>
+          <div><label>Rendement offert %/an</label><input id="oblRendement" type="number" value="10" step="0.1"></div>
+          <div><label>Ticket d'entrée</label><input id="oblTicket" type="number" value="25000"></div>
+        </div>
+        <div class="result-line">
+          <div><div class="l">Intérêts à verser</div><div class="v" id="oblInterets">—</div><div class="sub">sur la durée</div></div>
+          <div><div class="l">Reste opérateur</div><div class="v gold" id="oblReste">—</div><div class="sub">marge − intérêts</div></div>
+          <div><div class="l">Rendement investisseur</div><div class="v" id="oblRendementBrut">—</div><div class="sub" id="oblRendementNet">—</div></div>
+          <div><div class="l">Nb d'investisseurs</div><div class="v" id="oblNbInv">—</div><div class="sub">à gérer (KYC)</div></div>
+        </div>
+        <div class="callout warn" id="oblCallout">—</div>
+      </div>
+
+      <!-- BANQUE + APPORT -->
+      <div class="panel" id="panel-bq">
+        <h2>Banque + apport · levier bancaire</h2>
+        <div class="card-sub">Meilleur rendement (levier) mais dur à obtenir sans track record, délais longs, caution personnelle.</div>
+        <div class="grid">
+          <div><label>Apport exigé %</label><input id="bqApportPct" type="number" value="30" step="0.1"></div>
+          <div><label>Taux tout compris %/an</label><input id="bqTaux" type="number" value="8" step="0.1"></div>
+          <div><label>Part de marge de l'apporteur %</label><input id="bqPartApporteur" type="number" value="50" step="0.1"></div>
+        </div>
+        <div class="result-line">
+          <div><div class="l">Montant emprunté</div><div class="v" id="bqEmprunte">—</div></div>
+          <div><div class="l">Apport à réunir</div><div class="v" id="bqApportReunir">—</div></div>
+          <div><div class="l">Coût du crédit</div><div class="v" id="bqCoutCredit">—</div></div>
+          <div><div class="l">Marge après crédit</div><div class="v" id="bqMargeApres">—</div></div>
+          <div><div class="l">Gain apporteur</div><div class="v gold" id="bqGainApporteur">—</div><div class="sub" id="bqRendement">—</div></div>
+          <div><div class="l">Gain opérateur</div><div class="v gold" id="bqGainOperateur">—</div></div>
+        </div>
+        <div class="callout good" id="bqCallout">—</div>
+      </div>
+
+      <!-- CROWDFUNDING -->
+      <div class="panel" id="panel-cf">
+        <h2>Crowdfunding · plateforme</h2>
+        <div class="card-sub">Cher, mais mise en place rapide et forte probabilité de financement. La solution de secours.</div>
+        <div class="grid">
+          <div><label>Montant levé</label><input id="cfMontant" type="number" value="800000"></div>
+          <div><label>Coût total (rendement + frais) % du montant</label><input id="cfCoutPct" type="number" value="15" step="0.1"></div>
+        </div>
+        <div class="result-line">
+          <div><div class="l">Coût du financement</div><div class="v" id="cfCout">—</div><div class="sub">sur le montant levé</div></div>
+          <div><div class="l">Reste opérateur</div><div class="v gold" id="cfReste">—</div><div class="sub">marge − coût</div></div>
+          <div><div class="l">Part de marge absorbée</div><div class="v" id="cfPartAbsorbee">—</div></div>
+        </div>
+        <div class="callout warn" id="cfCallout">—</div>
+      </div>
+
+      <!-- COMPARATIF -->
+      <div class="panel" id="panel-cmp">
+        <h2>Comparatif · même opération, 4 véhicules</h2>
+        <div class="card-sub">« Coût » = ce que le financement retire à ta marge. Ligne surlignée = ce qui te laisse le plus. Rendement investisseur brut.</div>
+        <table class="cmp">
+          <thead>
+            <tr><th>Véhicule</th><th style="text-align:right">Coût du financement</th><th style="text-align:right">Reste opérateur</th><th style="text-align:right">Rendement investisseur</th></tr>
+          </thead>
+          <tbody id="cmpBody"></tbody>
+        </table>
+        <div class="cmp-note">Comparatif indicatif calculé à partir des hypothèses saisies dans chaque onglet.</div>
+      </div>
+
+      <!-- PERSO -->
+      <div class="panel" id="panel-perso">
+        <h2>Investir en perso · impact de la flat tax (PFU 31,4 %)</h2>
+        <div class="card-sub">Flat tax = 31,4 % (12,8 % IR + 18,6 % prélèvements sociaux) sur les intérêts, dividendes et plus-values perçus en direct par un particulier.</div>
+        <div class="toggle2" id="persoModeBar">
+          <button data-mode="cash" class="active">Cash déjà perso</button>
+          <button data-mode="holding">À sortir d'une holding (−31,4 %)</button>
+        </div>
+        <div class="grid">
+          <div><label id="persoMontantLbl">Capital de départ</label><input id="persoMontant" type="number" value="200000"></div>
+          <div><label>Rendement brut %/an</label><input id="persoRendement" type="number" value="10" step="0.1"></div>
+          <div><label>Durée (mois)</label><input id="persoDuree" type="number" value="18"></div>
+        </div>
+        <div class="result-line">
+          <div><div class="l">Capital réellement investi</div><div class="v" id="persoCapitalReel">—</div><div class="sub" id="persoHoldingNote"></div></div>
+          <div><div class="l">Gain brut</div><div class="v" id="persoGainBrut">—</div></div>
+          <div><div class="l">Flat tax sur le gain</div><div class="v" id="persoFlatTax">—</div><div class="sub">31,4 %</div></div>
+          <div><div class="l">Net en poche (fin)</div><div class="v green" id="persoNet">—</div><div class="sub" id="persoRendementNet">—</div></div>
+        </div>
+        <div class="callout good" id="persoCallout">—</div>
+      </div>
+
+    </div>
+
+    <div class="btnrow">
+      <button class="action primary" onclick="exportPdf()">Exporter en PDF</button>
+      <button class="action" onclick="resetAll()">Réinitialiser</button>
+    </div>
+
+    <footer class="legal">
+      <div class="links">
+        <a href="/assets/arborescence-data-room-incubateur.pdf" target="_blank" rel="noopener">Télécharger l'arborescence type du dossier (PDF)</a>
+        <a href="/outils/offre-achat/">Aide à la création d'offre</a>
+        <a href="/outils/chiffrage-travaux/">Chiffrage travaux</a>
+        <a href="/">deka-partners.com</a>
+      </div>
+      <div class="note">
+        Simulateur de levée — DEKA Partners · Marchand de biens.<br>
+        Simulation pédagogique simplifiée (intérêts non composés, in fine ; flat tax à 31,4 % ; fiscalité société non modélisée). Ce n'est pas un conseil fiscal, juridique ou financier : fais valider par ton expert-comptable, ton avocat et ton notaire avant toute levée réelle.
+      </div>
+    </footer>
+  </div>
+</div>
+
+<script>
+// ---------- Gate (même code d'accès que les autres outils internes) ----------
+const PASSCODE_HASH = "3df851f8a45465e987bc3c7cadf2cfa4a8b94cb35a5606020da376e77b07fe6b";
+async function sha256hex(str){
+  const enc = new TextEncoder().encode(str);
+  const buf = await crypto.subtle.digest('SHA-256', enc);
+  return Array.from(new Uint8Array(buf)).map(b=>b.toString(16).padStart(2,'0')).join('');
+}
+async function tryUnlock(){
+  const val = document.getElementById('gateInput').value;
+  const hash = await sha256hex(val);
+  if(hash === PASSCODE_HASH){
+    sessionStorage.setItem('deka_unlocked','1');
+    document.getElementById('gate').style.display='none';
+    document.getElementById('app').style.display='block';
+    init();
+  } else {
+    document.getElementById('gateErr').textContent = "Code incorrect.";
+  }
+}
+document.getElementById('gateInput').addEventListener('keydown', e=>{ if(e.key==='Enter') tryUnlock(); });
+if(sessionStorage.getItem('deka_unlocked')==='1'){
+  document.getElementById('gate').style.display='none';
+  document.getElementById('app').style.display='block';
+  window.addEventListener('DOMContentLoaded', init);
+}
+
+// ---------- Helpers ----------
+function num(id){ return parseFloat(document.getElementById(id).value) || 0; }
+function eur(n){ return Math.round(n).toLocaleString('fr-FR') + ' €'; }
+function eurNum(n){ return Math.round(n).toLocaleString('fr-FR'); }
+function pct(n, d){ d = (d===undefined)?1:d; return n.toLocaleString('fr-FR', {minimumFractionDigits:d, maximumFractionDigits:d}) + ' %'; }
+function set(id, val){ document.getElementById(id).textContent = val; }
+
+const DEFAULTS = {
+  pA:500000, frP:9, trv:300000, autC:60000, revCA:1200000, dur:18, roiCible:20,
+  assApport:300000, assPart:50, assCca:0,
+  oblMontant:800000, oblRendement:10, oblTicket:25000,
+  bqApportPct:30, bqTaux:8, bqPartApporteur:50,
+  cfMontant:800000, cfCoutPct:15,
+  persoMontant:200000, persoRendement:10, persoDuree:18
+};
+const FLAT_TAX = 0.314;
+let persoMode = 'cash';
+
+// ---------- Compute ----------
+function compute(){
+  var pA = num('pA'), frP = num('frP')/100, trv = num('trv'), autC = num('autC');
+  var revCA = num('revCA'), dur = num('dur'), duree12 = dur/12 || 0;
+  var roiCible = num('roiCible');
+
+  var fraisEur = pA*frP;
+  var coutRevient = pA + fraisEur + trv + autC;
+  var margeBrute = revCA - coutRevient;
+  var roi = coutRevient ? margeBrute/coutRevient*100 : 0;
+
+  set('frEur', '= ' + eur(fraisEur) + ' de frais');
+  set('outCout', eur(coutRevient));
+  set('outCoutDetail', eurNum(pA) + ' + ' + eurNum(fraisEur) + ' frais + ' + eurNum(trv) + ' travaux + ' + eurNum(autC) + ' autres');
+  set('outMarge', eur(margeBrute));
+  set('outRoi', pct(roi));
+  var roiTag = document.getElementById('outRoiTag');
+  if(roi >= roiCible){ roiTag.textContent = '✓ cible atteinte'; roiTag.style.color = 'var(--green)'; }
+  else { roiTag.textContent = '⚠ sous la cible (' + roiCible + ' %)'; roiTag.style.color = 'var(--amber)'; }
+  set('outFinancer', eur(coutRevient));
+
+  // ASSOCIÉ
+  var assApport = num('assApport'), assPart = num('assPart')/100, assCca = num('assCca')/100;
+  var assInterets = assApport*assCca*duree12;
+  var assSolde = margeBrute - assInterets;
+  var assGainAssocie = assSolde*assPart + assInterets;
+  var assGainOperateur = assSolde - assSolde*assPart;
+  var assRendementPctAn = (assApport && duree12) ? (assGainAssocie/assApport)/duree12*100 : 0;
+  set('assInterets', eur(assInterets));
+  set('assSolde', eur(assSolde));
+  set('assGainAssocie', eur(assGainAssocie));
+  set('assRendement', pct(assRendementPctAn) + '/an');
+  set('assGainOperateur', eur(assGainOperateur));
+  set('assCallout', "Répartition " + Math.round(assPart*100) + " / " + Math.round((1-assPart)*100) + " sur le solde de marge. Teste-la avec une marge −30 % pour voir si elle tient.");
+
+  // OBLIGATAIRE
+  var oblMontant = num('oblMontant'), oblRendement = num('oblRendement')/100, oblTicket = num('oblTicket');
+  var oblInterets = oblMontant*oblRendement*duree12;
+  var oblReste = margeBrute - oblInterets;
+  var oblRendementNet = oblRendement*(1-FLAT_TAX)*100;
+  var oblNbInv = oblTicket ? Math.ceil(oblMontant/oblTicket) : 0;
+  set('oblInterets', eur(oblInterets));
+  set('oblReste', eur(oblReste));
+  set('oblRendementBrut', pct(oblRendement*100));
+  set('oblRendementNet', 'net flat tax : ' + pct(oblRendementNet));
+  set('oblNbInv', oblNbInv);
+  set('oblCallout', oblNbInv + " investisseur(s) à gérer seul (pièces, KYC) : monte le ticket d'entrée pour en réduire le nombre.");
+
+  // BANQUE + APPORT
+  var bqApportPct = num('bqApportPct')/100, bqTaux = num('bqTaux')/100, bqPartApporteur = num('bqPartApporteur')/100;
+  var bqEmprunte = coutRevient*(1-bqApportPct);
+  var bqApportReunir = coutRevient*bqApportPct;
+  var bqCoutCredit = bqEmprunte*bqTaux*duree12;
+  var bqMargeApres = margeBrute - bqCoutCredit;
+  var bqGainApporteur = bqMargeApres*bqPartApporteur;
+  var bqGainOperateur = bqMargeApres - bqGainApporteur;
+  var bqRendementPctAn = (bqApportReunir && duree12) ? (bqGainApporteur/bqApportReunir)/duree12*100 : 0;
+  set('bqEmprunte', eur(bqEmprunte));
+  set('bqApportReunir', eur(bqApportReunir));
+  set('bqCoutCredit', eur(bqCoutCredit));
+  set('bqMargeApres', eur(bqMargeApres));
+  set('bqGainApporteur', eur(bqGainApporteur));
+  set('bqRendement', pct(bqRendementPctAn) + '/an sur son cash');
+  set('bqGainOperateur', eur(bqGainOperateur));
+  set('bqCallout', "Le levier au travail : l'apporteur fait " + pct(bqRendementPctAn) + "/an sur son cash.");
+
+  // CROWDFUNDING
+  var cfMontant = num('cfMontant'), cfCoutPct = num('cfCoutPct')/100;
+  var cfCout = cfMontant*cfCoutPct;
+  var cfReste = margeBrute - cfCout;
+  var cfPartAbsorbee = margeBrute ? cfCout/margeBrute*100 : 0;
+  set('cfCout', eur(cfCout));
+  set('cfReste', eur(cfReste));
+  set('cfPartAbsorbee', pct(cfPartAbsorbee));
+  set('cfCallout', "Coûteux mais rapide. Ton coussin de ROI absorbe le prix : " + pct(cfPartAbsorbee) + " de la marge brute.");
+
+  // COMPARATIF
+  var cfRendementApprox = duree12 ? cfCoutPct*100*(1/duree12) : 0;
+  var vehicles = [
+    {name:'Associé (equity)', cout:assGainAssocie, reste:assGainOperateur, rendement:pct(assRendementPctAn)+'/an'},
+    {name:'Obligataire', cout:oblInterets, reste:oblReste, rendement:pct(oblRendement*100)},
+    {name:'Banque + apport', cout:bqCoutCredit+bqGainApporteur, reste:bqGainOperateur, rendement:pct(bqRendementPctAn)+'/an'},
+    {name:'Crowdfunding', cout:cfCout, reste:cfReste, rendement:'~'+pct(cfRendementApprox,0)}
+  ];
+  var best = vehicles.reduce(function(a,b){ return b.reste>a.reste?b:a; });
+  var rows = vehicles.map(function(v){
+    var cls = v===best ? ' class="best"' : '';
+    return '<tr'+cls+'><td>'+v.name+'</td><td class="num">'+eur(v.cout)+'</td><td class="num gold">'+eur(v.reste)+'</td><td class="num">'+v.rendement+'</td></tr>';
+  }).join('');
+  document.getElementById('cmpBody').innerHTML = rows;
+
+  // PERSO
+  var persoMontant = num('persoMontant'), persoRendement = num('persoRendement')/100, persoDuree = num('persoDuree')/12 || 0;
+  var persoCapitalReel = persoMode==='holding' ? persoMontant*(1-FLAT_TAX) : persoMontant;
+  var persoGainBrut = persoCapitalReel*persoRendement*persoDuree;
+  var persoFlatTaxGain = persoGainBrut*FLAT_TAX;
+  var persoNet = persoCapitalReel + persoGainBrut - persoFlatTaxGain;
+  var persoRendementNetAn = (persoMontant && persoDuree) ? (persoGainBrut-persoFlatTaxGain)/persoMontant/persoDuree*100 : 0;
+  set('persoCapitalReel', eur(persoCapitalReel));
+  document.getElementById('persoHoldingNote').textContent = persoMode==='holding' ? ('−'+eur(persoMontant*FLAT_TAX)+' de flat tax à la sortie') : '';
+  set('persoGainBrut', eur(persoGainBrut));
+  set('persoFlatTax', eur(persoFlatTaxGain));
+  set('persoNet', eur(persoNet));
+  set('persoRendementNet', pct(persoRendementNetAn) + '/an net');
+  set('persoCallout', persoMode==='holding'
+    ? ("Sortir de la holding coûte " + eur(persoMontant*FLAT_TAX) + " d'entrée. Souvent plus malin de laisser la société investir en direct (pas de flat tax en amont) — à arbitrer avec ton expert-comptable.")
+    : (pct(persoRendement*100) + " brut → " + pct(persoRendementNetAn) + " net après flat tax. Gain net : " + eur(persoGainBrut-persoFlatTaxGain) + "."));
+
+  saveState();
+}
+
+// ---------- Tabs ----------
+document.getElementById('tabBar').addEventListener('click', function(e){
+  var btn = e.target.closest('button[data-tab]');
+  if(!btn) return;
+  document.querySelectorAll('#tabBar button').forEach(function(b){ b.classList.remove('active'); });
+  btn.classList.add('active');
+  document.querySelectorAll('.panel').forEach(function(p){ p.classList.remove('active'); });
+  document.getElementById('panel-'+btn.dataset.tab).classList.add('active');
+});
+
+document.getElementById('persoModeBar').addEventListener('click', function(e){
+  var btn = e.target.closest('button[data-mode]');
+  if(!btn) return;
+  persoMode = btn.dataset.mode;
+  document.querySelectorAll('#persoModeBar button').forEach(function(b){ b.classList.remove('active'); });
+  btn.classList.add('active');
+  document.getElementById('persoMontantLbl').textContent = persoMode==='holding' ? "Montant sorti de la holding" : "Capital de départ";
+  compute();
+});
+
+// ---------- Reset / Persistence ----------
+function resetAll(){
+  Object.keys(DEFAULTS).forEach(function(id){ document.getElementById(id).value = DEFAULTS[id]; });
+  persoMode = 'cash';
+  document.querySelectorAll('#persoModeBar button').forEach(function(b){ b.classList.remove('active'); });
+  document.querySelector('#persoModeBar button[data-mode="cash"]').classList.add('active');
+  document.getElementById('persoMontantLbl').textContent = "Capital de départ";
+  compute();
+}
+function saveState(){
+  try{
+    var state = {};
+    Object.keys(DEFAULTS).forEach(function(id){ state[id] = document.getElementById(id).value; });
+    state.persoMode = persoMode;
+    localStorage.setItem('deka_simu_levee', JSON.stringify(state));
+  }catch(e){}
+}
+function loadState(){
+  try{
+    var raw = localStorage.getItem('deka_simu_levee');
+    if(!raw) return;
+    var state = JSON.parse(raw);
+    Object.keys(DEFAULTS).forEach(function(id){ if(state[id]!==undefined) document.getElementById(id).value = state[id]; });
+    if(state.persoMode){
+      persoMode = state.persoMode;
+      document.querySelectorAll('#persoModeBar button').forEach(function(b){ b.classList.toggle('active', b.dataset.mode===persoMode); });
+      document.getElementById('persoMontantLbl').textContent = persoMode==='holding' ? "Montant sorti de la holding" : "Capital de départ";
+    }
+  }catch(e){}
+}
+
+// ---------- Export PDF ----------
+function exportPdf(){
+  var el = document.querySelector('.wrap');
+  html2pdf().set({
+    margin: 10,
+    filename: 'deka-simulateur-levee.pdf',
+    image: { type: 'jpeg', quality: 0.95 },
+    html2canvas: { scale: 2, backgroundColor: '#f7f1e4' },
+    jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+  }).from(el).save();
+}
+
+// ---------- Init ----------
+function init(){
+  loadState();
+  document.querySelectorAll('#app input').forEach(function(el){
+    el.addEventListener('input', compute);
+  });
+  compute();
+}
+</script>
+</body>
+</html>
