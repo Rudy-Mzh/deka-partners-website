@@ -7,12 +7,12 @@ Electricite,Saignees distribution circuits + rebouchage,forfait,1100,1348,1700,L
 Electricite,Point lumineux simple allumage,u,74,100,185,LAMBA17 I-26-06-9 2026,Devis reel
 Electricite,Spot LED blanc orientable dimmable,u,48,55,75,LAMBA17 I-26-06-9 2026,Devis reel
 Electricite,Prise 2P+T 10/16A standard,u,59,75,80,LAMBA17 I-26-06-9 2026,Devis reel
-Electricite,Prise RJ45 blindee cat6,u,108,100,110,LAMBA17 I-26-06-9 2026,Devis reel
+Electricite,Prise RJ45 blindee cat6,u,108.25,108.25,108.25,LAMBA17 I-26-06-9 2026,Devis reel
 Electricite,Point lumineux va-et-vient,u,127,220,460,LAMBA17 I-26-06-9 2026,Devis reel
 Electricite,Point lumineux telerupteur 3 boutons,u,326.98,326.98,326.98,LAMBA17 I-26-06-9 2026,Devis reel
 Electricite,Prise directe 2P+T four,u,106,130,175,LAMBA17 I-26-06-9 2026,Devis reel
 Electricite,Prise directe 2P+T lave-vaisselle,u,106,130,175,LAMBA17 I-26-06-9 2026,Devis reel
-Electricite,Alimentation directe 32A plaque cuisson,u,136,130,175,LAMBA17 I-26-06-9 2026,Devis reel
+Electricite,Alimentation directe 32A plaque cuisson,u,135.52,135.52,135.52,LAMBA17 I-26-06-9 2026,Devis reel
 Electricite,Refection TGBT aux normes,forfait,2500,2500,2500,SFTJ 130226 2026,Devis reel
 Maconnerie,Demolition mur epaisseur 20cm,m2,108,108,108,EMRT 82 2026,Devis reel
 Maconnerie,Realisation fondations mur ferraillage,ml,55,55,55,EMRT 82 2026,Devis reel
@@ -83,9 +83,6 @@ Peinture,Pose sol stratifie + sous-couche,m2,36,36,36,Guillaume MILCENT D08 2026
 Peinture,Pose sol PVC + sous-couche,m2,36,36,36,Guillaume MILCENT D08 2026,Devis reel
 Peinture,Pose plinthes MDF + peinture,ml,8,8,8,Guillaume MILCENT D08 2026,Devis reel
 Peinture,Ponçage bandes + impression studios,m2,4,4,4,Guillaume MILCENT D09 2026,Devis reel 4 studios
-Terrassement,Sciage demolition muret parking,forfait,600,600,600,DAT DEVIS N1 2026,Devis reel
-Terrassement,Place stationnement dalle beton,m2,120,120,120,DAT DEVIS N1 2026,Devis reel option C
-Terrassement,Demolition marquise,forfait,200,200,200,DAT DEVIS N1 2026,Devis reel
 Electricite,Refection 3 TGBT normes protections diff,forfait,2500,2500,2500,SFTJ 130226 2026,Devis reel
 Electricite,Passage terre ensemble installation,forfait,2500,2500,2500,SFTJ 130226 2026,Devis reel
 Electricite,6 prises 16A veranda,forfait,270,270,270,SFTJ 130226 2026,Devis reel
@@ -228,7 +225,7 @@ Plomberie,Depose/repose WC existant conserve,forfait,106.00,106.00,106.00,COUTAN
 Plomberie,Raccordement en EU des appareils sanitaires depuis existant,forfait,309.80,309.80,309.80,COUTANT 19840 2025,Devis reel
 Plomberie,Realimentation EC/EF ensemble appareils sanitaires depuis chaudiere,forfait,836.01,836.01,836.01,COUTANT 19840 2025,Devis reel
 Plomberie,Reprise EF generale depuis tube existant vers chaudiere cuivre,forfait,402.25,402.25,402.25,COUTANT 19840 2025,Devis reel
-Sanitaire,Mitigeur de lavabo,u,84.62,86.52,86.41,COUTANT 19840-21416 2025-2026,Devis reel
+Sanitaire,Mitigeur de lavabo GROHE Eurosmart,u,86.41,86.41,86.41,COUTANT 21416 2026,Devis reel
 Sanitaire,Meuble sous-vasque 60cm 2 tiroirs,u,186.37,186.37,186.37,COUTANT 19840 2025,Devis reel
 Sanitaire,Paroi de douche coulissante,u,814.88,814.88,814.88,COUTANT 19840 2025,Devis reel
 Sanitaire,Ensemble douche thermostatique,u,258.12,260.83,263.54,COUTANT 19840-21416 2025-2026,Devis reel
@@ -366,7 +363,6 @@ Volets,Volet persienne bois exotique 34mm 2000x1080mm 2 vantaux,u,1041.64,1041.6
 Volets,Volet bois lames verticales exotique 27mm 1680x1060mm 2 vantaux,u,671.23,671.23,671.23,BONNET_CEDRIC 00109 2026,Devis reel
 Volets,Pose de volets battants,u,120.00,120.00,120.00,BONNET_CEDRIC 00109 2026,Devis reel
 Volets,Echafaudage sur toute hauteur,forfait,580.00,580.00,580.00,BONNET_CEDRIC 00109 2026,Devis reel
-Peinture,Decapage et peinture de porte d'entree,u,550.00,550.00,550.00,BONNET_CEDRIC 00109 2026,Devis reel
 Menuiserie,Oeil de boeuf PVC fixe 600x700mm avec petits bois,u,1121.17,1121.17,1121.17,L_ATELIER58 DE-202607-090 2026,Devis reel
 Menuiserie,Fenetre PVC oscillo-battante 1 vantail 800x1150mm,u,454.25,454.25,454.25,L_ATELIER58 DE-202607-090 2026,Devis reel
 Menuiserie,Baie vitree coulissante aluminium 2 vantaux 2600x2700mm avec chassis fixe,u,2815.45,2815.45,2815.45,L_ATELIER58 DE-202607-090 2026,Devis reel
