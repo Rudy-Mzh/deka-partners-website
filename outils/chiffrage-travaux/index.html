@@ -943,6 +943,7 @@ const ROOM_TYPES = [
     ...STRUCTURE_POSTES_COMMUNS
   ]},
   {type:'logement', label:'Logement (général) — tableau élec, chauffage, VMC', noDims:true, postes:[
+    'Generalites electriques studio/T1 (tableau+communication+cablage+VMC+saignees) au m2',
     'Generalites electriques appartement / T2-T3 (tableau+communication+cablage+VMC+saignees)',
     'Generalites electriques maison plus de 100m2 (tableau+communication+cablage+VMC+saignees)',
     'Tableau electrique seul fourniture+pose prequipe',
@@ -1115,6 +1116,24 @@ function floorArea(room){ return round1((room.longueur||0) * (room.largeur||0));
 function wallArea(room){ return round1(2*((room.longueur||0)+(room.largeur||0))*(room.hauteur||0)); }
 function perimeter(room){ return round1(2*((room.longueur||0)+(room.largeur||0))); }
 
+/* Surface habitable totale du logement composé (somme des pieces de vie
+   reellement saisies, hors la piece "Logement (general)" elle-meme qui
+   n'a pas de dimensions, et hors garage/exterieur/escalier/parties
+   communes qui ne font pas partie du lot chauffe/cable). Sert a chiffrer
+   au m2 les postes qui doivent suivre la taille reelle du bien (ex.
+   generalites electriques studio/T1) plutot qu'un forfait fixe pense
+   pour un T2/T3 applique tel quel a une plus petite surface. */
+const LIVABLE_ROOM_TYPES = new Set(['chambre','sejour','cuisine','sdb','salledeau','wc','degagement']);
+function livableArea(){
+  return round1(rooms.filter(r=>LIVABLE_ROOM_TYPES.has(r.type)).reduce((sum,r)=>sum+floorArea(r),0));
+}
+const GENERALITES_ELEC_STUDIO_T1 = 'Generalites electriques studio/T1 (tableau+communication+cablage+VMC+saignees) au m2';
+const GENERALITES_ELEC_T2T3 = 'Generalites electriques appartement / T2-T3 (tableau+communication+cablage+VMC+saignees)';
+/* Plancher applique a la surface facturee : meme un studio de 12-14m2 a
+   besoin d'un tableau complet et d'une mise en service — le cout ne
+   descend pas en dessous de ce qu'implique ~15m2. */
+function generalitesElecStudioQty(){ return Math.max(15, livableArea()); }
+
 /* Nombre de prises de courant minimum par piece, d'apres la norme
    NF C 15-100 (minima legaux) :
    - sejour : 5 prises si < 28m2, 7 si >= 28m2
@@ -1161,7 +1180,8 @@ const ROOM_CALC = {
   'Chape beton / ragreage de sol': room => floorArea(room),
   'Terrasse bois composite posee (structure+lames)': room => floorArea(room),
   'Terrasse dallage / carrelage exterieur posee': room => floorArea(room),
-  'Prise de courant 2P+T standard': room => nfPrisesRoom(room)
+  'Prise de courant 2P+T standard': room => nfPrisesRoom(room),
+  [GENERALITES_ELEC_STUDIO_T1]: () => generalitesElecStudioQty()
 };
 
 let rooms = [];
@@ -1322,7 +1342,7 @@ const CUISINE_INTEGREE_EXTRA = {
   'Alimentation / evacuation EC-EF (par point ponctuel)': 1
 };
 
-function applyFullRoomPostes(room, cuisineGamme){
+function applyFullRoomPostes(room, cuisineGamme, electriciteDesig){
   const coquille = {...(ROOM_COQUILLE[room.type] || {})};
   if(room.type==='cuisine' || room.hasCuisine){
     coquille[CUISINE_GAMME_DESIG[cuisineGamme] || CUISINE_GAMME_DESIG.standard] = 1;
@@ -1333,6 +1353,15 @@ function applyFullRoomPostes(room, cuisineGamme){
   if(room.type==='logement'){
     const chauffageDesig = variantDefaultDesig('chauffage_generation');
     if(chauffageDesig) coquille[chauffageDesig] = 1;
+    /* Generalites electriques : par defaut le forfait T2/T3 (coquille de
+       base), mais pour un Studio/T1/T1 bis on bascule sur la variante au
+       m2, moins chere et adaptee a la surface reelle plutot qu'un
+       forfait pense pour un T2 de 46m2 — voir GENERALITES_ELEC_STUDIO_T1
+       et generalitesElecStudioQty(). */
+    if(electriciteDesig && electriciteDesig !== GENERALITES_ELEC_T2T3){
+      delete coquille[GENERALITES_ELEC_T2T3];
+      coquille[electriciteDesig] = 'auto';
+    }
   }
   Object.entries(coquille).forEach(([desig, qtySpec])=>{
     const p = PRICES.find(pr=>pr.designation===desig);
@@ -1357,6 +1386,7 @@ function addRoom(type){
   const room = createRoom(type);
   rooms.push(room);
   applyRoomDefaults(room);
+  recalcLogementAutoQty();
   renderRooms(); renderSummary();
 }
 
@@ -1388,16 +1418,16 @@ const CUISINE_GAMME_DESIG = {
    1 cloison entre le sejour/cuisine et la salle d'eau). A ajuster
    selon le plan reel une fois le releve fait. */
 const LOGEMENT_TYPES = {
-  studio: {label:'Studio', cuisineGamme:'kitchenette', cloisonM2:8, rooms:[
+  studio: {label:'Studio', cuisineGamme:'kitchenette', cloisonM2:8, electriciteDesig:GENERALITES_ELEC_STUDIO_T1, rooms:[
     {type:'sejour', count:1, withCuisine:true},
     {type:'salledeau', count:1}
   ]},
-  t1: {label:'T1', cuisineGamme:'kitchenette', cloisonM2:12, rooms:[
+  t1: {label:'T1', cuisineGamme:'kitchenette', cloisonM2:12, electriciteDesig:GENERALITES_ELEC_STUDIO_T1, rooms:[
     {type:'sejour', count:1, withCuisine:true},
     {type:'salledeau', count:1},
     {type:'degagement', count:1}
   ]},
-  t1bis: {label:'T1 bis', cuisineGamme:'kitchenette', cloisonM2:16, rooms:[
+  t1bis: {label:'T1 bis', cuisineGamme:'kitchenette', cloisonM2:16, electriciteDesig:GENERALITES_ELEC_STUDIO_T1, rooms:[
     {type:'sejour', count:1, withCuisine:true},
     {type:'chambre', count:1},
     {type:'salledeau', count:1},
@@ -1447,14 +1477,14 @@ function applyLogementTypeShell(){
         room.name = 'Séjour / Cuisine';
       }
       rooms.push(room);
-      applyFullRoomPostes(room, cfg.cuisineGamme);
+      applyFullRoomPostes(room, cfg.cuisineGamme, cfg.electriciteDesig);
     }
   });
   let gRoom = rooms.find(r=>r.type==='logement');
   if(!gRoom){
     gRoom = createRoom('logement');
     rooms.push(gRoom);
-    applyFullRoomPostes(gRoom, cfg.cuisineGamme);
+    applyFullRoomPostes(gRoom, cfg.cuisineGamme, cfg.electriciteDesig);
   }
   if(cfg.cloisonM2){
     const cloisonDesig = 'Cloison de distribution placo (rails+montants 48 double BA13 laine 45mm) fourniture+pose';
@@ -1478,6 +1508,7 @@ function removeRoom(id){
     photos = photos.filter(p=>p.roomId!==id);
   }
   rooms = rooms.filter(r=>r.id!==id);
+  recalcLogementAutoQty();
   renderRooms(); renderSummary(); renderGallery();
 }
 
@@ -1488,6 +1519,25 @@ function recalcRoomAutoQty(room){
       s.qty = ROOM_CALC[s.item.designation](room);
     }
   });
+}
+
+/* Les postes "au m2" rattaches a la piece "Logement (general)" (ex.
+   generalites electriques studio/T1) dependent de la surface de TOUTES
+   les pieces de vie, pas seulement de leurs propres dimensions (qui
+   n'existent pas, cette piece est noDims). Il faut donc les recalculer
+   a chaque fois qu'une piece quelconque est ajoutee, supprimee, ou
+   redimensionnee — pas seulement quand la piece "Logement" elle-meme
+   change (recalcRoomAutoQty ne suffit pas ici). */
+function recalcLogementAutoQty(){
+  const gRoom = rooms.find(r=>r.type==='logement');
+  if(!gRoom) return;
+  recalcRoomAutoQty(gRoom);
+  // rafraichit l'affichage de la quantite dans la carte "Logement" elle
+  // meme (sinon elle ne se met a jour qu'au prochain renderRooms complet,
+  // par ex. en modifiant une autre piece) ; sans effet si la carte n'est
+  // pas encore dans le DOM (ajout/suppression de piece : renderRooms()
+  // qui suit de toute facon rafraichit tout).
+  if(document.getElementById('roomBody-'+gRoom.id)) renderRoomBody(gRoom);
 }
 
 function renderRooms(){
@@ -1534,11 +1584,11 @@ function renderRooms(){
       };
       head.querySelector('.room-l').addEventListener('input', e=>{
         room.longueur = parseFloat(e.target.value)||null;
-        updateHint(); recalcRoomAutoQty(room); renderRoomBody(room); renderSummary(); updateSurfaceCoherenceHint();
+        updateHint(); recalcRoomAutoQty(room); recalcLogementAutoQty(); renderRoomBody(room); renderSummary(); updateSurfaceCoherenceHint();
       });
       head.querySelector('.room-la').addEventListener('input', e=>{
         room.largeur = parseFloat(e.target.value)||null;
-        updateHint(); recalcRoomAutoQty(room); renderRoomBody(room); renderSummary(); updateSurfaceCoherenceHint();
+        updateHint(); recalcRoomAutoQty(room); recalcLogementAutoQty(); renderRoomBody(room); renderSummary(); updateSurfaceCoherenceHint();
       });
       head.querySelector('.room-h').addEventListener('input', e=>{
         room.hauteur = parseFloat(e.target.value)||2.5;

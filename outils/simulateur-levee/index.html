@@ -100,6 +100,14 @@
   button.primary{background:var(--blue);color:#1a1710;border:none;}
   button.primary:hover{background:var(--accent);}
 
+  .hist-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:14px;margin-top:16px;}
+  .hist-card{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:14px;cursor:pointer;transition:border-color .2s;}
+  .hist-card:hover{border-color:var(--blue);}
+  .hist-card .hist-name{font-weight:700;color:var(--ink);}
+  .hist-card .hist-date{font-size:.72rem;color:var(--ink-soft);margin-bottom:8px;}
+  .hist-card .hist-line{font-size:.8rem;color:var(--ink);margin-top:2px;}
+  .hist-card .hist-line b{color:var(--accent);}
+
   .note{font-size:.72rem;color:var(--ink-soft);margin-top:6px;line-height:1.5;}
   footer.legal{border-top:1px solid var(--line);padding-top:20px;margin-top:10px;}
   footer.legal a{color:var(--blue);}
@@ -137,6 +145,20 @@
 
   <div class="wrap">
     <p class="intro">Renseigne une opération une fois, compare les 4 véhicules de financement (associé, obligataire, banque + apport, crowdfunding), et simule ton retour perso avec la flat tax. Outil de comparaison — pas un outil de décision juridique ou fiscale.</p>
+
+    <div style="margin:-8px 0 22px;">
+      <button class="action" onclick="openHistorique()">📁 Historique des simulations</button>
+    </div>
+
+    <div id="histModal" style="display:none;position:fixed;inset:0;background:rgba(20,15,5,.45);z-index:60;align-items:flex-start;justify-content:center;overflow:auto;padding:40px 16px;">
+      <div style="background:var(--card);border-radius:14px;max-width:900px;width:100%;padding:28px 26px;position:relative;box-shadow:0 20px 60px rgba(0,0,0,.2);">
+        <button onclick="closeHistorique()" style="position:absolute;top:14px;right:16px;background:none;border:none;font-size:1.4rem;cursor:pointer;color:var(--ink-soft);line-height:1;">×</button>
+        <h2 style="margin:0 0 4px;">Historique des simulations</h2>
+        <p class="card-sub">Clique une carte pour recharger cette simulation dans le formulaire.</p>
+        <div id="histGrid" class="hist-grid"></div>
+        <div id="histEmpty" class="empty-hint" style="display:none;">Chargement…</div>
+      </div>
+    </div>
 
     <div class="card">
       <h2>1 · L'opération</h2>
@@ -285,6 +307,8 @@
 
     <div class="btnrow">
       <button class="action primary" onclick="exportPdf()">Exporter en PDF</button>
+      <button class="action" id="btnShare" onclick="sharePdf()">Partager (WhatsApp, Mail…)</button>
+      <button class="action" onclick="saveHistorique()">💾 Enregistrer cette simulation</button>
       <button class="action" onclick="resetAll()">Réinitialiser</button>
     </div>
 
@@ -347,6 +371,11 @@ const DEFAULTS = {
 };
 const FLAT_TAX = 0.314;
 let persoMode = 'cash';
+let _bestVehicleName = '';
+let _histList = [];
+
+// ⚠️ À remplir après déploiement du script Apps Script (voir Code.gs fourni séparément) :
+var APPS_SCRIPT_URL = 'COLLER_ICI_URL_APPS_SCRIPT';
 
 // ---------- Compute ----------
 function compute(){
@@ -433,6 +462,7 @@ function compute(){
     {name:'Crowdfunding', cout:cfCout, reste:cfReste, rendement:'~'+pct(cfRendementApprox,0)}
   ];
   var best = vehicles.reduce(function(a,b){ return b.reste>a.reste?b:a; });
+  _bestVehicleName = best.name;
   var rows = vehicles.map(function(v){
     var cls = v===best ? ' class="best"' : '';
     return '<tr'+cls+'><td>'+v.name+'</td><td class="num">'+eur(v.cout)+'</td><td class="num gold">'+eur(v.reste)+'</td><td class="num">'+v.rendement+'</td></tr>';
@@ -520,6 +550,155 @@ function exportPdf(){
     html2canvas: { scale: 2, backgroundColor: '#f7f1e4' },
     jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
   }).from(el).save();
+}
+
+// ---------- Partage (WhatsApp, Mail…) via l'API de partage native ----------
+async function sharePdf(){
+  var btn = document.getElementById('btnShare');
+  var orig = btn.textContent;
+  btn.textContent = 'Génération du PDF…';
+  btn.disabled = true;
+  try{
+    var el = document.querySelector('.wrap');
+    var opt = {
+      margin: 10,
+      image: { type: 'jpeg', quality: 0.92 },
+      html2canvas: { scale: 2, backgroundColor: '#f7f1e4' },
+      jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+    };
+    var blob = await html2pdf().set(opt).from(el).outputPdf('blob');
+    var filename = 'deka-simulateur-levee-' + new Date().toISOString().slice(0,10) + '.pdf';
+    var file = new File([blob], filename, {type:'application/pdf'});
+    if(navigator.canShare && navigator.canShare({files:[file]})){
+      await navigator.share({ files:[file], title:'Simulateur de levée DEKA', text:'Simulation de financement — DEKA Partners' });
+    } else {
+      var link = document.createElement('a');
+      link.href = URL.createObjectURL(blob);
+      link.download = filename;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      alert("Le partage direct n'est pas disponible sur cet appareil ou ce navigateur : le PDF a été téléchargé, il ne reste qu'à l'attacher manuellement dans WhatsApp ou Mail.");
+    }
+  } catch(err){
+    if(!(err && err.name === 'AbortError')){
+      console.error('Erreur de partage PDF :', err);
+      alert("Impossible de générer le PDF pour le partage. Réessaie, ou utilise « Exporter en PDF ».");
+    }
+  } finally {
+    btn.textContent = orig;
+    btn.disabled = false;
+  }
+}
+
+// ---------- Historique en ligne (Apps Script + Google Sheet) ----------
+function escapeHtml(s){
+  return String(s==null?'':s).replace(/[&<>"']/g, function(c){
+    return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];
+  });
+}
+
+function openHistorique(){
+  document.getElementById('histModal').style.display = 'flex';
+  loadHistoriqueList();
+}
+function closeHistorique(){
+  document.getElementById('histModal').style.display = 'none';
+}
+
+function loadHistoriqueList(){
+  var grid = document.getElementById('histGrid');
+  var empty = document.getElementById('histEmpty');
+  grid.innerHTML = '';
+  if(APPS_SCRIPT_URL.indexOf('COLLER_ICI') !== -1){
+    empty.style.display = 'block';
+    empty.textContent = "Backend non configuré : l'historique sera actif une fois le script déployé.";
+    return;
+  }
+  empty.style.display = 'block';
+  empty.textContent = 'Chargement…';
+  var script = document.createElement('script');
+  script.src = APPS_SCRIPT_URL + '?action=list&callback=onHistoriqueLoaded';
+  script.onerror = function(){
+    empty.textContent = "Impossible de charger l'historique (vérifie l'URL du backend).";
+  };
+  document.body.appendChild(script);
+}
+
+function onHistoriqueLoaded(list){
+  _histList = list || [];
+  var grid = document.getElementById('histGrid');
+  var empty = document.getElementById('histEmpty');
+  grid.innerHTML = '';
+  if(!_histList.length){
+    empty.style.display = 'block';
+    empty.textContent = 'Aucune simulation enregistrée pour l\'instant.';
+    return;
+  }
+  empty.style.display = 'none';
+  _histList.forEach(function(item, i){
+    var dateStr = '';
+    try{ dateStr = new Date(item.date).toLocaleDateString('fr-FR', {day:'2-digit',month:'short',year:'numeric'}); }catch(e){}
+    var div = document.createElement('div');
+    div.className = 'hist-card';
+    div.innerHTML = '<div class="hist-name">' + escapeHtml(item.nom) + '</div>'
+      + '<div class="hist-date">' + dateStr + '</div>'
+      + '<div class="hist-line">Véhicule conseillé : <b>' + escapeHtml(item.vehicule) + '</b></div>'
+      + '<div class="hist-line">ROI ' + escapeHtml(item.roi) + ' · À financer ' + escapeHtml(item.aFinancer) + '</div>';
+    div.addEventListener('click', function(){ applyHistorique(i); });
+    grid.appendChild(div);
+  });
+}
+
+function applyHistorique(i){
+  var item = _histList[i];
+  if(!item || !item.data) return;
+  var data = item.data;
+  Object.keys(DEFAULTS).forEach(function(id){
+    if(data[id] !== undefined) document.getElementById(id).value = data[id];
+  });
+  if(data.persoMode){
+    persoMode = data.persoMode;
+    document.querySelectorAll('#persoModeBar button').forEach(function(b){ b.classList.toggle('active', b.dataset.mode===persoMode); });
+    document.getElementById('persoMontantLbl').textContent = persoMode==='holding' ? "Montant sorti de la holding" : "Capital de départ";
+  }
+  compute();
+  closeHistorique();
+  window.scrollTo({top:0, behavior:'smooth'});
+}
+
+function saveHistorique(){
+  if(APPS_SCRIPT_URL.indexOf('COLLER_ICI') !== -1){
+    alert("Backend non configuré : impossible d'enregistrer pour l'instant.");
+    return;
+  }
+  var nom = prompt('Nom de cette simulation (ex : nom du projet) :', '');
+  if(nom === null) return;
+  nom = nom.trim() || ('Simulation ' + new Date().toLocaleDateString('fr-FR'));
+
+  var state = {};
+  Object.keys(DEFAULTS).forEach(function(id){ state[id] = document.getElementById(id).value; });
+  state.persoMode = persoMode;
+
+  var payload = {
+    nom: nom,
+    vehicule: _bestVehicleName,
+    roi: document.getElementById('outRoi').textContent,
+    marge: document.getElementById('outMarge').textContent,
+    aFinancer: document.getElementById('outFinancer').textContent,
+    data: state
+  };
+
+  fetch(APPS_SCRIPT_URL, {
+    method: 'POST',
+    mode: 'no-cors',
+    headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+    body: JSON.stringify(payload)
+  }).then(function(){
+    alert('Simulation « ' + nom + ' » enregistrée dans l\'historique.');
+  }).catch(function(err){
+    alert('Erreur d\'enregistrement : ' + err.message);
+  });
 }
 
 // ---------- Init ----------
