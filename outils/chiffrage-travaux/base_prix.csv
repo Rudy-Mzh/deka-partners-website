@@ -676,3 +676,78 @@ Electricite,Electricite logement neuf complet (tableau+reseau+prises) au m2,m2,7
 Plomberie,Plomberie neuve complete logement (au m2 habitable),m2,50,80,110,Travaux.com/Usineadesign,Estimation marche - Construction neuve - installation complete fourniture+pose,,0
 Terrassement,Viabilisation raccordement eau/electricite/telecom terrain a batir,forfait,5000,9000,15000,Afedim/Prix-Pose/Celimo,Estimation marche - Construction neuve - hors assainissement collectif si deja en limite de propriete,,0
 Couvreur,Raccord de zinguerie autour d'un conduit de cheminee,u,450,600,850,Estimation marche (extrapole depuis devis reels similaires 600EUR),Estimation marche - libelle exact requis par le code,,0
+Huissier,Constat avant travaux (droit + deplacement),forfait,1115.0,1115.0,1115.0,PIRS SCP ANDILLY 2026,"Devis reel Andilly 17230 hangar+4box, droit 1100 + deplacement 15",,0
+Huissier,Constat apres travaux (droit + deplacement),forfait,1515.0,1515.0,1515.0,PIRS SCP ANDILLY 2026,"Devis reel Andilly, droit 1500 + deplacement 15",,0
+Huissier,Constat affichage permis construire 3 passages (droit + deplacement),forfait,465.0,465.0,465.0,PIRS SCP ANDILLY 2026,"Devis reel Andilly, droit 450 + deplacement 15",,0
+Huissier,Constat etat des lieux avant travaux (tarif preferentiel hangar+box),forfait,386.0,386.0,386.0,HUISALLIANCE V-64962 2026,"Devis reel Andilly 244m2 hangar+4box, forfait 300 + deplacement 86",,0
+Huissier,Constat etat des lieux apres travaux (tarif preferentiel hangar+box),forfait,386.0,386.0,386.0,HUISALLIANCE V-64962 2026,"Devis reel Andilly 244m2 hangar+4box, forfait 300 + deplacement 86",,0
+Huissier,Constat affichage PC 3 passages (deplacement zone eloignee),forfait,356.0,356.0,356.0,HUISALLIANCE V-64962 2026,"Devis reel Andilly, forfait 270 + deplacement 86",,0
+Huissier,"Constat affichage PC 3 passages (declaration prealable, deplacement offert)",forfait,270.0,270.0,270.0,HUISALLIANCE V-61937 2025,Devis reel Niort 27 rue Arsenal,,0
+Huissier,Constat etat des lieux avant travaux 2h (deplacement offert),forfait,460.0,460.0,460.0,HUISALLIANCE V-63331 2026,"Devis reel St Gelais 247m2, forfait base 300 + heure sup 160",,0
+Huissier,"Constat etat des lieux apres travaux 2h, 2 lots (deplacement offert)",forfait,460.0,460.0,460.0,HUISALLIANCE V-63331 2026,"Devis reel St Gelais 2 lots 110+137m2, forfait base 300 + heure sup 160",,0
+Huissier,"Constat affichage PC 3 passages (declaration prealable, deplacement offert)",forfait,270.0,270.0,270.0,HUISALLIANCE V-63331 2026,Devis reel St Gelais,,0
+Huissier,Constat etat des lieux habitation 70m2 sous-sol+exterieurs (2h),forfait,530.13,530.13,530.13,HUISALLIANCE V-59120 2025,"Devis reel Niort 224 av Venise Verte, deplacement 30.13 + forfait base 320 + heure sup 180",,0
+Huissier,Constat affichage PC 3 passages (deplacement zone proche),forfait,300.13,300.13,300.13,HUISALLIANCE V-59119 2025,"Devis reel Niort 224 av Venise Verte, deplacement 30.13 + forfait 270",,0
+Huissier,Constat etat des lieux avant travaux 1h base (deplacement offert),forfait,300.0,300.0,300.0,HUISALLIANCE V-61938 2025,"Devis reel Niort 27 rue Arsenal 126m2 - valeur proche des lignes generiques existantes source HuisAlliance KFM 2026, a reconcilier",,0
+Huissier,Constat etat des lieux apres travaux 1h base (deplacement offert),forfait,300.0,300.0,300.0,HUISALLIANCE V-61939 2025,"Devis reel Niort 27 rue Arsenal 126m2 - fichier duplique, traite une seule fois",,0
+Diagnostiqueur,Diagnostic amiante studio,u,100.0,100.0,100.0,DIAGOME 26DE0300 2026,"Devis reel Niort 274 rue Arsenal, immeuble studios avant 1949",,0
+Diagnostiqueur,Diagnostic termites studio,u,100.0,100.0,100.0,DIAGOME 26DE0300 2026,Devis reel Niort,,0
+Diagnostiqueur,Diagnostic plomb CREP studio,u,100.0,100.0,100.0,DIAGOME 26DE0300 2026,Devis reel Niort,,0
+Diagnostiqueur,Mesurage Loi Carrez maison plus de 50m2,u,66.67,66.67,66.67,DIAGOME 26DE0300 2026,Devis reel Niort - proche de la ligne generique existante Mesurage Loi Carrez (Diagome Niort 2025),,0
+Diagnostiqueur,Etat des risques et pollutions ERP,u,25.0,25.0,25.0,DIAGOME 26DE0300 2026,"Devis reel Niort, tarif catalogue (offert dans ce devis)",,0
+Diagnostiqueur,Diagnostic technique global DTG copropriete 4 lots,forfait,1000.0,1000.0,1000.0,DIAGOME 26DE0300 2026,"Devis reel Niort, immeuble avant 1949, 4 lots type studio",,0
+Diagnostiqueur,Pack diagnostics complet maison avant 1949 (DPE+Elec+Amiante+Plomb+Termites+ERP),forfait,450.0,450.0,450.0,DIAGOME 26DE0307 2026,"Devis reel St Gelais, maison 130m2, remise 10% incluse (tarif catalogue 500 HT)",,0
+Diagnostiqueur,Pack diagnostics complet maison 1970 (DPE+Elec+Amiante+Termites+ERP),forfait,375.0,375.0,375.0,DIAGOME 26DE0307 2026,"Devis reel St Gelais, maison 120m2, remise 10% incluse (tarif catalogue 416.67 HT)",,0
+Eau,Droit de prise pour compteur diametre 15mm,u,147.9,147.9,147.9,SEDN OPUS HABITAT 2026-21 2026,"Devis reel Niort 27 rue Arsenal, 5 compteurs individualises",,0
+Eau,Frais forfaitaires etudes et dossier prestation ponctuelle,forfait,53.7,53.7,53.7,SEDN OPUS HABITAT 2026-21 2026,Devis reel Niort 27 rue Arsenal,,0
+Syndic,Mise en demeure d'un tiers par LRAR,forfait,30.0,30.0,30.0,LEBLOND IMMOBILIER 27rue arsenal 2026,"Devis reel Niort, prestation litiges/contentieux",,0
+Syndic,Constitution dossier transmis avocat huissier assureur,forfait,250.0,250.0,250.0,LEBLOND IMMOBILIER 27rue arsenal 2026,Devis reel Niort,,0
+Syndic,Constitution et suivi dossier d'emprunt (forfait minimum),forfait,350.0,350.0,350.0,LEBLOND IMMOBILIER 27rue arsenal 2026,Devis reel Niort,,0
+Syndic,Constitution et suivi dossier de subvention (forfait minimum),forfait,350.0,350.0,350.0,LEBLOND IMMOBILIER 27rue arsenal 2026,Devis reel Niort,,0
+Syndic,Immatriculation initiale du syndicat,forfait,300.0,300.0,300.0,LEBLOND IMMOBILIER 27rue arsenal 2026,Devis reel Niort,,0
+Syndic,Relance apres mise en demeure,forfait,20.0,20.0,20.0,LEBLOND IMMOBILIER 27rue arsenal 2026,Devis reel Niort,,0
+Syndic,Conclusion protocole d'accord acte sous seing prive,forfait,125.0,125.0,125.0,LEBLOND IMMOBILIER 27rue arsenal 2026,Devis reel Niort,,0
+Syndic,Frais de constitution d'hypotheque,forfait,125.0,125.0,125.0,LEBLOND IMMOBILIER 27rue arsenal 2026,Devis reel Niort,,0
+Syndic,Frais de mainlevee d'hypotheque,forfait,150.0,150.0,150.0,LEBLOND IMMOBILIER 27rue arsenal 2026,Devis reel Niort,,0
+Syndic,Depot requete en injonction de payer,forfait,150.0,150.0,150.0,LEBLOND IMMOBILIER 27rue arsenal 2026,Devis reel Niort,,0
+Syndic,Constitution dossier transmis auxiliaire de justice,forfait,150.0,150.0,150.0,LEBLOND IMMOBILIER 27rue arsenal 2026,Devis reel Niort,,0
+Syndic,Opposition sur mutation,forfait,125.0,125.0,125.0,LEBLOND IMMOBILIER 27rue arsenal 2026,Devis reel Niort,,0
+Syndic,Delivrance copie carnet d'entretien,forfait,50.0,50.0,50.0,LEBLOND IMMOBILIER 27rue arsenal 2026,Devis reel Niort,,0
+Syndic,Delivrance copie diagnostics techniques,forfait,25.0,25.0,25.0,LEBLOND IMMOBILIER 27rue arsenal 2026,Devis reel Niort,,0
+Syndic,Delivrance informations DPE,forfait,37.5,37.5,37.5,LEBLOND IMMOBILIER 27rue arsenal 2026,Devis reel Niort,,0
+Syndic,Delivrance copie certifiee ou extrait PV AG,forfait,25.0,25.0,25.0,LEBLOND IMMOBILIER 27rue arsenal 2026,Devis reel Niort,,0
+Syndic,Forfait annuel gestion syndic copropriete 4 lots,forfait,1800.0,1800.0,1800.0,CITYA IMMOBILIER 27rue arsenal 2025,"Devis reel Niort, 4 lots, contrat 36 mois, proposition concurrente a LEBLOND IMMOBILIER pour le meme immeuble",,0
+Syndic,Prestation horaire syndic (hors forfait),h,111.0,111.0,111.0,CITYA IMMOBILIER 27rue arsenal 2025,Devis reel Niort,,0
+Syndic,Preparation convocation tenue AG supplementaire 2h,forfait,291.67,291.67,291.67,CITYA IMMOBILIER 27rue arsenal 2025,Devis reel Niort,,0
+Syndic,Mise en demeure d'un tiers par LRAR (litiges),forfait,35.0,35.0,35.0,CITYA IMMOBILIER 27rue arsenal 2025,Devis reel Niort - prestation litiges/contentieux,,0
+Syndic,Constitution dossier transmis avocat huissier assureur,forfait,283.33,283.33,283.33,CITYA IMMOBILIER 27rue arsenal 2025,Devis reel Niort,,0
+Syndic,Constitution et suivi dossier d'emprunt,forfait,1500.0,1500.0,1500.0,CITYA IMMOBILIER 27rue arsenal 2025,"Devis reel Niort, + 2% du montant emprunte",,0
+Syndic,Constitution et suivi dossier de subvention,forfait,1500.0,1500.0,1500.0,CITYA IMMOBILIER 27rue arsenal 2025,"Devis reel Niort, + 2% du montant de la subvention",,0
+Syndic,Immatriculation initiale syndicat (2 a 20 lots),forfait,350.0,350.0,350.0,CITYA IMMOBILIER 27rue arsenal 2025,Devis reel Niort,,0
+Syndic,Mise en demeure coproprietaire par LRAR (recouvrement),forfait,38.0,38.0,38.0,CITYA IMMOBILIER 27rue arsenal 2025,Devis reel Niort - frais imputables au seul coproprietaire,,0
+Syndic,Relance apres mise en demeure,forfait,28.0,28.0,28.0,CITYA IMMOBILIER 27rue arsenal 2025,Devis reel Niort,,0
+Syndic,Conclusion protocole d'accord acte sous seing prive,forfait,141.67,141.67,141.67,CITYA IMMOBILIER 27rue arsenal 2025,Devis reel Niort,,0
+Syndic,Frais de constitution d'hypotheque,forfait,166.67,166.67,166.67,CITYA IMMOBILIER 27rue arsenal 2025,Devis reel Niort,,0
+Syndic,Frais de mainlevee d'hypotheque,forfait,166.67,166.67,166.67,CITYA IMMOBILIER 27rue arsenal 2025,Devis reel Niort,,0
+Syndic,Depot requete en injonction de payer,forfait,166.67,166.67,166.67,CITYA IMMOBILIER 27rue arsenal 2025,Devis reel Niort,,0
+Syndic,Constitution dossier transmis auxiliaire de justice (diligences exceptionnelles),forfait,400.0,400.0,400.0,CITYA IMMOBILIER 27rue arsenal 2025,Devis reel Niort,,0
+Syndic,Etablissement etat date (mutation),forfait,316.66,316.66,316.66,CITYA IMMOBILIER 27rue arsenal 2025,"Devis reel Niort, plafond legal 380 TTC (decret)",,0
+Syndic,Opposition sur mutation,forfait,125.4,125.4,125.4,CITYA IMMOBILIER 27rue arsenal 2025,Devis reel Niort,,0
+Syndic,Delivrance copie carnet d'entretien,forfait,35.0,35.0,35.0,CITYA IMMOBILIER 27rue arsenal 2025,Devis reel Niort,,0
+Syndic,Delivrance copie diagnostics techniques,forfait,35.0,35.0,35.0,CITYA IMMOBILIER 27rue arsenal 2025,Devis reel Niort,,0
+Syndic,Delivrance informations DPE individuel,forfait,58.33,58.33,58.33,CITYA IMMOBILIER 27rue arsenal 2025,Devis reel Niort,,0
+Syndic,Delivrance copie certifiee ou extrait PV AG,forfait,18.0,18.0,18.0,CITYA IMMOBILIER 27rue arsenal 2025,Devis reel Niort,,0
+Maconnerie,Dalle beton poreux ton pierre (variante allee gravillonnee),m2,71.79,71.79,71.79,CHEVALLIER 1638 2026,Devis reel - variante non retenue pour l'allee (remplace grave bleue 0/31.5),,0
+Electricite,Cable R2V 2G16mm2 alimentation tableau (maison),forfait,690.27,690.27,690.27,LAMBA17 I-26-06-8 2026,Devis reel maison (distinct du cable appartement I-26-06-9),,0
+Electricite,VMC hygroreglable + gaines + bouches (maison),forfait,1484.23,1484.23,1484.23,LAMBA17 I-26-06-8 2026,Devis reel maison (distinct de la VMC appartement I-26-06-9),,0
+Electricite,Prise 2P+T 10/16A directe micro-ondes,u,105.82,105.82,105.82,LAMBA17 I-26-06-8 2026,Devis reel,,0
+Electricite,Prise 2P+T 10/16A directe lave-linge,u,105.82,105.82,105.82,LAMBA17 I-26-06-8 2026,Devis reel,,0
+Sanitaire,"Equipement et pose du WC (main d'oeuvre, compris pipe et robinet d'arret)",u,89.3,89.3,89.3,COUTANT 21416 2026,Devis reel,,0
+Electricite,Platine pour disjoncteur seul (fourniture pose),u,58.71,58.71,58.71,COUTANT 21415 2026,Devis reel,,0
+Menuiserie,Pose sol stratifie bois + sous-couche 3mm,m2,42.0,42.0,42.0,EP_RENOV D202507208 2025,"Devis reel, mesure a verifier (mentionne comme telle sur le devis)",,0
+Menuiserie,Fenetre aluminium 2 vantaux 1800x1550mm gamme IDEAL 4000,u,1400.0,1400.0,1400.0,EP_RENOV D202507208 2025,Devis reel,,0
+Plomberie,Nettoyage fin de chantier,forfait,150.0,150.0,150.0,SFTJ 130226 2026,Devis reel,,0
+Dechets,Fluctuation exceptionnelle carburant (par mouvement de benne),u,12.0,12.0,12.0,METAL FER ENVIRONNEMENT DE04260040 2026,"Devis reel, supplement carburant applique a chaque mouvement (depot/rotation/retrait)",,0
+Recyclage,Location journaliere benne 30m3 (par benne),jour,3.0,3.0,3.0,LOCA RECUPER St Gelais 09-04-2026,Devis reel,,0
+Architecture,Releve et chiffrage pour devis renovation (etude prealable),forfait,200.0,200.0,200.0,COUTANT FA43030 2026,Facture reelle - releve et chiffrage prealable aux devis 21415-21416-21417-21418,,0
+Electricite,"Mise en securite electrique (main d'oeuvre/deplacement, 2 maisons)",forfait,300.0,300.0,300.0,GEFFARD_ELEC DEV00000197 2026,"Devis reel - prestation tres sommaire (une seule ligne, perimetre exact des travaux non detaille)",,0
