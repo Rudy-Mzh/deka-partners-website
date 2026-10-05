@@ -676,3 +676,5 @@ Electricite,Electricite logement neuf complet (tableau+reseau+prises) au m2,m2,7
 Plomberie,Plomberie neuve complete logement (au m2 habitable),m2,50,80,110,Travaux.com/Usineadesign,Estimation marche - Construction neuve - installation complete fourniture+pose,,0
 Terrassement,Viabilisation raccordement eau/electricite/telecom terrain a batir,forfait,5000,9000,15000,Afedim/Prix-Pose/Celimo,Estimation marche - Construction neuve - hors assainissement collectif si deja en limite de propriete,,0
 Couvreur,Raccord de zinguerie autour d'un conduit de cheminee,u,450,600,850,Estimation marche (extrapole depuis devis reels similaires 600EUR),Estimation marche - libelle exact requis par le code,,0
+Isolation,Panneau isolant laine minerale 120mm sous doublage (fourniture et pose),m2,25.90,25.90,25.90,PRESTIGE_PEINTURES 1008 2026,Devis reel,,0
+Maconnerie,Dalle beton poreux ton pierre (variante allee grave bleue),m2,71.79,71.79,71.79,CHEVALLIER 1638 2026,Devis reel - variante chiffree de la ligne allee grave bleue,,0
