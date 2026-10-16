@@ -28,6 +28,13 @@
   header.top .sub{font-size:.82rem;color:#b7b0a2;margin-top:4px;letter-spacing:.02em;}
   header.top .badge{font-size:.72rem;background:rgba(232,201,122,.1);border:1px solid rgba(232,201,122,.35);color:#e8c97a;padding:4px 10px;border-radius:20px;}
 
+  #gate{max-width:380px;margin:80px auto;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:28px;box-shadow:0 10px 30px rgba(0,0,0,.1);}
+  #gate h2{margin-top:0;font-size:1.3rem;color:var(--accent);}
+  #gate input{width:100%;padding:10px 12px;border:1px solid var(--line);border-radius:8px;font-size:1rem;margin:10px 0;background:var(--surface);color:var(--ink);}
+  #gate button{width:100%;padding:10px;background:var(--blue);color:#1a1710;border:none;border-radius:8px;font-size:.95rem;font-weight:600;cursor:pointer;font-family:inherit;}
+  #gate button:hover{background:var(--accent);}
+  #gate .err{color:var(--danger);font-size:.85rem;min-height:18px;}
+
   nav.jump{position:sticky;top:0;z-index:30;background:rgba(247,241,228,.96);backdrop-filter:blur(6px);border-bottom:1px solid var(--line);margin-bottom:22px;}
   nav.jump .wrap{display:flex;gap:6px;overflow-x:auto;padding:8px 20px;}
   nav.jump a{flex:none;text-decoration:none;font-size:.76rem;font-weight:600;color:var(--ink-soft);padding:6px 12px;border-radius:16px;border:1px solid transparent;white-space:nowrap;}
@@ -153,7 +160,15 @@
 </head>
 <body>
 
-<div id="app">
+<div id="gate">
+  <h2>Accès outil interne DEKA</h2>
+  <p style="font-size:.85rem;color:var(--ink-soft);">Cette page n'est pas destinée au public. Merci de saisir le code d'accès.</p>
+  <input type="password" id="gateInput" placeholder="Code d'accès" autocomplete="off">
+  <div class="err" id="gateErr"></div>
+  <button onclick="tryUnlock()">Accéder à l'outil</button>
+</div>
+
+<div id="app" style="display:none;">
   <header class="top">
     <div class="wrap">
       <div style="display:flex;align-items:center;gap:16px;">
@@ -450,6 +465,27 @@
 
 <script>
   var APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwlyR6P4PmqqFFSAvQzm7xPxPvSs7qyG8kBqjw4o2IOx1eY3JiijEBr3hS_k5pRrfKw/exec';
+
+  // ---------- Accès (même code que les autres outils internes) ----------
+  const PASSCODE_HASH = "3df851f8a45465e987bc3c7cadf2cfa4a8b94cb35a5606020da376e77b07fe6b";
+  async function sha256hex(str){
+    const enc = new TextEncoder().encode(str);
+    const buf = await crypto.subtle.digest('SHA-256', enc);
+    return Array.from(new Uint8Array(buf)).map(function(b){ return b.toString(16).padStart(2,'0'); }).join('');
+  }
+  async function tryUnlock(){
+    var val = document.getElementById('gateInput').value;
+    var hash = await sha256hex(val);
+    if(hash === PASSCODE_HASH){
+      sessionStorage.setItem('deka_unlocked','1');
+      document.getElementById('gate').style.display = 'none';
+      document.getElementById('app').style.display = 'block';
+      init();
+    } else {
+      document.getElementById('gateErr').textContent = "Code incorrect.";
+    }
+  }
+  document.getElementById('gateInput').addEventListener('keydown', function(e){ if(e.key === 'Enter') tryUnlock(); });
 
   // ---------- Helpers ----------
   function num(id){ return parseFloat(document.getElementById(id).value) || 0; }
@@ -923,7 +959,11 @@
     compute();
     loadProperties();
   }
-  init();
+  if(sessionStorage.getItem('deka_unlocked') === '1'){
+    document.getElementById('gate').style.display = 'none';
+    document.getElementById('app').style.display = 'block';
+    init();
+  }
 </script>
 </body>
 </html>
