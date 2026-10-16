@@ -7,6 +7,7 @@
 <title>DEKA Partners — Aide à la création d'offre</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.12.1/html2pdf.bundle.min.js"></script>
 <style>
   :root{
     --ink:#221c11; --ink-soft:#7c7460; --blue:#b3903f; --blue-dark:#8a6f30;
@@ -16,321 +17,909 @@
     font-family:'Montserrat',-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;
   }
   *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
   body{margin:0;background:var(--bg);color:var(--ink);}
   a{color:var(--blue);}
-  h1,h2{font-family:'Cormorant Garamond',serif;}
-  .wrap{max-width:820px;margin:0 auto;padding:0 20px 80px;}
-  header.top{background:linear-gradient(135deg,#111111,#1c1a16);border-bottom:1px solid var(--line);color:#f2ede2;padding:28px 0;margin-bottom:24px;}
-  header.top .wrap{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;}
+  h1,h2,h3{font-family:'Cormorant Garamond',serif;}
+  .wrap{max-width:980px;margin:0 auto;padding:0 20px 80px;}
+  header.top{background:linear-gradient(135deg,#111111,#1c1a16);border-bottom:1px solid var(--line);color:#f2ede2;padding:28px 0;}
+  header.top .wrap{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;padding-bottom:0;}
   header.top h1{font-size:1.7rem;margin:0;font-weight:600;letter-spacing:.3px;color:#e8c97a;}
   header.top .sub{font-size:.82rem;color:#b7b0a2;margin-top:4px;letter-spacing:.02em;}
   header.top .badge{font-size:.72rem;background:rgba(232,201,122,.1);border:1px solid rgba(232,201,122,.35);color:#e8c97a;padding:4px 10px;border-radius:20px;}
 
-  #gate{max-width:380px;margin:80px auto;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:28px;box-shadow:0 10px 30px rgba(0,0,0,.1);}
-  #gate h2{margin-top:0;font-size:1.3rem;color:var(--accent);}
-  #gate input{width:100%;padding:10px 12px;border:1px solid var(--line);border-radius:8px;font-size:1rem;margin:10px 0;background:var(--surface);color:var(--ink);}
-  #gate button{width:100%;padding:10px;background:var(--blue);color:#1a1710;border:none;border-radius:8px;font-size:.95rem;font-weight:600;cursor:pointer;}
-  #gate button:hover{background:var(--accent);}
-  #gate .err{color:var(--danger);font-size:.85rem;min-height:18px;}
+  nav.jump{position:sticky;top:0;z-index:30;background:rgba(247,241,228,.96);backdrop-filter:blur(6px);border-bottom:1px solid var(--line);margin-bottom:22px;}
+  nav.jump .wrap{display:flex;gap:6px;overflow-x:auto;padding:8px 20px;}
+  nav.jump a{flex:none;text-decoration:none;font-size:.76rem;font-weight:600;color:var(--ink-soft);padding:6px 12px;border-radius:16px;border:1px solid transparent;white-space:nowrap;}
+  nav.jump a:hover{border-color:var(--blue);color:var(--ink);}
+  section[id]{scroll-margin-top:58px;}
 
   .card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:20px 22px;margin-bottom:18px;box-shadow:0 1px 3px rgba(0,0,0,.04);}
-  .card h2{font-size:1.3rem;font-weight:600;margin:0 0 14px;color:var(--accent);display:flex;align-items:center;gap:8px;}
-  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:14px;}
-  label{display:block;font-size:.78rem;color:var(--ink-soft);margin-bottom:4px;font-weight:500;}
+  .card h2{font-size:1.3rem;font-weight:600;margin:0 0 4px;color:var(--accent);}
+  .card .card-sub{font-size:.78rem;color:var(--ink-soft);margin:0 0 14px;line-height:1.5;}
+  .card h3{font-size:1.1rem;color:var(--accent);margin:0 0 4px;}
+  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:14px;}
+  label{display:block;font-size:.72rem;color:var(--ink-soft);margin-bottom:4px;font-weight:600;text-transform:uppercase;letter-spacing:.03em;}
   select, input, textarea{
-    width:100%;padding:10px 12px;border-radius:8px;border:1px solid var(--line);
+    width:100%;padding:10px 11px;border-radius:8px;border:1px solid var(--line);
     background:var(--surface);color:var(--ink);font-size:.95rem;font-family:inherit;
   }
-  textarea{resize:vertical;min-height:110px;}
-  details{margin-top:10px;}
-  summary{color:var(--ink-soft);font-size:.82rem;cursor:pointer;padding:6px 0;}
+  input:focus,select:focus,textarea:focus{outline:2px solid var(--blue);outline-offset:1px;}
+  textarea{resize:vertical;min-height:120px;line-height:1.5;}
+  .field-hint{font-size:.72rem;color:var(--accent);margin-top:5px;}
+  details{margin-top:12px;}
+  summary{color:var(--ink-soft);font-size:.8rem;cursor:pointer;padding:6px 0;}
 
-  .result-key{background:var(--green-bg);border:1px solid var(--green);border-radius:12px;padding:18px;text-align:center;margin-bottom:14px;}
-  .result-key .label{color:var(--ink-soft);font-size:.78rem;letter-spacing:.03em;text-transform:uppercase;}
-  .result-key .value{color:var(--green);font-size:1.9rem;font-weight:700;margin-top:4px;font-family:'Cormorant Garamond',serif;}
-  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:10px;font-size:.85rem;margin-top:10px;}
-  .grid2 div{background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:10px;}
-  .grid2 .l{color:var(--ink-soft);font-size:.7rem;text-transform:uppercase;letter-spacing:.03em;}
-  .grid2 .v{font-weight:600;margin-top:2px;}
-  table.band{width:100%;border-collapse:collapse;font-size:.85rem;margin-top:14px;}
-  table.band td{padding:8px 4px;border-top:1px solid var(--line);}
-  table.band td:last-child{text-align:right;font-weight:600;color:var(--accent);}
+  .result-key{background:var(--green-bg);border:1px solid var(--green);border-radius:12px;padding:18px;text-align:center;margin-bottom:6px;}
+  .result-key .label{color:var(--ink-soft);font-size:.78rem;letter-spacing:.03em;text-transform:uppercase;margin:0;}
+  .result-key .value{color:var(--green);font-size:2rem;font-weight:700;margin-top:4px;font-family:'Cormorant Garamond',serif;}
+  .result-key .value.bad{color:var(--danger);}
+  .result-key .sub{font-size:.8rem;color:var(--ink-soft);margin-top:2px;}
 
+  .kpi-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin-top:14px;}
+  .kpi-row.k3{grid-template-columns:repeat(3,1fr);}
+  .kpi-tile{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:13px 15px;}
+  .kpi-tile .l{color:var(--ink-soft);font-size:.66rem;text-transform:uppercase;letter-spacing:.04em;}
+  .kpi-tile .v{font-family:'Cormorant Garamond',serif;font-weight:700;font-size:1.45rem;margin-top:4px;}
+  .kpi-tile .v.gold{color:var(--accent);}
+  .kpi-tile .v.green{color:var(--green);}
+  .kpi-tile .v.amber{color:var(--amber);}
+  .kpi-tile .sub{font-size:.7rem;color:var(--ink-soft);margin-top:3px;line-height:1.35;}
+
+  .subhead{font-size:.7rem;text-transform:uppercase;letter-spacing:.05em;color:var(--ink-soft);font-weight:700;margin:22px 0 6px;}
+  table.band, table.cmp{width:100%;border-collapse:collapse;font-size:.85rem;}
+  table.band th, table.cmp th{text-align:left;font-size:.66rem;text-transform:uppercase;letter-spacing:.03em;color:var(--ink-soft);padding:8px 6px;border-bottom:1px solid var(--line);font-weight:600;}
+  table.band td, table.cmp td{padding:10px 6px;border-bottom:1px solid var(--line);}
+  table.band th.r, table.band td.num, table.cmp th.r, table.cmp td.num{text-align:right;}
+  table.band td.num, table.cmp td.num{font-weight:600;white-space:nowrap;}
+  table.band tbody tr{cursor:pointer;}
+  table.band tbody tr:hover{background:rgba(179,144,63,.07);}
+  table.band tbody tr.sel{background:rgba(179,144,63,.13);}
+  table.band tbody tr.sel td:first-child{font-weight:700;color:var(--accent);}
+  table.cmp tr.best{background:rgba(47,125,70,.07);}
+  table.cmp tr.best td:first-child{color:var(--green);font-weight:700;}
+  table.cmp td.gold{color:var(--accent);}
+  .scroll-x{overflow-x:auto;}
+
+  .tabs{display:flex;gap:8px;flex-wrap:wrap;margin:20px 0 18px;}
+  .tabs button{border:1px solid var(--line);background:transparent;color:var(--ink-soft);padding:9px 16px;border-radius:20px;font-size:.83rem;font-weight:600;cursor:pointer;white-space:nowrap;font-family:inherit;}
+  .tabs button.active{background:var(--blue);color:#1a1710;border-color:var(--blue);}
+  .toggle2{display:flex;gap:8px;margin-bottom:14px;}
+  .toggle2 button{flex:1;border:1px solid var(--line);background:transparent;color:var(--ink-soft);padding:9px 12px;border-radius:8px;font-size:.82rem;font-weight:600;cursor:pointer;font-family:inherit;}
+  .toggle2 button.active{background:var(--blue);color:#1a1710;border-color:var(--blue);}
+  .panel{display:none;border-top:1px solid var(--line);padding-top:16px;}
+  .panel.active{display:block;}
+
+  .result-line{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;font-size:.85rem;margin-top:16px;}
+  .result-line div.t{background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:11px;}
+  .result-line .l{color:var(--ink-soft);font-size:.66rem;text-transform:uppercase;letter-spacing:.03em;}
+  .result-line .v{font-weight:700;margin-top:3px;font-size:1.05rem;}
+  .result-line .v.gold{color:var(--accent);}
+  .result-line .v.green{color:var(--green);}
+  .result-line .sub{font-size:.7rem;color:var(--ink-soft);margin-top:2px;}
+  .callout{border-radius:10px;padding:13px 16px;font-size:.85rem;line-height:1.55;margin-top:16px;}
+  .callout.good{background:var(--green-bg);border:1px solid var(--green);}
+  .callout.warn{background:var(--amber-bg);border:1px solid var(--amber);}
+  .note{font-size:.72rem;color:var(--ink-soft);margin-top:8px;line-height:1.5;}
+
+  .btnrow{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px;}
   button.action{
     padding:11px 16px;border-radius:8px;border:1px solid var(--line);
-    font-size:.88rem;font-weight:600;cursor:pointer;margin-top:8px;
-    background:var(--surface);color:var(--ink);width:100%;
+    font-size:.88rem;font-weight:600;cursor:pointer;font-family:inherit;
+    background:var(--surface);color:var(--ink);flex:1 1 150px;
   }
   button.action:hover{border-color:var(--blue);}
   button.primary{background:var(--blue);color:#1a1710;border:none;}
   button.primary:hover{background:var(--accent);}
-  button.primary:disabled{opacity:.6;cursor:default;}
+  button:disabled{opacity:.6;cursor:default;}
 
   .toast{
-    position:fixed;bottom:18px;left:18px;right:18px;max-width:780px;margin:0 auto;
+    position:fixed;bottom:18px;left:18px;right:18px;max-width:780px;margin:0 auto;z-index:80;
     background:var(--green);color:#fff;padding:12px;border-radius:10px;
     text-align:center;font-size:.88rem;font-weight:600;display:none;box-shadow:0 10px 30px rgba(0,0,0,.2);
   }
   .toast.error{background:var(--danger);}
-  .note{font-size:.72rem;color:var(--ink-soft);margin-top:6px;}
+
+  footer.legal{border-top:1px solid var(--line);padding-top:20px;margin-top:24px;}
+  footer.legal .links{display:flex;gap:14px;flex-wrap:wrap;margin-bottom:12px;font-size:.8rem;}
+
+  /* ----- Fiche PDF ----- */
+  .recap{width:740px;background:#fff;color:#221c11;font-family:'Montserrat',Arial,sans-serif;font-size:12px;line-height:1.45;}
+  .recap .rh{background:#141210;color:#e8c97a;padding:16px 22px;display:flex;align-items:center;gap:16px;}
+  .recap .rh img{height:44px;}
+  .recap .rh .t{font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:600;}
+  .recap .rh .s{font-size:11px;color:#b7b0a2;}
+  .recap .rb{padding:18px 22px;}
+  .recap h4{font-family:'Cormorant Garamond',serif;font-size:16px;color:#9c7a2e;margin:16px 0 6px;border-bottom:1px solid #e4dac0;padding-bottom:3px;}
+  .recap table{width:100%;border-collapse:collapse;}
+  .recap th{font-size:9px;text-transform:uppercase;color:#7c7460;text-align:left;padding:4px;border-bottom:1px solid #e4dac0;}
+  .recap td{padding:5px 4px;border-bottom:1px solid #efe7d2;}
+  .recap td.r, .recap th.r{text-align:right;}
+  .recap .big{font-family:'Cormorant Garamond',serif;font-size:26px;font-weight:700;color:#2f7d46;}
+  .recap pre{white-space:pre-wrap;font-family:inherit;background:#fbf8f1;border:1px solid #e4dac0;border-radius:6px;padding:8px 10px;margin:0;}
+  .recap .foot{font-size:9px;color:#7c7460;margin-top:14px;}
+
+  @media (max-width:560px){
+    .card{padding:16px 15px;}
+    .result-key .value{font-size:1.7rem;}
+    .kpi-row.k3{grid-template-columns:repeat(2,1fr);}
+    .grid .wide{grid-column:1/-1;}
+    .hide-m{display:none;}
+    table.band td, table.cmp td{padding:9px 4px;font-size:.8rem;}
+    table.band th, table.cmp th{padding:7px 4px;}
+    .kpi-tile .v{font-size:1.3rem;}
+  }
 </style>
 </head>
 <body>
 
-<div id="app" style="display:block;">
+<div id="app">
   <header class="top">
     <div class="wrap">
       <div style="display:flex;align-items:center;gap:16px;">
         <img src="/assets/deka-logo.png" alt="DEKA" style="height:48px;width:auto;">
         <div>
           <h1>Aide à la création d'offre</h1>
-          <div class="sub">DEKA Partners — MDB · descente de prix par la marge</div>
+          <div class="sub">DEKA Partners — MDB · descente de prix par la marge, puis financement de l'opération</div>
         </div>
       </div>
       <div class="badge">Interne</div>
     </div>
   </header>
 
+  <nav class="jump">
+    <div class="wrap">
+      <a href="#sec-bien">1 · Bien</a>
+      <a href="#sec-hyp">2 · Hypothèses</a>
+      <a href="#sec-offre">3 · Offre</a>
+      <a href="#sec-fin">4 · Financement</a>
+      <a href="#sec-arg">5 · Argumentaires</a>
+      <a href="#sec-save">6 · Enregistrer</a>
+    </div>
+  </nav>
+
   <div class="wrap">
 
-    <div class="card">
-      <h2>Bien</h2>
-      <label>Charger un bien déjà visité (optionnel)</label>
+    <!-- 1 · BIEN -->
+    <section id="sec-bien" class="card">
+      <h2>1 · Le bien</h2>
+      <div class="card-sub">Charge un bien déjà visité (depuis le suivi des visites) ou saisis-le à la main.</div>
+      <label>Bien déjà visité (optionnel)</label>
       <select id="propertyPicker"><option value="">— saisie manuelle —</option></select>
       <div class="note" id="loadStatus"></div>
 
       <label style="margin-top:14px;">Adresse</label>
       <input id="adresse" placeholder="12 rue Exemple, 17000 La Rochelle">
-      <div class="grid" style="margin-top:10px;">
-        <div><label>Prix demandé (€)</label><input id="prixAffiche" type="number" value="500000"></div>
-        <div><label>Surface (m²)</label><input id="surface" type="number" value="100"></div>
+      <div class="grid" style="margin-top:12px;">
+        <div><label>Prix demandé (€)</label><input id="prixAffiche" type="number" inputmode="decimal" value="500000"></div>
+        <div><label>Surface (m²)</label><input id="surface" type="number" inputmode="decimal" value="100"></div>
       </div>
-    </div>
+    </section>
 
-    <div class="card">
-      <h2>Sortie &amp; travaux</h2>
+    <!-- 2 · HYPOTHESES -->
+    <section id="sec-hyp" class="card">
+      <h2>2 · Sortie &amp; travaux</h2>
+      <div class="card-sub">Ce que tu vises à la revente et ce que l'opération coûte avant l'achat.</div>
       <div class="grid">
-        <div><label>Revente visée (€/m²)</label><input id="prixM2" type="number" value="5000"></div>
-        <div><label>Budget travaux (€)</label><input id="travaux" type="number" value="75000"></div>
-        <div><label>Portage (mois)</label><input id="duree" type="number" value="6"></div>
-        <div><label>Marge cible brute (%)</label><input id="marge" type="number" value="25"></div>
+        <div><label>Revente visée (€/m²)</label><input id="prixM2" type="number" inputmode="decimal" value="5000"></div>
+        <div><label>Budget travaux (€)</label><input id="travaux" type="number" inputmode="decimal" value="75000"></div>
+        <div><label>Portage (mois)</label><input id="duree" type="number" inputmode="decimal" value="6"></div>
+        <div><label>Marge cible brute (%)</label><input id="marge" type="number" inputmode="decimal" step="0.5" value="25"></div>
       </div>
       <details>
-        <summary>Paramètres financiers avancés</summary>
+        <summary>Paramètres avancés (frais, taux de portage)</summary>
         <div class="grid" style="margin-top:10px;">
-          <div><label>Notaire (%)</label><input id="notaire" type="number" value="3"></div>
-          <div><label>Dossier bancaire (%)</label><input id="dossier" type="number" value="1"></div>
-          <div><label>Garantie (%)</label><input id="garantie" type="number" value="1.5"></div>
-          <div><label>Taux bancaire annuel (%)</label><input id="tauxBanc" type="number" value="7"></div>
+          <div><label>Notaire (%)</label><input id="notaire" type="number" step="0.1" value="3"></div>
+          <div><label>Dossier bancaire (%)</label><input id="dossier" type="number" step="0.1" value="1"></div>
+          <div><label>Garantie (%)</label><input id="garantie" type="number" step="0.1" value="1.5"></div>
+          <div><label>Taux de portage bancaire (%/an)</label><input id="tauxBanc" type="number" step="0.1" value="7"></div>
+          <div><label>Frais divers (€)</label><input id="fraisDivers" type="number" value="5000"></div>
         </div>
-        <label style="margin-top:10px;">Frais divers (€)</label>
-        <input id="fraisDivers" type="number" value="5000">
+        <div class="note">Le calcul d'offre est volontairement prudent : il suppose un portage 100 % bancaire. Commercialisation non incluse (non payée par DEKA), hors calcul de marge.</div>
       </details>
-      <div class="note">Commercialisation non incluse dans le coût (non payée par DEKA), hors calcul de marge.</div>
-    </div>
+    </section>
 
-    <div class="card">
-      <h2>Résultat</h2>
+    <!-- 3 · OFFRE -->
+    <section id="sec-offre" class="card">
+      <h2>3 · Prix d'achat à offrir</h2>
+      <div class="card-sub" id="offreSub">—</div>
       <div class="result-key">
         <div class="label">Prix d'achat MAX</div>
         <div class="value" id="outAchat">—</div>
+        <div class="sub" id="outAchatM2">—</div>
       </div>
-      <div class="grid2">
-        <div><div class="l">Marge brute</div><div class="v" id="outMarge">—</div></div>
-        <div><div class="l">Coût total opération</div><div class="v" id="outCout">—</div></div>
-        <div><div class="l">Écart vs prix demandé</div><div class="v" id="outEcart">—</div></div>
-        <div><div class="l">CA revente (HT)</div><div class="v" id="outCA">—</div></div>
-      </div>
-      <table class="band">
-        <tr><td>Marge 20%</td><td id="band20">—</td></tr>
-        <tr><td>Marge 25%</td><td id="band25">—</td></tr>
-        <tr><td>Marge 30%</td><td id="band30">—</td></tr>
-      </table>
-    </div>
 
-    <div class="card">
-      <h2>Argumentaire court</h2>
+      <div class="kpi-row k3">
+        <div class="kpi-tile"><div class="l">Marge brute</div><div class="v gold" id="outMarge">—</div><div class="sub" id="outMargePct">—</div></div>
+        <div class="kpi-tile"><div class="l">Coût total opération</div><div class="v" id="outCout">—</div><div class="sub" id="outCoutM2">—</div></div>
+        <div class="kpi-tile"><div class="l">Écart vs prix demandé</div><div class="v" id="outEcart">—</div><div class="sub" id="outEcartPct">—</div></div>
+        <div class="kpi-tile"><div class="l">CA revente (HT)</div><div class="v" id="outCA">—</div><div class="sub" id="outCAm2">—</div></div>
+        <div class="kpi-tile"><div class="l">Prix demandé au m²</div><div class="v" id="outDemandeM2">—</div><div class="sub" id="outDemandeVs">—</div></div>
+        <div class="kpi-tile"><div class="l">Marge si achat au prix demandé</div><div class="v" id="outMargeAsk">—</div><div class="sub" id="outMargeAskTag">—</div></div>
+      </div>
+
+      <div class="subhead">Prix selon la marge · touche une ligne pour la prendre comme cible</div>
+      <div class="scroll-x">
+        <table class="band">
+          <thead><tr><th>Marge brute</th><th class="r">Prix d'achat</th><th class="r">€/m²</th><th class="r">vs demandé</th></tr></thead>
+          <tbody id="bandBody"></tbody>
+        </table>
+      </div>
+      <div class="note">20 % = plancher de négociation, 25 % = cible, 30 % = ouverture prudente.</div>
+    </section>
+
+    <!-- 4 · FINANCEMENT -->
+    <section id="sec-fin" class="card">
+      <h2>4 · Financement de l'opération</h2>
+      <div class="card-sub">Repart du prix d'achat choisi ci-dessous, <b>hors coût de financement</b>, puis retire le coût propre à chaque véhicule (associé, obligataire, banque, crowdfunding). Ton calcul d'offre ci-dessus intègre déjà un portage bancaire prudent : ici on compare les façons réelles de lever l'argent.</div>
+
+      <div class="grid">
+        <div class="wide">
+          <label>Prix d'achat simulé</label>
+          <select id="finBase">
+            <option value="offre" selected>Mon offre (prix d'achat max)</option>
+            <option value="asking">Prix demandé par le vendeur</option>
+            <option value="custom">Montant libre…</option>
+          </select>
+          <div class="field-hint" id="finBaseHint">—</div>
+        </div>
+        <div id="finCustomWrap" style="display:none;"><label>Montant libre (€)</label><input id="finCustom" type="number" inputmode="decimal" value="300000"></div>
+        <div><label>ROI cible (%)</label><input id="finRoiCible" type="number" step="0.5" value="20"><div class="field-hint">ROI = marge ÷ coût de revient</div></div>
+      </div>
+
+      <div class="kpi-row">
+        <div class="kpi-tile"><div class="l">Coût de revient</div><div class="v" id="finCout">—</div><div class="sub" id="finCoutDetail">—</div></div>
+        <div class="kpi-tile"><div class="l">Marge avant financement</div><div class="v gold" id="finMarge">—</div><div class="sub" id="finMargePct">—</div></div>
+        <div class="kpi-tile"><div class="l">ROI</div><div class="v" id="finRoi">—</div><div class="sub" id="finRoiTag">—</div></div>
+        <div class="kpi-tile"><div class="l">À financer</div><div class="v" id="finFinancer">—</div><div class="sub">= coût de revient</div></div>
+      </div>
+
+      <div class="tabs" id="tabBar">
+        <button data-tab="cmp" class="active">Comparatif</button>
+        <button data-tab="assoc">Associé (equity)</button>
+        <button data-tab="obl">Obligataire</button>
+        <button data-tab="bq">Banque + apport</button>
+        <button data-tab="cf">Crowdfunding</button>
+        <button data-tab="perso">Perso · flat tax</button>
+      </div>
+
+      <!-- COMPARATIF -->
+      <div class="panel active" id="panel-cmp">
+        <h3>Comparatif · même opération, 4 véhicules</h3>
+        <div class="card-sub">« Coût » = ce que le financement retire à ta marge. Ligne surlignée = ce qui te laisse le plus. Rendement investisseur brut.</div>
+        <div class="scroll-x">
+          <table class="cmp">
+            <thead><tr><th>Véhicule</th><th class="r">Coût du financement</th><th class="r">Reste opérateur</th><th class="r hide-m">Reste / CA</th><th class="r">Rendement investisseur</th></tr></thead>
+            <tbody id="cmpBody"></tbody>
+          </table>
+        </div>
+        <div class="callout good" id="cmpCallout">—</div>
+        <div class="note">Comparatif indicatif calculé à partir des hypothèses saisies dans chaque onglet.</div>
+      </div>
+
+      <!-- ASSOCIÉ -->
+      <div class="panel" id="panel-assoc">
+        <h3>Associé · apport en capital / CCA, partage de marge</h3>
+        <div class="card-sub">Pas d'intérêt obligatoire, risque partagé : si l'opération déborde, l'associé encaisse aussi. Idéal portage long.</div>
+        <div class="grid">
+          <div><label>Part du besoin apportée (%)</label><input id="assPct" type="number" value="100"><div class="field-hint" id="assHint">—</div></div>
+          <div><label>Part de marge pour l'associé (%)</label><input id="assPart" type="number" value="50"></div>
+          <div><label>Intérêts de CCA (option) %/an</label><input id="assCca" type="number" value="0" step="0.1"></div>
+        </div>
+        <div class="result-line">
+          <div class="t"><div class="l">Intérêts CCA prioritaires</div><div class="v" id="assInterets">—</div></div>
+          <div class="t"><div class="l">Solde partagé</div><div class="v" id="assSolde">—</div></div>
+          <div class="t"><div class="l">Gain associé</div><div class="v gold" id="assGainAssocie">—</div><div class="sub" id="assRendement">—</div></div>
+          <div class="t"><div class="l">Gain opérateur</div><div class="v gold" id="assGainOperateur">—</div></div>
+        </div>
+        <div class="callout good" id="assCallout">—</div>
+      </div>
+
+      <!-- OBLIGATAIRE -->
+      <div class="panel" id="panel-obl">
+        <h3>Obligataire · rendement fixe contractuel</h3>
+        <div class="card-sub">Tu paies les intérêts même si l'opération déborde. Non cumulable avec un crédit bancaire. Tickets élevés = moins d'admin.</div>
+        <div class="grid">
+          <div><label>Part du besoin levée (%)</label><input id="oblPct" type="number" value="100"><div class="field-hint" id="oblHint">—</div></div>
+          <div><label>Rendement offert %/an</label><input id="oblRendement" type="number" value="10" step="0.1"></div>
+          <div><label>Ticket d'entrée (€)</label><input id="oblTicket" type="number" value="25000"></div>
+        </div>
+        <div class="result-line">
+          <div class="t"><div class="l">Intérêts à verser</div><div class="v" id="oblInterets">—</div><div class="sub">sur la durée</div></div>
+          <div class="t"><div class="l">Reste opérateur</div><div class="v gold" id="oblReste">—</div><div class="sub">marge − intérêts</div></div>
+          <div class="t"><div class="l">Rendement investisseur</div><div class="v" id="oblRendementBrut">—</div><div class="sub" id="oblRendementNet">—</div></div>
+          <div class="t"><div class="l">Nb d'investisseurs</div><div class="v" id="oblNbInv">—</div><div class="sub">à gérer (KYC)</div></div>
+        </div>
+        <div class="callout warn" id="oblCallout">—</div>
+      </div>
+
+      <!-- BANQUE + APPORT -->
+      <div class="panel" id="panel-bq">
+        <h3>Banque + apport · levier bancaire</h3>
+        <div class="card-sub">Meilleur rendement (levier) mais dur à obtenir sans track record, délais longs, caution personnelle.</div>
+        <div class="grid">
+          <div><label>Apport exigé %</label><input id="bqApportPct" type="number" value="30" step="0.1"></div>
+          <div><label>Taux tout compris %/an</label><input id="bqTaux" type="number" value="8" step="0.1"></div>
+          <div><label>Part de marge de l'apporteur %</label><input id="bqPartApporteur" type="number" value="50" step="0.1"></div>
+        </div>
+        <div class="result-line">
+          <div class="t"><div class="l">Montant emprunté</div><div class="v" id="bqEmprunte">—</div></div>
+          <div class="t"><div class="l">Apport à réunir</div><div class="v" id="bqApportReunir">—</div></div>
+          <div class="t"><div class="l">Coût du crédit</div><div class="v" id="bqCoutCredit">—</div></div>
+          <div class="t"><div class="l">Marge après crédit</div><div class="v" id="bqMargeApres">—</div></div>
+          <div class="t"><div class="l">Gain apporteur</div><div class="v gold" id="bqGainApporteur">—</div><div class="sub" id="bqRendement">—</div></div>
+          <div class="t"><div class="l">Gain opérateur</div><div class="v gold" id="bqGainOperateur">—</div></div>
+        </div>
+        <div class="callout good" id="bqCallout">—</div>
+      </div>
+
+      <!-- CROWDFUNDING -->
+      <div class="panel" id="panel-cf">
+        <h3>Crowdfunding · plateforme</h3>
+        <div class="card-sub">Cher, mais mise en place rapide et forte probabilité de financement. La solution de secours.</div>
+        <div class="grid">
+          <div><label>Part du besoin levée (%)</label><input id="cfPct" type="number" value="100"><div class="field-hint" id="cfHint">—</div></div>
+          <div><label>Coût total (rendement + frais) % du montant</label><input id="cfCoutPct" type="number" value="15" step="0.1"></div>
+        </div>
+        <div class="result-line">
+          <div class="t"><div class="l">Coût du financement</div><div class="v" id="cfCout">—</div><div class="sub">sur le montant levé</div></div>
+          <div class="t"><div class="l">Reste opérateur</div><div class="v gold" id="cfReste">—</div><div class="sub">marge − coût</div></div>
+          <div class="t"><div class="l">Part de marge absorbée</div><div class="v" id="cfPartAbsorbee">—</div></div>
+        </div>
+        <div class="callout warn" id="cfCallout">—</div>
+      </div>
+
+      <!-- PERSO -->
+      <div class="panel" id="panel-perso">
+        <h3>Investir en perso · impact de la flat tax (PFU 31,4 %)</h3>
+        <div class="card-sub">Flat tax = 31,4 % (12,8 % IR + 18,6 % prélèvements sociaux) sur les intérêts, dividendes et plus-values perçus en direct par un particulier. Simulation indépendante de l'opération ci-dessus.</div>
+        <div class="toggle2" id="persoModeBar">
+          <button data-mode="cash" class="active">Cash déjà perso</button>
+          <button data-mode="holding">À sortir d'une holding (−31,4 %)</button>
+        </div>
+        <div class="grid">
+          <div><label id="persoMontantLbl">Capital de départ</label><input id="persoMontant" type="number" value="200000"></div>
+          <div><label>Rendement brut %/an</label><input id="persoRendement" type="number" value="10" step="0.1"></div>
+          <div><label>Durée (mois)</label><input id="persoDuree" type="number" value="18"></div>
+        </div>
+        <div class="result-line">
+          <div class="t"><div class="l">Capital réellement investi</div><div class="v" id="persoCapitalReel">—</div><div class="sub" id="persoHoldingNote"></div></div>
+          <div class="t"><div class="l">Gain brut</div><div class="v" id="persoGainBrut">—</div></div>
+          <div class="t"><div class="l">Flat tax sur le gain</div><div class="v" id="persoFlatTax">—</div><div class="sub">31,4 %</div></div>
+          <div class="t"><div class="l">Net en poche (fin)</div><div class="v green" id="persoNet">—</div><div class="sub" id="persoRendementNet">—</div></div>
+        </div>
+        <div class="callout good" id="persoCallout">—</div>
+      </div>
+    </section>
+
+    <!-- 5 · ARGUMENTAIRES -->
+    <section id="sec-arg" class="card">
+      <h2>5 · Argumentaires</h2>
+      <div class="card-sub">Prêts à envoyer à l'agent ou au vendeur. Ils se mettent à jour avec le prix d'achat et la marge ci-dessus.</div>
+      <div class="toggle2" id="argBar">
+        <button data-arg="court" class="active">Court · SMS / oral</button>
+        <button data-arg="long">Structuré · email agent</button>
+      </div>
       <textarea id="txtCourt" readonly></textarea>
-      <button class="action" onclick="copyText('txtCourt')">Copier le texte court</button>
-    </div>
+      <textarea id="txtLong" readonly style="display:none;min-height:190px;"></textarea>
+      <div class="btnrow"><button class="action" onclick="copyCurrent()">Copier ce texte</button></div>
+    </section>
 
-    <div class="card">
-      <h2>Argumentaire structuré (email agent)</h2>
-      <textarea id="txtLong" readonly style="min-height:170px"></textarea>
-      <button class="action" onclick="copyText('txtLong')">Copier le texte structuré</button>
-    </div>
+    <!-- 6 · ENREGISTRER -->
+    <section id="sec-save" class="card">
+      <h2>6 · Enregistrer &amp; partager</h2>
+      <div class="card-sub">Enregistre l'offre dans le suivi, envoie le mémo, ou sors une fiche PDF à partager (WhatsApp, mail…).</div>
+      <div class="grid">
+        <div class="wide">
+          <label>Destination de l'enregistrement</label>
+          <select id="destination">
+            <option value="both" selected>Sauvegarde Drive + Email</option>
+            <option value="drive">Sauvegarde Drive uniquement</option>
+            <option value="email">Email uniquement</option>
+          </select>
+        </div>
+      </div>
+      <label style="margin-top:14px;">Notes (optionnel)</label>
+      <textarea id="notes" style="min-height:70px;" placeholder="Contexte, interlocuteur, conditions particulières…"></textarea>
+      <label style="display:flex;align-items:center;gap:8px;text-transform:none;font-size:.8rem;margin-top:10px;font-weight:500;">
+        <input type="checkbox" id="joinFin" checked style="width:auto;"> Joindre le récap de financement aux notes
+      </label>
+      <div class="btnrow">
+        <button class="action primary" id="saveBtn" onclick="saveOffer()">Enregistrer l'offre</button>
+        <button class="action" onclick="exportPdf()">Exporter la fiche PDF</button>
+        <button class="action" id="btnShare" onclick="sharePdf()">Partager (WhatsApp, Mail…)</button>
+      </div>
+      <div class="note">Selon la destination choisie, la ligne est ajoutée au suivi sur Google Drive, un mémo est envoyé par email, ou les deux. La confirmation dans l'email (si activé) fait foi.</div>
+    </section>
 
-    <div class="card">
-      <h2>Destination de l'enregistrement</h2>
-      <label>Que souhaites-tu faire avec cette offre ?</label>
-      <select id="destination">
-        <option value="both" selected>Sauvegarde Drive + Email</option>
-        <option value="drive">Sauvegarde Drive uniquement</option>
-        <option value="email">Email uniquement</option>
-      </select>
-    </div>
-
-    <button class="action primary" id="saveBtn" onclick="saveOffer()">Enregistrer l'offre</button>
-    <div class="note">Selon l'option choisie, la ligne est ajoutée au suivi sur Google Drive, un mémo est envoyé par email, ou les deux. La confirmation dans l'email (si activé) fait foi.</div>
+    <footer class="legal">
+      <div class="links">
+        <a href="/outils/simulateur-levee/">Simulateur de levée (complet)</a>
+        <a href="/outils/chiffrage-travaux/">Chiffrage travaux</a>
+        <a href="/">deka-partners.com</a>
+      </div>
+      <div class="note">
+        Aide à la création d'offre — DEKA Partners · Marchand de biens.<br>
+        Simulation pédagogique simplifiée (intérêts non composés, in fine ; flat tax à 31,4 % ; fiscalité société non modélisée). Ce n'est pas un conseil fiscal, juridique ou financier : fais valider par ton expert-comptable, ton avocat et ton notaire avant toute levée réelle.
+      </div>
+    </footer>
   </div>
 </div>
 
 <div class="toast" id="toast"></div>
 
 <script>
-  // ⚠️ À remplir après déploiement du script Apps Script (voir Code.gs) :
   var APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwlyR6P4PmqqFFSAvQzm7xPxPvSs7qyG8kBqjw4o2IOx1eY3JiijEBr3hS_k5pRrfKw/exec';
 
-  // ---------- Calcul ----------
-  function num(id) { return parseFloat(document.getElementById(id).value) || 0; }
-  function eur(n) { return Math.round(n).toLocaleString('fr-FR') + ' €'; }
-  function pct(n) { return (n * 100).toFixed(1) + ' %'; }
+  // ---------- Helpers ----------
+  function num(id){ return parseFloat(document.getElementById(id).value) || 0; }
+  function eur(n){ return Math.round(n).toLocaleString('fr-FR') + ' €'; }
+  function eurNum(n){ return Math.round(n).toLocaleString('fr-FR'); }
+  function pct(n, d){ d = (d===undefined)?1:d; return n.toLocaleString('fr-FR', {minimumFractionDigits:d, maximumFractionDigits:d}) + ' %'; }
+  function set(id, val){ document.getElementById(id).textContent = val; }
+  function mPct(m){ return Math.round(m * 1000) / 10; }
+  function mLabel(m){ var v = mPct(m); return pct(v, v === Math.round(v) ? 0 : 1); }
+  function perM2(n, s){ return s > 0 ? eur(n / s) + '/m²' : '—'; }
+  function escapeHtml(s){
+    return String(s==null?'':s).replace(/[&<>"']/g, function(c){
+      return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];
+    });
+  }
 
-  function compute() {
-    var surface = num('surface');
-    var prixM2 = num('prixM2');
-    var travaux = num('travaux');
-    var duree = num('duree');
-    var fraisDivers = num('fraisDivers');
-    var notaire = num('notaire') / 100;
-    var dossier = num('dossier') / 100;
-    var garantie = num('garantie') / 100;
-    var tauxBanc = num('tauxBanc') / 100;
-    var margeCible = num('marge') / 100;
-    var prixAffiche = num('prixAffiche');
-    var adresse = document.getElementById('adresse').value || '[adresse]';
+  var FLAT_TAX = 0.314;
+  var persoMode = 'cash';
+  var argMode = 'court';
+  var _last = null;       // dernier calcul (pour PDF / notes)
+  var _propList = [];
+
+  // Paramètres mémorisés d'une visite à l'autre (hors données du bien)
+  var PERSIST = ['notaire','dossier','garantie','tauxBanc','fraisDivers','finRoiCible',
+    'assPct','assPart','assCca','oblPct','oblRendement','oblTicket',
+    'bqApportPct','bqTaux','bqPartApporteur','cfPct','cfCoutPct',
+    'persoMontant','persoRendement','persoDuree','destination'];
+
+  // ---------- Calcul ----------
+  function compute(){
+    var surface = num('surface'), prixM2 = num('prixM2'), travaux = num('travaux');
+    var duree = num('duree'), fraisDivers = num('fraisDivers');
+    var notaire = num('notaire')/100, dossier = num('dossier')/100, garantie = num('garantie')/100;
+    var tauxBanc = num('tauxBanc')/100, margeCible = num('marge')/100, prixAffiche = num('prixAffiche');
+    var adresse = document.getElementById('adresse').value.trim() || '[adresse]';
 
     var ca = surface * prixM2;
     var k1 = 1 + notaire + dossier + garantie;
     var k2 = 1 + tauxBanc * duree / 12;
     var fixe = travaux + fraisDivers;
-
-    function achatPour(marge) { return (ca * (1 - marge) - fixe) / (k1 * k2); }
+    function achatPour(m){ return (ca * (1 - m) - fixe) / (k1 * k2); }
+    function coutPour(a){ return a * k1 * k2 + fixe; }
 
     var achatMax = achatPour(margeCible);
-    var coutTotal = achatMax * k1 * k2 + fixe;
+    var feasible = achatMax > 0;
+    var coutTotal = coutPour(achatMax);
     var margeBrute = ca - coutTotal;
     var ecart = prixAffiche - achatMax;
 
-    document.getElementById('outAchat').textContent = eur(achatMax);
-    document.getElementById('outMarge').textContent = eur(margeBrute) + ' (' + pct(margeBrute / ca || 0) + ')';
-    document.getElementById('outCout').textContent = eur(coutTotal);
-    document.getElementById('outEcart').textContent = eur(ecart);
-    document.getElementById('outCA').textContent = eur(ca);
-    document.getElementById('band20').textContent = eur(achatPour(0.20));
-    document.getElementById('band25').textContent = eur(achatPour(0.25));
-    document.getElementById('band30').textContent = eur(achatPour(0.30));
+    // ----- 3 · Offre -----
+    set('offreSub', "Descente de prix : revente visée " + eur(ca) + " − coûts − marge cible de " + pct(margeCible*100) + " (brute, avant IS) = prix d'achat maximum.");
+    var outAchat = document.getElementById('outAchat');
+    outAchat.textContent = feasible ? eur(achatMax) : 'Non réalisable';
+    outAchat.className = 'value' + (feasible ? '' : ' bad');
+    set('outAchatM2', feasible ? perM2(achatMax, surface) + ' · marge cible ' + pct(margeCible*100) : 'Les hypothèses ne laissent aucun prix d\'achat positif à cette marge.');
 
+    set('outMarge', feasible ? eur(margeBrute) : '—');
+    set('outMargePct', feasible ? pct(margeBrute / ca * 100) + ' du CA · portage bancaire inclus' : '—');
+    set('outCout', feasible ? eur(coutTotal) : '—');
+    set('outCoutM2', feasible ? perM2(coutTotal, surface) + ' de revient' : '—');
+    set('outEcart', feasible ? eur(ecart) : '—');
+    var remise = prixAffiche > 0 ? (prixAffiche - achatMax) / prixAffiche : 0;
+    set('outEcartPct', (feasible && prixAffiche > 0) ? (remise >= 0 ? '−' + pct(remise*100, 0) + ' vs demandé' : '+' + pct(-remise*100, 0) + ' au-dessus du demandé') : '—');
+    set('outCA', eur(ca));
+    set('outCAm2', eur(prixM2) + '/m² visés');
+    set('outDemandeM2', surface > 0 ? eur(prixAffiche / surface) : '—');
+    set('outDemandeVs', (surface > 0 && prixM2 > 0) ? pct(prixAffiche / surface / prixM2 * 100, 0) + ' du prix de revente' : '—');
+
+    var margeAsk = ca - coutPour(prixAffiche);
+    var margeAskPct = ca ? margeAsk / ca : 0;
+    var askEl = document.getElementById('outMargeAsk');
+    askEl.textContent = eur(margeAsk);
+    var askTag = document.getElementById('outMargeAskTag');
+    if(margeAskPct >= margeCible){
+      askEl.className = 'v green'; askTag.style.color = 'var(--green)';
+      askTag.textContent = '✓ ' + pct(margeAskPct*100) + ' : le prix demandé passe déjà';
+    } else {
+      askEl.className = 'v amber'; askTag.style.color = 'var(--amber)';
+      askTag.textContent = '⚠ ' + pct(margeAskPct*100) + ' : sous la cible, il faut négocier';
+    }
+
+    // fourchette selon la marge (+ la cible si elle est différente)
+    var margins = [0.20, 0.25, 0.30];
+    if(margins.map(function(m){ return Math.round(m*1000); }).indexOf(Math.round(margeCible*1000)) === -1){
+      margins.push(margeCible); margins.sort(function(a,b){ return a-b; });
+    }
+    var band = margins.map(function(m){
+      var a = achatPour(m);
+      var r = prixAffiche > 0 ? (prixAffiche - a) / prixAffiche : null;
+      return {m:m, achat:a, m2: surface > 0 ? a / surface : null, remise:r, sel: Math.abs(m - margeCible) < 1e-9};
+    });
+    document.getElementById('bandBody').innerHTML = band.map(function(b){
+      var ok = b.achat > 0;
+      var rem = (!ok || b.remise === null) ? '—' : (b.remise >= 0 ? '−' + pct(b.remise*100, 0) : '+' + pct(-b.remise*100, 0));
+      return '<tr data-m="' + mPct(b.m) + '"' + (b.sel ? ' class="sel"' : '') + '>'
+        + '<td>' + mLabel(b.m) + (b.sel ? ' · cible' : '') + '</td>'
+        + '<td class="num">' + (ok ? eur(b.achat) : '—') + '</td>'
+        + '<td class="num">' + ((ok && b.m2 !== null) ? eur(b.m2) : '—') + '</td>'
+        + '<td class="num">' + rem + '</td></tr>';
+    }).join('');
+
+    // ----- 4 · Financement -----
+    var base = document.getElementById('finBase').value;
+    document.getElementById('finCustomWrap').style.display = base === 'custom' ? 'block' : 'none';
+    var achatSim = base === 'asking' ? prixAffiche : base === 'custom' ? num('finCustom') : achatMax;
+    achatSim = Math.max(0, achatSim);
+    set('finBaseHint', '= ' + eur(achatSim) + (surface > 0 ? ' (' + perM2(achatSim, surface) + ')' : ''));
+
+    var fraisEur = achatSim * notaire;
+    var coutRevient = achatSim + fraisEur + travaux + fraisDivers;
+    var margeAvant = ca - coutRevient;
+    var roi = coutRevient ? margeAvant / coutRevient * 100 : 0;
+    var roiCible = num('finRoiCible');
+    var duree12 = duree / 12 || 0;
+
+    set('finCout', eur(coutRevient));
+    set('finCoutDetail', eurNum(achatSim) + ' + ' + eurNum(fraisEur) + ' notaire + ' + eurNum(travaux) + ' travaux + ' + eurNum(fraisDivers) + ' divers');
+    set('finMarge', eur(margeAvant));
+    set('finMargePct', ca ? pct(margeAvant / ca * 100) + ' du CA · avant coût de financement' : '—');
+    set('finRoi', pct(roi));
+    var roiTag = document.getElementById('finRoiTag');
+    if(roi >= roiCible){ roiTag.textContent = '✓ cible atteinte (' + roiCible + ' %)'; roiTag.style.color = 'var(--green)'; }
+    else { roiTag.textContent = '⚠ sous la cible (' + roiCible + ' %)'; roiTag.style.color = 'var(--amber)'; }
+    set('finFinancer', eur(coutRevient));
+
+    // Associé
+    var assApport = coutRevient * num('assPct')/100, assPart = num('assPart')/100, assCca = num('assCca')/100;
+    var assInterets = assApport * assCca * duree12;
+    var assSolde = margeAvant - assInterets;
+    var assGainAssocie = assSolde * assPart + assInterets;
+    var assGainOperateur = assSolde - assSolde * assPart;
+    var assRendement = (assApport && duree12) ? (assGainAssocie / assApport) / duree12 * 100 : 0;
+    set('assHint', '= ' + eur(assApport) + ' apportés');
+    set('assInterets', eur(assInterets));
+    set('assSolde', eur(assSolde));
+    set('assGainAssocie', eur(assGainAssocie));
+    set('assRendement', pct(assRendement) + '/an');
+    set('assGainOperateur', eur(assGainOperateur));
+    set('assCallout', "Répartition " + Math.round(assPart*100) + " / " + Math.round((1-assPart)*100) + " sur le solde de marge. Teste-la avec une marge −30 % pour voir si elle tient.");
+
+    // Obligataire
+    var oblMontant = coutRevient * num('oblPct')/100, oblRend = num('oblRendement')/100, oblTicket = num('oblTicket');
+    var oblInterets = oblMontant * oblRend * duree12;
+    var oblReste = margeAvant - oblInterets;
+    var oblNet = oblRend * (1 - FLAT_TAX) * 100;
+    var oblNbInv = oblTicket ? Math.ceil(oblMontant / oblTicket) : 0;
+    set('oblHint', '= ' + eur(oblMontant) + ' levés');
+    set('oblInterets', eur(oblInterets));
+    set('oblReste', eur(oblReste));
+    set('oblRendementBrut', pct(oblRend*100));
+    set('oblRendementNet', 'net flat tax : ' + pct(oblNet));
+    set('oblNbInv', oblNbInv);
+    set('oblCallout', oblNbInv + " investisseur(s) à gérer seul (pièces, KYC) : monte le ticket d'entrée pour en réduire le nombre.");
+
+    // Banque + apport
+    var bqApportPct = num('bqApportPct')/100, bqTaux = num('bqTaux')/100, bqPartApp = num('bqPartApporteur')/100;
+    var bqEmprunte = coutRevient * (1 - bqApportPct);
+    var bqApportReunir = coutRevient * bqApportPct;
+    var bqCoutCredit = bqEmprunte * bqTaux * duree12;
+    var bqMargeApres = margeAvant - bqCoutCredit;
+    var bqGainApporteur = bqMargeApres * bqPartApp;
+    var bqGainOperateur = bqMargeApres - bqGainApporteur;
+    var bqRendement = (bqApportReunir && duree12) ? (bqGainApporteur / bqApportReunir) / duree12 * 100 : 0;
+    set('bqEmprunte', eur(bqEmprunte));
+    set('bqApportReunir', eur(bqApportReunir));
+    set('bqCoutCredit', eur(bqCoutCredit));
+    set('bqMargeApres', eur(bqMargeApres));
+    set('bqGainApporteur', eur(bqGainApporteur));
+    set('bqRendement', pct(bqRendement) + '/an sur son cash');
+    set('bqGainOperateur', eur(bqGainOperateur));
+    set('bqCallout', "Le levier au travail : l'apporteur fait " + pct(bqRendement) + "/an sur son cash.");
+
+    // Crowdfunding
+    var cfMontant = coutRevient * num('cfPct')/100, cfCoutPct = num('cfCoutPct')/100;
+    var cfCout = cfMontant * cfCoutPct;
+    var cfReste = margeAvant - cfCout;
+    var cfAbsorbe = margeAvant ? cfCout / margeAvant * 100 : 0;
+    set('cfHint', '= ' + eur(cfMontant) + ' levés');
+    set('cfCout', eur(cfCout));
+    set('cfReste', eur(cfReste));
+    set('cfPartAbsorbee', pct(cfAbsorbe));
+    set('cfCallout', "Coûteux mais rapide. Ton coussin de ROI absorbe le prix : " + pct(cfAbsorbe) + " de la marge avant financement.");
+
+    // Comparatif
+    var cfRendApprox = duree12 ? cfCoutPct * 100 * (1 / duree12) : 0;
+    var vehicles = [
+      {name:'Associé (equity)', cout:assGainAssocie, reste:assGainOperateur, rendement:pct(assRendement) + '/an'},
+      {name:'Obligataire', cout:oblInterets, reste:oblReste, rendement:pct(oblRend*100)},
+      {name:'Banque + apport', cout:bqCoutCredit + bqGainApporteur, reste:bqGainOperateur, rendement:pct(bqRendement) + '/an'},
+      {name:'Crowdfunding', cout:cfCout, reste:cfReste, rendement:'~' + pct(cfRendApprox, 0)}
+    ];
+    var best = vehicles.reduce(function(a,b){ return b.reste > a.reste ? b : a; });
+    document.getElementById('cmpBody').innerHTML = vehicles.map(function(v){
+      return '<tr' + (v === best ? ' class="best"' : '') + '><td>' + v.name + '</td>'
+        + '<td class="num">' + eur(v.cout) + '</td><td class="num gold">' + eur(v.reste) + '</td>'
+        + '<td class="num hide-m">' + (ca ? pct(v.reste / ca * 100) : '—') + '</td><td class="num">' + v.rendement + '</td></tr>';
+    }).join('');
+    var cmpCallout = document.getElementById('cmpCallout');
+    if(best.reste < 0){
+      cmpCallout.className = 'callout warn';
+      cmpCallout.textContent = "À ce prix d'achat, aucun véhicule ne te laisse une marge positive : revois le prix d'offre, les travaux ou la revente visée.";
+    } else {
+      cmpCallout.className = 'callout good';
+      cmpCallout.textContent = "Le plus favorable pour toi : " + best.name + " — il te laisse " + eur(best.reste) + (ca ? " (" + pct(best.reste / ca * 100) + " du CA)" : "") + " après financement.";
+    }
+
+    // Perso
+    var pMontant = num('persoMontant'), pRend = num('persoRendement')/100, pDuree = num('persoDuree')/12 || 0;
+    var pCapital = persoMode === 'holding' ? pMontant * (1 - FLAT_TAX) : pMontant;
+    var pGain = pCapital * pRend * pDuree;
+    var pTax = pGain * FLAT_TAX;
+    var pNet = pCapital + pGain - pTax;
+    var pRendNet = (pMontant && pDuree) ? (pGain - pTax) / pMontant / pDuree * 100 : 0;
+    set('persoCapitalReel', eur(pCapital));
+    set('persoHoldingNote', persoMode === 'holding' ? ('−' + eur(pMontant * FLAT_TAX) + ' de flat tax à la sortie') : '');
+    set('persoGainBrut', eur(pGain));
+    set('persoFlatTax', eur(pTax));
+    set('persoNet', eur(pNet));
+    set('persoRendementNet', pct(pRendNet) + '/an net');
+    set('persoCallout', persoMode === 'holding'
+      ? ("Sortir de la holding coûte " + eur(pMontant * FLAT_TAX) + " d'entrée. Souvent plus malin de laisser la société investir en direct (pas de flat tax en amont) — à arbitrer avec ton expert-comptable.")
+      : (pct(pRend*100) + " brut → " + pct(pRendNet) + " net après flat tax. Gain net : " + eur(pGain - pTax) + "."));
+
+    // ----- 5 · Argumentaires -----
+    var offreTxt = feasible ? eur(achatMax) : '[montant à définir]';
     var court = "Bonjour, suite à notre visite du bien " + adresse + ", je vous confirme une offre à "
-      + eur(achatMax) + ", sous condition suspensive de prêt. Budget travaux estimé " + eur(travaux)
+      + offreTxt + ", sous condition suspensive de prêt. Budget travaux estimé " + eur(travaux)
       + ", c'est le prix qui nous permet de rester sur une opération saine. Je reste disponible pour en discuter.";
-
     var long = "Objet : Offre d'achat — " + adresse + "\n"
       + "Statut : Marchand de biens (DEKA), achat en direct\n"
-      + "Offre : " + eur(achatMax) + ", sous condition suspensive de prêt\n"
+      + "Offre : " + offreTxt + ", sous condition suspensive de prêt\n"
       + "Justification : prix de revente visé " + eur(prixM2) + "/m², budget travaux chiffré " + eur(travaux)
-      + ", marge cible " + pct(margeCible) + "\n"
+      + ", marge cible " + pct(margeCible*100) + "\n"
       + "Conditions : signature rapide dès accord de financement, portage estimé " + duree + " mois, "
       + "mandat de revente confié à votre agence en cas d'accord\n"
       + "Validité : 15 jours, relance prévue à 3 et 6 mois en cas de refus";
-
     document.getElementById('txtCourt').value = court;
     document.getElementById('txtLong').value = long;
 
-    return { adresse: adresse, prixAffiche: prixAffiche, prixAchatMax: Math.round(achatMax), margeCible: margeCible };
+    _last = {
+      adresse: adresse, surface: surface, prixAffiche: prixAffiche, prixM2: prixM2, travaux: travaux, duree: duree,
+      margeCible: margeCible, ca: ca, feasible: feasible, achatMax: achatMax, coutTotal: coutTotal, margeBrute: margeBrute,
+      margeAsk: margeAsk, band: band,
+      fin: {baseLabel: base === 'asking' ? 'prix demandé' : base === 'custom' ? 'montant libre' : 'offre', achatSim: achatSim,
+        coutRevient: coutRevient, margeAvant: margeAvant, roi: roi, vehicles: vehicles, best: best},
+      court: court, long: long
+    };
+
+    saveState();
+    return { adresse: adresse, prixAffiche: prixAffiche, prixAchatMax: Math.round(achatMax), margeCible: margeCible, feasible: feasible };
   }
 
-  function copyText(id) {
-    var el = document.getElementById(id);
-    el.select();
-    el.setSelectionRange(0, 99999);
-    navigator.clipboard ? navigator.clipboard.writeText(el.value) : document.execCommand('copy');
+  // ---------- Onglets / bascules ----------
+  document.getElementById('tabBar').addEventListener('click', function(e){
+    var btn = e.target.closest('button[data-tab]'); if(!btn) return;
+    document.querySelectorAll('#tabBar button').forEach(function(b){ b.classList.remove('active'); });
+    btn.classList.add('active');
+    document.querySelectorAll('.panel').forEach(function(p){ p.classList.remove('active'); });
+    document.getElementById('panel-' + btn.dataset.tab).classList.add('active');
+  });
+  document.getElementById('persoModeBar').addEventListener('click', function(e){
+    var btn = e.target.closest('button[data-mode]'); if(!btn) return;
+    persoMode = btn.dataset.mode;
+    syncPersoUi();
+    compute();
+  });
+  function syncPersoUi(){
+    document.querySelectorAll('#persoModeBar button').forEach(function(b){ b.classList.toggle('active', b.dataset.mode === persoMode); });
+    document.getElementById('persoMontantLbl').textContent = persoMode === 'holding' ? 'Montant sorti de la holding' : 'Capital de départ';
+  }
+  document.getElementById('argBar').addEventListener('click', function(e){
+    var btn = e.target.closest('button[data-arg]'); if(!btn) return;
+    argMode = btn.dataset.arg;
+    document.querySelectorAll('#argBar button').forEach(function(b){ b.classList.toggle('active', b.dataset.arg === argMode); });
+    document.getElementById('txtCourt').style.display = argMode === 'court' ? 'block' : 'none';
+    document.getElementById('txtLong').style.display = argMode === 'long' ? 'block' : 'none';
+  });
+  // toucher une ligne de la fourchette = la prendre comme marge cible
+  document.getElementById('bandBody').addEventListener('click', function(e){
+    var tr = e.target.closest('tr[data-m]'); if(!tr) return;
+    document.getElementById('marge').value = parseFloat(tr.dataset.m);
+    compute();
+  });
+
+  // ---------- Mémorisation des paramètres ----------
+  function saveState(){
+    try{
+      var s = {};
+      PERSIST.forEach(function(id){ s[id] = document.getElementById(id).value; });
+      s.persoMode = persoMode;
+      localStorage.setItem('deka_offre_params', JSON.stringify(s));
+    }catch(e){}
+  }
+  function loadState(){
+    try{
+      var raw = localStorage.getItem('deka_offre_params'); if(!raw) return;
+      var s = JSON.parse(raw);
+      PERSIST.forEach(function(id){ if(s[id] !== undefined) document.getElementById(id).value = s[id]; });
+      if(s.persoMode){ persoMode = s.persoMode; syncPersoUi(); }
+    }catch(e){}
+  }
+
+  // ---------- Copier / toasts ----------
+  function copyCurrent(){
+    var el = document.getElementById(argMode === 'court' ? 'txtCourt' : 'txtLong');
+    el.select(); el.setSelectionRange(0, 99999);
+    if(navigator.clipboard){ navigator.clipboard.writeText(el.value); } else { document.execCommand('copy'); }
     showToast('Copié dans le presse-papiers');
   }
-
-  function showToast(msg, isError) {
+  function showToast(msg, isError){
     var t = document.getElementById('toast');
     t.textContent = msg;
     t.className = 'toast' + (isError ? ' error' : '');
     t.style.display = 'block';
-    setTimeout(function() { t.style.display = 'none'; }, 2200);
+    setTimeout(function(){ t.style.display = 'none'; }, 2600);
   }
 
-  // ---------- Sauvegarde (Drive) + email, via l'API Apps Script ----------
-  function saveOffer() {
+  // ---------- Enregistrement (Drive + email) via Apps Script ----------
+  function finNote(){
+    if(!_last) return '';
+    var f = _last.fin;
+    return 'Financement simulé (base : ' + f.baseLabel + ' ' + eur(f.achatSim) + ') : coût de revient ' + eur(f.coutRevient)
+      + ', marge avant financement ' + eur(f.margeAvant) + ', ROI ' + pct(f.roi) + '. Véhicule le plus favorable : '
+      + f.best.name + ' (reste opérateur ' + eur(f.best.reste) + ').';
+  }
+  function saveOffer(){
     var data = compute();
-    data.notes = '';
+    if(!data.feasible){ showToast("Offre non réalisable avec ces hypothèses : rien à enregistrer.", true); return; }
+    var notes = document.getElementById('notes').value.trim();
+    if(document.getElementById('joinFin').checked){ notes = (notes ? notes + '\n' : '') + finNote(); }
+    data.notes = notes;
     data.texteCourt = document.getElementById('txtCourt').value;
     data.texteLong = document.getElementById('txtLong').value;
     data.destination = document.getElementById('destination').value;
+    delete data.feasible;
 
     var btn = document.getElementById('saveBtn');
-    btn.disabled = true;
-    btn.textContent = 'Enregistrement…';
-
+    btn.disabled = true; btn.textContent = 'Enregistrement…';
     // mode 'no-cors' + text/plain : évite le preflight bloqué par Apps Script.
-    // On ne peut pas lire la réponse (limite Apps Script + site externe), donc
-    // confirmation optimiste ici ; la vraie confirmation arrive par email.
+    // La réponse n'est pas lisible depuis un site externe : confirmation optimiste, la vraie confirmation arrive par email.
     fetch(APPS_SCRIPT_URL, {
-      method: 'POST',
-      mode: 'no-cors',
+      method: 'POST', mode: 'no-cors',
       headers: { 'Content-Type': 'text/plain;charset=utf-8' },
       body: JSON.stringify(data)
-    }).then(function() {
-      var msg = data.destination === 'drive' ? "Offre sauvegardée sur Drive"
+    }).then(function(){
+      showToast(data.destination === 'drive' ? "Offre sauvegardée sur Drive"
               : data.destination === 'email' ? "Mémo envoyé par email"
-              : "Sauvegarde Drive + email en cours";
-      showToast(msg);
-    }).catch(function(err) {
+              : "Sauvegarde Drive + email en cours");
+    }).catch(function(err){
       showToast('Erreur réseau : ' + err.message, true);
-    }).finally(function() {
-      btn.disabled = false;
-      btn.textContent = "Enregistrer l'offre";
+    }).finally(function(){
+      btn.disabled = false; btn.textContent = "Enregistrer l'offre";
     });
+  }
+
+  // ---------- Fiche PDF ----------
+  function recapHtml(){
+    var L = _last; if(!L) return '';
+    var F = L.fin;
+    var today = new Date().toLocaleDateString('fr-FR', {day:'2-digit', month:'long', year:'numeric'});
+    var bandRows = L.band.map(function(b){
+      var ok = b.achat > 0;
+      var rem = (!ok || b.remise === null) ? '—' : (b.remise >= 0 ? '−' + pct(b.remise*100, 0) : '+' + pct(-b.remise*100, 0));
+      return '<tr><td>' + mLabel(b.m) + (b.sel ? ' (cible)' : '') + '</td><td class="r">' + (ok ? eur(b.achat) : '—') + '</td><td class="r">'
+        + ((ok && b.m2 !== null) ? eur(b.m2) : '—') + '</td><td class="r">' + rem + '</td></tr>';
+    }).join('');
+    var vRows = F.vehicles.map(function(v){
+      return '<tr><td>' + (v === F.best ? '★ ' : '') + v.name + '</td><td class="r">' + eur(v.cout) + '</td><td class="r">' + eur(v.reste)
+        + '</td><td class="r">' + (L.ca ? pct(v.reste / L.ca * 100) : '—') + '</td><td class="r">' + v.rendement + '</td></tr>';
+    }).join('');
+    return '<div class="recap">'
+      + '<div class="rh"><img src="/assets/deka-logo.png" alt="DEKA"><div><div class="t">Fiche offre</div><div class="s">' + escapeHtml(L.adresse) + ' · ' + today + '</div></div></div>'
+      + '<div class="rb">'
+      + '<h4>Prix d\'achat à offrir</h4>'
+      + '<div class="big">' + (L.feasible ? eur(L.achatMax) : 'Non réalisable') + '</div>'
+      + '<div>' + (L.feasible ? perM2(L.achatMax, L.surface) + ' · marge cible ' + pct(L.margeCible*100) + ' (brute, avant IS) · prix demandé ' + eur(L.prixAffiche) : '') + '</div>'
+      + '<table style="margin-top:8px"><tr><th>Revente visée</th><th>Travaux</th><th>Portage</th><th>CA revente</th><th>Coût total opération</th><th>Marge brute</th></tr>'
+      + '<tr><td>' + eur(L.prixM2) + '/m²</td><td>' + eur(L.travaux) + '</td><td>' + L.duree + ' mois</td><td>' + eur(L.ca) + '</td><td>' + (L.feasible ? eur(L.coutTotal) : '—') + '</td><td>' + (L.feasible ? eur(L.margeBrute) : '—') + '</td></tr></table>'
+      + '<h4>Prix selon la marge</h4>'
+      + '<table><tr><th>Marge brute</th><th class="r">Prix d\'achat</th><th class="r">€/m²</th><th class="r">vs demandé</th></tr>' + bandRows + '</table>'
+      + '<h4>Financement · base ' + escapeHtml(F.baseLabel) + ' ' + eur(F.achatSim) + '</h4>'
+      + '<table><tr><th>Coût de revient</th><th>Marge avant financement</th><th>ROI</th><th>À financer</th></tr>'
+      + '<tr><td>' + eur(F.coutRevient) + '</td><td>' + eur(F.margeAvant) + '</td><td>' + pct(F.roi) + '</td><td>' + eur(F.coutRevient) + '</td></tr></table>'
+      + '<table style="margin-top:8px"><tr><th>Véhicule</th><th class="r">Coût du financement</th><th class="r">Reste opérateur</th><th class="r">Reste / CA</th><th class="r">Rendement investisseur</th></tr>' + vRows + '</table>'
+      + '<h4>Argumentaire court</h4><pre>' + escapeHtml(L.court) + '</pre>'
+      + '<h4>Argumentaire structuré</h4><pre>' + escapeHtml(L.long) + '</pre>'
+      + '<div class="foot">DEKA Partners · Marchand de biens. Simulation pédagogique simplifiée (intérêts non composés, in fine ; flat tax 31,4 % ; fiscalité société non modélisée). Pas un conseil fiscal, juridique ou financier.</div>'
+      + '</div></div>';
+  }
+  function pdfName(){
+    var slug = (_last ? _last.adresse : 'offre').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '').slice(0, 40) || 'offre';
+    return 'deka-offre-' + slug + '-' + new Date().toISOString().slice(0,10) + '.pdf';
+  }
+  function pdfOpts(){
+    return { margin: 8, image: {type:'jpeg', quality:0.95}, html2canvas: {scale:2, backgroundColor:'#ffffff', useCORS:true}, jsPDF: {unit:'mm', format:'a4', orientation:'portrait'} };
+  }
+  function buildRecapEl(){
+    compute();
+    var holder = document.createElement('div');
+    holder.innerHTML = recapHtml();
+    return holder.firstElementChild;
+  }
+  function exportPdf(){
+    if(typeof html2pdf === 'undefined'){ showToast("Le module PDF n'a pas pu se charger (connexion ?). Réessaie.", true); return; }
+    html2pdf().set(Object.assign(pdfOpts(), {filename: pdfName()})).from(buildRecapEl()).save();
+  }
+  async function sharePdf(){
+    if(typeof html2pdf === 'undefined'){ showToast("Le module PDF n'a pas pu se charger (connexion ?). Réessaie.", true); return; }
+    var btn = document.getElementById('btnShare'), orig = btn.textContent;
+    btn.textContent = 'Génération du PDF…'; btn.disabled = true;
+    try{
+      var blob = await html2pdf().set(pdfOpts()).from(buildRecapEl()).outputPdf('blob');
+      var file = new File([blob], pdfName(), {type:'application/pdf'});
+      if(navigator.canShare && navigator.canShare({files:[file]})){
+        await navigator.share({files:[file], title:'Fiche offre DEKA', text:'Fiche offre — DEKA Partners'});
+      } else {
+        var link = document.createElement('a');
+        link.href = URL.createObjectURL(blob); link.download = pdfName();
+        document.body.appendChild(link); link.click(); document.body.removeChild(link);
+        alert("Le partage direct n'est pas disponible sur cet appareil ou ce navigateur : le PDF a été téléchargé, il ne reste qu'à l'attacher manuellement dans WhatsApp ou Mail.");
+      }
+    } catch(err){
+      if(!(err && err.name === 'AbortError')){
+        console.error('Erreur de partage PDF :', err);
+        alert("Impossible de générer le PDF pour le partage. Réessaie, ou utilise « Exporter la fiche PDF ».");
+      }
+    } finally { btn.textContent = orig; btn.disabled = false; }
   }
 
   // ---------- Chargement des biens visités (JSONP) ----------
-  var _propList = [];
-  function onPropertiesLoaded(list) {
-    _propList = list;
+  function onPropertiesLoaded(list){
+    _propList = list || [];
     var picker = document.getElementById('propertyPicker');
-    list.forEach(function(p, i) {
+    _propList.forEach(function(p, i){
       var opt = document.createElement('option');
-      opt.value = i;
-      opt.textContent = p.adresse;
+      opt.value = i; opt.textContent = p.adresse;
       picker.appendChild(opt);
     });
-    document.getElementById('loadStatus').textContent = list.length + ' bien(s) chargé(s) depuis le suivi.';
+    document.getElementById('loadStatus').textContent = _propList.length + ' bien(s) chargé(s) depuis le suivi.';
   }
-  function loadProperties() {
-    if (APPS_SCRIPT_URL.indexOf('COLLER_ICI') !== -1) {
+  function loadProperties(){
+    if(APPS_SCRIPT_URL.indexOf('COLLER_ICI') !== -1){
       document.getElementById('loadStatus').textContent = "Backend non configuré : saisie manuelle uniquement.";
       return;
     }
     var script = document.createElement('script');
     script.src = APPS_SCRIPT_URL + '?action=properties&callback=onPropertiesLoaded';
-    script.onerror = function() {
+    script.onerror = function(){
       document.getElementById('loadStatus').textContent = "Impossible de charger la liste des biens (vérifie l'URL du backend).";
     };
     document.body.appendChild(script);
   }
-
-  document.getElementById('propertyPicker').addEventListener('change', function() {
-    if (this.value === '') return;
+  document.getElementById('propertyPicker').addEventListener('change', function(){
+    if(this.value === '') return;
     var p = _propList[this.value];
     document.getElementById('adresse').value = p.adresse;
     document.getElementById('prixAffiche').value = p.prixAffiche;
     document.getElementById('surface').value = p.surface;
-    if (p.prixReventeM2) document.getElementById('prixM2').value = p.prixReventeM2;
+    if(p.prixReventeM2) document.getElementById('prixM2').value = p.prixReventeM2;
     document.getElementById('travaux').value = p.budgetTravaux;
     compute();
   });
 
-  document.querySelectorAll('#app input').forEach(function(el) {
-    el.addEventListener('input', compute);
-  });
-
-  function init() {
+  // ---------- Init ----------
+  function init(){
+    loadState();
+    document.querySelectorAll('#app input, #app select, #app textarea').forEach(function(el){
+      el.addEventListener('input', compute);
+      el.addEventListener('change', compute);
+    });
     compute();
     loadProperties();
   }
