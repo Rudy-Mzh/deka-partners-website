@@ -127,6 +127,14 @@
   }
   .toast.error{background:var(--danger);}
 
+  .hist-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:12px;margin-top:10px;}
+  .hist-card{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:13px;cursor:pointer;}
+  .hist-card:hover{border-color:var(--blue);}
+  .hist-card.off{opacity:.6;cursor:default;}
+  .hist-card .hn{font-weight:700;font-size:.9rem;}
+  .hist-card .hd{font-size:.7rem;color:var(--ink-soft);margin:2px 0 6px;}
+  .hist-card .hl{font-size:.8rem;margin-top:3px;}
+  .hist-card .hl b{color:var(--accent);}
   footer.legal{border-top:1px solid var(--line);padding-top:20px;margin-top:24px;}
   footer.legal .links{display:flex;gap:14px;flex-wrap:wrap;margin-bottom:12px;font-size:.8rem;}
 
@@ -162,7 +170,7 @@
 <script>
 // Contrôle de version : si cette page vient d'une copie en mémoire du navigateur, on recharge la version publiée (une seule fois).
 (function(){
-  window.PAGE_BUILD = '2026-10-16-d';
+  window.PAGE_BUILD = '2026-10-16-e';
   try{
     fetch('/outils/build.json?ts=' + Date.now(), {cache:'no-store'})
       .then(function(r){ return r.json(); })
@@ -219,6 +227,14 @@
       <label>Bien déjà visité (optionnel)</label>
       <select id="propertyPicker"><option value="">— saisie manuelle —</option></select>
       <div class="note" id="loadStatus"></div>
+      <div class="btnrow" style="margin-top:10px;">
+        <button class="action" id="btnHist" onclick="toggleHistory()">📂 Reprendre une offre enregistrée</button>
+      </div>
+      <div id="histPanel" style="display:none;margin-top:14px;">
+        <div class="subhead" style="margin-top:0;">Offres enregistrées · les plus récentes d'abord</div>
+        <div id="histGrid" class="hist-grid"></div>
+        <div class="note" id="histEmpty"></div>
+      </div>
 
       <label style="margin-top:14px;">Adresse</label>
       <input id="adresse" placeholder="12 rue Exemple, 17000 La Rochelle">
@@ -463,7 +479,7 @@
         <button class="action" id="btnShare" onclick="sharePdf()">Partager (WhatsApp, Mail…)</button>
       </div>
       <div class="callout warn" id="saveResult" style="display:none;"></div>
-      <div class="note">« Drive » : la fiche PDF est rangée dans le dossier du bien (sous-dossier « 1. Estimation &amp; chiffrage ») et l'offre est ajoutée au suivi. « Email » : mémo avec la fiche en pièce jointe.</div>
+      <div class="note">« Drive » : la fiche PDF est rangée dans le dossier du bien (sous-dossier « 1. Estimation &amp; chiffrage ») et l'offre est ajoutée au suivi. « Email » : mémo avec la fiche en pièce jointe. Une offre enregistrée avec « Drive » peut être rouverte plus tard avec « Reprendre une offre enregistrée » (section 1).</div>
     </section>
 
     <footer class="legal">
@@ -867,6 +883,7 @@
     var ok = r && r.ok;
     showSaveResult('<b>' + (ok ? '✓ Offre enregistrée' : 'Enregistrement incomplet') + '</b><br>' + lines.join('<br>'), ok ? 'good' : 'warn');
     showToast(ok ? 'Offre enregistrée' : "Enregistrement incomplet : voir le détail sous le bouton", !ok);
+    if(ok && document.getElementById('histPanel').style.display === 'block'){ loadHistory(); }
   }
   function onSaveStatus(res){
     if(res && res.error === 'unauthorized' && _pollId){ clearTimeout(_pollTimer); _pollId = null; denyAccess(); return; }
@@ -900,6 +917,7 @@
     data.texteLong = document.getElementById('txtLong').value;
     data.destination = document.getElementById('destination').value;
     data.revente = num('revente');
+    data.state = collectState();
     data.offerId = Date.now().toString(36) + Math.random().toString(36).slice(2, 8);
     data.key = accessCode();
     delete data.feasible;
@@ -923,6 +941,70 @@
       showToast('Erreur réseau : ' + err.message, true);
     }).finally(function(){
       btn.disabled = false; btn.textContent = "Enregistrer l'offre";
+    });
+  }
+
+  // ---------- Reprise d'une offre enregistrée ----------
+  var STATE_IDS = ['adresse','prixAffiche','surface','revente','surfaceRevente','travaux','duree','marge',
+    'notaire','dossier','garantie','tauxBanc','fraisDivers','finBase','finCustom','finRoiCible',
+    'assPct','assPart','assCca','oblPct','oblRendement','oblTicket','bqApportPct','bqTaux','bqPartApporteur',
+    'cfPct','cfCoutPct','persoMontant','persoRendement','persoDuree','notes'];
+  function collectState(){
+    var st = {v: 1};
+    STATE_IDS.forEach(function(id){ st[id] = document.getElementById(id).value; });
+    st.persoMode = persoMode; st.argMode = argMode;
+    return st;
+  }
+  function applyState(st){
+    if(!st) return;
+    STATE_IDS.forEach(function(id){ if(st[id] !== undefined) document.getElementById(id).value = st[id]; });
+    if(st.persoMode){ persoMode = st.persoMode; syncPersoUi(); }
+    document.getElementById('propertyPicker').value = '';
+    compute();
+  }
+  var _histList = [];
+  function toggleHistory(){
+    var p = document.getElementById('histPanel');
+    if(p.style.display === 'none'){ p.style.display = 'block'; loadHistory(); } else { p.style.display = 'none'; }
+  }
+  function loadHistory(){
+    set('histEmpty', 'Chargement…');
+    document.getElementById('histGrid').innerHTML = '';
+    var sc = document.createElement('script');
+    sc.src = APPS_SCRIPT_URL + '?action=history&key=' + encodeURIComponent(accessCode()) + '&callback=onHistoryLoaded&_=' + Date.now();
+    sc.onerror = function(){ set('histEmpty', "Impossible de charger l'historique (vérifie l'URL du script)."); };
+    document.body.appendChild(sc);
+  }
+  function onHistoryLoaded(list){
+    var grid = document.getElementById('histGrid');
+    grid.innerHTML = '';
+    if(list && list.error === 'unauthorized'){ denyAccess(); return; }
+    if(!Array.isArray(list) || (list.length && list[0].row === undefined)){
+      set('histEmpty', "L'historique n'est pas encore disponible : le script Apps Script doit être mis à jour (nouvelle version à déployer).");
+      return;
+    }
+    _histList = list;
+    if(!list.length){ set('histEmpty', "Aucune offre enregistrée pour l'instant. Les offres enregistrées avec « Drive » apparaissent ici."); return; }
+    set('histEmpty', '');
+    list.forEach(function(it){
+      var d = '';
+      try{ d = new Date(it.date).toLocaleDateString('fr-FR', {day:'2-digit', month:'short', year:'numeric'}); }catch(e){}
+      var div = document.createElement('div');
+      div.className = 'hist-card' + (it.state ? '' : ' off');
+      div.innerHTML = '<div class="hn">' + escapeHtml(it.adresse) + '</div>'
+        + '<div class="hd">' + escapeHtml(d) + (it.statut ? ' · ' + escapeHtml(it.statut) : '') + '</div>'
+        + '<div class="hl">Offre <b>' + eur(it.prixAchatMax) + '</b> · demandé ' + eur(it.prixAffiche) + '</div>'
+        + '<div class="hl">Marge visée ' + pct((it.margeCible || 0) * 100, 0) + '</div>'
+        + (it.pdf ? '<div class="hl">' + safeLink(it.pdf, 'Fiche PDF dans le Drive') + '</div>' : '')
+        + (it.state ? '' : '<div class="hl note">Ancienne offre : le détail n\'a pas été conservé.</div>');
+      div.addEventListener('click', function(e){
+        if(e.target.closest('a') || !it.state) return;
+        applyState(it.state);
+        document.getElementById('histPanel').style.display = 'none';
+        window.scrollTo({top: 0, behavior: 'smooth'});
+        showToast('Offre rechargée : ' + it.adresse);
+      });
+      grid.appendChild(div);
     });
   }
 

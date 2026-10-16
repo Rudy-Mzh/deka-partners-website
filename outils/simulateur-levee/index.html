@@ -134,7 +134,7 @@
 <script>
 // Contrôle de version : si cette page vient d'une copie en mémoire du navigateur, on recharge la version publiée (une seule fois).
 (function(){
-  window.PAGE_BUILD = '2026-10-16-d';
+  window.PAGE_BUILD = '2026-10-16-e';
   try{
     fetch('/outils/build.json?ts=' + Date.now(), {cache:'no-store'})
       .then(function(r){ return r.json(); })
@@ -386,6 +386,7 @@ async function tryUnlock(){
   const hash = await sha256hex(val);
   if(hash === PASSCODE_HASH){
     sessionStorage.setItem('deka_unlocked','1');
+    sessionStorage.setItem('deka_code', val);
     document.getElementById('gate').style.display='none';
     document.getElementById('app').style.display='block';
     init();
@@ -394,7 +395,15 @@ async function tryUnlock(){
   }
 }
 document.getElementById('gateInput').addEventListener('keydown', e=>{ if(e.key==='Enter') tryUnlock(); });
-if(sessionStorage.getItem('deka_unlocked')==='1'){
+function accessCode(){ return sessionStorage.getItem('deka_code') || ''; }
+// le script a refusé le code : retour au portail
+function denyAccess(msg){
+  sessionStorage.removeItem('deka_unlocked'); sessionStorage.removeItem('deka_code');
+  document.getElementById('app').style.display = 'none';
+  document.getElementById('gate').style.display = 'block';
+  document.getElementById('gateErr').textContent = msg || "Code refusé par le serveur : ressaisis le code d'accès.";
+}
+if(sessionStorage.getItem('deka_unlocked')==='1' && accessCode()){
   document.getElementById('gate').style.display='none';
   document.getElementById('app').style.display='block';
   window.addEventListener('DOMContentLoaded', init);
@@ -421,7 +430,7 @@ let _bestVehicleName = '';
 let _histList = [];
 
 // ⚠️ À remplir après déploiement du script Apps Script (voir Code.gs fourni séparément) :
-var APPS_SCRIPT_URL = 'COLLER_ICI_URL_APPS_SCRIPT';
+var APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwlyR6P4PmqqFFSAvQzm7xPxPvSs7qyG8kBqjw4o2IOx1eY3JiijEBr3hS_k5pRrfKw/exec';
 
 // ---------- Compute ----------
 function compute(){
@@ -705,7 +714,7 @@ function loadHistoriqueList(){
   empty.style.display = 'block';
   empty.textContent = 'Chargement…';
   var script = document.createElement('script');
-  script.src = APPS_SCRIPT_URL + '?action=list&callback=onHistoriqueLoaded';
+  script.src = APPS_SCRIPT_URL + '?action=list&key=' + encodeURIComponent(accessCode()) + '&callback=onHistoriqueLoaded&_=' + Date.now();
   script.onerror = function(){
     empty.textContent = "Impossible de charger l'historique (vérifie l'URL du backend).";
   };
@@ -713,7 +722,15 @@ function loadHistoriqueList(){
 }
 
 function onHistoriqueLoaded(list){
-  _histList = list || [];
+  if(list && list.error === 'unauthorized'){ closeHistorique(); denyAccess(); return; }
+  if(!Array.isArray(list) || (list.length && list[0].nom === undefined)){
+    document.getElementById('histGrid').innerHTML = '';
+    var em = document.getElementById('histEmpty');
+    em.style.display = 'block';
+    em.textContent = "L'historique n'est pas encore disponible : le script Apps Script doit être mis à jour (nouvelle version à déployer).";
+    return;
+  }
+  _histList = list;
   var grid = document.getElementById('histGrid');
   var empty = document.getElementById('histEmpty');
   grid.innerHTML = '';
@@ -768,6 +785,9 @@ function saveHistorique(){
   state.persoMode = persoMode;
 
   var payload = {
+    kind: 'simulation',
+    key: accessCode(),
+    offerId: 'sim' + Date.now().toString(36) + Math.random().toString(36).slice(2, 6),
     nom: nom,
     vehicule: _bestVehicleName,
     roi: document.getElementById('outRoi').textContent,
@@ -782,10 +802,32 @@ function saveHistorique(){
     headers: { 'Content-Type': 'text/plain;charset=utf-8' },
     body: JSON.stringify(payload)
   }).then(function(){
-    alert('Simulation « ' + nom + ' » enregistrée dans l\'historique.');
+    pollSimStatus(payload.offerId, nom, 0);
   }).catch(function(err){
     alert('Erreur d\'enregistrement : ' + err.message);
   });
+}
+
+// Accusé de réception : on interroge le script pour savoir si la simulation est bien écrite dans le Drive
+var _simPoll = null, _simTimer = null, _simNom = '';
+function onSimStatus(res){
+  if(res && res.error === 'unauthorized' && _simPoll){ clearTimeout(_simTimer); _simPoll = null; denyAccess(); return; }
+  if(!res || !res.found || res.id !== _simPoll) return;
+  clearTimeout(_simTimer); _simPoll = null;
+  if(res.result && res.result.ok){ alert('Simulation « ' + _simNom + ' » enregistrée dans le Drive (onglet SIMULATIONS) : tu peux la rouvrir via « Historique des simulations ».'); }
+  else { alert("Enregistrement incomplet : " + ((res.result && (res.result.error || JSON.stringify(res.result.steps))) || 'raison inconnue')); }
+}
+function pollSimStatus(id, nom, n){
+  _simPoll = id; _simNom = nom;
+  var sc = document.createElement('script');
+  sc.src = APPS_SCRIPT_URL + '?action=status&id=' + encodeURIComponent(id) + '&key=' + encodeURIComponent(accessCode()) + '&callback=onSimStatus&_=' + Date.now();
+  sc.onload = sc.onerror = function(){ if(sc.parentNode) sc.parentNode.removeChild(sc); };
+  document.body.appendChild(sc);
+  _simTimer = setTimeout(function(){
+    if(_simPoll !== id) return;
+    if(n >= 20){ _simPoll = null; alert("Aucun accusé de réception. Si la simulation n'apparaît pas dans l'historique, le script Apps Script doit être mis à jour (nouvelle version à déployer)."); }
+    else { pollSimStatus(id, nom, n + 1); }
+  }, 1500);
 }
 
 // ---------- Init ----------
