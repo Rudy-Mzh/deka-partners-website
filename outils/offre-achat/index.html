@@ -159,6 +159,23 @@
 </style>
 </head>
 <body>
+<script>
+// Contrôle de version : si cette page vient d'une copie en mémoire du navigateur, on recharge la version publiée (une seule fois).
+(function(){
+  window.PAGE_BUILD = '2026-10-16-d';
+  try{
+    fetch('/outils/build.json?ts=' + Date.now(), {cache:'no-store'})
+      .then(function(r){ return r.json(); })
+      .then(function(j){
+        if(j && j.build && j.build !== window.PAGE_BUILD){
+          var k = 'deka_reload_' + j.build;
+          if(!sessionStorage.getItem(k)){ sessionStorage.setItem(k, '1'); location.replace(location.pathname + '?v=' + encodeURIComponent(j.build)); }
+        }
+      }).catch(function(){});
+  }catch(e){}
+})();
+</script>
+
 
 <div id="gate">
   <h2>Accès outil interne DEKA</h2>
@@ -456,7 +473,7 @@
         <a href="/">deka-partners.com</a>
       </div>
       <div class="note">
-        Aide à la création d'offre — DEKA Partners · Marchand de biens.<br>
+        Aide à la création d'offre — DEKA Partners · Marchand de biens.<br>Version de la page : <span id="buildStamp">—</span><br>
         Simulation pédagogique simplifiée (intérêts non composés, in fine ; flat tax à 31,4 % ; fiscalité société non modélisée). Ce n'est pas un conseil fiscal, juridique ou financier : fais valider par ton expert-comptable, ton avocat et ton notaire avant toute levée réelle.
       </div>
     </footer>
@@ -1046,5 +1063,6 @@
     init();
   }
 </script>
+<script>(function(){var e=document.getElementById('buildStamp'); if(e) e.textContent = window.PAGE_BUILD || '?';})();</script>
 </body>
 </html>
