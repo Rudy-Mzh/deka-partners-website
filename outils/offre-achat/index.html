@@ -214,9 +214,10 @@
     <!-- 2 · HYPOTHESES -->
     <section id="sec-hyp" class="card">
       <h2>2 · Sortie &amp; travaux</h2>
-      <div class="card-sub">Ce que tu vises à la revente et ce que l'opération coûte avant l'achat.</div>
+      <div class="card-sub">Le prix de revente se saisit en euros : il reste juste si tu détaches du terrain ou si tu augmentes la surface habitable.</div>
       <div class="grid">
-        <div><label>Revente visée (€/m²)</label><input id="prixM2" type="number" inputmode="decimal" value="5000"></div>
+        <div><label>Prix de revente visé (€)</label><input id="revente" type="number" inputmode="decimal" value="500000"></div>
+        <div><label>Surface à la revente (m²)</label><input id="surfaceRevente" type="number" inputmode="decimal" placeholder="= surface actuelle"><div class="field-hint">Optionnel, pour le ratio €/m² seulement</div></div>
         <div><label>Budget travaux (€)</label><input id="travaux" type="number" inputmode="decimal" value="75000"></div>
         <div><label>Portage (mois)</label><input id="duree" type="number" inputmode="decimal" value="6"></div>
         <div><label>Marge cible brute (%)</label><input id="marge" type="number" inputmode="decimal" step="0.5" value="25"></div>
@@ -260,7 +261,7 @@
           <tbody id="bandBody"></tbody>
         </table>
       </div>
-      <div class="note">20 % = plancher de négociation, 25 % = cible, 30 % = ouverture prudente.</div>
+      <div class="note">20 % = plancher de négociation, 25 % = cible, 30 % = ouverture prudente. Les €/m² sont calculés sur la surface actuelle du bien, à titre indicatif seulement (terrain détaché, extension…) : le prix en euros fait foi.</div>
     </section>
 
     <!-- 4 · FINANCEMENT -->
@@ -444,7 +445,8 @@
         <button class="action" onclick="exportPdf()">Exporter la fiche PDF</button>
         <button class="action" id="btnShare" onclick="sharePdf()">Partager (WhatsApp, Mail…)</button>
       </div>
-      <div class="note">Selon la destination choisie, la ligne est ajoutée au suivi sur Google Drive, un mémo est envoyé par email, ou les deux. La confirmation dans l'email (si activé) fait foi.</div>
+      <div class="callout warn" id="saveResult" style="display:none;"></div>
+      <div class="note">« Drive » : la fiche PDF est rangée dans le dossier du bien (sous-dossier « 1. Estimation &amp; chiffrage ») et l'offre est ajoutée au suivi. « Email » : mémo avec la fiche en pièce jointe.</div>
     </section>
 
     <footer class="legal">
@@ -478,6 +480,7 @@
     var hash = await sha256hex(val);
     if(hash === PASSCODE_HASH){
       sessionStorage.setItem('deka_unlocked','1');
+      sessionStorage.setItem('deka_code', val);
       document.getElementById('gate').style.display = 'none';
       document.getElementById('app').style.display = 'block';
       init();
@@ -486,6 +489,14 @@
     }
   }
   document.getElementById('gateInput').addEventListener('keydown', function(e){ if(e.key === 'Enter') tryUnlock(); });
+  function accessCode(){ return sessionStorage.getItem('deka_code') || ''; }
+  // le serveur a refusé le code : retour au portail
+  function denyAccess(msg){
+    sessionStorage.removeItem('deka_unlocked'); sessionStorage.removeItem('deka_code');
+    document.getElementById('app').style.display = 'none';
+    document.getElementById('gate').style.display = 'block';
+    document.getElementById('gateErr').textContent = msg || "Code refusé par le serveur : ressaisis le code d'accès.";
+  }
 
   // ---------- Helpers ----------
   function num(id){ return parseFloat(document.getElementById(id).value) || 0; }
@@ -516,13 +527,14 @@
 
   // ---------- Calcul ----------
   function compute(){
-    var surface = num('surface'), prixM2 = num('prixM2'), travaux = num('travaux');
+    var surface = num('surface'), revente = num('revente'), travaux = num('travaux');
+    var surfRev = num('surfaceRevente') || surface;
     var duree = num('duree'), fraisDivers = num('fraisDivers');
     var notaire = num('notaire')/100, dossier = num('dossier')/100, garantie = num('garantie')/100;
     var tauxBanc = num('tauxBanc')/100, margeCible = num('marge')/100, prixAffiche = num('prixAffiche');
     var adresse = document.getElementById('adresse').value.trim() || '[adresse]';
 
-    var ca = surface * prixM2;
+    var ca = revente;
     var k1 = 1 + notaire + dossier + garantie;
     var k2 = 1 + tauxBanc * duree / 12;
     var fixe = travaux + fraisDivers;
@@ -550,9 +562,9 @@
     var remise = prixAffiche > 0 ? (prixAffiche - achatMax) / prixAffiche : 0;
     set('outEcartPct', (feasible && prixAffiche > 0) ? (remise >= 0 ? '−' + pct(remise*100, 0) + ' vs demandé' : '+' + pct(-remise*100, 0) + ' au-dessus du demandé') : '—');
     set('outCA', eur(ca));
-    set('outCAm2', eur(prixM2) + '/m² visés');
+    set('outCAm2', surfRev > 0 ? perM2(ca, surfRev) + (num('surfaceRevente') ? ' à la revente' : ' (surface actuelle)') : '—');
     set('outDemandeM2', surface > 0 ? eur(prixAffiche / surface) : '—');
-    set('outDemandeVs', (surface > 0 && prixM2 > 0) ? pct(prixAffiche / surface / prixM2 * 100, 0) + ' du prix de revente' : '—');
+    set('outDemandeVs', ca > 0 ? pct(prixAffiche / ca * 100, 0) + ' du prix de revente' : '—');
 
     var margeAsk = ca - coutPour(prixAffiche);
     var margeAskPct = ca ? margeAsk / ca : 0;
@@ -717,7 +729,7 @@
     var long = "Objet : Offre d'achat — " + adresse + "\n"
       + "Statut : Marchand de biens (DEKA), achat en direct\n"
       + "Offre : " + offreTxt + ", sous condition suspensive de prêt\n"
-      + "Justification : prix de revente visé " + eur(prixM2) + "/m², budget travaux chiffré " + eur(travaux)
+      + "Justification : prix de revente visé " + eur(revente) + ", budget travaux chiffré " + eur(travaux)
       + ", marge cible " + pct(margeCible*100) + "\n"
       + "Conditions : signature rapide dès accord de financement, portage estimé " + duree + " mois, "
       + "mandat de revente confié à votre agence en cas d'accord\n"
@@ -726,7 +738,7 @@
     document.getElementById('txtLong').value = long;
 
     _last = {
-      adresse: adresse, surface: surface, prixAffiche: prixAffiche, prixM2: prixM2, travaux: travaux, duree: duree,
+      adresse: adresse, surface: surface, prixAffiche: prixAffiche, revente: revente, travaux: travaux, duree: duree,
       margeCible: margeCible, ca: ca, feasible: feasible, achatMax: achatMax, coutTotal: coutTotal, margeBrute: margeBrute,
       margeAsk: margeAsk, band: band,
       fin: {baseLabel: base === 'asking' ? 'prix demandé' : base === 'custom' ? 'montant libre' : 'offre', achatSim: achatSim,
@@ -811,7 +823,57 @@
       + ', marge avant financement ' + eur(f.margeAvant) + ', ROI ' + pct(f.roi) + '. Véhicule le plus favorable : '
       + f.best.name + ' (reste opérateur ' + eur(f.best.reste) + ').';
   }
-  function saveOffer(){
+  var _pollId = null, _pollTimer = null;
+  function showSaveResult(html, cls){
+    var el = document.getElementById('saveResult');
+    el.style.display = 'block';
+    el.className = 'callout ' + (cls || 'warn');
+    el.innerHTML = html;
+  }
+  function safeLink(url, label){
+    return /^https:\/\/(drive|docs)\.google\.com\//.test(url || '') ? '<a href="' + escapeHtml(url) + '" target="_blank" rel="noopener">' + label + '</a>' : '';
+  }
+  function renderSaveResult(r){
+    if(r && r.error === 'unauthorized'){ denyAccess(); return; }
+    var steps = (r && r.steps) || {}, links = (r && r.links) || {}, lines = [];
+    function bad(v){ return String(v || '').indexOf('erreur') === 0; }
+    if(steps.pdf === 'ok'){
+      lines.push('📄 Fiche PDF rangée dans <b>' + escapeHtml(r.dossier) + '</b> — ' + safeLink(links.pdf, 'ouvrir dans le Drive')
+        + (r.dossierExact === false ? '<br><span class="note">Aucun dossier de bien reconnu pour cette adresse : déplace la fiche dans le bon dossier si besoin.</span>' : ''));
+    } else if(bad(steps.pdf)){ lines.push('⚠ Fiche PDF : ' + escapeHtml(steps.pdf)); }
+    else if(steps.pdf === 'non fourni'){ lines.push('⚠ La fiche PDF n\'a pas pu être générée (module PDF indisponible) : le reste est enregistré.'); }
+    if(steps.sheet === 'ok'){ lines.push('📊 Offre ajoutée au suivi — ' + safeLink(links.suivi, 'ouvrir le suivi')); }
+    else if(bad(steps.sheet)){ lines.push('⚠ Suivi : ' + escapeHtml(steps.sheet)); }
+    if(steps.email === 'ok'){ lines.push('✉️ Mémo envoyé par email' + (steps.pdf === 'ok' || steps.pdf === undefined ? ' avec la fiche en pièce jointe.' : '.')); }
+    else if(bad(steps.email)){ lines.push('⚠ Email : ' + escapeHtml(steps.email)); }
+    if(r && r.error){ lines.push('⚠ ' + escapeHtml(r.error)); }
+    var ok = r && r.ok;
+    showSaveResult('<b>' + (ok ? '✓ Offre enregistrée' : 'Enregistrement incomplet') + '</b><br>' + lines.join('<br>'), ok ? 'good' : 'warn');
+    showToast(ok ? 'Offre enregistrée' : "Enregistrement incomplet : voir le détail sous le bouton", !ok);
+  }
+  function onSaveStatus(res){
+    if(res && res.error === 'unauthorized' && _pollId){ clearTimeout(_pollTimer); _pollId = null; denyAccess(); return; }
+    if(!res || !res.found || res.id !== _pollId) return;     // pas encore prêt : le minuteur relancera
+    clearTimeout(_pollTimer); _pollId = null;
+    renderSaveResult(res.result);
+  }
+  function pollStatus(id, n){
+    _pollId = id;
+    var sc = document.createElement('script');
+    sc.src = APPS_SCRIPT_URL + '?action=status&id=' + encodeURIComponent(id) + '&key=' + encodeURIComponent(accessCode()) + '&callback=onSaveStatus&_=' + Date.now();
+    sc.onload = sc.onerror = function(){ if(sc.parentNode) sc.parentNode.removeChild(sc); };
+    document.body.appendChild(sc);
+    _pollTimer = setTimeout(function(){
+      if(_pollId !== id) return;
+      if(n >= 24){
+        _pollId = null;
+        showSaveResult("Aucun accusé de réception reçu. Vérifie ta boîte mail et le Drive. Si rien n'apparaît, le script Apps Script n'est peut-être pas à jour (nouvelle version à déployer).", 'warn');
+        showToast("Pas d'accusé de réception", true);
+      } else { pollStatus(id, n + 1); }
+    }, 1500);
+  }
+
+  async function saveOffer(){
     var data = compute();
     if(!data.feasible){ showToast("Offre non réalisable avec ces hypothèses : rien à enregistrer.", true); return; }
     var notes = document.getElementById('notes').value.trim();
@@ -820,21 +882,27 @@
     data.texteCourt = document.getElementById('txtCourt').value;
     data.texteLong = document.getElementById('txtLong').value;
     data.destination = document.getElementById('destination').value;
+    data.revente = num('revente');
+    data.offerId = Date.now().toString(36) + Math.random().toString(36).slice(2, 8);
+    data.key = accessCode();
     delete data.feasible;
 
     var btn = document.getElementById('saveBtn');
-    btn.disabled = true; btn.textContent = 'Enregistrement…';
-    // mode 'no-cors' + text/plain : évite le preflight bloqué par Apps Script.
-    // La réponse n'est pas lisible depuis un site externe : confirmation optimiste, la vraie confirmation arrive par email.
+    btn.disabled = true; btn.textContent = 'Préparation de la fiche PDF…';
+    showSaveResult('⏳ Génération de la fiche PDF puis envoi…', 'warn');
+    data.pdfBase64 = await pdfBase64();
+    btn.textContent = 'Envoi…';
+    // mode 'no-cors' + text/plain : évite le preflight bloqué par Apps Script. La réponse n'est pas lisible
+    // depuis un site externe : on interroge ensuite le script (action=status) pour obtenir un vrai accusé de réception.
     fetch(APPS_SCRIPT_URL, {
       method: 'POST', mode: 'no-cors',
       headers: { 'Content-Type': 'text/plain;charset=utf-8' },
       body: JSON.stringify(data)
     }).then(function(){
-      showToast(data.destination === 'drive' ? "Offre sauvegardée sur Drive"
-              : data.destination === 'email' ? "Mémo envoyé par email"
-              : "Sauvegarde Drive + email en cours");
+      showSaveResult('⏳ Envoyé, en attente de confirmation du Drive…', 'warn');
+      pollStatus(data.offerId, 0);
     }).catch(function(err){
+      showSaveResult('⚠ Erreur réseau : ' + escapeHtml(err.message), 'warn');
       showToast('Erreur réseau : ' + err.message, true);
     }).finally(function(){
       btn.disabled = false; btn.textContent = "Enregistrer l'offre";
@@ -862,8 +930,8 @@
       + '<h4>Prix d\'achat à offrir</h4>'
       + '<div class="big">' + (L.feasible ? eur(L.achatMax) : 'Non réalisable') + '</div>'
       + '<div>' + (L.feasible ? perM2(L.achatMax, L.surface) + ' · marge cible ' + pct(L.margeCible*100) + ' (brute, avant IS) · prix demandé ' + eur(L.prixAffiche) : '') + '</div>'
-      + '<table style="margin-top:8px"><tr><th>Revente visée</th><th>Travaux</th><th>Portage</th><th>CA revente</th><th>Coût total opération</th><th>Marge brute</th></tr>'
-      + '<tr><td>' + eur(L.prixM2) + '/m²</td><td>' + eur(L.travaux) + '</td><td>' + L.duree + ' mois</td><td>' + eur(L.ca) + '</td><td>' + (L.feasible ? eur(L.coutTotal) : '—') + '</td><td>' + (L.feasible ? eur(L.margeBrute) : '—') + '</td></tr></table>'
+      + '<table style="margin-top:8px"><tr><th>Prix de revente visé</th><th>Travaux</th><th>Portage</th><th>CA revente</th><th>Coût total opération</th><th>Marge brute</th></tr>'
+      + '<tr><td>' + eur(L.revente) + '</td><td>' + eur(L.travaux) + '</td><td>' + L.duree + ' mois</td><td>' + eur(L.ca) + '</td><td>' + (L.feasible ? eur(L.coutTotal) : '—') + '</td><td>' + (L.feasible ? eur(L.margeBrute) : '—') + '</td></tr></table>'
       + '<h4>Prix selon la marge</h4>'
       + '<table><tr><th>Marge brute</th><th class="r">Prix d\'achat</th><th class="r">€/m²</th><th class="r">vs demandé</th></tr>' + bandRows + '</table>'
       + '<h4>Financement · base ' + escapeHtml(F.baseLabel) + ' ' + eur(F.achatSim) + '</h4>'
@@ -879,8 +947,15 @@
     var slug = (_last ? _last.adresse : 'offre').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '').slice(0, 40) || 'offre';
     return 'deka-offre-' + slug + '-' + new Date().toISOString().slice(0,10) + '.pdf';
   }
-  function pdfOpts(){
-    return { margin: 8, image: {type:'jpeg', quality:0.95}, html2canvas: {scale:2, backgroundColor:'#ffffff', useCORS:true}, jsPDF: {unit:'mm', format:'a4', orientation:'portrait'} };
+  function pdfOpts(light){
+    return { margin: 8, image: {type:'jpeg', quality: light ? 0.85 : 0.95}, html2canvas: {scale: light ? 1.5 : 2, backgroundColor:'#ffffff', useCORS:true}, jsPDF: {unit:'mm', format:'a4', orientation:'portrait'} };
+  }
+  async function pdfBase64(){
+    if(typeof html2pdf === 'undefined') return '';
+    try{
+      var uri = await html2pdf().set(pdfOpts(true)).from(buildRecapEl()).outputPdf('datauristring');
+      return String(uri).split(',')[1] || '';
+    }catch(err){ console.error('PDF', err); return ''; }
   }
   function buildRecapEl(){
     compute();
@@ -917,7 +992,12 @@
 
   // ---------- Chargement des biens visités (JSONP) ----------
   function onPropertiesLoaded(list){
-    _propList = list || [];
+    if(list && list.error === 'unauthorized'){ denyAccess(); return; }
+    if(!Array.isArray(list)){
+      document.getElementById('loadStatus').textContent = "Impossible de charger la liste des biens" + (list && list.error ? ' : ' + list.error : '') + '.';
+      return;
+    }
+    _propList = list;
     var picker = document.getElementById('propertyPicker');
     _propList.forEach(function(p, i){
       var opt = document.createElement('option');
@@ -932,7 +1012,7 @@
       return;
     }
     var script = document.createElement('script');
-    script.src = APPS_SCRIPT_URL + '?action=properties&callback=onPropertiesLoaded';
+    script.src = APPS_SCRIPT_URL + '?action=properties&key=' + encodeURIComponent(accessCode()) + '&callback=onPropertiesLoaded';
     script.onerror = function(){
       document.getElementById('loadStatus').textContent = "Impossible de charger la liste des biens (vérifie l'URL du backend).";
     };
@@ -944,7 +1024,8 @@
     document.getElementById('adresse').value = p.adresse;
     document.getElementById('prixAffiche').value = p.prixAffiche;
     document.getElementById('surface').value = p.surface;
-    if(p.prixReventeM2) document.getElementById('prixM2').value = p.prixReventeM2;
+    var rev = p.prixRevente || (p.prixReventeM2 && p.surface ? p.prixReventeM2 * p.surface : 0);
+    if(rev) document.getElementById('revente').value = Math.round(rev);
     document.getElementById('travaux').value = p.budgetTravaux;
     compute();
   });
@@ -959,7 +1040,7 @@
     compute();
     loadProperties();
   }
-  if(sessionStorage.getItem('deka_unlocked') === '1'){
+  if(sessionStorage.getItem('deka_unlocked') === '1' && accessCode()){
     document.getElementById('gate').style.display = 'none';
     document.getElementById('app').style.display = 'block';
     init();
