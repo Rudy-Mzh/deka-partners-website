@@ -89,6 +89,17 @@
   table.cmp td.num{text-align:right;font-weight:600;}
   table.cmp td.num.gold{color:var(--accent);}
   .cmp-note{font-size:.72rem;color:var(--ink-soft);margin-top:10px;}
+  .subhead{font-size:.7rem;text-transform:uppercase;letter-spacing:.05em;color:var(--ink-soft);font-weight:700;margin:24px 0 6px;}
+  table.cmp th.r{text-align:right;}
+  table.cmp.pick tbody tr{cursor:pointer;}
+  table.cmp.pick tbody tr:hover{background:rgba(179,144,63,.07);}
+  table.cmp td.pos{color:var(--green);}
+  table.cmp td.neg{color:var(--amber);}
+  .kpi-row.ratio{margin-top:12px;}
+  table.cmp.pick td.num{white-space:nowrap;}
+  @media (max-width:560px){
+    table.cmp.pick th, table.cmp.pick td{padding:9px 4px;font-size:.78rem;}
+  }
 
   .btnrow{display:flex;gap:10px;flex-wrap:wrap;margin:6px 0 24px;}
   button.action{
@@ -168,6 +179,7 @@
         <div><label>Travaux</label><input id="trv" type="number" value="300000"></div>
         <div><label>Autres coûts</label><input id="autC" type="number" value="60000"></div>
         <div><label>Revente visée (CA)</label><input id="revCA" type="number" value="1200000"></div>
+        <div><label>Surface (m²) · optionnel</label><input id="surf" type="number" step="any" placeholder="pour les ratios €/m²"><div class="field-hint">Sert uniquement aux €/m² ci-dessous</div></div>
         <div><label>Durée de portage (mois)</label><input id="dur" type="number" value="18"></div>
       </div>
       <details>
@@ -179,10 +191,27 @@
 
       <div class="kpi-row">
         <div class="kpi-tile"><div class="l">Coût de revient</div><div class="v" id="outCout">—</div><div class="sub" id="outCoutDetail">—</div></div>
-        <div class="kpi-tile"><div class="l">Marge brute</div><div class="v gold" id="outMarge">—</div></div>
+        <div class="kpi-tile"><div class="l">Marge brute</div><div class="v gold" id="outMarge">—</div><div class="sub" id="outMargePct">—</div></div>
         <div class="kpi-tile"><div class="l">ROI</div><div class="v" id="outRoi">—</div><div class="sub" id="outRoiTag">—</div></div>
         <div class="kpi-tile"><div class="l">À financer</div><div class="v" id="outFinancer">—</div><div class="sub">= coût de revient</div></div>
       </div>
+
+      <div class="kpi-row ratio" id="ratioRow" style="display:none;">
+        <div class="kpi-tile"><div class="l">Achat au m²</div><div class="v" id="rAchat">—</div></div>
+        <div class="kpi-tile"><div class="l">Coût de revient au m²</div><div class="v" id="rCout">—</div></div>
+        <div class="kpi-tile"><div class="l">Revente au m²</div><div class="v" id="rRevente">—</div></div>
+        <div class="kpi-tile"><div class="l">Marge au m²</div><div class="v gold" id="rMarge">—</div></div>
+      </div>
+      <div class="note" id="ratioHint"></div>
+
+      <div class="subhead">Prix d'achat maximum selon l'objectif · touche une ligne pour l'appliquer</div>
+      <div style="overflow-x:auto;">
+        <table class="cmp pick">
+          <thead><tr><th>Objectif</th><th class="r">Prix d'achat max</th><th class="r">€/m²</th><th class="r">vs ton prix</th></tr></thead>
+          <tbody id="margeBody"></tbody>
+        </table>
+      </div>
+      <div class="cmp-note">Calculé avec tes frais, travaux, autres coûts et ta revente visée, avant coût de financement. « vs ton prix » : + = marge de manœuvre, − = prix à négocier. Les €/m² n'apparaissent que si tu renseignes la surface.</div>
     </div>
 
     <div class="tabs" id="tabBar">
@@ -362,7 +391,7 @@ function pct(n, d){ d = (d===undefined)?1:d; return n.toLocaleString('fr-FR', {m
 function set(id, val){ document.getElementById(id).textContent = val; }
 
 const DEFAULTS = {
-  pA:500000, frP:9, trv:300000, autC:60000, revCA:1200000, dur:18, roiCible:20,
+  pA:500000, frP:9, trv:300000, autC:60000, revCA:1200000, surf:'', dur:18, roiCible:20,
   assApport:300000, assPart:50, assCca:0,
   oblMontant:800000, oblRendement:10, oblTicket:25000,
   bqApportPct:30, bqTaux:8, bqPartApporteur:50,
@@ -397,6 +426,39 @@ function compute(){
   if(roi >= roiCible){ roiTag.textContent = '✓ cible atteinte'; roiTag.style.color = 'var(--green)'; }
   else { roiTag.textContent = '⚠ sous la cible (' + roiCible + ' %)'; roiTag.style.color = 'var(--amber)'; }
   set('outFinancer', eur(coutRevient));
+
+  // ---- Infos complémentaires : % du CA, ratios au m², prix d'achat selon l'objectif ----
+  var surf = num('surf');
+  set('outMargePct', revCA ? pct(margeBrute/revCA*100) + ' du CA · avant financement' : '—');
+  var ratioRow = document.getElementById('ratioRow');
+  if(surf > 0){
+    ratioRow.style.display = 'grid';
+    set('rAchat', eur(pA/surf) + '/m²');
+    set('rCout', eur(coutRevient/surf) + '/m²');
+    set('rRevente', eur(revCA/surf) + '/m²');
+    set('rMarge', eur(margeBrute/surf) + '/m²');
+    set('ratioHint', '');
+  } else {
+    ratioRow.style.display = 'none';
+    set('ratioHint', 'Renseigne la surface (m²) pour afficher les ratios au m².');
+  }
+  var fixeSim = trv + autC;
+  var objectifs = [
+    { lbl: 'ROI cible ' + roiCible + ' %', sub: 'soit ' + pct(roiCible/(100+roiCible)*100) + ' de marge sur le CA', cout: revCA/(1+roiCible/100) },
+    { lbl: 'Marge 20 % du CA', cout: revCA*0.80 },
+    { lbl: 'Marge 25 % du CA', cout: revCA*0.75 },
+    { lbl: 'Marge 30 % du CA', cout: revCA*0.70 }
+  ];
+  document.getElementById('margeBody').innerHTML = objectifs.map(function(o){
+    var a = (o.cout - fixeSim)/(1+frP);
+    var ok = a > 0;
+    var diff = a - pA;
+    return '<tr data-p="' + (ok ? Math.round(a) : '') + '">'
+      + '<td>' + o.lbl + (o.sub ? '<div class="field-hint" style="margin:2px 0 0">' + o.sub + '</div>' : '') + '</td>'
+      + '<td class="num">' + (ok ? eur(a) : '—') + '</td>'
+      + '<td class="num">' + ((ok && surf > 0) ? eur(a/surf) : '—') + '</td>'
+      + '<td class="num ' + (ok ? (diff >= 0 ? 'pos' : 'neg') : '') + '">' + (ok ? (diff >= 0 ? '+' : '−') + eur(Math.abs(diff)) : '—') + '</td></tr>';
+  }).join('');
 
   // ASSOCIÉ
   var assApport = num('assApport'), assPart = num('assPart')/100, assCca = num('assCca')/100;
@@ -488,6 +550,14 @@ function compute(){
 
   saveState();
 }
+
+// toucher une ligne du tableau « prix d'achat max » applique ce prix dans le formulaire
+document.getElementById('margeBody').addEventListener('click', function(e){
+  var tr = e.target.closest('tr[data-p]');
+  if(!tr || !tr.dataset.p) return;
+  document.getElementById('pA').value = tr.dataset.p;
+  compute();
+});
 
 // ---------- Tabs ----------
 document.getElementById('tabBar').addEventListener('click', function(e){
