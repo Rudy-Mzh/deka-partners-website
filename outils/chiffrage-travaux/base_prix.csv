@@ -1,4 +1,4 @@
-categorie,designation,unite,prix_bas,prix_moyen,prix_haut,source,notes,groupe_variante,est_defaut
+categorie,designation,unite,prix_bas,prix_moyen,prix_haut,source,notes,groupe_variante,est_defaut,date_devis
 Electricite,Tableau electrique equipe disjoncteur GTL,forfait,1700,1917,2050,LAMBA17 I-26-06-9 2026,Devis reel,,0
 Electricite,Coffret communication RJ45,forfait,300,363,380,LAMBA17 I-26-06-9 2026,Devis reel,,0
 Electricite,Cable R2V 2G16mm2 alimentation tableau,forfait,410.48,410.48,410.48,LAMBA17 I-26-06-9 2026,Devis reel,,0
