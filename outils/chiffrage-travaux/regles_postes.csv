@@ -1,0 +1,162 @@
+corps_metier,poste_generique,unite,motifs,exclure,nb_regex,affichage
+Électricité,Lot électricité complet (forfait projet),u,lot electricite,,,isole
+Plomberie & sanitaire,Lot plomberie complet (forfait projet),u,lot plomberie,,,isole
+Plâtrerie & isolation,Lot second œuvre complet (forfait projet),u,lot second oeuvre,,,isole
+Menuiseries extérieures,Lot dépose + pose menuiseries complet (forfait projet),u,depose totale et pose de,,,isole
+Démolition & dépose,Lot démolition globale (forfait projet),u,cloisons&rangements&cheminee,,,isole
+Électricité,Électricité logement neuf complète (au m²),m2,electricite logement neuf,,,isole
+Plomberie & sanitaire,Plomberie neuve complète logement (au m²),m2,plomberie neuve complete,,,isole
+Électricité,Généralités électriques studio/T1 (au m²),m2,generalites electriques studio,,,principal
+Électricité,Généralités électriques appartement T2-T3 (forfait),u,generalites electriques appartement,,,principal
+Électricité,Généralités électriques maison > 100 m² (forfait),u,generalites electriques maison,,,principal
+Électricité,Remise aux normes tableau (TGBT) + protections différentielles,u,tgbt,,,principal
+Électricité,Tableau électrique (fourniture + pose),u,tableau,liaison|cable|alimentation|generalites|neuf,,principal
+Électricité,Coffret de communication RJ45,u,coffret&communication,,,principal
+Électricité,Gaine technique logement (GTL),u,gaine technique logement,fourreaux,,principal
+Électricité,Mise à la terre — reprise ensemble installation (existant),u,passage terre|passage et mise a la terre,,,principal
+Électricité,Mise à la terre générale immeuble (répartiteur),u,mise a la terre generale,,,principal
+Électricité,Mise à la terre logement (fourniture + pose + vérification),u,mise a la terre,,,principal
+Électricité,Saignées et rebouchage (distribution électrique),u,saignees,,,principal
+Électricité,Point lumineux va-et-vient (y compris spots / DCL),u,va et vient,appareillage|ou telerupteur,,principal
+Électricité,Point lumineux télérupteur / poussoirs,u,telerupteur|interrupteurs poussoirs,va et vient|ou telerupteur,,principal
+Électricité,Point lumineux double allumage,u,double allumage,,,principal
+Électricité,Point lumineux supplémentaire (spot),u,point lumineux supplementaire|points lumineux supplementaires|spot led,,,principal
+Électricité,Point lumineux simple allumage (y compris spot / applique),u,simple allumage|point lumineux simple|eclairage sur,,,principal
+Électricité,Interrupteur à voyant / attente éclairage extérieur,u,interrupteur a voyant,,,principal
+Électricité,Luminaire / hublot / pot de centre (fourniture ou pose),u,hublot|luminaires|pot de centre,,,principal
+Électricité,Prise RJ45 (réseau cat6),u,rj45,coffret|kit|appareillage,,principal
+Électricité,Prise TV coaxiale,u,prise tv|prise television,,,principal
+Électricité,Ligne dédiée plaque de cuisson 32A,u,plaque&32a|plaque cuisson,,,principal
+Électricité,Ligne dédiée électroménager (four / lave-vaisselle / lave-linge),u,ligne dediee electromenager|prise directe|directe four|directe lave|ligne directe|20a directe|prises 20a|prises courant 20a,,^(?:lot )?(\d+) prises,principal
+Électricité,Alimentation ballon / chauffe-eau,u,ballon&alimentation|sortie de cable&chauffe eau,,,principal
+Électricité,Alimentation radiateur / chauffage électrique,u,alimentation&chauffage electrique|alimentation radiateur,,,principal
+Électricité,Alimentation volet roulant,u,alimentation volet,,,principal
+Électricité,Alimentation miroir / salle d'eau,u,alimentation miroir,,,principal
+Électricité,Prise de courant extérieure,u,prise&exterieur,,,principal
+Électricité,Prise de courant 2P+T (standard / affleurante),u,prise de courant|prise 2p|prises 16a|prises courant,rj45|tv|coax,^(?:lot )?(\d+) prises,principal
+Terrassement & VRD,Fourreaux réseaux (électrique / télécom),ml,fourreau,ik10,,principal
+Études techniques (sol / ANC / électricité),Étude électrique / colonne montante / raccordement ENEDIS collectif,u,colonne montante|etude electrique|etude avp|etude bureau d etudes,cctp,,principal
+Études techniques (sol / ANC / électricité),CCTP / consultation entreprises électricité,u,cctp|dpgf|analyse des offres,,,principal
+Études techniques (sol / ANC / électricité),Accompagnement administratif ENEDIS / GEREDIS,u,geredis|formulaire dt,,,principal
+Raccordements & compteurs,Intervention ENEDIS immeuble (gestion + point de comptage),u,forfait intervention enedis|forfait enedis pose point,,,principal
+Raccordements & compteurs,Raccordement ENEDIS individuel (compteur neuf),u,raccordement&enedis individuel,,,principal
+Raccordements & compteurs,Droit de prise / branchement compteur d'eau,u,droit de prise,,,principal
+Raccordements & compteurs,Compteur d'eau individuel (création / pose),u,compteur eau individuel|sous compteur,,,principal
+Chauffage ventilation & ECS,VMC hygroréglable (kit complet fourniture + pose),u,vmc&hygro|kit vmc,double flux|raccordement vmc|entree d air|extracteur,,principal
+Chauffage ventilation & ECS,Entrée d'air hygroréglable,u,entree d air,,,principal
+Chauffage ventilation & ECS,Extracteur individuel,u,extracteur,,,principal
+Chauffage ventilation & ECS,Radiateur électrique (chaleur douce / inertie),u,radiateur electrique|radiateur chaleur douce|radiateur 1500w|radiateur&inertie,seche serviette|depose|alimentation,,principal
+Chauffage ventilation & ECS,Radiateur à eau chaude (fourniture + pose),u,radiateur eau chaude|equipement pose radiateur,depose|seche serviette,,principal
+Chauffage ventilation & ECS,Sèche-serviette (fourniture + pose),u,seche serviette,depose|raccordement|modification|pose radiateur,,principal
+Chauffage ventilation & ECS,Dépose radiateur(s) / sèche-serviette,u,depose&radiateur|suppression radiateur,,,principal
+Chauffage ventilation & ECS,Chauffe-eau / ballon eau chaude (fourniture + pose),u,ballon eau chaude|chauffe eau,depose|pose chauffe|alimentation|sortie|evacuation|ballon douche,,principal
+Chauffage ventilation & ECS,Dépose chauffe-eau / ancienne chaudière,u,depose&chauffe eau|depose ancienne chaudiere,,,principal
+Chauffage ventilation & ECS,Chaudière gaz à condensation (fourniture + pose),u,chaudiere murale|chaudiere gaz|chaudiere a condensation,depose|tubage|sortie,,principal
+Plomberie & sanitaire,Réseau eau (EF / EC / TAL) création ou modification,u,creation eau froide|reseau tal|reseau alimentation|modification reseau|reprise ef|distribution ec|realimentation ec|alimentation ef depuis|creation d evacuation|collecteur|attentes ec|passage tube|rebouchage tranchee|tranchee sol,remblaiement,,principal
+Plomberie & sanitaire,Alimentation EC/EF + évacuation par point (hors appareil),u,alimentation ec ef|alimentation ef|evacuation douche|evacuation lave|evacuation vasque|evacuation ballon|evacuation alimentation|alimentation evacuation|siphon avaloir,gravats|deblais|dechets|terres,,principal
+Plomberie & sanitaire,Raccordement eaux usées des appareils sanitaires,u,raccordement eu|raccordement en eu|raccordement ensemble sanitaire,4 logements,,principal
+Plomberie & sanitaire,Dépose appareils sanitaires (WC / salle d'eau) avec évacuation,u,depose&sanitaire|depose&wc|depose salle d eau,repose,,principal
+Plomberie & sanitaire,Salle de bain complète (forfait fourni-posé),u,salle de bain complete|creation salle de bain complete,,,principal
+Plomberie & sanitaire,Baignoire (fourniture + pose),u,baignoire,,,principal
+Plomberie & sanitaire,Robinetterie douche (ensemble thermostatique / colonne / robinet),u,ensemble douche thermostatique|colonne de douche|robinet douche,,,principal
+Plomberie & sanitaire,Robinetterie lavabo / vasque (mitigeur),u,mitigeur de lavabo|robinet vasque,,,principal
+Plomberie & sanitaire,Douche complète / cabine (fourniture + pose),u,cabine douche|douche fourniture pose|douche complete,paroi,,principal
+Plomberie & sanitaire,Receveur / bac à douche,u,receveur|bac a douche,,,principal
+Plomberie & sanitaire,Paroi de douche (fourniture ou pose),u,paroi|acces d angle,,,principal
+Plomberie & sanitaire,WC pack complet (fourniture + pose),u,wc fourniture pose|pack wc complet a poser|wc complet pose|fourniture pose pack wc,,,principal
+Plomberie & sanitaire,WC pack complet (fourniture seule),u,pack wc blanc|cuvette wc,,,principal
+Plomberie & sanitaire,Pose WC suspendu / support (main d'œuvre),u,pose wc suspendu|pose petit support,,,principal
+Plomberie & sanitaire,Vasque double + robinetterie (fourni-posé),u,double vasque|vasque double,,,principal
+Plomberie & sanitaire,Vasque simple + robinetterie (fourni-posé),u,simple vasque|vasque simple|lavabo fourniture pose,,,principal
+Plomberie & sanitaire,Lave-main (fourniture + pose),u,fourniture pose lave main,,,principal
+Plomberie & sanitaire,Meuble vasque / meuble sous-vasque,u,meuble vasque|meuble sous,,,principal
+Plomberie & sanitaire,Branchement lave-linge / lave-vaisselle,u,branchement machine|branchement lave,,,principal
+Plâtrerie & isolation,Plus-value plaque hydrofuge,m2,plus value plaque,,,principal
+Plâtrerie & isolation,Bande à joint / jointoiement plaques de plâtre,m2,bandes|bande a joint|jointoiement|joints,impression,,principal
+Plâtrerie & isolation,"Isolation de doublage seule (laine 120 mm, hors parement placo)",m2,doublage panneau|isolation 120mm doublage,,,principal
+Plâtrerie & isolation,Doublage isolant (placo + laine de verre),m2,doublage isole|doublage isolation|faconnage doublage,,,principal
+Plâtrerie & isolation,Isolation combles perdus (laine soufflée),m2,souffler|soufflee|combles perdus,,,principal
+Plâtrerie & isolation,Plafond / faux-plafond / rampant plaque de plâtre,m2,plafond rampant|faux plafond,,,principal
+Plâtrerie & isolation,Cloison séparative / fermeture de cage d'escalier,m2,separative|fermeture cage,,,principal
+Plâtrerie & isolation,Cloison / doublage plaque de plâtre BA13 (fourniture + pose),m2,cloison|doublage|placo|plaques de platre,demolition|depose|rangements|decapage,,principal
+Menuiseries extérieures,Fenêtre PVC oscillo-battante,u,oscillo,,,principal
+Menuiseries extérieures,Fenêtre PVC (fourniture + pose),u,fenetre pvc|oeil de boeuf pvc,grande dimension|hors standard,,principal
+Menuiseries extérieures,Fenêtre PVC grande dimension / sur mesure,u,fenetre pvc grande|hors standard,,,principal
+Menuiseries extérieures,Fenêtre alu standard,u,fenetre alu,,,principal
+Menuiseries extérieures,Fenêtre bois 2 vantaux,u,fenetre bois,,,principal
+Menuiseries extérieures,Porte-fenêtre / baie vitrée coulissante,u,porte fenetre|baie vitree,,,principal
+Menuiseries extérieures,Fenêtre de toit / Velux,u,velux|fenetre de toit,,,principal
+Menuiseries extérieures,Volet roulant motorisé (fourniture + pose),u,volet roulant|volet alu,,,principal
+Menuiseries extérieures,Pose de volets battants (main d'œuvre),u,pose de volets,,,principal
+Menuiseries extérieures,Volet battant bois / persienne (fourniture + pose),u,volet bois|volet persienne,,,principal
+Menuiseries extérieures,Décapage / peinture volets et porte d'entrée existants,u,decapage,sol|escalier,,principal
+Menuiseries extérieures,Porte d'entrée (fourniture + pose),u,porte d entree,decapage|cylindre|plaque|demolition,,principal
+Menuiseries extérieures,Pose menuiseries en rénovation (main d'œuvre / dépose),u,pose en remplacement fenetres|pose de menuiseries|pose complete de menuiseries|depose huisseries,,,principal
+Menuiseries extérieures,Double vitrage (fourniture ou remplacement),u,double vitrage,,,principal
+Menuiseries intérieures,Bloc-porte intérieur (fourniture + pose),u,bloc porte|porte de service|porte paliere,pose de porte|pose ensemble|ensemble plaque,,principal
+Menuiseries intérieures,Pose porte palière (main d'œuvre),u,pose de porte paliere|pose ensemble porte,,,principal
+Menuiseries intérieures,Escalier (création),u,escalier bois|escalier metal|escalier sur mesure,,,principal
+Menuiseries intérieures,Rénovation / habillage escalier existant,u,habillage escalier|vitrification parquet escalier,,,principal
+Sols & revêtements,Ragréage de sol,m2,ragreage|chape,,,principal
+Sols & revêtements,Sol stratifié / PVC / vinyle (fourniture + pose),m2,stratifie|sol pvc|dalle vinyle|sol&sous couche,,,principal
+Sols & revêtements,Parquet contrecollé posé,m2,parquet contrecolle,,,principal
+Sols & revêtements,Plinthes (fourniture + pose),ml,plinthe,,,principal
+Sols & revêtements,Carrelage — fourniture seule,m2,fourniture de carrelage,,,principal
+Sols & revêtements,Faïence — fourniture seule,m2,fourniture de faience,,,principal
+Sols & revêtements,Carrelage — pose seule (main d'œuvre),m2,pose droite carrelage,,,principal
+Sols & revêtements,Carrelage sol (fourniture + pose),m2,carrelage sol,,,principal
+Sols & revêtements,Faïence murale (fourniture + pose),m2,faience,,,principal
+Sols & revêtements,Étanchéité sous carrelage / douche,m2,etancheite,,,principal
+Peinture,Peinture plafonds (2 couches),m2,plafonds&application|plafonds main d oeuvre|application mat plafonds|application deux couches peinture mate,,,principal
+Peinture,Peinture murs (2 couches),m2,velours murs|peinture murs main d oeuvre|application deux couches peinture velours,,,principal
+Peinture,Peinture portes / huisseries,u,peinture&porte|mise en peinture de porte|portes bati,,,principal
+Peinture,Peinture murs + plafonds complète (m²),m2,peinture rafraichissement murs|mise en peinture 2 couches|peinture airless,,,principal
+Peinture,Ponçage / impression murs et plafonds,m2,poncage bandes,,,principal
+Cuisine,Cuisine équipée (fourniture + pose),u,cuisine equipee|cuisine kitchenette,,,principal
+Démolition & dépose,Dépose moquette / revêtement existant,u,depose&moquette,,,principal
+Démolition & dépose,Dépose cuisine existante,u,depose&cuisine,moquette,,principal
+Démolition & dépose,Démolition de mur / maçonnerie (au m²),m2,demolition&mur|demolition&agglos,muret|parcelle,,principal
+Démolition & dépose,Démolition de cloisons existantes (forfait),u,demolition&cloison,,,principal
+Démolition & dépose,Dépose / démolition de cheminée,u,cheminee,zinguerie,,principal
+Maçonnerie & gros œuvre,Création d'ouverture dans un mur,u,creation d ouverture,,,principal
+Maçonnerie & gros œuvre,Reprise de plancher,u,reprise de plancher|reprise plancher,palier,,principal
+Maçonnerie & gros œuvre,Boucher ouverture / séparation en parpaings,u,boucher,,,principal
+Maçonnerie & gros œuvre,Montage de parpaings / agglos (au m²),m2,montage parpaings|maconnerie d agglos|pose de parpaing,,,principal
+Terrassement & VRD,Géotextile (fourniture + pose),m2,geotextile|bidim,,,principal
+Terrassement & VRD,Place de stationnement / allée (gravier / enrobé),m2,place de stationnement|allee,,,principal
+Façade & échafaudage,Échafaudage,u,echafaudage,,,principal
+Façade & échafaudage,Ravalement / peinture façade,m2,ravalement|peinture facade|traitement fissures,,,principal
+Charpente & couverture,Toiture bac acier isolé (fourniture + pose),m2,bac acier,,,principal
+Charpente & couverture,Dépose toiture amiantée / fibro-ciment (au m²),m2,enlevement eternit|enlevement toiture eternit|desamiantage&depose|fibro,,,principal
+Déchets & évacuation,Benne 30 m³ (dépôt / rotation / retrait),u,benne&depot|benne&rotation|benne&retrait|rotation benne|retrait benne|mise en place benne|echange retrait,,,principal
+Déchets & évacuation,Traitement DIB (par tonne),tonne,traitement dib|traitement des dechets,,,principal
+Déchets & évacuation,Location journalière de benne,jour,location&benne,,,principal
+Aménagements extérieurs,Porte de garage motorisée,u,porte de garage,,,principal
+Géomètre,Prime fixe / ouverture de dossier,u,prime fixe|frais fixes,,,principal
+Géomètre,Archivage / gestion signature électronique,u,archivage,,,principal
+Géomètre,Déplacement forfaitaire sur site,u,deplacement forfaitaire,,,principal
+Géomètre,Procès-verbal de bornage / délimitation,u,proces verbal|pv bornage|redaction pv,,,principal
+Géomètre,Recherche et convocation de riverains,u,recherche cadastrale|convocation|riverain,proces verbal|limites,,principal
+Géomètre,Recherche des limites avec titres,u,recherche des limites,,,principal
+Géomètre,Relevé des sommets / bornes,u,releve des sommets,,,principal
+Géomètre,État descriptif de division (EDD),u,etat descriptif de division,tantiemes|modificatif|adaptation,,principal
+Géomètre,Règlement de copropriété,u,reglement de copropriete,modificatif|adaptation,,principal
+Diagnostics immobiliers,Mesurage / certificat loi Carrez,u,carrez,,,principal
+Diagnostics immobiliers,Diagnostic amiante,u,diagnostic amiante,,,principal
+Diagnostics immobiliers,Diagnostic termites,u,diagnostic termites,,,principal
+Diagnostics immobiliers,Diagnostic plomb (CREP),u,diagnostic plomb|crep,,,principal
+Diagnostics immobiliers,Pack diagnostics (avant-vente),u,pack diagnostics,,,principal
+Diagnostics immobiliers,Diagnostic technique global (DTG),u,=dtg,,,principal
+Huissier / constats,Constat d'huissier / état des lieux avant travaux,u,constat&avant travaux|etat lieux avant|etat des lieux avant,grand hangar,,principal
+Huissier / constats,Constat d'huissier / état des lieux après travaux,u,constat&apres travaux|etat lieux apres|etat des lieux apres,grand hangar,,principal
+Huissier / constats,Constat d'affichage (permis de construire),u,affichage,,,principal
+Syndic / copropriété,Honoraires de gestion syndic (annuel),an,gestion syndic|honoraires forfaitaires annuels|remuneration syndic,,,principal
+Syndic / copropriété,État daté (mutation),u,etat date,,,principal
+Syndic / copropriété,Immatriculation du syndicat,u,immatriculation,,,principal
+Architecte,Étude de faisabilité (architecte),u,etude de faisabilite,anc|assainissement,,principal
+Architecte,Esquisse (architecte),u,esquisse,faisabilite,,principal
+Architecte,Demande d'autorisation d'urbanisme / permis de construire,u,autorisation d urbanisme|permis de construire changement,,,principal
+Architecte,Honoraires mission complète (faisabilité + esquisse + permis),u,honoraires mission etudes architecte,,,principal
+Architecte,Relevé de bâtiment / état des lieux,u,releve de batiment|releve etat des lieux,,,principal
+Études techniques (sol / ANC / électricité),Étude de sol G1 PGC,u,=g1|g1 pgc|etude geotechnique,,,principal
+Études techniques (sol / ANC / électricité),Étude de faisabilité assainissement (ANC),u,=anc,,,principal
