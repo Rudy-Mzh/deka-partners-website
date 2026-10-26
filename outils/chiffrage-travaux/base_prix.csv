@@ -676,3 +676,51 @@ Electricite,Electricite logement neuf complet (tableau+reseau+prises) au m2,m2,7
 Plomberie,Plomberie neuve complete logement (au m2 habitable),m2,50,80,110,Travaux.com/Usineadesign,Estimation marche - Construction neuve - installation complete fourniture+pose,,0
 Terrassement,Viabilisation raccordement eau/electricite/telecom terrain a batir,forfait,5000,9000,15000,Afedim/Prix-Pose/Celimo,Estimation marche - Construction neuve - hors assainissement collectif si deja en limite de propriete,,0
 Couvreur,Raccord de zinguerie autour d'un conduit de cheminee,u,450,600,850,Estimation marche (extrapole depuis devis reels similaires 600EUR),Estimation marche - libelle exact requis par le code,,0
+Peinture,Peinture murs - reprise defauts enduit + impression + 2 couches acrylique,m2,10.00,10.00,10.00,TC_JOINTEUR_PEINTRE D202500006 2025,Devis reel peinture sans fourniture,,0,2025-07-28
+Peinture,Peinture plafonds - reprise defauts enduit + impression + 2 couches acrylique,m2,15.00,15.00,15.00,TC_JOINTEUR_PEINTRE D202500006 2025,Devis reel peinture sans fourniture,,0,2025-07-28
+Peinture,Poncage et peinture porte + bati (2 couches),u,30.00,30.00,30.00,TC_JOINTEUR_PEINTRE D202500006 2025,Devis reel peinture sans fourniture,,0,2025-07-28
+Peinture,Depose revetements muraux + grattage anciennes colles + evacuation + lessivage murs,m2,11.50,11.50,11.50,Horizon Renovation Chikhaoui 22102026-2 2026,Devis reel renovation appartement,,0,2026-10-22
+Peinture,Reprise murs/cloisons ratissage enduit platre + toile renfort fissures,m2,16.45,16.45,16.45,Horizon Renovation Chikhaoui 22102026-2 2026,Devis reel,,0,2026-10-22
+Peinture,Poncage et epoussetage preparation peinture murs/plafonds + impression,m2,7.50,7.50,7.50,Horizon Renovation Chikhaoui 22102026-2 2026,Devis reel,,0,2026-10-22
+Peinture,Peinture finition plafonds 2 couches veloute,m2,14.50,14.50,14.50,Horizon Renovation Chikhaoui 22102026-2 2026,Devis reel,,0,2026-10-22
+Peinture,Peinture finition murs 2 couches mat blanc,m2,14.50,14.50,14.50,Horizon Renovation Chikhaoui 22102026-2 2026,Devis reel,,0,2026-10-22
+Peinture,Decapage et peinture porte interieure (couche intermediaire + 2 finition),u,110,110,110,Horizon Renovation Chikhaoui 22102026-2 2026,Devis reel,,0,2026-10-22
+Peinture,Poncage et peinture radiateur (primaire + 2 couches resistant chaleur),u,140,140,140,Horizon Renovation Chikhaoui 22102026-2 2026,Devis reel,,0,2026-10-22
+Plaquiste,Demolition cloisons briques + portes + batis + plinthes + placards avec evacuation,forfait,5500,5500,5500,Horizon Renovation Chikhaoui 22102026-3 2026,Devis reel projet Le Jaures,,0,2026-10-22
+Plaquiste,Plafond rampant BA13 entre poutres sur rails suspendus,m2,38.50,38.50,38.50,Horizon Renovation Chikhaoui 22102026-3 2026,Devis reel,,0,2026-10-22
+Plaquiste,Isolation reflecteur alveolaire plafond rampant ep125mm,m2,17.35,17.35,17.35,Horizon Renovation Chikhaoui 22102026-3 2026,Devis reel,,0,2026-10-22
+Plaquiste,Plafond horizontal BA13 auto-porte,m2,31.45,31.45,31.45,Horizon Renovation Chikhaoui 22102026-3 2026,Devis reel,,0,2026-10-22
+Plaquiste,Doublage BA13 ossature metallique + laine minerale 45mm,m2,38.35,38.35,38.35,Horizon Renovation Chikhaoui 22102026-3 2026,Devis reel,,0,2026-10-22
+Plaquiste,Bande a joint placo + baguette renfort angles,m2,7.50,7.50,7.50,Horizon Renovation Chikhaoui 22102026-3 2026,Devis reel,,0,2026-10-22
+Facade,Echafaudage montage et demontage,forfait,950,950,950,Horizon Renovation Chikhaoui 22102026-1 2026,Devis reel facade,,0,2026-10-22
+Facade,Nettoyage facade haute pression + traitement fissures/elements metalliques,m2,14.35,14.35,14.35,Horizon Renovation Chikhaoui 22102026-1 2026,Devis reel,,0,2026-10-22
+Facade,Mise en oeuvre fixateur acrylique + 2 couches peinture facade impermeable,m2,29.50,29.50,29.50,Horizon Renovation Chikhaoui 22102026-1 2026,Devis reel,,0,2026-10-22
+Facade,Peinture sous-faces volige exterieure (poncage + 2 couches finition),ml,29.50,29.50,29.50,Horizon Renovation Chikhaoui 22102026-1 2026,Devis reel,,0,2026-10-22
+Facade,Poncage + peinture structure metallique veranda (antirouille + 2 couches),forfait,900,900,900,Horizon Renovation Chikhaoui 22102026-1 2026,Devis reel,,0,2026-10-22
+Facade,Ravalement complet facade (anti-mousse+nettoyage Karcher+rebouchage fissures+peinture 2 couches),forfait,4800,4800,4800,Francis Multiservice Devis44 2026,Devis reel 2 facades+2 pignons+tours fenetres+muret devis manuscrit retranscrit,,0,2026-10-20
+Electricite,Deplacement et main d'oeuvre (diagnostic mise en securite sans detail de prestation),forfait,300,300,300,GEFFARD_ELEC DEV00000197 2026,Devis reel - devis limite a un forfait de deplacement/main d'oeuvre aucune prestation detaillee,,0,2026-04-08
+Architecture,Releve etat des lieux batiment (plans coupes facades ~600m2),forfait,2000,2000,2000,ARCHIXO PC_Andilly 2026,Devis reel - proposition honoraires permis de construire changement de destination,,0,2026-05-21
+Architecture,Conception et dossier de permis de construire (changement de destination),forfait,4600,4600,4600,ARCHIXO PC_Andilly 2026,Devis reel,,0,2026-05-21
+Huissier,Constat avant travaux (SCP PIRS),forfait,1115,1115,1115,PIRS COMMISSAIRE JUSTICE Andilly 2026,Devis reel 39 rue des Noues Andilly - montant egal au moyen deja en base HuisAlliance KFM mais prestataire et chantier differents,,0,2026-05-26
+Huissier,Constat affichage (SCP PIRS 3 passages),forfait,465,465,465,PIRS COMMISSAIRE JUSTICE Andilly 2026,Devis reel 39 rue des Noues Andilly,,0,2026-05-26
+Huissier,Constat apres travaux (SCP PIRS),forfait,1515,1515,1515,PIRS COMMISSAIRE JUSTICE Andilly 2026,Devis reel 39 rue des Noues Andilly,,0,2026-05-26
+Huissier,Constat etat des lieux apres travaux (hangar + 4 box 244m2),forfait,386,386,386,HUIS-ALLIANCE V-64962-apres 2026,Devis reel 39 rue des Noues Andilly,,0,2026-05-21
+Huissier,Constat affichage declaration prealable (hangar + 4 box Andilly),forfait,356,356,356,HUIS-ALLIANCE V-64962-PC 2026,Devis reel 39 rue des Noues Andilly (deplacement 86 + forfait standard 270),,0,2026-05-21
+Huissier,Constat etat des lieux avant travaux (hangar + 4 box 244m2),forfait,386,386,386,HUIS-ALLIANCE V-64962-avant 2026,Devis reel 39 rue des Noues Andilly,,0,2026-05-21
+Huissier,Constat affichage declaration prealable (3 passages tarif standard),forfait,270,270,270,HUIS-ALLIANCE KFM V-61937+V-63331 2025-2026,Devis reel - tarif forfaitaire standard confirme par 2 devis distincts (27 rue Arsenal Niort et St Gelais),,0,2025-12-30
+Huissier,Constat etat des lieux (zone eloignee avec supplement horaire 70m2 sous-sol et exterieurs),forfait,530.13,530.13,530.13,HUIS-ALLIANCE V-59120 2025,Devis reel 224 Avenue Venise Verte Niort,,0,2025-08-06
+Huissier,Constat affichage declaration prealable (zone eloignee Venise Verte),forfait,300.13,300.13,300.13,HUIS-ALLIANCE V-59119 2025,Devis reel 224 Avenue Venise Verte Niort,,0,2025-08-06
+Syndic,Mise en demeure tiers par LRAR,u,30,30,30,LEBLOND IMMOBILIER 27rue arsenal 2026,Devis reel,,0,2026-01-06
+Syndic,Relance apres mise en demeure,u,20,20,20,LEBLOND IMMOBILIER 27rue arsenal 2026,Devis reel,,0,2026-01-06
+Syndic,Constitution dossier transmis avocat/huissier/assureur (litige),u,250,250,250,LEBLOND IMMOBILIER 27rue arsenal 2026,Devis reel,,0,2026-01-06
+Syndic,Constitution dossier transmis auxiliaire de justice (forfait minimum),forfait,350,350,350,LEBLOND IMMOBILIER 27rue arsenal 2026,Devis reel vacation au temps passe 90EUR/h,,0,2026-01-06
+Syndic,Opposition sur mutation,u,125,125,125,LEBLOND IMMOBILIER 27rue arsenal 2026,Devis reel,,0,2026-01-06
+Syndic,Delivrance copie carnet d'entretien,u,50,50,50,LEBLOND IMMOBILIER 27rue arsenal 2026,Devis reel,,0,2026-01-06
+Syndic,Delivrance copie diagnostics techniques,u,25,25,25,LEBLOND IMMOBILIER 27rue arsenal 2026,Devis reel,,0,2026-01-06
+Syndic,Delivrance informations necessaires DPE,u,37.50,37.50,37.50,LEBLOND IMMOBILIER 27rue arsenal 2026,Devis reel,,0,2026-01-06
+Syndic,Delivrance copie certifiee PV AG,u,25,25,25,LEBLOND IMMOBILIER 27rue arsenal 2026,Devis reel,,0,2026-01-06
+Syndic,Immatriculation initiale du syndicat,forfait,300,300,300,LEBLOND IMMOBILIER 27rue arsenal 2026,Devis reel,,0,2026-01-06
+Syndic,Conclusion protocole d'accord,u,125,125,125,LEBLOND IMMOBILIER 27rue arsenal 2026,Devis reel,,0,2026-01-06
+Syndic,Frais constitution hypotheque,u,125,125,125,LEBLOND IMMOBILIER 27rue arsenal 2026,Devis reel,,0,2026-01-06
+Syndic,Frais mainlevee hypotheque,u,150,150,150,LEBLOND IMMOBILIER 27rue arsenal 2026,Devis reel,,0,2026-01-06
+Syndic,Depot requete injonction de payer,u,150,150,150,LEBLOND IMMOBILIER 27rue arsenal 2026,Devis reel,,0,2026-01-06
