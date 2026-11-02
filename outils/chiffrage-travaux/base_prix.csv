@@ -676,3 +676,17 @@ Electricite,Electricite logement neuf complet (tableau+reseau+prises) au m2,m2,7
 Plomberie,Plomberie neuve complete logement (au m2 habitable),m2,50,80,110,Travaux.com/Usineadesign,Estimation marche - Construction neuve - installation complete fourniture+pose,,0
 Terrassement,Viabilisation raccordement eau/electricite/telecom terrain a batir,forfait,5000,9000,15000,Afedim/Prix-Pose/Celimo,Estimation marche - Construction neuve - hors assainissement collectif si deja en limite de propriete,,0
 Couvreur,Raccord de zinguerie autour d'un conduit de cheminee,u,450,600,850,Estimation marche (extrapole depuis devis reels similaires 600EUR),Estimation marche - libelle exact requis par le code,,0
+Facade,Echafaudage facade (montage+demontage),forfait,950.00,950.00,950.00,HORIZON_RENOVATION 22102026-1 2026,Devis reel,,0,2026-10-22
+Facade,Nettoyage facade haute pression (anti-mousse+traitement fissures),m2,14.35,14.35,14.35,HORIZON_RENOVATION 22102026-1 2026,Devis reel,,0,2026-10-22
+Facade,Peinture facade impermeable 2 couches (fixateur+revetement semi-epais sur facade fissuree),m2,29.50,29.50,29.50,HORIZON_RENOVATION 22102026-1 2026,Devis reel - libelle unite imprecis dans le PDF (decalage de colonne) - voir PR,,0,2026-10-22
+Facade,Poncage+peinture sous-faces de volige 2 couches,ml,29.50,29.50,29.50,HORIZON_RENOVATION 22102026-1 2026,Devis reel - idem note ligne precedente sur le libelle,,0,2026-10-22
+Facade,Poncage+peinture structure metallique exterieure (veranda) antirouille+2 couches,forfait,900.00,900.00,900.00,HORIZON_RENOVATION 22102026-1 2026,Devis reel,,0,2026-10-22
+Facade,Ravalement facade complet (anti-mousse+nettoyage Karcher+rebouchage fissures+peinture 2 couches) 2 facades+2 pignons+tours fenetres+muret,forfait,4800.00,4800.00,4800.00,FRANCIS_MULTISERVICE 44 2026,Devis reel - forfait global non detaille au m2 - TVA non applicable art 293B CGI - devis manuscrit retranscrit,,0,2026-10-20
+Peinture,Depose revetements muraux+grattage anciennes colles+evacuation+lessivage,m2,11.50,11.50,11.50,HORIZON_RENOVATION 22102026-2 2026,Devis reel,,0,2026-10-22
+Peinture,Reprise murs/cloisons ratissage enduit platre+toile renforcement fissures+poncage,m2,16.45,16.45,16.45,HORIZON_RENOVATION 22102026-2 2026,Devis reel,,0,2026-10-22
+Peinture,Poncage+epoussetage preparation peinture murs et plafonds+rebouchage+impression,m2,7.50,7.50,7.50,HORIZON_RENOVATION 22102026-2 2026,Devis reel,,0,2026-10-22
+Peinture,Peinture finition plafonds 2 couches veloute,m2,14.50,14.50,14.50,HORIZON_RENOVATION 22102026-2 2026,Devis reel,,0,2026-10-22
+Peinture,Peinture finition murs 2 couches mat blanc,m2,14.50,14.50,14.50,HORIZON_RENOVATION 22102026-2 2026,Devis reel,,0,2026-10-22
+Peinture,Decapage+poncage+peinture porte interieure bois (paille de fer+couche intermediaire+2 couches finition),u,110.00,110.00,110.00,HORIZON_RENOVATION 22102026-2 2026,Devis reel,,0,2026-10-22
+Peinture,Poncage+peinture radiateur (primaire accroche+2 couches satinee speciale radiateur),u,140.00,140.00,140.00,HORIZON_RENOVATION 22102026-2 2026,Devis reel,,0,2026-10-22
+Peinture,Plus-value teinte couleur au-dela du blanc standard,m2,4.50,4.50,4.50,HORIZON_RENOVATION 22102026-2 2026,Devis reel - plus-value optionnelle non chiffree dans le total,,0,2026-10-22
