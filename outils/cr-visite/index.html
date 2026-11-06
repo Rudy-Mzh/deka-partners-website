@@ -110,6 +110,27 @@
   .banner a{color:inherit;font-weight:700;}
   .banner button{margin-top:8px;border:1px solid currentColor;background:transparent;color:inherit;border-radius:8px;padding:8px 12px;font:inherit;font-weight:600;font-size:.8rem;cursor:pointer;}
 
+  .folderpick{display:flex;gap:10px;align-items:center;justify-content:space-between;background:var(--surface);border:1px solid var(--gold);border-radius:10px;padding:10px 12px;margin-top:12px;}
+  .fp-path{font-size:.8rem;font-weight:500;word-break:break-word;}
+  .fp-change{border:1px solid var(--line);background:#fff;border-radius:8px;padding:8px 12px;font:inherit;font-size:.78rem;font-weight:600;cursor:pointer;color:var(--accent);}
+  #fpModal{display:none;position:fixed;inset:0;z-index:50;background:rgba(0,0,0,.5);align-items:flex-end;justify-content:center;}
+  #fpModal .box{background:var(--card);width:100%;max-width:560px;max-height:85vh;border-radius:16px 16px 0 0;display:flex;flex-direction:column;overflow:hidden;}
+  @media (min-width:600px){#fpModal{align-items:center;} #fpModal .box{border-radius:16px;}}
+  #fpModal .hd{padding:14px 16px;border-bottom:1px solid var(--line);}
+  #fpModal .hd h3{margin:0 0 6px;font-size:1.2rem;color:var(--accent);}
+  #fpCrumb{font-size:.74rem;color:var(--ink-soft);display:flex;flex-wrap:wrap;gap:4px;}
+  #fpCrumb a{color:var(--accent);cursor:pointer;text-decoration:underline;}
+  #fpList{overflow:auto;flex:1;padding:6px 8px;min-height:160px;}
+  #fpList .it{display:flex;align-items:center;gap:10px;padding:12px 10px;border-bottom:1px solid var(--line);cursor:pointer;font-size:.88rem;}
+  #fpList .it:active{background:var(--surface);}
+  #fpList .empty{padding:18px;text-align:center;color:var(--ink-soft);font-size:.85rem;}
+  #fpModal .ft{display:flex;gap:10px;padding:12px 16px calc(12px + env(safe-area-inset-bottom));border-top:1px solid var(--line);}
+  .btn.cam{background:var(--surface);border:1px solid var(--gold);color:var(--gold-dark);font-size:.9rem;padding:13px;}
+  .card > h2.tog{cursor:pointer;display:flex;justify-content:space-between;align-items:center;}
+  .card > h2.tog::after{content:'▾';font-size:.9rem;color:var(--gold-dark);transition:transform .2s;}
+  .card.closed > h2.tog::after{transform:rotate(-90deg);}
+  .card.closed > *:not(h2){display:none;}
+  .card.closed > h2.tog{margin-bottom:0;border-bottom:none;padding-bottom:0;}
   #done{display:none;}
   #done .card{text-align:center;padding:28px 18px;}
   #done h2{border:none;font-size:1.6rem;color:var(--green);}
@@ -164,9 +185,14 @@
         <select id="projet" name="projet" required>
           <option value="" disabled selected>Choisir le projet…</option>
           <option value="NEW">➕ Nouveau bien (classé dans 98, à trier)</option>
+          <option value="FOLDER">📁 Choisir un dossier précis du Drive…</option>
         </select>
-        <span class="hint">Projet existant → <i>0. Pré-étude / 1. CR Visite</i>. La liste se met à jour toute seule.</span>
+        <span class="hint">Projet existant → <i>0. Pré-étude / 1. CR Visite</i>. « Dossier précis » → le PDF est posé directement dans le dossier que tu choisis.</span>
       </label>
+      <div id="folderPick" class="folderpick" style="display:none;">
+        <div class="fp-path" id="fpPath"></div>
+        <button type="button" class="fp-change" onclick="openBrowser(folderChoice ? folderChoice.id : null)">Changer</button>
+      </div>
     </div>
 
     <div class="card">
@@ -240,6 +266,9 @@
       <label class="photo-btn">📷 Ajouter des photos
         <input type="file" id="photoInput" accept="image/*" multiple>
       </label>
+      <label class="btn cam" style="display:block;text-align:center;margin-top:10px;cursor:pointer;">📸 Prendre une photo
+        <input type="file" id="camInput" accept="image/*" capture="environment" style="display:none;">
+      </label>
       <div class="photos" id="photos"></div>
       <label class="check"><input type="checkbox" id="photosPdf" checked> Mettre aussi les photos en bas du PDF</label>
       <div class="small" style="margin-top:8px;">Les photos sont rangées dans le dossier <i>2. PHOTOS - VIDEOS - AI</i> du projet. Elles sont réduites automatiquement avant l'envoi.</div>
@@ -256,6 +285,17 @@
       <label class="f">Informations complémentaires <textarea name="Informations complémentaires"></textarea></label>
     </div>
   </form>
+</div>
+
+<div id="fpModal">
+  <div class="box">
+    <div class="hd"><h3>Choisir le dossier</h3><div id="fpCrumb"></div></div>
+    <div id="fpList"></div>
+    <div class="ft">
+      <button class="btn ghost" type="button" onclick="closeBrowser(true)">Annuler</button>
+      <button class="btn main" type="button" id="fpOk" onclick="pickFolder()">Choisir ce dossier</button>
+    </div>
+  </div>
 </div>
 
 <div class="sendbar" id="sendbar">
@@ -390,7 +430,7 @@ async function post(payload){
 function renderProjets(){
   const sel = document.getElementById('projet');
   const keep = sel.value;
-  sel.innerHTML = '<option value="" disabled>Choisir le projet…</option><option value="NEW">➕ Nouveau bien (classé dans 98, à trier)</option>' +
+  sel.innerHTML = '<option value="" disabled>Choisir le projet…</option><option value="NEW">➕ Nouveau bien (classé dans 98, à trier)</option><option value="FOLDER">📁 Choisir un dossier précis du Drive…</option>' +
     projets.map(p=>`<option value="${esc(p.id)}">${esc(p.nom)}</option>`).join('');
   sel.value = keep || '';
   if(!sel.value) sel.selectedIndex = 0;
@@ -411,6 +451,56 @@ async function loadProjets(){
     /* hors ligne : on garde la liste en cache */
   }
 }
+
+/* ---------- Navigateur de dossiers (destination précise) ---------- */
+let folderChoice = null;      // {id, nom, chemin:[...]}
+let browsing = null;          // dernier résultat de l'action 'dossiers'
+let prevProjet = '';
+async function openBrowser(parentId){
+  document.getElementById('fpModal').style.display='flex';
+  document.getElementById('fpList').innerHTML='<div class="empty">Chargement…</div>';
+  try{
+    const r = await post({action:'dossiers', parentId: parentId||''});
+    if(!r.ok) throw new Error(r.error||'erreur');
+    browsing = r; renderBrowser();
+  }catch(e){
+    document.getElementById('fpList').innerHTML='<div class="empty">Impossible de lire le Drive : '+esc(e.message)+'</div>';
+  }
+}
+function renderBrowser(){
+  const r = browsing;
+  document.getElementById('fpCrumb').innerHTML = r.chemin.map((c,i)=>
+    i<r.chemin.length-1 ? '<a onclick="openBrowser(\''+c.id+'\')">'+esc(c.nom)+'</a> ›' : '<b>'+esc(c.nom)+'</b>').join(' ');
+  document.getElementById('fpList').innerHTML = r.dossiers.length
+    ? r.dossiers.map(d=>'<div class="it" onclick="openBrowser(\''+d.id+'\')">📁 <span>'+esc(d.nom)+'</span></div>').join('')
+    : '<div class="empty">Aucun sous-dossier ici.</div>';
+  document.getElementById('fpOk').textContent = 'Choisir « '+r.nom+' »';
+}
+function pickFolder(){
+  if(!browsing) return;
+  folderChoice = {id:browsing.id, nom:browsing.nom, chemin:browsing.chemin.map(c=>c.nom)};
+  closeBrowser(false);
+  showFolderChoice();
+}
+function showFolderChoice(){
+  const box = document.getElementById('folderPick');
+  if(document.getElementById('projet').value==='FOLDER' && folderChoice){
+    document.getElementById('fpPath').textContent = '📁 ' + folderChoice.chemin.join(' › ');
+    box.style.display='flex';
+  } else box.style.display='none';
+}
+function closeBrowser(cancel){
+  document.getElementById('fpModal').style.display='none';
+  if(cancel && !folderChoice){ const s=document.getElementById('projet'); s.value = prevProjet && prevProjet!=='FOLDER' ? prevProjet : ''; if(!s.value) s.selectedIndex=0; }
+  showFolderChoice();
+}
+document.addEventListener('focusin', e=>{ if(e.target.id==='projet') prevProjet = e.target.value; });
+document.addEventListener('change', e=>{
+  if(e.target.id==='projet'){
+    if(e.target.value==='FOLDER'){ openBrowser(folderChoice?folderChoice.id:null); }
+    showFolderChoice();
+  }
+});
 
 // Choisir un projet pré-remplit l'adresse (modifiable)
 document.addEventListener('change', e=>{
@@ -447,7 +537,7 @@ async function compress(file){
   cv.getContext('2d').drawImage(bmp,0,0,cv.width,cv.height);
   return cv.toDataURL('image/jpeg', QUALITY);
 }
-document.getElementById('photoInput').addEventListener('change', async e=>{
+['photoInput','camInput'].forEach(id=>document.getElementById(id).addEventListener('change', async e=>{
   const files = Array.from(e.target.files||[]);
   e.target.value='';
   for(const f of files){
@@ -457,7 +547,7 @@ document.getElementById('photoInput').addEventListener('change', async e=>{
       renderPhotos();
     }catch(err){ showErr('Une photo n\'a pas pu être lue : '+f.name); }
   }
-});
+}));
 function renderPhotos(){
   document.getElementById('photos').innerHTML = photos.map(p=>`
     <div class="ph" data-id="${p.id}">
@@ -506,7 +596,7 @@ function restoreDraft(){
   restoreProjetFromDraft();
 }
 function restoreProjetFromDraft(){
-  if(!pendingProjet) return;
+  if(!pendingProjet || pendingProjet==='FOLDER') return;
   const sel=document.getElementById('projet');
   if(Array.from(sel.options).some(o=>o.value===pendingProjet)){ sel.value=pendingProjet; }
 }
@@ -515,7 +605,7 @@ function clearDraft(askBanner){
   try{ localStorage.removeItem(DRAFT_KEY); }catch(e){}
   document.getElementById('form').reset();
   document.getElementById('projet').selectedIndex = 0;
-  photos=[]; renderPhotos(); pendingProjet=''; currentId=null;
+  photos=[]; renderPhotos(); pendingProjet=''; currentId=null; folderChoice=null; showFolderChoice();
   document.getElementById('draftBanner').style.display='none';
   hideErr(); recalc();
 }
@@ -534,6 +624,7 @@ async function envoyer(){
   const projetId = document.getElementById('projet').value;
   const adresse = document.getElementById('adresse').value.trim();
   if(!projetId){ showErr('Choisis le projet (ou « Nouveau bien ») tout en haut.'); document.getElementById('projet').focus(); return; }
+  if(projetId==='FOLDER' && !folderChoice){ openBrowser(null); return; }
   if(!adresse){ showErr("L'adresse du bien est obligatoire."); document.getElementById('adresse').focus(); return; }
 
   const answers = {};
@@ -547,7 +638,7 @@ async function envoyer(){
   btn.textContent = photos.length ? 'Envoi en cours… (photos, quelques secondes)' : 'Envoi en cours…';
   try{
     const r = await post({
-      action:'envoyer', id:currentId, dateIso:new Date().toISOString(), projetId,
+      action:'envoyer', id:currentId, dateIso:new Date().toISOString(), projetId: projetId==='FOLDER'?'NEW':projetId, dossierId: projetId==='FOLDER'?folderChoice.id:'',
       answers, photosDansPdf: document.getElementById('photosPdf').checked,
       photos: photos.map(p=>({caption:p.caption, data:p.dataUrl.split(',')[1]}))
     });
@@ -569,7 +660,7 @@ function showDone(r){
   if(r.dossierUrl) links.push(`<a class="alt" href="${esc(r.dossierUrl)}" target="_blank" rel="noopener">📁 Ouvrir le dossier « ${esc(r.dossierNom||'')} »</a>`);
   if(r.photosUrl) links.push(`<a class="alt" href="${esc(r.photosUrl)}" target="_blank" rel="noopener">🖼️ Dossier photos (${r.nbPhotos})</a>`);
   document.getElementById('doneLinks').innerHTML = links.join('');
-  document.getElementById('doneTxt').textContent = (r.projetNom ? 'Rangé dans le projet « '+r.projetNom+' ». ' : 'Rangé dans « 98 – PDF générés » (à trier). ') + 'La ligne de suivi a été ajoutée.';
+  document.getElementById('doneTxt').textContent = (r.projetNom ? 'Rangé dans le projet « '+r.projetNom+' ». ' : 'Rangé dans « '+(r.dossierNom||'98')+' ». ') + 'La ligne de suivi a été ajoutée.';
   document.getElementById('done').style.display='block';
   window.scrollTo({top:0,behavior:'smooth'});
 }
@@ -591,6 +682,21 @@ const prixEl=document.getElementById('prix'), surfEl=document.getElementById('su
 const cPm2=document.getElementById('cPm2'), cNot=document.getElementById('cNot'), cCout=document.getElementById('cCout'),
       cMarge=document.getElementById('cMarge'), cPct=document.getElementById('cPct'), cMargeRow=document.getElementById('cMargeRow');
 
+['Détails techniques','Estimation chiffrée'].forEach(t=>{
+  Array.from(document.querySelectorAll('.card > h2')).filter(h=>h.textContent.trim()===t).forEach(h=>{
+    h.classList.add('tog'); h.parentElement.classList.add('closed');
+    h.addEventListener('click',()=>h.parentElement.classList.toggle('closed'));
+  });
+});
+document.addEventListener('change', e=>{ if(e.target.name==='Visité par'){ try{ localStorage.setItem('deka_cr_visitepar', e.target.value); }catch(_){} } });
+function presetVisitePar(){
+  try{
+    const v = localStorage.getItem('deka_cr_visitepar');
+    if(v && !document.querySelector('input[name="Visité par"]:checked')){
+      const r = Array.from(document.querySelectorAll('input[name="Visité par"]')).find(x=>x.value===v); if(r) r.checked=true;
+    }
+  }catch(_){}
+}
 let started=false;
 function showApp(){
   document.getElementById('gate').style.display='none';
@@ -599,6 +705,7 @@ function showApp(){
   document.getElementById('dateBadge').textContent = new Date().toLocaleDateString('fr-FR',{weekday:'long',day:'numeric',month:'long'});
   buildForm();
   restoreDraft();
+  presetVisitePar();
   recalc();
   if(!endpointOk()){
     const w=document.getElementById('setupWarn');
