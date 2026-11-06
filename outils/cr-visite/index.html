@@ -1,0 +1,613 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#111111">
+<title>DEKA Partners — CR de visite</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#221c11; --ink-soft:#7c7460; --gold:#b3903f; --gold-dark:#8a6f30;
+    --accent:#9c7a2e; --bg:#f7f1e4; --card:#ffffff; --line:#e4dac0; --surface:#fbf8f1;
+    --green:#2f7d46; --green-bg:rgba(47,125,70,.09); --amber:#8a5f12; --amber-bg:rgba(138,95,18,.09);
+    --danger:#a53a30; --danger-bg:rgba(165,58,48,.08);
+    font-family:'Montserrat',-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;
+  }
+  *{box-sizing:border-box;}
+  html{-webkit-text-size-adjust:100%;}
+  body{margin:0;background:var(--bg);color:var(--ink);}
+  h1,h2,h3{font-family:'Cormorant Garamond',serif;}
+  .wrap{max-width:760px;margin:0 auto;padding:0 16px 120px;}
+
+  /* accès */
+  #gate{max-width:380px;margin:80px auto;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:28px;box-shadow:0 10px 30px rgba(0,0,0,.1);}
+  #gate h2{margin-top:0;font-size:1.3rem;color:var(--accent);}
+  #gate input{width:100%;padding:12px;border:1px solid var(--line);border-radius:8px;font-size:16px;margin:10px 0;background:var(--surface);color:var(--ink);}
+  #gate button{width:100%;padding:12px;background:var(--gold);color:#1a1710;border:none;border-radius:8px;font-size:.95rem;font-weight:600;cursor:pointer;}
+  #gate .err{color:var(--danger);font-size:.85rem;min-height:18px;}
+
+  /* en-tête */
+  header.top{background:linear-gradient(135deg,#111111,#1c1a16);color:#f2ede2;padding:22px 0;margin-bottom:18px;}
+  header.top .wrap{padding-bottom:0;display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;}
+  header.top h1{font-size:1.6rem;margin:0;font-weight:600;color:#e8c97a;letter-spacing:.3px;}
+  header.top .sub{font-size:.78rem;color:#b7b0a2;margin-top:3px;}
+  header.top .badge{font-size:.72rem;background:rgba(232,201,122,.1);border:1px solid rgba(232,201,122,.35);color:#e8c97a;padding:4px 10px;border-radius:20px;}
+
+  /* cartes */
+  .card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px 16px;margin-bottom:14px;box-shadow:0 2px 8px rgba(60,45,10,.05);}
+  .card > h2{margin:0 0 12px;font-size:1.25rem;color:var(--accent);letter-spacing:.2px;border-bottom:1px solid var(--line);padding-bottom:8px;}
+  label.f{display:block;margin:0 0 14px;font-size:.8rem;font-weight:600;color:var(--ink);}
+  .card > label.f:last-child, .card > .f:last-child{margin-bottom:0;}
+  .row2 label.f{margin-bottom:14px;}
+  label.f .hint{font-weight:400;color:var(--ink-soft);}
+  input[type=text],input[type=number],input[type=date],select,textarea{
+    display:block;width:100%;margin-top:5px;padding:12px;border:1px solid var(--line);border-radius:10px;
+    font:inherit;font-size:16px;font-weight:400;background:var(--surface);color:var(--ink);appearance:none;-webkit-appearance:none;
+  }
+  select{background-image:linear-gradient(45deg,transparent 50%,var(--gold-dark) 50%),linear-gradient(135deg,var(--gold-dark) 50%,transparent 50%);
+    background-position:calc(100% - 20px) 55%,calc(100% - 14px) 55%;background-size:6px 6px,6px 6px;background-repeat:no-repeat;padding-right:36px;}
+  textarea{min-height:92px;resize:vertical;line-height:1.4;}
+  input:focus,select:focus,textarea:focus{outline:2px solid var(--gold);outline-offset:0;background:#fff;}
+  .req{color:var(--danger);}
+  .row2{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+  @media (max-width:420px){.row2{grid-template-columns:1fr;}}
+
+  /* boutons radio "pilules" */
+  .pills{display:flex;flex-wrap:wrap;gap:8px;margin-top:6px;}
+  .pills input{position:absolute;opacity:0;pointer-events:none;}
+  .pills label{padding:10px 14px;border:1px solid var(--line);border-radius:999px;background:var(--surface);font-size:.85rem;font-weight:500;cursor:pointer;user-select:none;}
+  .pills input:checked + label{background:#1c1a16;color:#e8c97a;border-color:#1c1a16;}
+  .pills input:focus-visible + label{outline:2px solid var(--gold);}
+
+  /* grille technique */
+  .grid-row{padding:10px 0;border-bottom:1px solid var(--line);}
+  .grid-row:last-child{border-bottom:none;}
+  .grid-row .nm{font-size:.84rem;font-weight:500;margin-bottom:6px;}
+  .seg{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;}
+  .seg input{position:absolute;opacity:0;pointer-events:none;}
+  .seg label{text-align:center;padding:10px 0;border:1px solid var(--line);border-radius:8px;background:var(--surface);font-weight:600;font-size:.88rem;cursor:pointer;user-select:none;}
+  .seg input:checked + label.l-pp{background:var(--green);border-color:var(--green);color:#fff;}
+  .seg input:checked + label.l-p{background:#6aa57b;border-color:#6aa57b;color:#fff;}
+  .seg input:checked + label.l-m{background:var(--danger);border-color:var(--danger);color:#fff;}
+  .seg input:checked + label.l-na{background:#8d8672;border-color:#8d8672;color:#fff;}
+  .legend{font-size:.76rem;color:var(--ink-soft);margin:-4px 0 8px;}
+
+  /* estimation en direct */
+  .calc{background:#1c1a16;color:#f2ede2;border-radius:12px;padding:14px 16px;margin-top:14px;}
+  .calc .k{display:flex;justify-content:space-between;gap:10px;font-size:.84rem;padding:4px 0;color:#d9d2c2;}
+  .calc .k b{color:#e8c97a;font-weight:600;}
+  .calc .k.tot{border-top:1px solid rgba(232,201,122,.3);margin-top:6px;padding-top:8px;font-size:.95rem;}
+  .calc .k.pos b{color:#7fd39a;} .calc .k.neg b{color:#ff8a7e;}
+  .calc .note{font-size:.7rem;color:#9a937f;margin-top:6px;}
+
+  /* photos */
+  .photo-btn{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;padding:14px;border:2px dashed var(--gold);border-radius:12px;background:var(--surface);color:var(--gold-dark);font-weight:600;font-size:.92rem;cursor:pointer;}
+  .photo-btn input{display:none;}
+  .photos{display:grid;gap:12px;margin-top:12px;}
+  .ph{display:grid;grid-template-columns:84px 1fr auto;gap:10px;align-items:center;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:8px;}
+  .ph img{width:84px;height:84px;object-fit:cover;border-radius:8px;display:block;background:#ddd;}
+  .ph input{margin:0;padding:10px;font-size:15px;}
+  .ph button{border:none;background:var(--danger-bg);color:var(--danger);width:36px;height:36px;border-radius:50%;font-size:1.1rem;cursor:pointer;}
+  .check{display:flex;gap:10px;align-items:center;font-size:.84rem;margin-top:12px;}
+  .check input{width:20px;height:20px;accent-color:#8a6f30;}
+  .small{font-size:.76rem;color:var(--ink-soft);}
+
+  /* barre d'envoi */
+  .sendbar{position:fixed;left:0;right:0;bottom:0;background:rgba(247,241,228,.96);backdrop-filter:blur(6px);border-top:1px solid var(--line);padding:10px 16px calc(10px + env(safe-area-inset-bottom));z-index:20;}
+  .sendbar .in{max-width:760px;margin:0 auto;display:flex;gap:10px;align-items:center;}
+  .btn{border:none;border-radius:12px;padding:15px 18px;font:inherit;font-weight:700;font-size:1rem;cursor:pointer;}
+  .btn.main{flex:1;background:linear-gradient(135deg,#c9a24a,#a88332);color:#17130a;}
+  .btn.main:disabled{opacity:.6;cursor:wait;}
+  .btn.ghost{background:transparent;border:1px solid var(--line);color:var(--ink-soft);font-weight:600;font-size:.85rem;padding:15px 12px;}
+
+  .banner{border-radius:12px;padding:12px 14px;margin-bottom:14px;font-size:.84rem;line-height:1.45;}
+  .banner.warn{background:var(--amber-bg);border:1px solid rgba(138,95,18,.3);color:var(--amber);}
+  .banner.err{background:var(--danger-bg);border:1px solid rgba(165,58,48,.35);color:var(--danger);}
+  .banner.ok{background:var(--green-bg);border:1px solid rgba(47,125,70,.35);color:var(--green);}
+  .banner a{color:inherit;font-weight:700;}
+  .banner button{margin-top:8px;border:1px solid currentColor;background:transparent;color:inherit;border-radius:8px;padding:8px 12px;font:inherit;font-weight:600;font-size:.8rem;cursor:pointer;}
+
+  #done{display:none;}
+  #done .card{text-align:center;padding:28px 18px;}
+  #done h2{border:none;font-size:1.6rem;color:var(--green);}
+  #done .links{display:grid;gap:10px;margin:18px 0 6px;}
+  #done .links a{display:block;padding:14px;border-radius:12px;background:#1c1a16;color:#e8c97a;text-decoration:none;font-weight:600;}
+  #done .links a.alt{background:var(--surface);color:var(--accent);border:1px solid var(--line);}
+</style>
+</head>
+<body>
+
+<div id="gate">
+  <h2>Accès outil interne DEKA</h2>
+  <p style="font-size:.85rem;color:var(--ink-soft);">Cette page n'est pas destinée au public. Merci de saisir le code d'accès.</p>
+  <input type="password" id="gateInput" placeholder="Code d'accès" autocomplete="off">
+  <div class="err" id="gateErr"></div>
+  <button onclick="tryUnlock()">Accéder à l'outil</button>
+</div>
+
+<div id="app" style="display:none;">
+<header class="top">
+  <div class="wrap">
+    <div>
+      <h1>Compte-rendu de visite</h1>
+      <div class="sub">DEKA Partners · outil interne</div>
+    </div>
+    <div class="badge" id="dateBadge"></div>
+  </div>
+</header>
+
+<div class="wrap">
+  <div id="setupWarn" class="banner warn" style="display:none;"></div>
+  <div id="draftBanner" class="banner warn" style="display:none;">
+    Brouillon restauré (photos non conservées).
+    <br><button type="button" onclick="clearDraft(true)">Effacer le brouillon</button>
+  </div>
+  <div id="errBanner" class="banner err" style="display:none;"></div>
+
+  <div id="done">
+    <div class="card">
+      <h2>CR envoyé ✓</h2>
+      <p id="doneTxt" style="font-size:.9rem;color:var(--ink-soft);margin:0;"></p>
+      <div class="links" id="doneLinks"></div>
+      <button class="btn main" style="width:100%;margin-top:10px;" onclick="newCR()">Nouveau CR</button>
+    </div>
+  </div>
+
+  <form id="form" autocomplete="off" novalidate>
+
+    <div class="card">
+      <h2>Projet</h2>
+      <label class="f">Où ranger ce CR ? <span class="req">*</span>
+        <select id="projet" name="projet" required>
+          <option value="" disabled selected>Choisir le projet…</option>
+          <option value="NEW">➕ Nouveau bien (classé dans 98, à trier)</option>
+        </select>
+        <span class="hint">Projet existant → <i>0. Pré-étude / 1. CR Visite</i>. La liste se met à jour toute seule.</span>
+      </label>
+    </div>
+
+    <div class="card">
+      <h2>Identification</h2>
+      <label class="f">Adresse du bien <span class="req">*</span>
+        <input type="text" id="adresse" name="Adresse du bien" required placeholder="12 rue Exemple, 17000 La Rochelle">
+      </label>
+      <label class="f">Ville / Secteur
+        <input type="text" name="Ville / Secteur">
+      </label>
+      <div class="f" style="margin-bottom:14px;"><div style="font-size:.8rem;font-weight:600;">Visité par</div>
+        <div class="pills" id="pillsVisite"></div>
+      </div>
+      <label class="f">Agent immobilier / Propriétaire
+        <input type="text" name="Agent immobilier / Propriétaire">
+      </label>
+      <label class="f">Contact <span class="hint">(tél / email)</span>
+        <input type="text" name="Contact (tél / email)" inputmode="email">
+      </label>
+      <div class="f"><div style="font-size:.8rem;font-weight:600;">Source du deal</div>
+        <div class="pills" id="pillsSource"></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>Ressenti à chaud</h2>
+      <label class="f">Avantages <textarea name="Avantages"></textarea></label>
+      <label class="f">Inconvénients <textarea name="Inconvénients"></textarea></label>
+      <label class="f">Situation du vendeur <textarea name="Situation du vendeur"></textarea></label>
+      <label class="f">Améliorations possibles <textarea name="Améliorations possibles"></textarea></label>
+    </div>
+
+    <div class="card">
+      <h2>Grille technique</h2>
+      <div class="legend">++ bon état · + correct · -- à refaire · N/A non vérifié</div>
+      <div id="gridRows"></div>
+    </div>
+
+    <div class="card">
+      <h2>Détails techniques</h2>
+      <div id="detailFields"></div>
+    </div>
+
+    <div class="card">
+      <h2>Estimation chiffrée</h2>
+      <div class="row2">
+        <label class="f">Prix affiché (€) <input type="text" inputmode="decimal" id="prix" name="Prix affiché (€)"></label>
+        <label class="f">Surface (m²) <input type="text" inputmode="decimal" id="surface" name="Surface habitable (m²)"></label>
+      </div>
+      <div class="row2">
+        <label class="f">Nb de pièces <input type="text" inputmode="numeric" name="Nombre de pièces"></label>
+        <label class="f">Budget travaux (€) <input type="text" inputmode="decimal" id="travaux" name="Budget travaux estimé (€)"></label>
+      </div>
+      <div class="row2">
+        <label class="f">Prix m² Immodata (€) <input type="text" inputmode="decimal" name="Prix au m² Immodata (€)"></label>
+        <label class="f">Prix m² concurrent (€) <input type="text" inputmode="decimal" name="Prix au m² concurrent (€)"></label>
+      </div>
+      <label class="f">Prix de revente estimé (€) <input type="text" inputmode="decimal" id="revente" name="Prix de revente estimé (€)"></label>
+      <div class="calc" id="calc">
+        <div class="k"><span>Prix au m²</span><b id="cPm2">—</b></div>
+        <div class="k"><span>Frais de notaire (3 %)</span><b id="cNot">—</b></div>
+        <div class="k"><span>Coût total opération</span><b id="cCout">—</b></div>
+        <div class="k tot" id="cMargeRow"><span>Marge brute estimée</span><b id="cMarge">—</b></div>
+        <div class="k" id="cPctRow"><span>Marge %</span><b id="cPct">—</b></div>
+        <div class="note">Calcul indicatif identique à celui du PDF (marge brute avant IS, sans frais de commercialisation).</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>Photos</h2>
+      <label class="photo-btn">📷 Ajouter des photos
+        <input type="file" id="photoInput" accept="image/*" multiple>
+      </label>
+      <div class="photos" id="photos"></div>
+      <label class="check"><input type="checkbox" id="photosPdf" checked> Mettre aussi les photos en bas du PDF</label>
+      <div class="small" style="margin-top:8px;">Les photos sont rangées dans le dossier <i>2. PHOTOS - VIDEOS - AI</i> du projet. Elles sont réduites automatiquement avant l'envoi.</div>
+    </div>
+
+    <div class="card">
+      <h2>Décision</h2>
+      <label class="f">Conclusion / Décision <textarea name="Conclusion / Décision"></textarea></label>
+      <div class="f"><div style="font-size:.8rem;font-weight:600;">Statut décision</div>
+        <div class="pills" id="pillsStatut"></div>
+      </div>
+      <label class="f">Date de relance <input type="date" name="Date de relance"></label>
+      <label class="f">Prochaine action <textarea name="Prochaine action"></textarea></label>
+      <label class="f">Informations complémentaires <textarea name="Informations complémentaires"></textarea></label>
+    </div>
+  </form>
+</div>
+
+<div class="sendbar" id="sendbar">
+  <div class="in">
+    <button class="btn ghost" type="button" onclick="clearDraft(true)">Vider</button>
+    <button class="btn main" id="sendBtn" type="button" onclick="envoyer()">Envoyer le CR</button>
+  </div>
+</div>
+</div>
+
+<script>
+/* ============================================================
+   CONFIGURATION
+   ENDPOINT = URL "…/exec" de l'application web Apps Script (Code.gs)
+   ============================================================ */
+const ENDPOINT = 'https://script.google.com/macros/s/AKfycbxqZqgxJvgVs43c4J0yX-Vgmns1U49yRANnbeecESmM7ZZ-UvbI2NbjSV16s7UdWPT6yw/exec';
+
+/* ============================================================
+   ACCES (même code que l'outil de chiffrage — empreinte SHA-256)
+   ============================================================ */
+const PASSCODE_HASH = "3df851f8a45465e987bc3c7cadf2cfa4a8b94cb35a5606020da376e77b07fe6b";
+
+async function sha256hex(str){
+  const enc = new TextEncoder().encode(str);
+  const buf = await crypto.subtle.digest('SHA-256', enc);
+  return Array.from(new Uint8Array(buf)).map(b=>b.toString(16).padStart(2,'0')).join('');
+}
+async function tryUnlock(){
+  const val = document.getElementById('gateInput').value;
+  const hash = await sha256hex(val);
+  if(hash === PASSCODE_HASH){
+    try{ sessionStorage.setItem('deka_cr_code', val); }catch(e){}
+    showApp();
+  } else {
+    document.getElementById('gateErr').textContent = "Code incorrect.";
+  }
+}
+document.getElementById('gateInput').addEventListener('keydown', e=>{ if(e.key==='Enter') tryUnlock(); });
+function getCode(){ try{ return sessionStorage.getItem('deka_cr_code') || ''; }catch(e){ return ''; } }
+
+/* ============================================================
+   DONNEES DU FORMULAIRE
+   ============================================================ */
+const GRID_ROWS = [
+  'Façade et toiture','Secteur ABF','Stationnement',
+  'Installation électrique (30mA / différentiel)','Plomberie / salle de bains','Cuisine',
+  "Traces d'humidité",'Défaut de planimétrie des sols',"État porte d'entrée",
+  'Accès toiture / combles - isolation','Charpente (xylophages / humidité)',
+  "Raccordement tout-à-l'égout / eaux pluviales",'Fibre / ADSL'
+];
+const GRID_COLS = [['++','l-pp'],['+','l-p'],['--','l-m'],['N/A','l-na']];
+const DETAIL_FIELDS = [
+  'Nb compteurs électricité','Nb compteurs eau','Nb compteurs gaz','Chaudière - âge / énergie',
+  'Nb fenêtres à changer','Taxe foncière (€)','Diagnostics (DPE...)',
+  'Travaux déjà effectués (date / garantie)','Servitude / droit de passage'
+];
+const VISITE_PAR = ['Rudy','Alexandre','Autre'];
+const SOURCES = ['Agence','Particulier/Leboncoin','Notaire','Réseau perso','Prospection directe','Autre'];
+const STATUTS = ['🟢 À approfondir','🟡 En réflexion','🔴 Archivé','✅ Offre déposée','🏆 Acquis'];
+
+const DRAFT_KEY = 'deka_cr_draft_v1';
+let photos = [];            // [{id, dataUrl, caption}]
+let currentId = null;       // identifiant d'envoi (évite les doublons en cas de réessai)
+let projets = [];
+
+function esc(s){ return String(s).replace(/[&<>"']/g, c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
+
+function buildPills(containerId, name, values){
+  const box = document.getElementById(containerId);
+  box.innerHTML = values.map((v,i)=>{
+    const id = name.replace(/\W/g,'')+'_'+i;
+    return `<input type="radio" name="${esc(name)}" id="${id}" value="${esc(v)}"><label for="${id}">${esc(v)}</label>`;
+  }).join('');
+}
+
+function buildForm(){
+  buildPills('pillsVisite','Visité par',VISITE_PAR);
+  buildPills('pillsSource','Source du deal',SOURCES);
+  buildPills('pillsStatut','Statut décision',STATUTS);
+
+  document.getElementById('gridRows').innerHTML = GRID_ROWS.map((r,i)=>{
+    const opts = GRID_COLS.map(([v,cls],j)=>{
+      const id='g_'+i+'_'+j;
+      return `<input type="radio" name="grid_${i}" id="${id}" value="${esc(v)}"><label class="${cls}" for="${id}">${esc(v)}</label>`;
+    }).join('');
+    return `<div class="grid-row"><div class="nm">${esc(r)}</div><div class="seg">${opts}</div></div>`;
+  }).join('');
+
+  document.getElementById('detailFields').innerHTML = DETAIL_FIELDS.map(f=>
+    `<label class="f">${esc(f)}<input type="text" name="${esc(f)}"></label>`).join('');
+}
+
+/* ============================================================
+   ESTIMATION EN DIRECT (mêmes formules que le PDF)
+   ============================================================ */
+function num(v){
+  if(v===undefined||v===null||String(v).trim()==='') return null;
+  const f = parseFloat(String(v).replace(/[^0-9,.\-]/g,'').replace(',','.'));
+  return isNaN(f)?null:f;
+}
+const eur = v => v===null ? '—' : Math.round(v).toLocaleString('fr-FR')+' €';
+function recalc(){
+  const prix=num(prixEl.value), surf=num(surfEl.value), rev=num(revEl.value), trav=num(travEl.value)||0;
+  const pm2 = (prix!==null && surf) ? prix/surf : null;
+  const not = prix!==null ? prix*0.03 : null;
+  const cout = (prix!==null) ? prix+not+trav : null;
+  const marge = (rev!==null && cout!==null) ? rev-cout : null;
+  const pct = (marge!==null && rev) ? marge/rev : null;
+  cPm2.textContent = pm2!==null ? Math.round(pm2).toLocaleString('fr-FR')+' €/m²' : '—';
+  cNot.textContent = eur(not);
+  cCout.textContent = eur(cout);
+  cMarge.textContent = eur(marge);
+  cPct.textContent = pct!==null ? (pct*100).toFixed(1)+' %' : '—';
+  cMargeRow.className = 'k tot' + (marge===null?'':(marge>=0?' pos':' neg'));
+}
+
+/* ============================================================
+   PROJETS (liste lue en direct dans le Drive via Apps Script)
+   ============================================================ */
+function endpointOk(){ return ENDPOINT && ENDPOINT.indexOf('http')===0; }
+
+async function post(payload){
+  const res = await fetch(ENDPOINT, {
+    method:'POST',
+    headers:{'Content-Type':'text/plain;charset=utf-8'},
+    body: JSON.stringify(Object.assign({code:getCode()}, payload)),
+    redirect:'follow'
+  });
+  return res.json();
+}
+
+function renderProjets(){
+  const sel = document.getElementById('projet');
+  const keep = sel.value;
+  sel.innerHTML = '<option value="" disabled>Choisir le projet…</option><option value="NEW">➕ Nouveau bien (classé dans 98, à trier)</option>' +
+    projets.map(p=>`<option value="${esc(p.id)}">${esc(p.nom)}</option>`).join('');
+  sel.value = keep || '';
+  if(!sel.value) sel.selectedIndex = 0;
+}
+
+async function loadProjets(){
+  try{ const c = localStorage.getItem('deka_cr_projets'); if(c){ projets = JSON.parse(c); renderProjets(); } }catch(e){}
+  if(!endpointOk()) return;
+  try{
+    const r = await post({action:'projets'});
+    if(r.ok){
+      projets = r.projets;
+      try{ localStorage.setItem('deka_cr_projets', JSON.stringify(projets)); }catch(e){}
+      renderProjets();
+      restoreProjetFromDraft();
+    } else if(r.error){ showErr('Liste des projets : '+r.error); }
+  }catch(e){
+    /* hors ligne : on garde la liste en cache */
+  }
+}
+
+// Choisir un projet pré-remplit l'adresse (modifiable)
+document.addEventListener('change', e=>{
+  if(e.target.id==='projet'){
+    const p = projets.find(x=>x.id===e.target.value);
+    const ad = document.getElementById('adresse');
+    if(p && !ad.value.trim()){
+      ad.value = p.nom.replace(/^\s*\d+\s*\.\s*/,'').trim();
+    }
+  }
+});
+
+/* ============================================================
+   PHOTOS (réduites dans le navigateur avant envoi)
+   ============================================================ */
+const MAX_SIDE = 1600, QUALITY = 0.78;
+
+function fileToImage(file){
+  return new Promise((resolve,reject)=>{
+    const url = URL.createObjectURL(file);
+    const img = new Image();
+    img.onload = ()=>{ URL.revokeObjectURL(url); resolve(img); };
+    img.onerror = ()=>{ URL.revokeObjectURL(url); reject(new Error('image illisible')); };
+    img.src = url;
+  });
+}
+async function compress(file){
+  let bmp;
+  try{ bmp = await createImageBitmap(file); }catch(e){ bmp = await fileToImage(file); }
+  const w = bmp.width, h = bmp.height;
+  const k = Math.min(1, MAX_SIDE/Math.max(w,h));
+  const cv = document.createElement('canvas');
+  cv.width = Math.round(w*k); cv.height = Math.round(h*k);
+  cv.getContext('2d').drawImage(bmp,0,0,cv.width,cv.height);
+  return cv.toDataURL('image/jpeg', QUALITY);
+}
+document.getElementById('photoInput').addEventListener('change', async e=>{
+  const files = Array.from(e.target.files||[]);
+  e.target.value='';
+  for(const f of files){
+    try{
+      const dataUrl = await compress(f);
+      photos.push({id:Math.random().toString(36).slice(2), dataUrl, caption:''});
+      renderPhotos();
+    }catch(err){ showErr('Une photo n\'a pas pu être lue : '+f.name); }
+  }
+});
+function renderPhotos(){
+  document.getElementById('photos').innerHTML = photos.map(p=>`
+    <div class="ph" data-id="${p.id}">
+      <img src="${p.dataUrl}" alt="">
+      <input type="text" placeholder="Légende (ex. compteur élec, toiture)" value="${esc(p.caption)}" oninput="setCaption('${p.id}',this.value)">
+      <button type="button" aria-label="Supprimer" onclick="rmPhoto('${p.id}')">✕</button>
+    </div>`).join('');
+}
+function setCaption(id,v){ const p=photos.find(x=>x.id===id); if(p) p.caption=v; }
+function rmPhoto(id){ photos=photos.filter(x=>x.id!==id); renderPhotos(); }
+
+/* ============================================================
+   BROUILLON AUTOMATIQUE (texte uniquement)
+   ============================================================ */
+function collectFields(){
+  const f = document.getElementById('form');
+  const out = {};
+  f.querySelectorAll('input[type=text],input[type=date],textarea').forEach(el=>{ if(el.name) out[el.name]=el.value; });
+  f.querySelectorAll('input[type=radio]:checked').forEach(el=>{ out[el.name]=el.value; });
+  out.__projet = document.getElementById('projet').value;
+  return out;
+}
+let draftTimer=null;
+function saveDraftSoon(){ clearTimeout(draftTimer); draftTimer=setTimeout(()=>{
+  try{ localStorage.setItem(DRAFT_KEY, JSON.stringify(collectFields())); }catch(e){}
+},400); }
+document.addEventListener('input', e=>{ if(e.target.closest('#form')){ saveDraftSoon(); if(['prix','surface','revente','travaux'].includes(e.target.id)) recalc(); } });
+document.addEventListener('change', e=>{ if(e.target.closest('#form')) saveDraftSoon(); });
+
+let pendingProjet = '';
+function restoreDraft(){
+  let d=null;
+  try{ d = JSON.parse(localStorage.getItem(DRAFT_KEY)||'null'); }catch(e){}
+  if(!d) return;
+  const f = document.getElementById('form');
+  let any=false;
+  Object.keys(d).forEach(k=>{
+    if(k==='__projet'){ pendingProjet=d[k]; return; }
+    const radios = f.querySelectorAll('input[type=radio]');
+    const r = Array.from(radios).find(x=>x.name===k && x.value===d[k]);
+    if(r){ r.checked=true; any=true; return; }
+    const el = f.querySelector(`[name="${CSS.escape(k)}"]`);
+    if(el && el.type!=='radio' && d[k]){ el.value=d[k]; any=true; }
+  });
+  if(any){ document.getElementById('draftBanner').style.display='block'; }
+  restoreProjetFromDraft();
+}
+function restoreProjetFromDraft(){
+  if(!pendingProjet) return;
+  const sel=document.getElementById('projet');
+  if(Array.from(sel.options).some(o=>o.value===pendingProjet)){ sel.value=pendingProjet; }
+}
+function clearDraft(askBanner){
+  if(askBanner && !confirm('Vider tous les champs et les photos ?')) return;
+  try{ localStorage.removeItem(DRAFT_KEY); }catch(e){}
+  document.getElementById('form').reset();
+  document.getElementById('projet').selectedIndex = 0;
+  photos=[]; renderPhotos(); pendingProjet=''; currentId=null;
+  document.getElementById('draftBanner').style.display='none';
+  hideErr(); recalc();
+}
+
+/* ============================================================
+   ENVOI
+   ============================================================ */
+function showErr(msg){ const b=document.getElementById('errBanner'); b.textContent=msg; b.style.display='block'; b.scrollIntoView({behavior:'smooth',block:'center'}); }
+function hideErr(){ document.getElementById('errBanner').style.display='none'; }
+
+function uuid(){ return (crypto.randomUUID ? crypto.randomUUID() : Date.now().toString(36)+Math.random().toString(36).slice(2)); }
+
+async function envoyer(){
+  hideErr();
+  if(!endpointOk()){ showErr("L'envoi n'est pas encore configuré (URL Apps Script manquante)."); return; }
+  const projetId = document.getElementById('projet').value;
+  const adresse = document.getElementById('adresse').value.trim();
+  if(!projetId){ showErr('Choisis le projet (ou « Nouveau bien ») tout en haut.'); document.getElementById('projet').focus(); return; }
+  if(!adresse){ showErr("L'adresse du bien est obligatoire."); document.getElementById('adresse').focus(); return; }
+
+  const answers = {};
+  const fields = collectFields();
+  Object.keys(fields).forEach(k=>{ if(k.indexOf('__')!==0 && k.indexOf('grid_')!==0) answers[k]=fields[k]; });
+  answers['Appréciation'] = GRID_ROWS.map((_,i)=>fields['grid_'+i]||'');
+
+  if(!currentId) currentId = uuid();
+  const btn = document.getElementById('sendBtn');
+  btn.disabled=true;
+  btn.textContent = photos.length ? 'Envoi en cours… (photos, quelques secondes)' : 'Envoi en cours…';
+  try{
+    const r = await post({
+      action:'envoyer', id:currentId, dateIso:new Date().toISOString(), projetId,
+      answers, photosDansPdf: document.getElementById('photosPdf').checked,
+      photos: photos.map(p=>({caption:p.caption, data:p.dataUrl.split(',')[1]}))
+    });
+    if(!r.ok) throw new Error(r.error||'Erreur inconnue');
+    showDone(r);
+  }catch(err){
+    showErr("Envoi non confirmé : "+err.message+" — tes réponses sont toujours là, appuie à nouveau sur « Envoyer » (pas de doublon).");
+    btn.disabled=false; btn.textContent='Réessayer l\'envoi';
+  }
+}
+
+function showDone(r){
+  try{ localStorage.removeItem(DRAFT_KEY); }catch(e){}
+  document.getElementById('form').style.display='none';
+  document.getElementById('sendbar').style.display='none';
+  document.getElementById('draftBanner').style.display='none';
+  const links=[];
+  if(r.pdfUrl) links.push(`<a href="${esc(r.pdfUrl)}" target="_blank" rel="noopener">📄 Ouvrir le PDF</a>`);
+  if(r.dossierUrl) links.push(`<a class="alt" href="${esc(r.dossierUrl)}" target="_blank" rel="noopener">📁 Ouvrir le dossier « ${esc(r.dossierNom||'')} »</a>`);
+  if(r.photosUrl) links.push(`<a class="alt" href="${esc(r.photosUrl)}" target="_blank" rel="noopener">🖼️ Dossier photos (${r.nbPhotos})</a>`);
+  document.getElementById('doneLinks').innerHTML = links.join('');
+  document.getElementById('doneTxt').textContent = (r.projetNom ? 'Rangé dans le projet « '+r.projetNom+' ». ' : 'Rangé dans « 98 – PDF générés » (à trier). ') + 'La ligne de suivi a été ajoutée.';
+  document.getElementById('done').style.display='block';
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+function newCR(){
+  document.getElementById('done').style.display='none';
+  document.getElementById('form').style.display='block';
+  document.getElementById('sendbar').style.display='block';
+  const btn=document.getElementById('sendBtn'); btn.disabled=false; btn.textContent='Envoyer le CR';
+  clearDraft(false);
+  window.scrollTo({top:0});
+}
+
+/* ============================================================
+   DEMARRAGE
+   ============================================================ */
+const prixEl=document.getElementById('prix'), surfEl=document.getElementById('surface'),
+      revEl=document.getElementById('revente'), travEl=document.getElementById('travaux');
+const cPm2=document.getElementById('cPm2'), cNot=document.getElementById('cNot'), cCout=document.getElementById('cCout'),
+      cMarge=document.getElementById('cMarge'), cPct=document.getElementById('cPct'), cMargeRow=document.getElementById('cMargeRow');
+
+let started=false;
+function showApp(){
+  document.getElementById('gate').style.display='none';
+  document.getElementById('app').style.display='block';
+  if(started) return; started=true;
+  document.getElementById('dateBadge').textContent = new Date().toLocaleDateString('fr-FR',{weekday:'long',day:'numeric',month:'long'});
+  buildForm();
+  restoreDraft();
+  recalc();
+  if(!endpointOk()){
+    const w=document.getElementById('setupWarn');
+    w.textContent="Page en cours de configuration : l'envoi sera activé dès que l'URL Apps Script est renseignée.";
+    w.style.display='block';
+  }
+  loadProjets();
+}
+if(getCode()){ showApp(); }
+</script>
+</body>
+</html>
