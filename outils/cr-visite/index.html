@@ -179,7 +179,12 @@
 
   <form id="form" autocomplete="off" novalidate>
 
-    <div class="card">
+    <div class="card" id="editCard" style="padding:12px 16px;">
+      <div id="editBanner" class="banner warn" style="display:none;margin:0 0 10px;"></div>
+      <button type="button" class="btn cam" style="width:100%;" id="editBtn" onclick="openCRList()">✏️ Modifier un CR existant</button>
+    </div>
+
+    <div class="card" id="projetCard">
       <h2>Projet</h2>
       <label class="f">Où ranger ce CR ? <span class="req">*</span>
         <select id="projet" name="projet" required>
@@ -452,11 +457,79 @@ async function loadProjets(){
   }
 }
 
+/* ---------- Modification d'un CR existant ---------- */
+let editId = null;
+let modalMode = 'folder';
+async function openCRList(){
+  if(!endpointOk()) return;
+  modalMode = 'cr';
+  document.querySelector('#fpModal .hd h3').textContent = 'Modifier un CR';
+  document.getElementById('fpCrumb').textContent = 'Les 40 derniers CR envoyés depuis cet outil (les anciens CR ne sont pas modifiables).';
+  document.getElementById('fpOk').style.display = 'none';
+  document.getElementById('fpModal').style.display = 'flex';
+  document.getElementById('fpList').innerHTML = '<div class="empty">Chargement…</div>';
+  try{
+    const r = await post({action:'liste'});
+    if(!r.ok) throw new Error(r.error||'erreur');
+    document.getElementById('fpList').innerHTML = r.crs.length
+      ? r.crs.map(c=>'<div class="it" onclick="loadCR(\''+c.id+'\')">📄 <span>'+esc(c.nom)+'</span></div>').join('')
+      : '<div class="empty">Aucun CR modifiable pour l\'instant : seuls les CR envoyés à partir de maintenant sont enregistrés.</div>';
+  }catch(e){
+    document.getElementById('fpList').innerHTML='<div class="empty">Impossible de lire la liste : '+esc(e.message)+'</div>';
+  }
+}
+async function loadCR(id){
+  document.getElementById('fpList').innerHTML = '<div class="empty">Chargement du CR…</div>';
+  try{
+    const r = await post({action:'charger', crId:id});
+    if(!r.ok) throw new Error(r.error||'erreur');
+    closeBrowser(false);
+    applyCR(r.cr, id);
+  }catch(e){
+    document.getElementById('fpList').innerHTML='<div class="empty">Chargement impossible : '+esc(e.message)+'</div>';
+  }
+}
+function applyCR(cr, id){
+  clearDraft(false);
+  editId = id;
+  const f = document.getElementById('form');
+  const a = cr.answers || {};
+  Object.keys(a).forEach(k=>{
+    if(k==='Appréciation'){
+      (a[k]||[]).forEach((v,i)=>{ const r = f.querySelector('input[name="grid_'+i+'"][value="'+v+'"]'); if(r) r.checked=true; });
+      return;
+    }
+    const els = f.querySelectorAll('[name="'+CSS.escape(k)+'"]');
+    els.forEach(el=>{ if(el.type==='radio'){ el.checked = (el.value===a[k]); } else { el.value = a[k]; } });
+  });
+  document.getElementById('photosPdf').checked = cr.photosDansPdf !== false;
+  document.getElementById('projetCard').style.display='none';
+  document.getElementById('editBtn').style.display='none';
+  const b = document.getElementById('editBanner');
+  b.innerHTML = '✏️ Modification du CR « '+esc(cr.adresse||'')+' ». Les photos déjà envoyées sont conservées ; tu peux en ajouter. Le PDF est remplacé et la ligne du suivi mise à jour.<br><button type="button" onclick="cancelEdit()">Annuler la modification</button>';
+  b.style.display='block';
+  document.getElementById('sendBtn').textContent='Enregistrer les modifications';
+  recalc();
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+function cancelEdit(){
+  editId = null;
+  clearDraft(false);
+  document.getElementById('projetCard').style.display='';
+  document.getElementById('editBtn').style.display='';
+  document.getElementById('editBanner').style.display='none';
+  document.getElementById('sendBtn').textContent='Envoyer le CR';
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
 /* ---------- Navigateur de dossiers (destination précise) ---------- */
 let folderChoice = null;      // {id, nom, chemin:[...]}
 let browsing = null;          // dernier résultat de l'action 'dossiers'
 let prevProjet = '';
 async function openBrowser(parentId){
+  modalMode = 'folder';
+  document.querySelector('#fpModal .hd h3').textContent = 'Choisir le dossier';
+  document.getElementById('fpOk').style.display = '';
   document.getElementById('fpModal').style.display='flex';
   document.getElementById('fpList').innerHTML='<div class="empty">Chargement…</div>';
   try{
@@ -491,6 +564,7 @@ function showFolderChoice(){
 }
 function closeBrowser(cancel){
   document.getElementById('fpModal').style.display='none';
+  if(modalMode==='cr') return;
   if(cancel && !folderChoice){ const s=document.getElementById('projet'); s.value = prevProjet && prevProjet!=='FOLDER' ? prevProjet : ''; if(!s.value) s.selectedIndex=0; }
   showFolderChoice();
 }
@@ -571,7 +645,7 @@ function collectFields(){
   return out;
 }
 let draftTimer=null;
-function saveDraftSoon(){ clearTimeout(draftTimer); draftTimer=setTimeout(()=>{
+function saveDraftSoon(){ if(editId) return; clearTimeout(draftTimer); draftTimer=setTimeout(()=>{
   try{ localStorage.setItem(DRAFT_KEY, JSON.stringify(collectFields())); }catch(e){}
 },400); }
 document.addEventListener('input', e=>{ if(e.target.closest('#form')){ saveDraftSoon(); if(['prix','surface','revente','travaux'].includes(e.target.id)) recalc(); } });
@@ -623,8 +697,8 @@ async function envoyer(){
   if(!endpointOk()){ showErr("L'envoi n'est pas encore configuré (URL Apps Script manquante)."); return; }
   const projetId = document.getElementById('projet').value;
   const adresse = document.getElementById('adresse').value.trim();
-  if(!projetId){ showErr('Choisis le projet (ou « Nouveau bien ») tout en haut.'); document.getElementById('projet').focus(); return; }
-  if(projetId==='FOLDER' && !folderChoice){ openBrowser(null); return; }
+  if(!projetId && !editId){ showErr('Choisis le projet (ou « Nouveau bien ») tout en haut.'); document.getElementById('projet').focus(); return; }
+  if(!editId && projetId==='FOLDER' && !folderChoice){ openBrowser(null); return; }
   if(!adresse){ showErr("L'adresse du bien est obligatoire."); document.getElementById('adresse').focus(); return; }
 
   const answers = {};
@@ -638,7 +712,7 @@ async function envoyer(){
   btn.textContent = photos.length ? 'Envoi en cours… (photos, quelques secondes)' : 'Envoi en cours…';
   try{
     const r = await post({
-      action:'envoyer', id:currentId, dateIso:new Date().toISOString(), projetId: projetId==='FOLDER'?'NEW':projetId, dossierId: projetId==='FOLDER'?folderChoice.id:'',
+      action:'envoyer', id:currentId, dateIso:new Date().toISOString(), editId: editId||'', projetId: projetId==='FOLDER'?'NEW':projetId, dossierId: (!editId && projetId==='FOLDER')?folderChoice.id:'',
       answers, photosDansPdf: document.getElementById('photosPdf').checked,
       photos: photos.map(p=>({caption:p.caption, data:p.dataUrl.split(',')[1]}))
     });
@@ -660,12 +734,17 @@ function showDone(r){
   if(r.dossierUrl) links.push(`<a class="alt" href="${esc(r.dossierUrl)}" target="_blank" rel="noopener">📁 Ouvrir le dossier « ${esc(r.dossierNom||'')} »</a>`);
   if(r.photosUrl) links.push(`<a class="alt" href="${esc(r.photosUrl)}" target="_blank" rel="noopener">🖼️ Dossier photos (${r.nbPhotos})</a>`);
   document.getElementById('doneLinks').innerHTML = links.join('');
-  document.getElementById('doneTxt').textContent = (r.projetNom ? 'Rangé dans le projet « '+r.projetNom+' ». ' : 'Rangé dans « '+(r.dossierNom||'98')+' ». ') + 'La ligne de suivi a été ajoutée.';
+  document.querySelector('#done h2').textContent = r.modifie ? 'CR mis à jour ✓' : 'CR envoyé ✓';
+  document.getElementById('doneTxt').textContent = (r.modifie ? 'Ancien PDF remplacé (récupérable dans la corbeille Drive 30 jours). ' : '') + (r.projetNom ? 'Rangé dans le projet « '+r.projetNom+' ». ' : 'Rangé dans « '+(r.dossierNom||'98')+' ». ') + 'La ligne de suivi a été ajoutée.';
   document.getElementById('done').style.display='block';
   window.scrollTo({top:0,behavior:'smooth'});
 }
 
 function newCR(){
+  editId = null;
+  document.getElementById('projetCard').style.display='';
+  document.getElementById('editBtn').style.display='';
+  document.getElementById('editBanner').style.display='none';
   document.getElementById('done').style.display='none';
   document.getElementById('form').style.display='block';
   document.getElementById('sendbar').style.display='block';
