@@ -676,3 +676,401 @@ Electricite,Electricite logement neuf complet (tableau+reseau+prises) au m2,m2,7
 Plomberie,Plomberie neuve complete logement (au m2 habitable),m2,50,80,110,Travaux.com/Usineadesign,Estimation marche - Construction neuve - installation complete fourniture+pose,,0
 Terrassement,Viabilisation raccordement eau/electricite/telecom terrain a batir,forfait,5000,9000,15000,Afedim/Prix-Pose/Celimo,Estimation marche - Construction neuve - hors assainissement collectif si deja en limite de propriete,,0
 Couvreur,Raccord de zinguerie autour d'un conduit de cheminee,u,450,600,850,Estimation marche (extrapole depuis devis reels similaires 600EUR),Estimation marche - libelle exact requis par le code,,0
+Paysagiste,Deplacement et debroussaillage/tonte (forfait global detail illisible),forfait,115,115,115,LP_GREEN_EI D2611-1 2026,Devis reel detail ligne a ligne illisible (OCR) total TVA non applicable art 293B,,0,2026-11-04
+Facade,Echafaudage facade (montage et demontage),forfait,950,950,950,HORIZON_RENOVATION 22102026-1 2026,Devis reel ravalement Le Jaures Aytre,,0,2026-10-22
+Facade,Nettoyage haute pression facade avant traitement,m2,14.35,14.35,14.35,HORIZON_RENOVATION 22102026-1 2026,Devis reel,,0,2026-10-22
+Facade,Mise en oeuvre peinture facade impermeable (fixateur + 2 couches),m2,29.50,29.50,29.50,HORIZON_RENOVATION 22102026-1 2026,Devis reel RECAFLEX semi-epais,,0,2026-10-22
+Peinture,Poncage et peinture sous-faces volige bois exterieur,ml,29.50,29.50,29.50,HORIZON_RENOVATION 22102026-1 2026,Devis reel,,0,2026-10-22
+Peinture,Poncage et peinture structure metallique exterieure (veranda),forfait,900,900,900,HORIZON_RENOVATION 22102026-1 2026,Devis reel,,0,2026-10-22
+Facade,Ravalement complet facade (anti-mousse+nettoyage+rebouchage+2 couches peinture),forfait,4800,4800,4800,FRANCIS_MULTISERVICE devis44 2026,Devis reel 2 facades 2 pignons tours fenetres+muret - devis concurrent a Horizon Renovation meme chantier,,0,2026-10-20
+Peinture,Depose revetements muraux et lessivage avant peinture,m2,11.50,11.50,11.50,HORIZON_RENOVATION 22102026-2 2026,Devis reel,,0,2026-10-22
+Peinture,Ratissage enduit platre et reprise de fissures murs/cloisons,m2,16.45,16.45,16.45,HORIZON_RENOVATION 22102026-2 2026,Devis reel,,0,2026-10-22
+Peinture,Poncage et impression preparation peinture murs/plafonds,m2,7.50,7.50,7.50,HORIZON_RENOVATION 22102026-2 2026,Devis reel,,0,2026-10-22
+Peinture,Peinture finition plafonds 2 couches veloute,m2,14.50,14.50,14.50,HORIZON_RENOVATION 22102026-2 2026,Devis reel,,0,2026-10-22
+Peinture,Peinture finition murs 2 couches mat,m2,14.50,14.50,14.50,HORIZON_RENOVATION 22102026-2 2026,Devis reel,,0,2026-10-22
+Peinture,Decapage et peinture porte interieure bois existante,u,110,110,110,HORIZON_RENOVATION 22102026-2 2026,Devis reel,,0,2026-10-22
+Peinture,Poncage et peinture radiateur (finition satinee haute temperature),u,140,140,140,HORIZON_RENOVATION 22102026-2 2026,Devis reel,,0,2026-10-22
+Plaquiste,Demolition cloisons briques portes et placards,forfait,5500,5500,5500,HORIZON_RENOVATION 22102026-3 2026,Devis reel,,0,2026-10-22
+Plaquiste,Plafond rampant BA13 entre poutres,m2,38.50,38.50,38.50,HORIZON_RENOVATION 22102026-3 2026,Devis reel etage,,0,2026-10-22
+Isolation,Isolant reflecteur alveolaire plafond rampant ep125mm,m2,17.35,17.35,17.35,HORIZON_RENOVATION 22102026-3 2026,Devis reel Hybris 31 R4.65,,0,2026-10-22
+Plaquiste,Plafond horizontal BA13 autoporte,m2,31.45,31.45,31.45,HORIZON_RENOVATION 22102026-3 2026,Devis reel cuisine,,0,2026-10-22
+Plaquiste,Doublage BA13 sur ossature metallique avec isolant 45mm,m2,38.35,38.35,38.35,HORIZON_RENOVATION 22102026-3 2026,Devis reel,,0,2026-10-22
+Plaquiste,Bande a joint cloisons et jonctions,m2,7.50,7.50,7.50,HORIZON_RENOVATION 22102026-3 2026,Devis reel,,0,2026-10-22
+Architecture,Realisation de 4 estimatifs chiffrage avant travaux,forfait,800,800,800,NOGUEIRA_GUILLAUME BRWE8653828DCE5 2026,Devis reel OPUS HABITAT,,0,2026-01-29
+EtudeSol,DICT prealable auprès des concessionnaires de reseaux,u,80,80,80,ALIOS PNI257155-G1PGC 2025,Devis reel - etude geotechnique G1 PGC,,0,2025-08-07
+EtudeSol,Amenee et repli du materiel de sondage,u,200,200,200,ALIOS PNI257155-G1PGC 2025,Devis reel - etude geotechnique G1 PGC,,0,2025-08-07
+EtudeSol,Essai penetration dynamique a -6/-8m ou refus,u,70,70,70,ALIOS PNI257155-G1PGC 2025,Devis reel - etude geotechnique G1 PGC,,0,2025-08-07
+EtudeSol,Forage a la tariere mecanique a -6/-8m ou refus,u,70,70,70,ALIOS PNI257155-G1PGC 2025,Devis reel - etude geotechnique G1 PGC,,0,2025-08-07
+EtudeSol,Determination des limites d'Atterberg (labo),u,150,150,150,ALIOS PNI257155-G1PGC 2025,Devis reel - etude geotechnique G1 PGC,,0,2025-08-07
+EtudeSol,Suivi etude et rapport geotechnique G1 PGC,u,350,350,350,ALIOS PNI257155-G1PGC 2025,Devis reel - etude geotechnique G1 PGC,,0,2025-08-07
+Assainissement,Etude de faisabilite assainissement non collectif groupe (3 logements),forfait,500,500,500,AGE Amenagement Geologie Environnement N3296 2025,Devis reel - etude faisabilite ANC groupee 3 lots 11 EH,,0,2025-01-28
+Assainissement,Intervention sur site recueil des donnees et contraintes,forfait,100,100,100,NCA Environnement 00004582 2026,Devis reel - pre-etude faisabilite ANC 3 lots,,0,2026-01-23
+Assainissement,Etude de sol : sondages tariere a main + tests permeabilite Porchet,forfait,250,250,250,NCA Environnement 00004582 2026,Devis reel - pre-etude faisabilite ANC 3 lots,,0,2026-01-23
+Geometre,Leve topographique du perimetre d'emprise ANC,forfait,250,250,250,NCA Environnement 00004582 2026,Devis reel - pre-etude faisabilite ANC 3 lots,,0,2026-01-23
+Assainissement,Redaction etude et rapport de faisabilite ANC (filiere schema enveloppe financiere),forfait,600,600,600,NCA Environnement 00004582 2026,Devis reel - pre-etude faisabilite ANC 3 lots,,0,2026-01-23
+Electricite,Accompagnement technique et administratif dossier GEREDIS (avec visite site),forfait,350,350,350,ATC 2026-H1 2026,Devis reel - etude colonne montante transformation en 4 logements + communs,,0,2026-01-06
+Electricite,Demande formulaire DT avec releve reseaux existants,forfait,150,150,150,ATC 2026-H1 2026,Devis reel - etude colonne montante,,0,2026-01-06
+Electricite,Plans d'execution electriques + note de calcul colonne montante,forfait,650,650,650,ATC 2026-H1 2026,Devis reel - etude colonne montante,,0,2026-01-06
+Electricite,Edition CCTP et DPGF electrique pour consultation entreprises,forfait,800,800,800,ATC 2026-H1 2026,Devis reel - etude colonne montante,,0,2026-01-06
+Electricite,Analyse des offres des entreprises (electricite),forfait,150,150,150,ATC 2026-H1 2026,Devis reel - etude colonne montante,,0,2026-01-06
+Electricite,Ingenierie fluides CFO/CFA - AVP schemas electriques et dossier ENEDIS (5 points de comptage),forfait,3250,3250,3250,DELTA ENERGIES 2026-001 2026,Devis reel - rehabilitation immeuble 4 logements Niort,,0,2026-01-13
+Electricite,Realisation d'un CCTP electrique (consultation entreprises),forfait,1550,1550,1550,DELTA ENERGIES 2026-001 2026,Devis reel - rehabilitation immeuble 4 logements Niort,,0,2026-01-13
+Electricite,Mission BE electricite infrastructures collectives + raccordement ENEDIS (division immeuble R+3),forfait,2200,2200,2200,SARL ACE 2025,Devis reel - division immeuble en lots 27 rue de l'Arsenal Niort,,0,2025-12-23
+Plomberie,Tranchee dans sol beton pour passage vidange et arrivee d'eau,forfait,880,880,880,R.S Confort Sanitaire - Le Jaures 2026,Devis reel - salle d'eau parentale,,0,2026-07-31
+Plomberie,Rebouchage tranchee,forfait,220,220,220,R.S Confort Sanitaire - Le Jaures 2026,Devis reel,,0,2026-07-31
+Plomberie,Passage tuyauterie eau en PER (vidange EC/EF),forfait,440,440,440,R.S Confort Sanitaire - Le Jaures 2026,Devis reel - prix constant sur 5 postes du devis,,0,2026-07-31
+Plomberie,Pose petit support Geberit (bati-support WC),forfait,220,240,280,R.S Confort Sanitaire - Le Jaures 2026,Devis reel - prix variable selon piece,,0,2026-07-31
+Plomberie,Pose WC suspendu,forfait,55,55,55,R.S Confort Sanitaire - Le Jaures 2026,Devis reel,,0,2026-07-31
+Plomberie,Pose colonne de douche,forfait,55,55,55,R.S Confort Sanitaire - Le Jaures 2026,Devis reel,,0,2026-07-31
+Plomberie,Pose meuble vasque + raccordement,forfait,220,220,220,R.S Confort Sanitaire - Le Jaures 2026,Devis reel,,0,2026-07-31
+Plomberie,Pose bac a douche,forfait,165,165,165,R.S Confort Sanitaire - Le Jaures 2026,Devis reel,,0,2026-07-31
+Plomberie,Pose paroi de douche (main d'oeuvre seule),forfait,220,220,220,R.S Confort Sanitaire - Le Jaures 2026,Devis reel - ATTENTION prix fourniture de la paroi non chiffre seule la pose l'est,,0,2026-07-31
+Plomberie,Depose WC existant,forfait,55,55,55,R.S Confort Sanitaire - Le Jaures 2026,Devis reel,,0,2026-07-31
+Plomberie,Depose radiateur + tuyauterie,forfait,220,220,220,R.S Confort Sanitaire - Le Jaures 2026,Devis reel,,0,2026-07-31
+Plomberie,Depose salle d'eau et WC existants,forfait,330,330,330,R.S Confort Sanitaire - Le Jaures 2026,Devis reel,,0,2026-07-31
+Plomberie,Depose chauffe-eau + vidange,forfait,220,220,220,R.S Confort Sanitaire - Le Jaures 2026,Devis reel,,0,2026-07-31
+Plomberie,Pose chauffe-eau + raccordement,forfait,220,220,220,R.S Confort Sanitaire - Le Jaures 2026,Devis reel,,0,2026-07-31
+Plomberie,Pose radiateur seche-serviette + modification reseaux,forfait,220,220,220,R.S Confort Sanitaire - Le Jaures 2026,Devis reel,,0,2026-07-31
+Plomberie,Support Geberit bati-support (fourniture),u,800,800,800,R.S Confort Sanitaire - Le Jaures 2026,Devis reel,,0,2026-07-31
+Plomberie,Cuvette WC suspendu Sava Aquance (fourniture),u,220,220,220,R.S Confort Sanitaire - Le Jaures 2026,Devis reel,,0,2026-07-31
+Plomberie,Plaque de commande Sigma 01 Geberit (fourniture),u,150,150,150,R.S Confort Sanitaire - Le Jaures 2026,Devis reel,,0,2026-07-31
+Sanitaire,Meuble vasque Ulysse 2 tiroirs 120cm (Porcher blanc),u,1500,1500,1500,R.S Confort Sanitaire - Le Jaures 2026,Devis reel - fourniture,,0,2026-07-31
+Sanitaire,Meuble vasque Cast 2 tiroirs 80cm blanc (Aquance),u,700,700,700,R.S Confort Sanitaire - Le Jaures 2026,Devis reel - fourniture,,0,2026-07-31
+Sanitaire,Robinet vasque 580 Coolstart Hansgrohe,u,350,350,350,R.S Confort Sanitaire - Le Jaures 2026,Devis reel - fourniture,,0,2026-07-31
+Sanitaire,Colonne de douche Ecosmart Hansgrohe,u,850,850,850,R.S Confort Sanitaire - Le Jaures 2026,Devis reel - fourniture,,0,2026-07-31
+Sanitaire,Bac a douche Ideal Standard blanc 200x90,u,1350,1350,1350,R.S Confort Sanitaire - Le Jaures 2026,Devis reel - fourniture,,0,2026-07-31
+Sanitaire,Bac a douche Beta ultra-plat 120x80,u,650,650,650,R.S Confort Sanitaire - Le Jaures 2026,Devis reel - fourniture,,0,2026-07-31
+Sanitaire,Bac a douche Beta ultra-plat rectangulaire 140x80,u,750,750,750,R.S Confort Sanitaire - Le Jaures 2026,Devis reel - fourniture,,0,2026-07-31
+Sanitaire,Miroir LED anti-buee 120cm (Aquance),u,450,450,450,R.S Confort Sanitaire - Le Jaures 2026,Devis reel - fourniture,,0,2026-07-31
+Sanitaire,Seche-serviette standard 1062W (Aquance),u,400,400,400,R.S Confort Sanitaire - Le Jaures 2026,Devis reel - fourniture,,0,2026-07-31
+Sanitaire,Chauffe-eau extra-plat Atlantic 80L,u,1300,1300,1300,R.S Confort Sanitaire - Le Jaures 2026,Devis reel - fourniture,,0,2026-07-31
+Demolition,Demolition cloisons existantes selon nouvelle implantation des pieces,forfait,700,700,700,SARL DAT - Devis N3 2026,Devis reel - 4 Rue Jean Jaures Aytre,,0,2026-06-22
+Demolition,Sciage et demolition de muret pour creation place de parking + evacuation gravats,forfait,600,600,600,SARL DAT - Devis N1 2026,Devis reel - 4 Rue Jean Jaures Aytre,,0,2026-06-22
+Exterieur,Enlevement vegetation/souche + evacuation dechets verts,forfait,400,400,400,SARL DAT - Devis N1 2026,Devis reel,,0,2026-06-22
+Exterieur,Creation place de stationnement - finition gravier,m2,40,40,40,SARL DAT - Devis N1 2026,Devis reel - option gravier parmi 3 variantes,,0,2026-06-22
+Exterieur,Creation place de stationnement - finition enrobe noir,m2,80,80,80,SARL DAT - Devis N1 2026,Devis reel - option enrobe parmi 3 variantes,,0,2026-06-22
+Exterieur,Creation place de stationnement - finition dalle beton,m2,120,120,120,SARL DAT - Devis N1 2026,Devis reel - option dalle beton parmi 3 variantes,,0,2026-06-22
+Demolition,Demolition d'une marquise + evacuation dechets,forfait,200,200,200,SARL DAT - Devis N1 2026,Devis reel,,0,2026-06-22
+Demolition,Demolition cloisons existantes gros oeuvre selon nouvelle implantation,forfait,800,800,800,SARL DAT - Devis N2 2026,Devis reel,,0,2026-06-22
+Demolition,Depose de la cuisine existante,forfait,300,300,300,SARL DAT - Devis N2 2026,Devis reel,,0,2026-06-22
+Demolition,Demolition rangements du couloir jusqu'a la porte d'entree,forfait,200,200,200,SARL DAT - Devis N2 2026,Devis reel,,0,2026-06-22
+Demolition,Demolition cheminee + rangements de la suite parentale,forfait,500,500,500,SARL DAT - Devis N2 2026,Devis reel,,0,2026-06-22
+Terrassement,Amene et repli du materiel de chantier,forfait,450,450,450,SARL ROCHE TP - Devis 00001932 2026,Devis reel - viabilisation 3 parcelles Niort,,0,2026-03-30
+Demolition,Sciage et demolition mur d'entree de parcelle (environ 4ml),forfait,185,185,185,SARL ROCHE TP - Devis 00001932 2026,Devis reel,,0,2026-03-30
+Exterieur,Arrachage et evacuation d'arbustes en entree de chantier,u,75,75,75,SARL ROCHE TP - Devis 00001932 2026,Devis reel,,0,2026-03-30
+Terrassement,Terrassement terre vegetale 25cm + evacuation des terres,m2,12.85,12.85,12.85,SARL ROCHE TP - Devis 00001932 2026,Devis reel,,0,2026-03-30
+Demolition,Demolition de paves et bordures existants,m2,7.15,7.15,7.15,SARL ROCHE TP - Devis 00001932 2026,Devis reel,,0,2026-03-30
+Terrassement,Fourniture et pose geotextile + compactage du fond de forme,m2,2.2,2.2,2.2,SARL ROCHE TP - Devis 00001932 2026,Devis reel,,0,2026-03-30
+Terrassement,Fourniture et pose de materiaux 0/31.5 (voirie/espace vert),m2,18,18,18,SARL ROCHE TP - Devis 00001932 2026,Devis reel,,0,2026-03-30
+Demolition,Demolition d'un preau existant (environ 45m2) + evacuation des deblais,forfait,3550,3550,3550,SARL ROCHE TP - Devis 00001932 2026,Devis reel,,0,2026-03-30
+Terrassement,Tranchee filet de protection remblaiement et evacuation deblais (passage reseaux),ml,75,75,75,SARL ROCHE TP - Devis 00001932 2026,Devis reel,,0,2026-03-30
+Assainissement,Fourniture et pose tuyau PVC diam 125 (tabouret de branchement),ml,25,25,25,SARL ROCHE TP - Devis 00001932 2026,Devis reel,,0,2026-03-30
+Assainissement,Fourniture et pose tabouret de branchement reseau EU diam 250 + tampon fonte C250,u,285,285,285,SARL ROCHE TP - Devis 00001932 2026,Devis reel,,0,2026-03-30
+Electricite,Fourniture et pose fourreau electrique diam 90 rouge + sablage,ml,13,13,13,SARL ROCHE TP - Devis 00001932 2026,Devis reel - reseau VRD,,0,2026-03-30
+Domotique,Fourniture et pose de 2 fourreaux telecom diam 45 + aiguillage + sablage,ml,10.65,10.65,10.65,SARL ROCHE TP - Devis 00001932 2026,Devis reel - reseau France Telecom,,0,2026-03-30
+Domotique,Fourniture et pose regard France Telecom 30x30 + sablage,u,125,125,125,SARL ROCHE TP - Devis 00001932 2026,Devis reel,,0,2026-03-30
+Eau,Fourniture et pose conduite AEP diam 25 PE PN16 (fourreau bleu diam 63) + sablage,ml,13.5,13.5,13.5,SARL ROCHE TP - Devis 00001932 2026,Devis reel,,0,2026-03-30
+Demolition,Demolition d'un mur existant entre deux parcelles,ml,48.35,48.35,48.35,SARL ROCHE TP - Devis 00001932 2026,Devis reel,,0,2026-03-30
+Facade,Mise en place d'un echafaudage (protection de chantier),m2,13,13,13,ARTES ENDUIT - Devis N21 2026,Devis reel - 4 bis rue Jean Jaures Aytre,,0,2026-06-28
+Facade,Nettoyage traitement rinçage basse pression traitement fissures et 2 couches peinture facade,m2,37,37,37,ARTES ENDUIT - Devis N21 2026,Devis reel,,0,2026-06-28
+Demolition,Depose cloisons briques portes bâtis plinthes cuisine placards entree et cheminee,forfait,3000,3000,3000,SARL Prestige Peintures - Devis N1008 2026,Devis reel - 22 rue de la commune La Rochelle,,0,2026-06-30
+Plaquiste,Plafond rampant chambre parentale plaques de platre sur ossature metallique suspendue,m2,53.5,53.5,53.5,SARL Prestige Peintures - Devis N1008 2026,Devis reel,,0,2026-06-30
+Plaquiste,Doublage sur ossature metallique (suite parentale cuisine salon),m2,59,59,59,SARL Prestige Peintures - Devis N1008 2026,Devis reel,,0,2026-06-30
+Isolation,Panneau semi-rigide pare-vapeur kraft laine minerale ep. 120mm (doublage),m2,25.9,25.9,25.9,SARL Prestige Peintures - Devis N1008 2026,Devis reel,,0,2026-06-30
+Plaquiste,Plus-value plaque de platre hydrofuge (etage),m2,8,8,8,SARL Prestige Peintures - Devis N1008 2026,Devis reel,,0,2026-06-30
+Plaquiste,Cloison de distribution dressing/WC/chambre BA13 + laine de verre 45mm,m2,54.26,54.26,54.26,SARL Prestige Peintures - Devis N1008 2026,Devis reel,,0,2026-06-30
+Menuiserie,Bloc porte isoplane 83cm (fourniture et pose),u,140,140,140,SARL Prestige Peintures - Devis N1008 2026,Devis reel - tarif a definir selon modele choisi (indicatif),,0,2026-06-30
+Plaquiste,Bandes placo joints du collage a la finition (sans ponçage),m2,5.9,5.9,5.9,SARL Prestige Peintures - Devis N1008 2026,Devis reel,,0,2026-06-30
+Couvreur,Bac acier isole 40mm polyurethane (bardage/couverture),m2,26.95,26.95,26.95,EI COLLARD GAETAN 05-26 2025,Devis reel - pose toiture grandes hauteurs,,0,2025-05-27
+Couvreur,Visserie 6.3x110 avec cavalier RAL bac acier,u,1.12,1.12,1.12,EI COLLARD GAETAN 05-26 2025,Devis reel,,0,2025-05-27
+Couvreur,Bavette faitage et rive (ensemble),forfait,485,485,485,EI COLLARD GAETAN 05-26 2025,Devis reel,,0,2025-05-27
+Couvreur,Forfait montage toiture a 3 personnels,forfait,7490,7490,7490,EI COLLARD GAETAN 05-26 2025,Devis reel,,0,2025-05-27
+Couvreur,Location telescopique pour duree chantier toiture,forfait,2244.67,2244.67,2244.67,EI COLLARD GAETAN 05-26 2025,Devis reel,,0,2025-05-27
+Couvreur,Location ventouse 8 accroches,jour,75,75,75,EI COLLARD GAETAN 05-26 2025,Devis reel,,0,2025-05-27
+Couvreur,Deplacement et frais equipe 3 personnels (toiture),forfait,750,750,750,EI COLLARD GAETAN 05-26 2025,Devis reel,,0,2025-05-27
+Couvreur,Elaboration dossier administratif desamiantage (inspection travail),forfait,250,250,250,EI COLLARD GAETAN 14-2026 2026,Devis reel - enlevement toiture eternit amiante,,0,2026-05-19
+Couvreur,Location nacelle thermique (2 jours),forfait,960,960,960,EI COLLARD GAETAN 14-2026 2026,Devis reel,,0,2026-05-19
+Couvreur,Enlevement eternits amiantes,m2,28.5,28.5,28.5,EI COLLARD GAETAN 14-2026 2026,Devis reel - desamiantage toiture,,0,2026-05-19
+Dechets,Mise en decheterie specialisee tuiles (benne+location+transport),forfait,375,375,375,EI COLLARD GAETAN 14-2026 2026,Devis reel,,0,2026-05-19
+Dechets,Mise sur palette eternits amiantes + decheterie ISDND,forfait,345,345,345,EI COLLARD GAETAN 14-2026 2026,Devis reel,,0,2026-05-19
+Couvreur,Forfait EPI amiante,forfait,175,175,175,EI COLLARD GAETAN 14-2026 2026,Devis reel,,0,2026-05-19
+Couvreur,Deplacement desamiantage toiture,forfait,185,185,185,EI COLLARD GAETAN 14-2026 2026,Devis reel,,0,2026-05-19
+Plomberie,Plomberie complete SDB+cuisine+buanderie (grand loft 120m2),forfait,27890,27890,27890,JOTRAU KEVIN Grand Loft 2026,Devis reel - forfait tous corps creation EF/EU SDB complete carrelage chauffe-eau adoucisseur parquet BA13,,0,2026-06-03
+Electricite,Electricite complete + PAC multisplit air/air 4 interieurs (grand loft),forfait,24800,24800,24800,JOTRAU KEVIN Grand Loft 2026,Devis reel - tableau+appareillage Schneider+spots+RJ45+VMC+2 radiateurs+secheserviette+PAC,,0,2026-06-03
+Plaquiste,Second oeuvre pieces grand loft (doublage isolation cloisons portes parquet peinture),forfait,92210,92210,92210,JOTRAU KEVIN Grand Loft 2026,Devis reel - lot global doublage BA13+isolant cloisons 7 blocs-portes parquet stratifie peinture,,0,2026-06-03
+Plomberie,Plomberie complete SDB+cuisine (petit loft 31m2),forfait,9740,9740,9740,JOTRAU KEVIN Petit Loft 2026,Devis reel,,0,2026-06-03
+Electricite,Electricite complete (petit loft hors PAC),forfait,5400,5400,5400,JOTRAU KEVIN Petit Loft 2026,Devis reel - tableau+appareillage+2 radiateurs+secheserviette+thermostat,,0,2026-06-03
+Plaquiste,Second oeuvre pieces petit loft (doublage isolation cloisons portes parquet peinture),forfait,23850,23850,23850,JOTRAU KEVIN Petit Loft 2026,Devis reel,,0,2026-06-03
+Plaquiste,Cloison phonique laine de verre 120mm (R3.75) + placo phonique/marine,m2,115.22,115.22,115.22,ENTREPRISE COUTANT 21418 2026,Devis reel - fermeture cage escalier immeuble Niort,,0,2026-02-04
+Plaquiste,Bandes ordinaires a placo sans poncage,m2,7.28,7.28,7.28,ENTREPRISE COUTANT 21418 2026,Devis reel,,0,2026-02-04
+Plaquiste,Bandes armees a placo angles sortants sans poncage,ml,7.28,7.28,7.28,ENTREPRISE COUTANT 21418 2026,Devis reel,,0,2026-02-04
+Demolition,Depose huisserie bois simple vitrage existante + evacuation,u,48,48,48,ENTREPRISE COUTANT 21418 2026,Devis reel,,0,2026-02-04
+Dechets,Gestion et traitement dechets de chantier (transport+tri+evacuation),m3,79.8,79.8,79.8,ENTREPRISE COUTANT 21418 2026,Devis reel,,0,2026-02-04
+Menuiserie,Fenetre bois 2 vantaux MILLET LUMINEA 1950x1120mm,u,1454.63,1454.63,1454.63,ENTREPRISE COUTANT 21418 2026,Devis reel Uw 1.4,fenetre_standard,0,2026-02-04
+Menuiserie,Fenetre bois 2 vantaux MILLET LUMINEA 2300x1250mm,u,1887.45,1887.45,1887.45,ENTREPRISE COUTANT 21418 2026,Devis reel Uw 1.4,fenetre_standard,0,2026-02-04
+Menuiserie,Fenetre bois 2 vantaux MILLET LUMINEA 1450x1100mm,u,1075.1,1075.1,1075.1,ENTREPRISE COUTANT 21418 2026,Devis reel Uw 1.5,fenetre_standard,0,2026-02-04
+Menuiserie,Fenetre bois 2 vantaux MILLET LUMINEA 1700x1100mm,u,1227.82,1227.82,1227.82,ENTREPRISE COUTANT 21418 2026,Devis reel Uw 1.5,fenetre_standard,0,2026-02-04
+Menuiserie,Pose fenetre bois en remplacement (joint Sikaflex reglage),u,280,280,280,ENTREPRISE COUTANT 21418 2026,Devis reel,,0,2026-02-04
+Menuiserie,Bloc-porte paliere 39dB EI30 prepeint JELD WEN 204x83cm + serrure 3 points,u,638.25,638.25,638.25,ENTREPRISE COUTANT 21418 2026,Devis reel,,0,2026-02-04
+Menuiserie,Pose ensemble porte paliere (mise en jeu + reglage),u,318,318,318,ENTREPRISE COUTANT 21418 2026,Devis reel,,0,2026-02-04
+Plaquiste,Faux-plafond placo phonique isole laine de verre 100mm (R2.50),m2,116.27,116.27,116.27,ENTREPRISE COUTANT 21418 2026,Devis reel,,0,2026-02-04
+Isolation,Doublage isole laine de verre GR32 120mm (R3.75) en placo (murs exterieurs),m2,97.51,97.51,97.51,ENTREPRISE COUTANT 21418 2026,Devis reel,,0,2026-02-04
+Menuiserie,Bloc-porte alveolaire 83cm compris poignee et serrure condamnation (SDB),u,286.9,286.9,286.9,ENTREPRISE COUTANT 21418 2026,Devis reel,,0,2026-02-04
+Electricite,Pose coffret de chantier provisoire,u,98,98,98,ENTREPRISE COUTANT 21415 2026,Devis reel - immeuble 4 logements Niort,,0,2026-02-04
+Electricite,Tableau electrique NFC15100 HAGER 1 rangee 13 modules + GTL (commun),u,630.49,630.49,630.49,ENTREPRISE COUTANT 21415 2026,Devis reel,,0,2026-02-04
+Electricite,Hublot LED detection ZG LIGHTING TOM 20W IP66 IK10,u,49.7,49.7,49.7,ENTREPRISE COUTANT 21415 2026,Devis reel,,0,2026-02-04
+Electricite,Pose et cablage luminaire,u,120,120,120,ENTREPRISE COUTANT 21415 2026,Devis reel,,0,2026-02-04
+Electricite,Prise de courant affleurante HAGER ESSENSYA + cablage,u,69.48,69.48,69.48,ENTREPRISE COUTANT 21415 2026,Devis reel,,0,2026-02-04
+Domotique,Kit audio interphonie URMET KA83/104 (platine+4 postes),u,721.03,721.03,721.03,ENTREPRISE COUTANT 21415 2026,Devis reel,,0,2026-02-04
+Electricite,Gaine ICTA pour fibre,u,114.2,114.2,114.2,ENTREPRISE COUTANT 21415 2026,Devis reel,,0,2026-02-04
+Electricite,Tableau electrique NFC15100 LEGRAND 2 rangees 26 modules,u,782.82,782.82,782.82,ENTREPRISE COUTANT 21415 2026,Devis reel - par logement,,0,2026-02-04
+Electricite,Bac d'encastrement BLM PLASTELBOX 1 travee/2 rangees,u,332.22,332.22,332.22,ENTREPRISE COUTANT 21415 2026,Devis reel,,0,2026-02-04
+Electricite,Sortie de cable HAGER ESSENSYA + cablage (chauffe-eau),u,116.49,116.49,116.49,ENTREPRISE COUTANT 21415 2026,Devis reel,,0,2026-02-04
+Ventilation,Kit VMC hygro-reglable extra-plat ATLANTIC HYGROCOSY 2 BC (2 bouches),u,943.77,943.77,943.77,ENTREPRISE COUTANT 21415 2026,Devis reel,,0,2026-02-04
+Electricite,Interrupteur double + spot encastrable IP65 CALYPSO + alim miroir,u,180.43,180.43,180.43,ENTREPRISE COUTANT 21415 2026,Devis reel - salle d'eau,,0,2026-02-04
+Electricite,Liaison equipotentielle des tuyauteries,u,42.24,42.24,42.24,ENTREPRISE COUTANT 21415 2026,Devis reel,,0,2026-02-04
+Chauffage,Radiateur seche-serviette electrique ATLANTIC 2012 Digital 500W,u,190.09,190.09,190.09,ENTREPRISE COUTANT 21415 2026,Devis reel,,0,2026-02-04
+Electricite,Interrupteur simple allumage + lampe DCL + cablage,u,116.32,116.32,116.32,ENTREPRISE COUTANT 21415 2026,Devis reel,,0,2026-02-04
+Electricite,Sortie de cable 32A LEGRAND + cablage (plaque cuisson),u,195.06,195.06,195.06,ENTREPRISE COUTANT 21415 2026,Devis reel,,0,2026-02-04
+Electricite,Prise de courant affleurante 20A directe (four/lave-vaisselle),u,125.58,125.58,125.58,ENTREPRISE COUTANT 21415 2026,Devis reel,,0,2026-02-04
+Electricite,Prise reseau RJ45 cat.6 FTP Grade 2 + cablage grade 3,u,137.05,137.05,137.05,ENTREPRISE COUTANT 21415 2026,Devis reel,,0,2026-02-04
+Chauffage,Radiateur electrique ATLANTIC SOKIO 1500W inertie chaleur douce,u,295.22,295.22,295.22,ENTREPRISE COUTANT 21415 2026,Devis reel,,0,2026-02-04
+Chauffage,Radiateur electrique ATLANTIC SOKIO 1000W inertie chaleur douce,u,233.39,233.39,233.39,ENTREPRISE COUTANT 21415 2026,Devis reel,,0,2026-02-04
+Demolition,Depose complete cuisine + evacuation,forfait,384,384,384,ENTREPRISE COUTANT 19840 2025,Devis reel,,0,2025-09-22
+Demolition,Depose appareils sanitaires SDB + evacuation,forfait,384,384,384,ENTREPRISE COUTANT 19840 2025,Devis reel,,0,2025-09-22
+Menuiserie,Double vitrage 4/16/4 clair transparent (fourniture),m2,102.31,102.31,102.31,ENTREPRISE COUTANT 19840 2025,Devis reel,,0,2025-09-22
+Isolation,Laine de verre a souffler ISOVER COMBLISSIMO 33cm (R7),m2,12.88,12.88,12.88,ENTREPRISE COUTANT 19840 2025,Devis reel - combles perdus,,0,2025-09-22
+Isolation,Doublage isole 4 faces laine de verre GR32 120mm (R3.75) en placo,m2,74.4,74.4,74.4,ENTREPRISE COUTANT 19840 2025,Devis reel - murs peripheriques,,0,2025-09-22
+Electricite,Tableau electrique NFC15100 LEGRAND 4 rangees 52 modules + GTL,u,1224.75,1224.75,1224.75,ENTREPRISE COUTANT 19840 2025,Devis reel,,0,2025-09-22
+Sanitaire,Receveur de douche DOCCIA BASALTO 140x80 redecoupable,u,297.67,297.67,297.67,ENTREPRISE COUTANT 19840 2025,Devis reel,,0,2025-09-22
+Sanitaire,Ensemble douche thermostatique GROHE GROTHERM 1000,u,258.12,258.12,258.12,ENTREPRISE COUTANT 19840 2025,Devis reel,,0,2025-09-22
+Sanitaire,Paroi de douche coulissante NOVELLINI LUNES 2P 1950x1320-1380mm,u,814.88,814.88,814.88,ENTREPRISE COUTANT 19840 2025,Devis reel,,0,2025-09-22
+Sanitaire,Meuble sous-vasque SANIJURA RIO 60x45.8x59.9cm 2 tiroirs,u,186.37,186.37,186.37,ENTREPRISE COUTANT 19840 2025,Devis reel,,0,2025-09-22
+Chauffage,Chaudiere murale a condensation SAUNIER DUVAL THEMAPLUS CONDENS 20KW,u,2391.84,2391.84,2391.84,ENTREPRISE COUTANT 19840 2025,Devis reel - remplacement chaudiere gaz,chauffage_generation,0,2025-09-22
+Revetements,Dalle vinyle clipsable FORBO ALLURA CLIC Pro 60x31cm 5mm,m2,40.26,40.26,40.26,ENTREPRISE COUTANT 19840 2025,Devis reel,,0,2025-09-22
+Revetements,Ragreage fibre du sol beton existant PRB PLANIFIBRE,m2,23.01,23.01,23.01,ENTREPRISE COUTANT 19840 2025,Devis reel,,0,2025-09-22
+Revetements,Fourniture carrelage (selon choix hors pose),m2,25,25,25,ENTREPRISE COUTANT 19840 2025,Devis reel - fourniture seule,,0,2025-09-22
+Serrurerie,Garde-corps tube acier 50x30mm L2000xH1050mm thermolaque pose,u,2124,2124,2124,ENTREPRISE COUTANT 19840 2025,Devis reel,,0,2025-09-22
+Plaquiste,Cloison isolee 45mm placo ordinaire/marine entre pieces,m2,69.32,69.32,69.32,ENTREPRISE COUTANT 19842 2025,Devis reel - amenagement sous-sol,,0,2025-09-22
+Plaquiste,Placo ordinaire colle au MAP sur mur de refend,m2,34.48,34.48,34.48,ENTREPRISE COUTANT 19842 2025,Devis reel,,0,2025-09-22
+Plaquiste,Placo marine colle au MAP (cote SDB 1 face),m2,45.78,45.78,45.78,ENTREPRISE COUTANT 19842 2025,Devis reel,,0,2025-09-22
+Menuiserie,Bloc-porte alveolaire 83cm droite poussant + serrure a condamnation,u,238.9,238.9,238.9,ENTREPRISE COUTANT 19842 2025,Devis reel,,0,2025-09-22
+Sanitaire,Pack WC complet JACOB DELAFON EOLIA sortie horizontale eco,u,112.27,112.27,112.27,ENTREPRISE COUTANT 19842 2025,Devis reel,,0,2025-09-22
+Sanitaire,Paroi fixe de douche NOVELLINI ALFAH 1950x1000mm verre 6mm,u,280.43,280.43,280.43,ENTREPRISE COUTANT 19842 2025,Devis reel,,0,2025-09-22
+Chauffage,Radiateur eau chaude FINIMETAL REGGANE 3010 600x920mm 1576W,u,179.48,179.48,179.48,ENTREPRISE COUTANT 19842 2025,Devis reel,,0,2025-09-22
+Chauffage,Radiateur seche-serviette eau chaude FINIMETAL TAHITI 500x1222mm 576W,u,194.92,194.92,194.92,ENTREPRISE COUTANT 19842 2025,Devis reel,,0,2025-09-22
+Revetements,Ragreage non-fibre du sol beton existant PRB PLANIDUR,m2,18.23,18.23,18.23,ENTREPRISE COUTANT 19842 2025,Devis reel,,0,2025-09-22
+Electricite,Forfait intervention ENEDIS (gestion admin+technique par logement),u,2600,2600,2600,EP RENOV D202602246 2026,Devis reel - decoupage de logements,,0,2026-02-03
+Electricite,Passage fourreaux IK10 gaine technique logement + goulotte,u,855,855,855,EP RENOV D202602246 2026,Devis reel,,0,2026-02-03
+Plomberie,Creation eau froide multicouche gaine D26 + support,ml,98,98,98,EP RENOV D202602246 2026,Devis reel,,0,2026-02-03
+Plomberie,Fourniture et pose sous-compteur eau froide + vanne + reducteur pression,u,451,451,451,EP RENOV D202602246 2026,Devis reel,,0,2026-02-03
+Plomberie,Creation reseau evacuation D100/D40/D32 + fixations,u,1298,1298,1298,EP RENOV D202602246 2026,Devis reel,,0,2026-02-03
+Menuiserie,Fourniture et pose porte de service PVC pleine 200x80,u,430,430,430,EP RENOV D202602246 2026,Devis reel,,0,2026-02-03
+Plaquiste,Cloison separative d'appartements ossature metallique 122mm (BA13 phonique+2 BA13),m2,89,89,89,EP RENOV D202602246 2026,Devis reel,,0,2026-02-03
+Maconnerie,Reprise de plancher partiel,u,980,980,980,EP RENOV D202602246 2026,Devis reel,,0,2026-02-03
+Maconnerie,Pose de parpaing + colle + ferraille,u,144,144,144,EP RENOV D202602246 2026,Devis reel,,0,2026-02-03
+Demolition,Depose cheminee + evacuation gravats,u,690,690,690,EP RENOV D202602246 2026,Devis reel,,0,2026-02-03
+Electricite,Tableau 1 rangee 13 modules disjoncteur+protection differentielle (commun),forfait,980,980,980,EP RENOV D202602245 2026,Devis reel - partie commune immeuble,,0,2026-02-03
+Electricite,Appareillage EUR'OHM complet (inter/poussoir/va-et-vient/prise/antenne/RJ45),forfait,300,300,300,EP RENOV D202602245 2026,Devis reel,,0,2026-02-03
+Peinture,Renovation cage d'escalier (protection+decapage+enduisage+peinture),m2,85,85,85,EP RENOV D202602245 2026,Devis reel,,0,2026-02-03
+Revetements,Poncage et vitrification parquet escalier (par etage),forfait,535,535,535,EP RENOV D202602245 2026,Devis reel,,0,2026-02-03
+Electricite,Forfait ENEDIS pose point de comptage + passage fourreaux IK10,u,2900,2900,2900,EP RENOV D202507208 2025,Devis reel - viabilisation,,0,2025-07-30
+Eau,Modification et division reseau avec changement tabouret + terrassement,u,1300,1300,1300,EP RENOV D202507208 2025,Devis reel,,0,2025-07-30
+Eau,Compteur eau individuel + passage arrivee PE32 + terrassement,u,2900,2900,2900,EP RENOV D202507208 2025,Devis reel,,0,2025-07-30
+Plaquiste,Cloison type placo BA13 phonique sur rail montant 48 (separation de lot),m2,92,92,92,EP RENOV D202507208 2025,Devis reel,,0,2025-07-30
+Electricite,Tableau 2/3 rangees avec disjoncteurs+inter differentielle remise aux normes + CONSUEL,u,4000,4000,4000,EP RENOV D202507208 2025,Devis reel,,0,2025-07-30
+Chauffage,Radiateur electrique 1500W + raccordement + fixation,u,400,400,400,EP RENOV D202507208 2025,Devis reel,,0,2025-07-30
+Plomberie,Creation reseau alimentation EC/EF multicouche (raccords nourrices) par logement,u,3460,3460,3460,EP RENOV D202507208 2025,Devis reel,,0,2025-07-30
+Sanitaire,Forfait creation salle de bain complete (receveur+paroi+robinetterie+mobilier+WC) par logement,u,3500,3500,3500,EP RENOV D202507208 2025,Devis reel,,0,2025-07-30
+Cuisine,Cuisine equipee 3 caissons bas/2 hauts + hotte + plaque + evier + robinetterie,u,2300,2300,2300,EP RENOV D202507208 2025,Devis reel,cuisine_gamme,0,2025-07-30
+Cuisine,Cuisine equipee 4/5 caissons bas + 4/5 hauts + hotte + plaque + evier + robinetterie,u,4000,4000,4000,EP RENOV D202507208 2025,Devis reel,cuisine_gamme,0,2025-07-30
+Isolation,Fourniture et pose isolation 120mm pour doublage,m2,18,18,18,EP RENOV D202507208 2025,Devis reel,,0,2025-07-30
+Peinture,Mise en peinture 2 couches croisees sous-couche + finition mat blanc,m2,18,18,18,EP RENOV D202507208 2025,Devis reel,,0,2025-07-30
+Menuiserie,Fenetre aluminium 2 vantaux IDEAL 4000 double vitrage 1800x1550mm,u,1400,1400,1400,EP RENOV D202507208 2025,Devis reel,fenetre_standard,0,2025-07-30
+Peinture,Peinture murs - reprise defauts enduit + impression + 2 couches acrylique (main d'oeuvre seule),m2,10,10,10,T.C JOINTEUR ET PEINTRE D202500005 2025,Devis reel - sans fourniture peinture,,0,2025-07-28
+Peinture,Peinture plafonds - reprise defauts enduit + impression + 2 couches acrylique (main d'oeuvre seule),m2,15,15,15,T.C JOINTEUR ET PEINTRE D202500005 2025,Devis reel - sans fourniture peinture,,0,2025-07-28
+Peinture,Peinture portes + bati - poncage/epoussetage + 2 couches acrylique,u,30,30,30,T.C JOINTEUR ET PEINTRE D202500005 2025,Devis reel,,0,2025-07-28
+Electricite,Point lumineux simple allumage,u,74.46,74.46,74.46,LAMBA17 I-26-06-8 2026,Devis reel - maison 4 Rue Jean Jaures Aytre,,0,2026-06-24
+Electricite,Point lumineux supplementaire sur circuit existant,u,18,18,18,LAMBA17 I-26-06-8 2026,Devis reel,,0,2026-06-24
+Electricite,Spot blanc orientable LED encastre dimmable (couleur reglable),u,48.24,48.24,48.24,LAMBA17 I-26-06-8 2026,Devis reel,,0,2026-06-24
+Electricite,Prise de courant 2P+T 10/16A,u,58.75,58.75,58.75,LAMBA17 I-26-06-8 2026,Devis reel,,0,2026-06-24
+Electricite,Point lumineux va-et-vient,u,126.74,126.74,126.74,LAMBA17 I-26-06-8 2026,Devis reel,,0,2026-06-24
+Electricite,Prise informatique RJ45 blindee cat6,u,108.25,108.25,108.25,LAMBA17 I-26-06-8 2026,Devis reel,,0,2026-06-24
+Electricite,Point lumineux telerupteur 3 boutons poussoirs,u,326.98,326.98,326.98,LAMBA17 I-26-06-8 2026,Devis reel,,0,2026-06-24
+Electricite,Alimentation directe 32A pour plaque de cuisson,u,135.52,135.52,135.52,LAMBA17 I-26-06-8 2026,Devis reel,,0,2026-06-24
+Electricite,Prise de courant 2P+T directe (four/lave-vaisselle/micro-ondes),u,105.82,105.82,105.82,LAMBA17 I-26-06-8 2026,Devis reel,,0,2026-06-24
+Electricite,Pot de centre (ampoule non fournie),u,18.52,18.52,18.52,LAMBA17 I-26-06-8 2026,Devis reel,,0,2026-06-24
+Electricite,Point lumineux va-et-vient a voyant (exterieur),u,173.48,173.48,173.48,LAMBA17 I-26-06-8 2026,Devis reel,,0,2026-06-24
+Electricite,Prise de courant 2P+T 10/16A exterieure encastree,u,84.39,84.39,84.39,LAMBA17 I-26-06-8 2026,Devis reel,,0,2026-06-24
+Electricite,Simple allumage commandant 1 spot encastre INDIGO,u,183,183,183,LP ELEC DEV-202606-00499 2026,Devis reel - DEKA M. Dupuy La Rochelle,,0,2026-06-18
+Electricite,Point lumineux supplementaire (spot),u,75,75,75,LP ELEC DEV-202606-00499 2026,Devis reel,,0,2026-06-18
+Electricite,Alimentation miroir 1.5mm,u,72,72,72,LP ELEC DEV-202606-00499 2026,Devis reel,,0,2026-06-18
+Electricite,Alimentation seche-serviette 1.5mm,u,72,72,72,LP ELEC DEV-202606-00499 2026,Devis reel,,0,2026-06-18
+Electricite,Prise de courant 2P+T affleurante ESSENSYA HAGER,u,79,79,79,LP ELEC DEV-202606-00499 2026,Devis reel,,0,2026-06-18
+Chauffage,Radiateur seche-serviettes connecte Riva 5 750W Thermor,u,425.43,425.43,425.43,LP ELEC DEV-202606-00499 2026,Devis reel,,0,2026-06-18
+Electricite,Va-et-vient commandant 1 spot encastre INDIGO,u,212,212,212,LP ELEC DEV-202606-00499 2026,Devis reel,,0,2026-06-18
+Electricite,Prise RJ45 cable CAT6,u,93,93,93,LP ELEC DEV-202606-00499 2026,Devis reel,,0,2026-06-18
+Electricite,Telerupteur + bouton poussoir commandant DCL (fourniture+pose),u,460.3,460.3,460.3,LP ELEC DEV-202606-00499 2026,Devis reel,,0,2026-06-18
+Electricite,Ligne directe plaque de cuisson 32A 6mm,u,174,174,174,LP ELEC DEV-202606-00499 2026,Devis reel,,0,2026-06-18
+Electricite,Ligne directe four 2.5mm,u,154,154,154,LP ELEC DEV-202606-00499 2026,Devis reel,,0,2026-06-18
+Electricite,Tableau electrique preequipe Gamma 4 rangees 13 modules (4 ID 63A+disjoncteur),u,2034.72,2034.72,2034.72,LP ELEC DEV-202606-00499 2026,Devis reel,,0,2026-06-18
+Electricite,Coffret de communication Gamma+ 4xRJ45 Grade 2TV,u,508.77,508.77,508.77,LP ELEC DEV-202606-00499 2026,Devis reel,,0,2026-06-18
+Electricite,Mise a la terre (fourniture + pose),u,450,450,450,LP ELEC DEV-202606-00499 2026,Devis reel,,0,2026-06-18
+Electricite,Gaine technique de logement HAGER 13m,u,187.8,187.8,187.8,LP ELEC DEV-202606-00499 2026,Devis reel,,0,2026-06-18
+Ventilation,Kit VMC Hygro B Standard jusqu'a 6 sanitaires,u,415,415,415,LP ELEC DEV-202606-00499 2026,Devis reel,,0,2026-06-18
+Ventilation,Gaine souple isolee ECOSOFT D80mm (6m),u,17.6,17.6,17.6,LP ELEC DEV-202606-00499 2026,Devis reel,,0,2026-06-18
+Chauffage,Alimentation radiateur (fourniture+pose),u,139,139,139,LP ELEC DEV-202606-00499 2026,Devis reel,,0,2026-06-18
+Chauffage,Radiateur chaleur douce Thermor Tenerife horizontal blanc 1000W,u,308.07,308.07,308.07,LP ELEC DEV-202606-00499 2026,Devis reel,,0,2026-06-18
+Chauffage,Radiateur chaleur douce Thermor Tenerife horizontal blanc 2000W,u,451.3,451.3,451.3,LP ELEC DEV-202606-00499 2026,Devis reel,,0,2026-06-18
+Electricite,Alimentation volet roulant,u,72,72,72,LP ELEC DEV-202606-00499 2026,Devis reel,,0,2026-06-18
+Electricite,Prise TV coaxiale,u,77,77,77,LP ELEC DEV-202606-00499 2026,Devis reel,,0,2026-06-18
+Chauffage,Radiateur seche-serviettes connecte Riva 5 500W Thermor,u,319.2,319.2,319.2,LP ELEC DEV-202606-00492 2026,Devis reel - loft DEKA La Rochelle,,0,2026-06-11
+Electricite,Tableau electrique preequipe Gamma 3 rangees 13 modules (3 ID 63A),u,1767.61,1767.61,1767.61,LP ELEC DEV-202606-00492 2026,Devis reel,,0,2026-06-11
+Electricite,Tableau electrique preequipe Gamma 2 rangees 13 modules (2 ID 63A),u,1139.09,1139.09,1139.09,LP ELEC DEV-202606-00492 2026,Devis reel,,0,2026-06-11
+Electricite,Mise a la terre + verification de la resistance de terre,u,381.3,381.3,381.3,LP ELEC DEV-202606-00492 2026,Devis reel,,0,2026-06-11
+Domotique,Kit alimentation solaire pour portail Somfy Solarset RTS,u,730.24,730.24,730.24,LP ELEC DEV-202606-00492 2026,Devis reel - motorisation portail,,0,2026-06-11
+Domotique,Pack confort moteur portail Somfy Elixo 3S+ M io,u,945.49,945.49,945.49,LP ELEC DEV-202606-00492 2026,Devis reel,,0,2026-06-11
+Domotique,Main d'oeuvre installation motorisation portail + reglage,forfait,450,450,450,LP ELEC DEV-202606-00492 2026,Devis reel,,0,2026-06-11
+Electricite,Refection de TGBT aux normes avec protections differentielles,u,2500,2500,2500,SFTJ 130226 2026,Devis reel - renovation maison Aytre,,0,2026-02-13
+Electricite,Passage et mise a la terre generale de l'installation,forfait,2500,2500,2500,SFTJ 130226 2026,Devis reel,,0,2026-02-13
+Electricite,Ligne directe 32A pour plaque de cuisson,u,65,65,65,SFTJ 130226 2026,Devis reel,,0,2026-02-13
+Sanitaire,Fourniture et pose double vasque + robinetterie,u,850,850,850,SFTJ 130226 2026,Devis reel,,0,2026-02-13
+Sanitaire,Fourniture et pose baignoire 170x75 + robinetterie,u,500,500,500,SFTJ 130226 2026,Devis reel,,0,2026-02-13
+Sanitaire,Fourniture et pose cabine de douche complete 1/4 de rond 90cm,u,1100,1100,1100,SFTJ 130226 2026,Devis reel,,0,2026-02-13
+Chauffage,Alimentation + fourniture et pose seche-serviette,u,290,290,290,SFTJ 130226 2026,Devis reel,,0,2026-02-13
+Sanitaire,Fourniture et pose pack WC complet a poser,u,280,280,280,SFTJ 130226 2026,Devis reel,,0,2026-02-13
+Sanitaire,Fourniture et pose lave-main,u,180,180,180,SFTJ 130226 2026,Devis reel,,0,2026-02-13
+Chauffage,Fourniture et pose ballon eau chaude extra-plat MALICIO 80L + groupe securite,u,800,800,800,SFTJ 130226 2026,Devis reel,,0,2026-02-13
+Sanitaire,Fourniture et pose simple vasque + robinetterie,u,450,450,450,SFTJ 130226 2026,Devis reel,,0,2026-02-13
+Plomberie,Collecteur EC/EF,u,190,190,190,SFTJ 130226 2026,Devis reel,,0,2026-02-13
+Electricite,Main d'oeuvre / deplacement (mise en securite electrique),forfait,300,300,300,GEFFARD ELEC DEV00000197 2026,Devis reel - pour OPUS HABITAT,,0,2026-04-08
+Dechets,Traitement DND (hors alimentaire/dangereux/amiante/inerte/pneus) TGAP incluse,tonne,220,220,220,Rouvreau Recyclage SIMP TRANSP26041315440 2026,Devis reel - chantier OPUS Habitat St Gelais,,0,2026-04-13
+Dechets,Depot/mise en place benne ouverte 30m3,forfait,120,120,120,Metal Fer Environnement DE04260040 2026,Devis reel - chantier OPUS Habitat St Gelais,,0,2026-04-13
+Dechets,Location journaliere benne ouverte 30m3,jour,4,4,4,Metal Fer Environnement DE04260040 2026,Devis reel,,0,2026-04-13
+Dechets,Rotation (echange) benne ouverte 30m3,forfait,120,120,120,Metal Fer Environnement DE04260040 2026,Devis reel,,0,2026-04-13
+Dechets,Retrait benne ouverte 30m3,forfait,120,120,120,Metal Fer Environnement DE04260040 2026,Devis reel,,0,2026-04-13
+Dechets,Supplement carburant par mouvement de benne,forfait,12,12,12,Metal Fer Environnement DE04260040 2026,Devis reel,,0,2026-04-13
+Dechets,Traitement DIB melange dechets non dangereux TGAP 2026 incluse,tonne,200,200,200,Metal Fer Environnement DE04260040 2026,Devis reel,,0,2026-04-13
+Dechets,Depot benne 30m3 DIB (a l'unite),u,120,120,120,Groupe Loca Recuper 2026-04-09,Devis reel - chantier OPUS Habitat St Gelais - sans numero de devis visible,,0,2026-04-09
+Dechets,Location benne 30m3 DIB (par jour a l'unite),jour,3,3,3,Groupe Loca Recuper 2026-04-09,Devis reel,,0,2026-04-09
+Dechets,Echange ou retrait benne 30m3 (a l'unite),u,130,130,130,Groupe Loca Recuper 2026-04-09,Devis reel,,0,2026-04-09
+Dechets,Mise a disposition de personnel (par personne et par jour),jour,250,250,250,Groupe Loca Recuper 2026-04-09,Devis reel - MO manutention chantier,,0,2026-04-09
+Menuiserie,Oeil de boeuf PVC blanc chassis fixe 600x700mm double vitrage depoli,u,1121.17,1121.17,1121.17,L'Atelier 58 DE-202607-090 2026,Devis reel - chantier 4 rue Jean Jaures Aytre,,0,2026-07-24
+Menuiserie,Fenetre PVC oscillo-battante 1 vantail 800x1150mm,u,454.25,454.25,454.25,L'Atelier 58 DE-202607-090 2026,Devis reel,fenetre_standard,0,2026-07-24
+Menuiserie,Baie vitree coulissante aluminium 2 vantaux 2600x2200mm + chassis fixe,u,2815.45,2815.45,2815.45,L'Atelier 58 DE-202607-090 2026,Devis reel,,0,2026-07-24
+Menuiserie,Fenetre PVC oscillo-battante 2 vantaux 1800x1460mm,u,957.37,957.37,957.37,L'Atelier 58 DE-202607-090 2026,Devis reel,fenetre_standard,0,2026-07-24
+Menuiserie,Porte d'entree aluminium 900x1900mm serrure 3 points,u,2074.95,2074.95,2074.95,L'Atelier 58 DE-202607-090 2026,Devis reel,,0,2026-07-24
+Menuiserie,Porte d'entree aluminium 912x2100mm serrure 3 points,u,2189.81,2189.81,2189.81,L'Atelier 58 DE-202607-090 2026,Devis reel,,0,2026-07-24
+Menuiserie,Remplacement portail bois par portail aluminium motorise (2620x2000mm Cadiou moteur Somfy),u,4666.5,4666.5,4666.5,L'Atelier 58 DE-202607-090 2026,Devis reel,,0,2026-07-24
+Menuiserie,Depose totale et pose de 5 menuiseries + 3 baies + 2 portes + 1 portail (forfait pose),forfait,3840,3840,3840,L'Atelier 58 DE-202607-090 2026,Devis reel,,0,2026-07-24
+Menuiserie,Petit consommable de pose (silicone mousse PU visserie),forfait,260,260,260,L'Atelier 58 DE-202607-090 2026,Devis reel,,0,2026-07-24
+Dechets,Forfait descente et evacuation dechets (anciennes menuiseries verre gravats),forfait,150,150,150,L'Atelier 58 DE-202607-090 2026,Devis reel,,0,2026-07-24
+Menuiserie,Forfait deplacement menuiserie,forfait,370,370,370,L'Atelier 58 DE-202607-090 2026,Devis reel,,0,2026-07-24
+Menuiserie,Fenetre bois G58 2 vantaux (pose renovation depose totale) gamme selon dimensions,u,950,1220,1935,EIRL Bonnet Cedric D-260183 2026,Devis reel - 6 fenetres de dimensions differentes - chantier 27 rue de l'Arsenal Niort pour OPUS Immobilier,fenetre_standard,0,2026-02-06
+Menuiserie,Pose de menuiserie renovation (depose totale par unite),u,195,195,195,EIRL Bonnet Cedric D-260183 2026,Devis reel,,0,2026-02-06
+Menuiserie,Bloc porte interieure EI30 39dB avec huisserie et serrure 3 points,u,945,945,945,EIRL Bonnet Cedric D-260183 2026,Devis reel,,0,2026-02-06
+Menuiserie,Pose de porte paliere (cloison ossature metallique + BA13),u,95,95,95,EIRL Bonnet Cedric D-260183 2026,Devis reel,,0,2026-02-06
+Plaquiste,Cloison de distribution rails/montants 48 BA13 double peau + laine acoustique 45mm,m2,88,88,88,EIRL Bonnet Cedric D-260183 2026,Devis reel,,0,2026-02-06
+Plaquiste,Joints sur plaques de platre (bandes papier + enduit hors poncage),m2,7,7,7,EIRL Bonnet Cedric D-260183 2026,Devis reel,,0,2026-02-06
+Volets,Volet persienne bois 34mm sur mesure 2000x1080mm 2 vantaux pose neuf,u,1041.64,1041.64,1041.64,EIRL Bonnet Cedric devis n00109 2026,Devis reel - client OPUS Habitat 27 rue de l'Arsenal Niort,volets,0,2026-02-21
+Volets,Volet a lames verticales bois 27mm 1680x1060mm 2 vantaux pose neuf,u,671.23,671.23,671.23,EIRL Bonnet Cedric devis n00109 2026,Devis reel,volets,0,2026-02-21
+Volets,Pose de volets battants (par vantail),u,120,120,120,EIRL Bonnet Cedric devis n00109 2026,Devis reel,,0,2026-02-21
+Exterieur,Location echafaudage toute hauteur (forfait),forfait,580,580,580,EIRL Bonnet Cedric devis n00109 2026,Devis reel,,0,2026-02-21
+Peinture,Decapage et peinture de volets (par paire),pair,350,350,350,EIRL Bonnet Cedric devis n00109 2026,Devis reel,,0,2026-02-21
+Peinture,Decapage et peinture de porte d'entree,forfait,550,550,550,EIRL Bonnet Cedric devis n00109 2026,Devis reel,,0,2026-02-21
+Menuiserie,Fenetre bois 2 vantaux gamme Beaulieu 2300x1250mm laquee pose renovation depose totale,u,1746.53,1746.53,1746.53,NOVAfermetures D260113856 2026,Devis reel - client SCI OPUS Habitat 27 rue de l'Arsenal Niort,fenetre_standard,0,2026-01-13
+Menuiserie,Pose de l'ensemble des menuiseries (depose totale etancheite finitions forfait),forfait,1560,1560,1560,NOVAfermetures D260113856 2026,Devis reel,,0,2026-01-13
+Architecture,Mission complete maitrise d'oeuvre (etude faisabilite a DCE),forfait,9672,9672,9672,fanum architecture 2611_NOU 2026,Devis reel - rehabilitation hangars en logements Andilly,,0,2026-06-04
+Architecture,Releve de batiment,u,580,580,580,Atelier Dessin Batiment 17 DEV00000750 2026,Devis reel - changement de destination Andilly,,0,2026-05-29
+Architecture,Dossier APS+APD avec plans pour permis de construire,u,1360,1360,1360,Atelier Dessin Batiment 17 DEV00000750 2026,Devis reel - paiement au depot du PC,,0,2026-05-29
+Architecture,Releve etat des lieux batiments (environ 600m2),forfait,2000,2000,2000,ARCHIXO proposition 2026,Devis reel - Cognac,,0,2026-05-21
+Architecture,Permis de construire changement de destination (conception+depot),forfait,4600,4600,4600,ARCHIXO proposition 2026,Devis reel,,0,2026-05-21
+Geometre,Prime fixe ouverture de dossier (mission fonciere),forfait,131,131,131,Sit&a Conseil D26063536 2026,Devis reel - mise en copropriete Aytre,,0,2026-06-04
+Geometre,Deplacement forfaitaire sur site,forfait,63,63,63,Sit&a Conseil D26063536 2026,Devis reel,,0,2026-06-04
+Geometre,Archivage et transmission Geofoncier,forfait,95,95,95,Sit&a Conseil D26063536 2026,Devis reel,,0,2026-06-04
+Geometre,Releve au 1/100 de l'existant,m2,1.6,1.6,1.6,Sit&a Conseil D26063536 2026,Devis reel,,0,2026-06-04
+Geometre,Montage du plan de copropriete (par piece),u,55,55,55,Sit&a Conseil D26063536 2026,Devis reel,,0,2026-06-04
+Geometre,Etablissement etat descriptif de division (moins de 6 lots),u,130,130,130,Sit&a Conseil D26063536 2026,Devis reel - prix par lot,,0,2026-06-04
+Geometre,Etablissement reglement de copropriete (moins de 6 lots),u,130,130,130,Sit&a Conseil D26063536 2026,Devis reel - prix par lot,,0,2026-06-04
+Geometre,Certificat loi Carrez,forfait,195,195,195,Sit&a Conseil D26063536 2026,Devis reel,,0,2026-06-04
+Geometre,Recherche et convocation de riverain,u,11,11,11,Sit&a Conseil D26033144 2026,Devis reel - prix par riverain,,0,2026-03-27
+Geometre,Recherche des limites avec titres de propriete (une limite),forfait,100,100,100,Sit&a Conseil D26033144 2026,Devis reel,,0,2026-03-27
+Geometre,Recherche des limites (limite supplementaire),u,50,50,50,Sit&a Conseil D26033144 2026,Devis reel,,0,2026-03-27
+Geometre,Redaction du proces-verbal de bornage,forfait,200,200,200,Sit&a Conseil D26033144 2026,Devis reel,,0,2026-03-27
+Geometre,Fourniture DMPC et gestion plateforme E-DA,u,16,16,16,Sit&a Conseil D26033144 2026,Devis reel,,0,2026-03-27
+Geometre,Materialisation/reconnaissance de limite de division (par division),u,89,89,89,Sit&a Conseil D26033144 2026,Devis reel,,0,2026-03-27
+Geometre,Modification du parcellaire cadastral (2 numeros crees),forfait,120,120,120,Sit&a Conseil D26033144 2026,Devis reel,,0,2026-03-27
+Geometre,Numero cadastral supplementaire (au-dela de 2),u,26,26,26,Sit&a Conseil D26033144 2026,Devis reel,,0,2026-03-27
+Geometre,Etablissement du plan de bornage et de division,forfait,175,175,175,Sit&a Conseil D26033144 2026,Devis reel,,0,2026-03-27
+Geometre,Rattachement au systeme planimetrique national (Lambert),forfait,74,74,74,Sit&a Conseil D26033144 2026,Devis reel,,0,2026-03-27
+Geometre,Etablissement etat descriptif de division (lots principaux),u,85,85,85,Sit&a Conseil D26033139 2026,Devis reel - prix par lot principal,,0,2026-03-27
+Geometre,Etablissement etat descriptif de division (lots secondaires),u,58,58,58,Sit&a Conseil D26033139 2026,Devis reel - prix par lot secondaire,,0,2026-03-27
+Geometre,Etablissement reglement de copropriete (lots principaux),u,85,85,85,Sit&a Conseil D26033139 2026,Devis reel,,0,2026-03-27
+Geometre,Etablissement reglement de copropriete (lots secondaires),u,37,37,37,Sit&a Conseil D26033139 2026,Devis reel,,0,2026-03-27
+Geometre,Reprise et modification des plans de copropriete projet,forfait,300,300,300,Sit&a Conseil D25122624 2025,Devis reel - modificatif copropriete apres travaux Niort 27 rue de l'Arsenal,,0,2025-12-23
+Geometre,Adaptation de l'etat descriptif de division et du reglement de copropriete,forfait,300,300,300,Sit&a Conseil D25122624 2025,Devis reel,,0,2025-12-23
+Geometre,Modificatif de l'etat descriptif de division (moins de 6 lots),u,130,130,130,Sit&a Conseil D25122624 2025,Devis reel,,0,2025-12-23
+Geometre,Modificatif du reglement de copropriete (moins de 6 lots),u,130,130,130,Sit&a Conseil D25122624 2025,Devis reel,,0,2025-12-23
+Geometre,Fourniture DMPC et gestion plateforme E-DA (deplacement riverains),u,16,16,16,Sit&a Conseil D25071685 2025,Devis reel - division terrain a batir Niort,,0,2025-07-15
+Geometre,Recherche cadastrale de riverain,u,14,14,14,Sit&a Conseil D25071685 2025,Devis reel,,0,2025-07-15
+Geometre,Convocation de riverain,u,7,7,7,Sit&a Conseil D25071685 2025,Devis reel,,0,2025-07-15
+Geometre,Redaction du proces-verbal de delimitation (domaine public),forfait,118,118,118,Sit&a Conseil D25071685 2025,Devis reel,,0,2025-07-15
+Geometre,Mise en place de la limite de division (par sommet),u,89,89,89,Sit&a Conseil D25071685 2025,Devis reel,,0,2025-07-15
+Geometre,Modification du parcellaire cadastral (2 numeros crees - division),forfait,142,142,142,Sit&a Conseil D25071685 2025,Devis reel,,0,2025-07-15
+Geometre,Releve des sommets des limites ou bornes (par sommet),u,19,19,19,Sit&a Conseil D25071685 2025,Devis reel,,0,2025-07-15
+Geometre,Report et calcul de la surface,forfait,74,74,74,Sit&a Conseil D25071685 2025,Devis reel,,0,2025-07-15
+Geometre,Etablissement du plan au 1/250 hors nivellement,forfait,179,179,179,Sit&a Conseil D25071685 2025,Devis reel,,0,2025-07-15
+Geometre,Etablissement du plan de situation (urbanisme),forfait,35,35,35,Sit&a Conseil D25071685 2025,Devis reel,,0,2025-07-15
+Geometre,Etablissement du plan figuratif du parcellaire,forfait,40,40,40,Sit&a Conseil D25071685 2025,Devis reel,,0,2025-07-15
+Geometre,Etablissement de la declaration prealable (division),forfait,175,175,175,Sit&a Conseil D25071685 2025,Devis reel,,0,2025-07-15
+Geometre,Fourniture d'un panneau d'affichage obligatoire (declaration prealable),forfait,63,63,63,Sit&a Conseil D25071685 2025,Devis reel,,0,2025-07-15
+Geometre,Topographie et etablissement d'un plan masse,forfait,450,450,450,LGER Gregoire Rechard DEV-26137 2026,Devis reel - mise en copropriete Aytre,,0,2026-06-26
+Geometre,Releve d'interieur et etablissement des plans de copropriete (scanner 3D),forfait,1300,1300,1300,LGER Gregoire Rechard DEV-26137 2026,Devis reel - releve scanner 3D ~380m2,,0,2026-06-26
+Geometre,Mise en copropriete (tantiemes etat descriptif de division reglement),forfait,650,650,650,LGER Gregoire Rechard DEV-26137 2026,Devis reel,,0,2026-06-26
+Geometre,Attestation loi Carrez (par attestation - LGER),u,30,30,30,LGER Gregoire Rechard DEV-26137 2026,Devis reel,,0,2026-06-26
+Geometre,Droit fixe - secretariat - archivage (Synergeo),forfait,95,95,95,Synergeo D26053899 2026,Devis reel - mise en copropriete Andilly parcelle ZI124,,0,2026-05-20
+Geometre,Releve de l'ensemble de l'immeuble et plans de copropriete (Synergeo),forfait,1800,1800,1800,Synergeo D26053899 2026,Devis reel,,0,2026-05-20
+Geometre,Etat descriptif de division + reglement copropriete (2 premiers lots principaux),u,250,250,250,Synergeo D26053899 2026,Devis reel,,0,2026-05-20
+Geometre,Etat descriptif de division + reglement copropriete (3e a 9e lots principaux),u,160,160,160,Synergeo D26053899 2026,Devis reel,,0,2026-05-20
+Geometre,Etat descriptif de division + reglement copropriete (lots secondaires/parkings),u,25,25,25,Synergeo D26053899 2026,Devis reel,,0,2026-05-20
+Geometre,Attestation loi Carrez (par attestation - Synergeo),u,40,40,40,Synergeo D26053899 2026,Devis reel,,0,2026-05-20
+Geometre,Georeferencement et publication Geofoncier (Synergeo),forfait,45,45,45,Synergeo D26053899 2026,Devis reel,,0,2026-05-20
+Geometre,Deplacement (Synergeo),forfait,45,45,45,Synergeo D26053899 2026,Devis reel,,0,2026-05-20
+Huissier,Constat avant travaux (droit + deplacement),forfait,1115,1115,1115,Nicolas Pirs huissier La Rochelle 2026,Devis reel - 39 rue des Noues Andilly,,0,2026-05-26
+Huissier,Constat d'affichage (3 passages - Nicolas Pirs),forfait,465,465,465,Nicolas Pirs huissier La Rochelle 2026,Devis reel - 39 rue des Noues Andilly,,0,2026-05-26
+Huissier,Constat apres travaux (droit + deplacement),forfait,1515,1515,1515,Nicolas Pirs huissier La Rochelle 2026,Devis reel - 39 rue des Noues Andilly,,0,2026-05-26
+Huissier,Constat d'etat des lieux apres travaux (hangar + 4 box 244m2),forfait,386,386,386,Huisalliance Niort V-64962 2026,Devis reel - 39 rue des Noues Andilly pour DEKA,,0,2026-05-21
+Huissier,Constat d'affichage permis de construire (3 passages - Huisalliance),forfait,356,356,356,Huisalliance Niort V-64962 2026,Devis reel - 39 rue des Noues Andilly pour DEKA,,0,2026-05-21
+Huissier,Constat d'etat des lieux avant travaux (hangar + 4 box 244m2),forfait,386,386,386,Huisalliance Niort V-64962 2026,Devis reel - 39 rue des Noues Andilly pour DEKA,,0,2026-05-21
+Huissier,Constat d'etat des lieux apres travaux (126m2 - Niort),forfait,300,300,300,Huisalliance Niort V-61939 2025,Devis reel - 27 rue de l'Arsenal Niort pour Opus Habitat,,0,2025-12-30
+Huissier,Constat d'affichage declaration prealable (3 passages - Saint-Gelais),forfait,270,270,270,Huisalliance Niort V-63331 2026,Devis reel - 395 rue des Herpens Saint-Gelais pour Opus Habitat,,0,2026-03-02
+Huissier,Constat d'etat des lieux apres travaux (2 lots suite division),forfait,460,460,460,Huisalliance Niort V-63331 2026,Devis reel - 395 rue des Herpens Saint-Gelais,,0,2026-03-02
+Huissier,Constat d'etat des lieux avant travaux (247m2 - Saint-Gelais),forfait,460,460,460,Huisalliance Niort V-63331 2026,Devis reel - 395 rue des Herpens Saint-Gelais,,0,2026-03-02
+Huissier,Constat d'etat des lieux avant travaux (126m2 - Niort),forfait,300,300,300,Huisalliance Niort V-61938 2025,Devis reel - 27 rue de l'Arsenal Niort pour Opus Habitat,,0,2025-12-30
+Huissier,Constat d'affichage declaration prealable (3 passages - Niort Arsenal),forfait,270,270,270,Huisalliance Niort V-61937 2025,Devis reel - 27 rue de l'Arsenal Niort pour Opus Habitat,,0,2025-12-30
+Huissier,Constat d'etat des lieux (habitation 70m2 sous-sol et exterieurs),forfait,530.13,530.13,530.13,Huisalliance Niort V-59120 2025,Devis reel - 224 Av. de la Venise Verte Niort pour Opus Habitat,,0,2025-08-06
+Huissier,Constat d'affichage declaration prealable (3 passages - Venise Verte),forfait,300.13,300.13,300.13,Huisalliance Niort V-59119 2025,Devis reel - 224 Av. de la Venise Verte Niort,,0,2025-08-06
+Diagnostiqueur,Diagnostic amiante (appartement type studio),u,100,100,100,Diagome 26DE0300 2026,Devis reel - 274 rue de l'Arsenal Niort pour Opus Habitat,,0,2026-01-05
+Diagnostiqueur,Diagnostic termites (appartement type studio),u,100,100,100,Diagome 26DE0300 2026,Devis reel,,0,2026-01-05
+Diagnostiqueur,Diagnostic plomb CREP (appartement type studio),u,100,100,100,Diagome 26DE0300 2026,Devis reel,,0,2026-01-05
+Diagnostiqueur,Mesurage loi Carrez (maison plus de 50m2),u,66.67,66.67,66.67,Diagome 26DE0300 2026,Devis reel,,0,2026-01-05
+Diagnostiqueur,Diagnostic technique global (DTG) copropriete (4 lots studio avant 1949),forfait,1000,1000,1000,Diagome 26DE0300 2026,Devis reel,,0,2026-01-05
+Diagnostiqueur,Pack diagnostics maison avant 1949 (DPE+electricite+amiante+plomb+termites+ERP - 130m2),forfait,540,540,540,Diagome 26DE0307 2026,Devis reel - 395 rue des Herpens/Fauvettes Saint-Gelais pour Opus Habitat,,0,2026-03-05
+Diagnostiqueur,Pack diagnostics maison 1970 (DPE+electricite+amiante+termites+ERP - 120m2),forfait,450,450,450,Diagome 26DE0307 2026,Devis reel,,0,2026-03-05
+Eau,Frais forfaitaires d'etudes et de dossier (prestation ponctuelle),u,147.9,147.9,147.9,Service des Eaux du Vivier devis 0021 2026,Devis reel - travaux sur reseau d'eau potable 27 rue de l'Arsenal Niort,,0,2026-01-26
+Eau,Droit de prise pour compteur diametre 15mm,forfait,53.7,53.7,53.7,Service des Eaux du Vivier devis 0021 2026,Devis reel,,0,2026-01-26
+Syndic,Honoraires syndic - forfait annuel (par lot - Arthurimmo),u,166.67,166.67,166.67,Agence du Chateau Arthurimmo Niort 2026,Devis reel - contrat syndic 27 rue de l'Arsenal Niort,,0,2026-01-06
+Syndic,Taux horaire prestations syndic (reunions visites AG supplementaire),h,90,90,90,Agence du Chateau Arthurimmo Niort 2026,Devis reel,,0,2026-01-06
+Syndic,Mise en demeure d'un tiers par LRAR (Arthurimmo),u,30,30,30,Agence du Chateau Arthurimmo Niort 2026,Devis reel,,0,2026-01-06
+Syndic,Constitution du dossier transmis a avocat/huissier/assureur (Arthurimmo),forfait,250,250,250,Agence du Chateau Arthurimmo Niort 2026,Devis reel,,0,2026-01-06
+Syndic,Etablissement de l'etat date (mutation - Arthurimmo),forfait,316.67,316.67,316.67,Agence du Chateau Arthurimmo Niort 2026,Devis reel,,0,2026-01-06
+Syndic,Opposition sur mutation (Arthurimmo),forfait,125,125,125,Agence du Chateau Arthurimmo Niort 2026,Devis reel,,0,2026-01-06
+Syndic,Delivrance d'une copie du carnet d'entretien (Arthurimmo),forfait,50,50,50,Agence du Chateau Arthurimmo Niort 2026,Devis reel,,0,2026-01-06
+Syndic,Delivrance d'une copie des diagnostics techniques (Arthurimmo),forfait,25,25,25,Agence du Chateau Arthurimmo Niort 2026,Devis reel,,0,2026-01-06
+Syndic,Immatriculation initiale du syndicat (Arthurimmo),forfait,300,300,300,Agence du Chateau Arthurimmo Niort 2026,Devis reel,,0,2026-01-06
+Syndic,Honoraires syndic - forfait annuel (copropriete 4 lots + 1 autre lot - Citya),forfait,1800,1800,1800,Citya La Poste Immobilier Niort 2025,Devis reel - contrat syndic 27 rue de l'Arsenal Niort,,0,2025-12-22
+Syndic,Cout horaire prestations particulieres syndic (Citya),h,111,111,111,Citya La Poste Immobilier Niort 2025,Devis reel,,0,2025-12-22
+Syndic,Mise en demeure d'un tiers par LRAR (Citya),forfait,35,35,35,Citya La Poste Immobilier Niort 2025,Devis reel,,0,2025-12-22
+Syndic,Constitution du dossier transmis a avocat/huissier (Citya),forfait,283.33,283.33,283.33,Citya La Poste Immobilier Niort 2025,Devis reel,,0,2025-12-22
+Syndic,Etablissement de l'etat date (mutation - Citya),forfait,316.66,316.66,316.66,Citya La Poste Immobilier Niort 2025,Devis reel,,0,2025-12-22
+Syndic,Immatriculation initiale du syndicat (2 a 20 lots - Citya),forfait,350,350,350,Citya La Poste Immobilier Niort 2025,Devis reel,,0,2025-12-22
