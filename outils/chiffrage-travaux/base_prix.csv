@@ -676,3 +676,24 @@ Electricite,Electricite logement neuf complet (tableau+reseau+prises) au m2,m2,7
 Plomberie,Plomberie neuve complete logement (au m2 habitable),m2,50,80,110,Travaux.com/Usineadesign,Estimation marche - Construction neuve - installation complete fourniture+pose,,0
 Terrassement,Viabilisation raccordement eau/electricite/telecom terrain a batir,forfait,5000,9000,15000,Afedim/Prix-Pose/Celimo,Estimation marche - Construction neuve - hors assainissement collectif si deja en limite de propriete,,0
 Couvreur,Raccord de zinguerie autour d'un conduit de cheminee,u,450,600,850,Estimation marche (extrapole depuis devis reels similaires 600EUR),Estimation marche - libelle exact requis par le code,,0
+Paysagiste,Deplacement et debroussaillage/tonte (forfait global detail illisible),forfait,115,115,115,LP_GREEN_EI D2611-1 2026,Devis reel detail ligne a ligne illisible (OCR) total TVA non applicable art 293B,,0,2026-11-04
+Facade,Echafaudage facade (montage et demontage),forfait,950,950,950,HORIZON_RENOVATION 22102026-1 2026,Devis reel ravalement Le Jaures Aytre,,0,2026-10-22
+Facade,Nettoyage haute pression facade avant traitement,m2,14.35,14.35,14.35,HORIZON_RENOVATION 22102026-1 2026,Devis reel,,0,2026-10-22
+Facade,Mise en oeuvre peinture facade impermeable (fixateur + 2 couches),m2,29.50,29.50,29.50,HORIZON_RENOVATION 22102026-1 2026,Devis reel RECAFLEX semi-epais,,0,2026-10-22
+Peinture,Poncage et peinture sous-faces volige bois exterieur,ml,29.50,29.50,29.50,HORIZON_RENOVATION 22102026-1 2026,Devis reel,,0,2026-10-22
+Peinture,Poncage et peinture structure metallique exterieure (veranda),forfait,900,900,900,HORIZON_RENOVATION 22102026-1 2026,Devis reel,,0,2026-10-22
+Facade,Ravalement complet facade (anti-mousse+nettoyage+rebouchage+2 couches peinture),forfait,4800,4800,4800,FRANCIS_MULTISERVICE devis44 2026,Devis reel 2 facades 2 pignons tours fenetres+muret - devis concurrent a Horizon Renovation meme chantier,,0,2026-10-20
+Peinture,Depose revetements muraux et lessivage avant peinture,m2,11.50,11.50,11.50,HORIZON_RENOVATION 22102026-2 2026,Devis reel,,0,2026-10-22
+Peinture,Ratissage enduit platre et reprise de fissures murs/cloisons,m2,16.45,16.45,16.45,HORIZON_RENOVATION 22102026-2 2026,Devis reel,,0,2026-10-22
+Peinture,Poncage et impression preparation peinture murs/plafonds,m2,7.50,7.50,7.50,HORIZON_RENOVATION 22102026-2 2026,Devis reel,,0,2026-10-22
+Peinture,Peinture finition plafonds 2 couches veloute,m2,14.50,14.50,14.50,HORIZON_RENOVATION 22102026-2 2026,Devis reel,,0,2026-10-22
+Peinture,Peinture finition murs 2 couches mat,m2,14.50,14.50,14.50,HORIZON_RENOVATION 22102026-2 2026,Devis reel,,0,2026-10-22
+Peinture,Decapage et peinture porte interieure bois existante,u,110,110,110,HORIZON_RENOVATION 22102026-2 2026,Devis reel,,0,2026-10-22
+Peinture,Poncage et peinture radiateur (finition satinee haute temperature),u,140,140,140,HORIZON_RENOVATION 22102026-2 2026,Devis reel,,0,2026-10-22
+Plaquiste,Demolition cloisons briques portes et placards,forfait,5500,5500,5500,HORIZON_RENOVATION 22102026-3 2026,Devis reel,,0,2026-10-22
+Plaquiste,Plafond rampant BA13 entre poutres,m2,38.50,38.50,38.50,HORIZON_RENOVATION 22102026-3 2026,Devis reel etage,,0,2026-10-22
+Isolation,Isolant reflecteur alveolaire plafond rampant ep125mm,m2,17.35,17.35,17.35,HORIZON_RENOVATION 22102026-3 2026,Devis reel Hybris 31 R4.65,,0,2026-10-22
+Plaquiste,Plafond horizontal BA13 autoporte,m2,31.45,31.45,31.45,HORIZON_RENOVATION 22102026-3 2026,Devis reel cuisine,,0,2026-10-22
+Plaquiste,Doublage BA13 sur ossature metallique avec isolant 45mm,m2,38.35,38.35,38.35,HORIZON_RENOVATION 22102026-3 2026,Devis reel,,0,2026-10-22
+Plaquiste,Bande a joint cloisons et jonctions,m2,7.50,7.50,7.50,HORIZON_RENOVATION 22102026-3 2026,Devis reel,,0,2026-10-22
+Architecture,Realisation de 4 estimatifs chiffrage avant travaux,forfait,800,800,800,NOGUEIRA_GUILLAUME BRWE8653828DCE5 2026,Devis reel OPUS HABITAT,,0,2026-01-29
